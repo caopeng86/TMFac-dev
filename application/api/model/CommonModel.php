@@ -31,5 +31,5 @@ class CommonModel extends Model
     protected $ruleprize_db=TM_PREFIX.'ruleprize';
     protected $site_db=TM_PREFIX.'site';
     protected $user_db = TM_PREFIX.'user';
-    protected $user_log_db=TM_PREFIX.'user_Log';
+    protected $user_log_db=TM_PREFIX.'user_log';
 }
