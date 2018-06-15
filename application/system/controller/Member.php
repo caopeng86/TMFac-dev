@@ -248,6 +248,7 @@ class Member extends Base
 
         //总数
         $totalConf['deleted'] = 0;
+
         $total = $this->memberModel->getCount($totalConf);
         if($total === false){
             Logservice::writeArray(['sql'=>$this->memberModel->getLastSql()], '统计总数失败', 2);
@@ -259,8 +260,7 @@ class Member extends Base
         $todayEnd = $todayStart + 24*3600 - 1;
         $todayConf = [
             'deleted' => 0,
-            ['create_time', '>=', $todayStart],
-            ['create_time', '<=', $todayEnd],
+            'create_time'=> array('between',"$todayStart,$todayEnd")
         ];
         $today = $this->memberModel->getCount($todayConf);
         if($today === false){
@@ -273,8 +273,7 @@ class Member extends Base
         $yesterdayEnd = $yesterdayStart + 24*3600 - 1;
         $yesterdayConf = [
             'deleted' => 0,
-            ['create_time', '>=', $yesterdayStart],
-            ['create_time', '<=', $yesterdayEnd],
+            'create_time'=> array('between',"$yesterdayStart,$yesterdayEnd")
         ];
         $yesterday = $this->memberModel->getCount($yesterdayConf);
         if($yesterday === false){
