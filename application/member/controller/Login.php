@@ -78,6 +78,7 @@ class Login extends Controller
                     'password' => md5(md5(rand(100000,999999))),
                     'site_code' => $inputData['site_code'],
                     'mobile' => $inputData['mobile'],
+                    'head_pic' => '/uploads/default/head.jpg'
                 ];
                 $add = $this->memberModel->addMember($addData);
                 if(!$add){
