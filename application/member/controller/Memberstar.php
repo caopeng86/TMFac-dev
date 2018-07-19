@@ -56,7 +56,7 @@ class Memberstar extends Base
             return reJson(500, '收藏失败', []);
         }
 
-        return reJson(200, '收藏成功', []);
+        return reJson(200, '收藏成功', ['star_id'=>$re]);
     }
 
     /**
