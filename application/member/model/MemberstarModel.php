@@ -59,4 +59,15 @@ class MemberstarModel extends CommonModel
         $re = Db::table($this->member_star_db)->field($field)->where($condition)->limit($limit)->order($order)->select();
         return $re;
     }
+
+    /**
+     * 获取单个收藏信息
+     * @param $condition
+     * @param $field
+     * @return array|null|\PDOStatement|string|Model
+     */
+    public function starFind($condition, $field){
+        $re = Db::table($this->member_star_db)->field($field)->where($condition)->find();
+        return $re;
+    }
 }

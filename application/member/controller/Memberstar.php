@@ -60,6 +60,32 @@ class Memberstar extends Base
     }
 
     /**
+     * 检验是否被收藏
+     */
+    public function checkIsStar(){
+        //判断请求方式以及请求参数
+        $inputData = Request::post();
+        $method = Request::method();
+        $params = ['member_code','app_id','article_id'];
+        $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
+        if(!$ret){
+            return reJson(500, $msg, []);
+        }
+        //判断是否已收藏
+        $condition = [
+            'member_code' => $inputData['member_code'],
+            'article_id' => $inputData['article_id'],
+            'app_id' => $inputData['app_id']
+        ];
+        $Info = $this->starModel->starFind($condition,'star_id');
+        if(!empty($Info)){
+            return reJson(200, '已被收藏', ['star_id'=>$list['star_id']]);
+        }
+        return reJson(200, '未被收藏', []);
+    }
+
+
+    /**
      * 取消收藏
      */
     public function deleteStar(){
