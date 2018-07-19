@@ -79,7 +79,7 @@ class Memberstar extends Base
         ];
         $Info = $this->starModel->starFind($condition,'star_id');
         if(!empty($Info)){
-            return reJson(200, '已被收藏', ['star_id'=>$list['star_id']]);
+            return reJson(200, '已被收藏', ['star_id'=>$Info['star_id']]);
         }
         return reJson(200, '未被收藏', []);
     }
