@@ -89,7 +89,8 @@ class Memberstar extends Base
 
     /**
      * 批量检查是否被收藏
-     * @return \think\response\Json 返回正常json样式 {"code":200,"data":{"1":false,"2":2,"3":false,"7":7,"10":false},"msg":"查询成功"}
+     * @return \think\response\Json
+     * 返回正常json样式 {"code":200,"data":[{"article_id":"1","star_id":false},{"article_id":"2","star_id":2},{"article_id":"3","star_id":false},{"article_id":"7","star_id":7},{"article_id":"10","star_id":false}],"msg":"查询成功"}
      */
     public function checkIsStarBatch(){
         //判断请求方式以及请求参数
@@ -118,12 +119,18 @@ class Memberstar extends Base
         if(!empty($starList)){
             $starList = array_column($starList,'star_id','article_id');
             foreach ($article_ids as $val){
-                $returnData[$val] = $val > 0 && isset($starList[$val])?$starList[$val]:false;
+                $returnData[] = array(
+                    'article_id'=>$val,
+                    'star_id'=>$val > 0 && isset($starList[$val])?$starList[$val]:false
+                );
             }
             return reJson(200,'查询成功', $returnData);
         }else{
             foreach ($article_ids as $val){
-                $returnData[$val] = false;
+                $returnData[] = array(
+                    'article_id'=>$val,
+                    'star_id'=>false
+                );
             }
             return reJson(200,'全未被收藏',$returnData);
         }
@@ -137,7 +144,7 @@ class Memberstar extends Base
         $inputData = Request::delete();
         $method = Request::method();
         $params = ['star_id'];
-        $ret = checkBeforeAction($inputData, $params, $method, 'DELETE', $msg);
+        $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
             return reJson(500, $msg, []);
         }
