@@ -78,12 +78,56 @@ class Memberstar extends Base
             'app_id' => $inputData['app_id']
         ];
         $Info = $this->starModel->starFind($condition,'star_id');
+        if($Info === false){
+            return reJson(500, '查询失败', []);
+        }
         if(!empty($Info)){
             return reJson(200, '已被收藏', ['star_id'=>$Info['star_id']]);
         }
         return reJson(200, '未被收藏', []);
     }
 
+    /**
+     * 批量检查是否被收藏
+     * @return \think\response\Json 返回正常json样式 {"code":200,"data":{"1":false,"2":2,"3":false,"7":7,"10":false},"msg":"查询成功"}
+     */
+    public function checkIsStarBatch(){
+        //判断请求方式以及请求参数
+        $inputData = Request::post();
+        $method = Request::method();
+        $params = ['member_code','app_id','article_ids'];
+        $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
+        if(!$ret){
+            return reJson(500, $msg, []);
+        }
+        if(is_array($inputData['article_ids'])){
+            $article_ids = $inputData['article_ids'];
+        }else{
+            $article_ids = explode(',',$inputData['article_ids']);
+        }
+        $condition = [
+            'member_code' => $inputData['member_code'],
+            'article_id' =>$article_ids,
+            'app_id' => $inputData['app_id']
+        ];
+        $starList = $this->starModel->starList($condition,'star_id,article_id');
+        if($starList === false){
+            return reJson(500, '查询失败', []);
+        }
+        $returnData = array();
+        if(!empty($starList)){
+            $starList = array_column($starList,'star_id','article_id');
+            foreach ($article_ids as $val){
+                $returnData[$val] = $val > 0 && isset($starList[$val])?$starList[$val]:false;
+            }
+            return reJson(200,'查询成功', $returnData);
+        }else{
+            foreach ($article_ids as $val){
+                $returnData[$val] = false;
+            }
+            return reJson(200,'全未被收藏',$returnData);
+        }
+    }
 
     /**
      * 取消收藏
