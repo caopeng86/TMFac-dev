@@ -33,11 +33,8 @@ class Memberstar extends Base
         if(!$ret){
             return reJson(500, $msg, []);
         }
-        if(isset($inputData['pic']) && preg_match("/^(http:\/\/|https:\/\/).*$/",$inputData['pic'])){
-            return reJson(500,'pic不能带有http或者https', []);
-        }
         if(preg_match("/^(http:\/\/|https:\/\/).*$/",$inputData['url'])){
-            return reJson(500,'url不能带有http或者https', []);
+            return reJson(500,'url不能带域名', []);
         }
         //判断是否已收藏
         $condition = [
