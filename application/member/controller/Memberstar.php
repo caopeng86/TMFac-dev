@@ -186,7 +186,7 @@ class Memberstar extends Base
         $totalPage = ceil($count / $pageSize);
         $limit = $firstRow.','.$pageSize;
         $order = 'create_time desc';
-        $field = 'star_id, member_code, app_id, article_id, title, intro, pic, create_time, extend';
+        $field = 'star_id, member_code, app_id, article_id, title, intro, pic, create_time, extend, url';
 
         //获取列表数据
         $list = $this->starModel->starList($condition, $field, $limit, $order);
@@ -195,9 +195,9 @@ class Memberstar extends Base
         }
 
         $return = [
-          'total' => $count,
-          'totla_page' => $totalPage,
-          'list' => $list
+            'total' => $count,
+            'totla_page' => $totalPage,
+            'list' => $list
         ];
 
         return reJson(200, '获取列表成功', $return);
