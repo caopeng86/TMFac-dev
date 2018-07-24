@@ -28,12 +28,17 @@ class Memberstar extends Base
         //判断请求方式以及请求参数
         $inputData = Request::post();
         $method = Request::method();
-        $params = ['member_code','title','app_id','article_id'];
+        $params = ['member_code','title','app_id','article_id','intro','url'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
             return reJson(500, $msg, []);
         }
-
+        if(isset($inputData['pic']) && preg_match("/^(http:\/\/|https:\/\/).*$/",$inputData['pic'])){
+            return reJson(500,'pic不能带有http或者https', []);
+        }
+        if(preg_match("/^(http:\/\/|https:\/\/).*$/",$inputData['url'])){
+            return reJson(500,'url不能带有http或者https', []);
+        }
         //判断是否已收藏
         $condition = [
             'member_code' => $inputData['member_code'],
