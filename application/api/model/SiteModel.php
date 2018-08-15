@@ -20,7 +20,7 @@ class SiteModel extends CommonModel
      * @return string
      */
     public function getDatabaseSize(){
-        $sql = "SHOW TABLE STATUS FROM ".Config::get('database')['database'];
+        $sql = "SHOW TABLE STATUS FROM ".Config::pull('database')['database'];
         $tblPrefix = TM_PREFIX;
         if($tblPrefix != null) {
             $sql .= " LIKE '{$tblPrefix}%'";
