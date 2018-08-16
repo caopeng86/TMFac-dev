@@ -11,7 +11,6 @@ namespace app\api\model;
 
 use think\Db;
 use think\facade\Config;
-use think\facade\Env;
 use think\Model;
 
 class SiteModel extends CommonModel
@@ -21,7 +20,7 @@ class SiteModel extends CommonModel
      * @return string
      */
     public function getDatabaseSize(){
-        $sql = "SHOW TABLE STATUS FROM ".Env::get(SERVER_ENV.'DATABASE_NAME');
+        $sql = "SHOW TABLE STATUS FROM ".Config::pull('database')['database'];
         $tblPrefix = TM_PREFIX;
         if($tblPrefix != null) {
             $sql .= " LIKE '{$tblPrefix}%'";
@@ -34,7 +33,6 @@ class SiteModel extends CommonModel
         $size = round(($size/1048576),2).'M';
         return $size;
     }
-
 
     /**
      * 获取数据库版本

@@ -83,8 +83,8 @@ class Site extends Base
         if(!$info){
             //程序版本
             //产品系列
-            $info['server_os'] = php_uname('a');//服务器系统
-            $info['php_version'] = 'PHP Version '.PHP_VERSION;//PHP版本
+            $info['server_os'] = PHP_OS;//服务器系统
+            $info['php_version'] = 'PHP Version '.phpversion();//PHP版本
             $info['server_software'] = $_SERVER ['SERVER_SOFTWARE'];//服务器软件
             $info['mysql_version'] = $this->siteModel->getMysqlVersion();//服务器MySQL版本
             $info['upload_max_file_size'] =  ini_get("file_uploads") ? ini_get("upload_max_filesize") : "Disabled";//上传许可
