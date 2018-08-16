@@ -67,7 +67,7 @@ class Member extends Base
             }
             $path = '/uploads/member'.'/'.$mobile.'/'.$img_name.'.'.$type;
             //拼接图片保存路径数据为一个字符串
-            $img_path[] = $_SERVER['HTTP_HOST'].$path;
+            $img_path[] = $path;
         }
         return $img_path;
     }
