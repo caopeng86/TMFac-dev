@@ -11,6 +11,7 @@ namespace app\member\controller;
 
 use app\extend\controller\Logservice;
 use app\member\model\MemberModel;
+use app\member\model\MemberThirdPartyModel;
 use think\Controller;
 use think\Db;
 use think\facade\Cache;
@@ -202,13 +203,17 @@ class Login extends Controller
                 return reJson(500, '获取会员数据失败', []);
             }
             Logservice::writeArray(['memberInfo'=>$addData], '第三方登录新增会员数据');
-        }
 
+        }
+        //保存第3方登陆数据
+        $ThirdPartyModel = new MemberThirdPartyModel();
+        $ThirdPartyModel->updateOrAddThirdParty($params,$memberInfo);
         //记录登录信息到数据库
         $token = createCode();
         $updateCondition = ['member_code' => $memberInfo['member_code']];
         $updateData['access_key'] = $token;
         $updateData['access_key_create_time'] = time();
+        $updateData['ip'] = Request::ip();
         $remember = $this->memberModel->updateMember($updateCondition, $updateData);
         if($remember === false){
             Logservice::writeArray(['sql'=>$this->memberModel->getLastSql()], '记录登录信息失败', 2);
@@ -232,7 +237,6 @@ class Login extends Controller
             'token' => $token,
             'member_info' => $memberInfo,
         ];
-
         return reJson(200, '登录成功', $return);
     }
 }

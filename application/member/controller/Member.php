@@ -67,7 +67,7 @@ class Member extends Base
             }
             $path = '/uploads/member'.'/'.$mobile.'/'.$img_name.'.'.$type;
             //拼接图片保存路径数据为一个字符串
-            $img_path[] = $_SERVER['HTTP_HOST'].$path;
+            $img_path[] = $path;
         }
         return $img_path;
     }
@@ -281,6 +281,132 @@ class Member extends Base
 
         Logservice::writeArray(['path'=>$path[0], 'mobile'=>$inputData['mobile']], '修改用户头像');
         return reJson(200, '成功', [$path[0]]);
+    }
+
+    /**
+     * 获取用户列表
+     */
+    public function getMemberList(){
+        //判断请求方式以及请求参数
+        $inputData = Request::get();
+        $method = Request::method();
+        $params = [];
+        $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
+        if(!$ret){
+            return reJson(500, $msg, []);
+        }
+        $condition = array();
+        if(!empty($inputData['member_name'])){ //名称条件
+            $condition['member_name'] = array('like','%'.$inputData['member_name'].'%');
+        }
+        if(!empty($inputData['member_code'])){ //用户编码条件
+            $condition['member_code'] = array('like','%'.$inputData['member_code'].'%');
+        }
+        $MemberModel = new MemberModel();
+        $MemberTotal = $MemberModel->getCount($condition); //会员总数
+        $num = 20; //获取20条会员数据
+        $totalPage = ceil($MemberTotal/$num); //总页数
+        if(!empty($inputData['page']) && $inputData['page'] > 0 && $inputData['page'] <= $totalPage){
+            $start_num = ($num * ($inputData['page']-1));
+        }else{
+            $start_num = 0;
+        }
+        $memberList = $MemberModel->getMemberList($condition,'',$start_num .','.$num,'create_time desc');
+        if($memberList === false){
+            return reJson(500,'获取数据失败', []);
+        }
+        return reJson(200,'获取成功',['total_page'=>$totalPage,'now_page'=>$start_num + 1,'list'=>$memberList]);
+    }
+
+    /**
+     * 更新会员信息
+     */
+    public function updateMemberInfo(){
+        //判断请求方式以及请求参数
+        $inputData = Request::post();
+        $method = Request::method();
+        $params = ['member_id'];
+        $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
+        if(!$ret){
+            return reJson(500, $msg, []);
+        }
+        $MemberModel = new MemberModel();
+        $condition = array(
+            'member_id'=>$inputData['member_id']
+        );
+        $MemberInfo = $MemberModel->getMemberInfo($condition);
+        if(!$MemberInfo){
+            return reJson(500,'用户不存在',[]);
+        }
+        $data = array();
+        $allowFiled = array('member_name','member_nickname','member_real_name','email','mobile','head_pic','sex','birthday','receive_notice','wifi_show_image','list_auto_play');
+        foreach ($allowFiled as $val){
+            if(!empty($inputData[$val])){
+                $data[$val] = $inputData[$val];
+            }
+        }
+        if(count($data) < 0){
+            return reJson(500,'更新信息不存在',[]);
+        }
+        $result = $MemberModel->updateMember($condition,$data);
+        if($result){
+            $MemberInfo = $MemberModel->getMemberInfo($condition);
+            return reJson(200,'更新成功',$MemberInfo);
+        }
+        return reJson(500,'更新失败',[]);
+    }
+
+    /**
+     * 禁用或开启
+     */
+    public function forbiddenOrStartMember(){
+        //判断请求方式以及请求参数
+        $inputData = Request::post();
+        $method = Request::method();
+        $params = ['member_id','status'];
+        $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
+        if(!$ret){
+            return reJson(500, $msg, []);
+        }
+        $MemberModel = new MemberModel();
+        $condition = array(
+            'member_id'=>$inputData['member_id']
+        );
+        $MemberInfo = $MemberModel->getMemberInfo($condition);
+        if(!$MemberInfo){
+            return reJson(500,'用户不存在',[]);
+        }
+        if(!in_array($inputData['status'],[0,1])){
+            return reJson(500,'状态参数异常',[]);
+        }
+        $result = $MemberModel->updateMember($condition,['status'=>$inputData['status']]);
+        if($result){
+            return reJson(200,'成功',[]);
+        }
+        return reJson(500,'失败',[]);
+    }
+
+    /**
+     * 获取用户信息
+     */
+    public function getMemberInfo(){
+        //判断请求方式以及请求参数
+        $inputData = Request::get();
+        $method = Request::method();
+        $params = ['member_id'];
+        $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
+        if(!$ret){
+            return reJson(500, $msg, []);
+        }
+        $MemberModel = new MemberModel();
+        $condition = array(
+            'member_id'=>$inputData['member_id']
+        );
+        $MemberInfo = $MemberModel->getMemberInfo($condition);
+        if(!$MemberInfo){
+            return reJson(500,'用户不存在',[]);
+        }
+        return reJson(200,'获取成功',$MemberInfo);
     }
 
 
