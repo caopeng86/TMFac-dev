@@ -48,7 +48,7 @@ class Login extends Controller
         //根据手机号取出会员数据
         $condition = ['mobile' => $inputData['mobile'], 'site_code' => $inputData['site_code']];
         $field = 'member_id, member_code, member_name, site_code, email, mobile, head_pic, create_time, status, deleted,
-        birthday, sex';
+        birthday, sex,password';
         $memberInfo = $this->memberModel->getMemberInfo($condition, $field);
         if($memberInfo === false){
             Logservice::writeArray(['sql'=>$this->memberModel->getLastSql()], '获取会员数据失败', 2);
@@ -79,6 +79,7 @@ class Login extends Controller
                     'password' => md5(md5(rand(100000,999999))),
                     'site_code' => $inputData['site_code'],
                     'mobile' => $inputData['mobile'],
+                    'head_pic' => '/uploads/default/head.jpg'
                 ];
                 $add = $this->memberModel->addMember($addData);
                 if(!$add){
