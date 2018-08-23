@@ -38,10 +38,11 @@ class MemberThirdPartyModel extends CommonModel
      * @param $ip
      * @return bool|int|string
      */
-    public function updateOrAddThirdParty($param,$member){
+    public function updateOrAddThirdParty($param,$member,$ip){
         $thirdParty = Db::table($this->member_third_party_db)->where(['uid'=>$param['uid'],'type'=>$param['type']])->find();
         if($thirdParty){
             $data['login_time'] = time();
+            $data['ip'] = $ip;
             return Db::table($this->member_third_party_db)->where(['id'=>$thirdParty['id']])->update($data);
         }else{
             return $this->addThirdParty($param,$member,$ip);

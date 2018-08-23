@@ -34,6 +34,7 @@ class Base extends Controller
         //跳过验证的方法
         $pass = [
             'system\site\getsitelist',
+            'system\Article\getReliefArticle' //免责申明文章获取
         ];
         if(in_array($url, $pass)){
             return true;

@@ -170,7 +170,7 @@ class Login extends Controller
         }
         $condition['site_code'] = $inputData['site_code'];
         $field = 'member_id, member_code, member_name, site_code, email, mobile, head_pic, create_time, status, deleted,
-        birthday, sex';
+        birthday, sex,password';
         $memberInfo = $this->memberModel->getMemberInfo($condition, $field);
         if($memberInfo === false){
             Logservice::writeArray(['sql'=>$this->memberModel->getLastSql()], '获取会员数据失败', 2);
@@ -206,15 +206,15 @@ class Login extends Controller
             Logservice::writeArray(['memberInfo'=>$addData], '第三方登录新增会员数据');
 
         }
+        $updateData['ip'] = Request::ip();
         //保存第3方登陆数据
         $ThirdPartyModel = new MemberThirdPartyModel();
-        $ThirdPartyModel->updateOrAddThirdParty($params,$memberInfo);
+        $ThirdPartyModel->updateOrAddThirdParty($params,$memberInfo,$updateData['ip']);
         //记录登录信息到数据库
         $token = createCode();
         $updateCondition = ['member_code' => $memberInfo['member_code']];
         $updateData['access_key'] = $token;
         $updateData['access_key_create_time'] = time();
-        $updateData['ip'] = Request::ip();
         $remember = $this->memberModel->updateMember($updateCondition, $updateData);
         if($remember === false){
             Logservice::writeArray(['sql'=>$this->memberModel->getLastSql()], '记录登录信息失败', 2);
