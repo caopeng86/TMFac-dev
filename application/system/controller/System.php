@@ -266,4 +266,32 @@ class System extends Controller
         }
         return reJson(200,'保存成功',[]);
     }
+
+    /**
+     * 部署sql文件
+     */
+    public function installSystem(){
+        $root_address = $_SERVER['DOCUMENT_ROOT'];
+        $PCVersion = $this->ConfigModel->getPCVersion();
+        if(empty($PCVersion['version'])){
+            $PCVersion['version'] = 'V1';
+        }
+        $version = substr($PCVersion['version'],1);
+        $update_data = array(
+            '1'=>$root_address.'/db/V1.sql',
+            '2'=>$root_address.'/db/V2.sql',
+        );
+        if(empty($update_data[$version])){
+            return reJson(500,'无更新',[]);
+        }
+        if(!file_exists($update_data[$version])){
+            return reJson(500,'无更新',[]);
+        }
+        $sql = file_get_contents($update_data[$version]);
+        $result = Db::execute($sql);
+        if($result){
+            unlink($update_data[$version]);
+        }
+        return reJson(200,'更新完成',[]);
+    }
 }

@@ -81,7 +81,7 @@ INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_
 INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'must_update', '1', '强制更新', 'ios_version', 1535082506, 1535082506);
 INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'version', 'V1', '版本号', 'android_version', 1535082566, 1535082566);
 INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'must_update', '1', '强制更新', 'android_version', 1535082566, 1535082566);
-INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'version', 'V1', '版本号', 'pc_version', 1535082566, 1535082566);
+INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'version', 'V2', '版本号', 'pc_version', 1535082566, 1535082566);
 INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'must_update', '1', '强制更新', 'pc_version', 1535082566, 1535082566);
 
 CREATE TABLE `tm_member_footprint`  (

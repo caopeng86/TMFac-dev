@@ -97,4 +97,16 @@ class ConfigModel extends CommonModel
         return $ConfigModel->ArrayToKey($ConfigList);
     }
 
+    /**
+     * 获取PC版本信息
+     * @return array
+     */
+    public function getPCVersion(){
+        $condition['key'] = ['version','must_update'];
+        $condition['type'] = 'pc_version';
+        $ConfigModel = new ConfigModel();
+        $ConfigList = $ConfigModel->getConfigList($condition);
+        return $ConfigModel->ArrayToKey($ConfigList);
+    }
+
 }
