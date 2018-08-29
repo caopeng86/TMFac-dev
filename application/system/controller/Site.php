@@ -9,6 +9,7 @@
 namespace app\system\controller;
 
 
+use app\api\model\ConfigModel;
 use app\extend\controller\Logservice;
 use app\api\model\RoleModel;
 use app\api\model\SiteModel;
@@ -89,6 +90,10 @@ class Site extends Base
             $info['mysql_version'] = $this->siteModel->getMysqlVersion();//服务器MySQL版本
             $info['upload_max_file_size'] =  ini_get("file_uploads") ? ini_get("upload_max_filesize") : "Disabled";//上传许可
             $info['database_size'] = $this->siteModel->getDatabaseSize();//当前数据库尺寸
+            $ConfigModel = new ConfigModel();
+            $ConfigList = $ConfigModel->getConfigList(['type'=>'pc_version']);
+            $ConfigList = $ConfigModel->ArrayToKey($ConfigList);
+            $info['version'] = !empty($ConfigList['version'])?$ConfigList['version']:'';
             //当前附件根目录
             //当前附件尺寸
             Cache::set('site_info', $info, 300);

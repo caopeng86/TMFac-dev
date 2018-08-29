@@ -48,6 +48,7 @@ class PushMessageModel extends CommonModel
      * 添加推送信息
      */
     public function addInfo($opinion){
+        $opinion['add_time'] = time();
         return Db::table($this->push_message_db)->insert($opinion);
     }
 

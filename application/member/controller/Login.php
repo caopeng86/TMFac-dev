@@ -9,6 +9,7 @@
 namespace app\member\controller;
 
 
+use app\api\model\ConfigModel;
 use app\extend\controller\Logservice;
 use app\member\model\MemberModel;
 use app\member\model\MemberThirdPartyModel;
@@ -47,8 +48,8 @@ class Login extends Controller
 
         //根据手机号取出会员数据
         $condition = ['mobile' => $inputData['mobile'], 'site_code' => $inputData['site_code']];
-        $field = 'member_id, member_code, member_name, site_code, email, mobile, head_pic, create_time, status, deleted,
-        birthday, sex,password';
+        $field = 'member_id, member_code, member_name,member_nickname,site_code, email, mobile, head_pic, create_time, status, deleted,
+        birthday, sex,password,wx,qq,wb';
         $memberInfo = $this->memberModel->getMemberInfo($condition, $field);
         if($memberInfo === false){
             Logservice::writeArray(['sql'=>$this->memberModel->getLastSql()], '获取会员数据失败', 2);
@@ -127,13 +128,14 @@ class Login extends Controller
 
         //保存会员信息到缓存 7天
         $cacheData = [
+            "member_id" => $memberInfo['member_id'],
             "user_id" => $memberInfo['member_id'],
             "member_code" => $memberInfo['member_code'],
             "member_name" => $memberInfo['member_name'],
             "access_key" => $updateData['access_key'],
             "access_key_create_time" => $updateData['access_key_create_time'],
         ];
-        Cache::set($token, $cacheData, 3600*24*7);
+        Cache::set($token, $cacheData,Config::get('token_time'));
         Logservice::writeArray(['token'=>$token, 'data'=>$cacheData], '会员登录信息');
 
         $return = [
@@ -169,8 +171,8 @@ class Login extends Controller
             $condition['wb'] = $inputData['uid'];
         }
         $condition['site_code'] = $inputData['site_code'];
-        $field = 'member_id, member_code, member_name, site_code, email, mobile, head_pic, create_time, status, deleted,
-        birthday, sex,password';
+        $field = 'member_id, member_code, member_name,member_nickname,site_code, email, mobile, head_pic, create_time, status, deleted,
+        birthday, sex,password,wx,qq,wb';
         $memberInfo = $this->memberModel->getMemberInfo($condition, $field);
         if($memberInfo === false){
             Logservice::writeArray(['sql'=>$this->memberModel->getLastSql()], '获取会员数据失败', 2);
@@ -189,7 +191,10 @@ class Login extends Controller
             $addData['create_time'] = time();
             $addData['password'] = md5(md5(rand(100000,999999)));
             $addData['sex'] = empty($inputData['sex'])?'':$inputData['sex'];
-            $addData['head_pic'] = empty($inputData['head_pic'])?'':$inputData['head_pic'];
+            $addData['head_pic'] = empty($inputData['head_pic'])?'/uploads/default/head.jpg':$inputData['head_pic'];
+            $addData['member_nickname'] = empty($inputData['member_nickname'])?'':$inputData['member_nickname'];
+            $addData['birthday'] = empty($inputData['birthday'])?'':$inputData['birthday'];
+            $addData['sex'] = empty($inputData['sex'])?0:$inputData['sex'];
             $add = $this->memberModel->addMember($addData);
             if(!$add){
                 Logservice::writeArray(['sql'=>$this->memberModel->getLastSql()], '新增会员数据失败', 2);
@@ -209,7 +214,7 @@ class Login extends Controller
         $updateData['ip'] = Request::ip();
         //保存第3方登陆数据
         $ThirdPartyModel = new MemberThirdPartyModel();
-        $ThirdPartyModel->updateOrAddThirdParty($params,$memberInfo,$updateData['ip']);
+        $ThirdPartyModel->updateOrAddThirdParty($inputData,$memberInfo,$updateData['ip']);
         //记录登录信息到数据库
         $token = createCode();
         $updateCondition = ['member_code' => $memberInfo['member_code']];
@@ -225,13 +230,14 @@ class Login extends Controller
 
         //保存会员信息到缓存 7天
         $cacheData = [
+            "member_id" => $memberInfo['member_id'],
             "user_id" => $memberInfo['member_id'],
             "member_code" => $memberInfo['member_code'],
             "member_name" => $memberInfo['member_name'],
             "access_key" => $updateData['access_key'],
             "access_key_create_time" => $updateData['access_key_create_time'],
         ];
-        Cache::set($token, $cacheData, 3600*24*7);
+        Cache::set($token, $cacheData,Config::get('token_time'));
         Logservice::writeArray(['token'=>$token, 'data'=>$cacheData], '会员登录信息');
 
         $return = [
@@ -239,5 +245,139 @@ class Login extends Controller
             'member_info' => $memberInfo,
         ];
         return reJson(200, '登录成功', $return);
+    }
+
+    /**
+     * 绑定接口
+     */
+    public function bindOtherLoginInfo(){
+        //判断请求方式以及请求参数
+        $inputData = Request::post();
+        $method = Request::method();
+        $params = ['uid','type','member_code'];
+        $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
+        if(!$ret){
+            return reJson(500, $msg, []);
+        }
+        $memberInfo = $this->memberModel->getMemberInfo(['member_code'=>$inputData['member_code']]);
+        if(!$memberInfo){
+            return reJson(500,'用户不存在',[]);
+        }
+        $bindData = [];
+        //根据uid取出会员数据
+        if($inputData['type'] == 1){
+            $bindData['qq'] = $inputData['uid'];
+        }elseif ($inputData['type'] == 2){
+            $bindData['wx'] = $inputData['uid'];
+        }elseif ($inputData['type'] == 3){
+            $bindData['wb'] = $inputData['uid'];
+        }
+        //验证第3方登录账户是否绑定了其他用户
+        $otherMember = $this->memberModel->getMemberInfo($bindData);
+        if($otherMember){
+            return reJson(500,'该账号已绑定',[]);
+        }
+        if(empty($memberInfo['member_nickname'])){
+            $bindData['member_nickname'] = $memberInfo['member_nickname'] = $inputData['member_nickname'];
+        }
+        if(empty($memberInfo['head_pic'])){
+            $bindData['head_pic'] = $memberInfo['head_pic'] = $inputData['head_pic'];
+        }
+        $result = $this->memberModel->updateMember(['member_id'=>$memberInfo['member_id']],$bindData);
+        if(!$result){
+            return reJson(500,'用户信息保存失败',[]);
+        }
+        $updateData['ip'] = Request::ip();
+        //保存第3方登陆数据
+        $ThirdPartyModel = new MemberThirdPartyModel();
+        $ThirdPartyModel->updateOrAddThirdParty($inputData,$memberInfo,$updateData['ip']);
+        return reJson(200,'绑定成功',[]);
+    }
+
+    /**
+     * 取消绑定
+     */
+    public function cancelBindInfo(){
+        //判断请求方式以及请求参数
+        $inputData = Request::post();
+        $method = Request::method();
+        $params = ['type','member_code'];
+        $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
+        if(!$ret){
+            return reJson(500, $msg, []);
+        }
+        //判断是否能够取消
+        $memberInfo = $this->memberModel->getMemberInfo(['member_code'=>$inputData['member_code']]);
+        if(!$memberInfo){
+            return reJson(500,'用户不存在',[]);
+        }
+        $cancelInfo = array();
+        if($inputData['type'] == 1){
+            $memberInfo['qq'] = '';
+            $cancelInfo['qq'] = '';
+        }elseif ($inputData['type'] == 2){
+            $memberInfo['wx'] = '';
+            $cancelInfo['wx'] = '';
+        }elseif ($inputData['type'] == 3){
+            $memberInfo['wb'] = '';
+            $cancelInfo['wb'] = '';
+        }
+        if(!$memberInfo['mobile'] && !$memberInfo['qq'] && !$memberInfo['wx'] && !$memberInfo['wb']){
+            return reJson(500,'不能取消绑定', []);
+        }
+        $result = $this->memberModel->updateMember(['member_id'=>$memberInfo['member_id']],$cancelInfo);
+        if($result){
+            return reJson(200,'取消成功',[]);
+        }
+        return reJson(500,'取消失败');
+    }
+
+    /**
+     * 检查版本
+     */
+    public function getVersion(){
+        //判断请求方式以及请求参数
+        $inputData = Request::post();
+        $method = Request::method();
+        $params = ['type'];
+        $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
+        if(!$ret){
+            return reJson(500, $msg, []);
+        }
+        if(!in_array($inputData['type'],['ios_version','android_version']))return reJson(500,'type参数异常');
+        $ConfigModel = new ConfigModel();
+        $condition = [];
+        $condition['key'] = ['version','must_update'];
+        $condition['type'] = $inputData['type'];
+        $ConfigList = $ConfigModel->getConfigList($condition);
+        if($ConfigList === false){
+            return reJson(500, '获取失败', []);
+        }
+        $ConfigList = $ConfigModel->ArrayToKey($ConfigList);
+        return reJson(200, '获取成功', $ConfigList);
+    }
+
+    /**
+     * 获取启动页配置
+     */
+    public function getStartConfig(){
+        //判断请求方式以及请求参数
+        $inputData = Request::get();
+        $method = Request::method();
+        $params = [];
+        $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
+        if(!$ret){
+            return reJson(500, $msg, []);
+        }
+        $condition = [];
+        $condition['key'] = ['app_start_image','app_start_url','app_start_title'];
+        $condition['type'] = 'client';
+        $ConfigModel = new ConfigModel();
+        $ConfigList = $ConfigModel->getConfigList($condition);
+        if($ConfigList === false){
+            return reJson(500, '获取失败', []);
+        }
+        $ConfigList = $ConfigModel->ArrayToKey($ConfigList);
+        return reJson(200, '获取成功', $ConfigList);
     }
 }

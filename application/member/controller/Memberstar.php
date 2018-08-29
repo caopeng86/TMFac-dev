@@ -28,14 +28,14 @@ class Memberstar extends Base
         //判断请求方式以及请求参数
         $inputData = Request::post();
         $method = Request::method();
-        $params = ['member_code','title','app_id','article_id','intro','url'];
+        $params = ['member_code','title','app_id','article_id','extend','intro','type'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
             return reJson(500, $msg, []);
         }
-        if(preg_match("/^(http:\/\/|https:\/\/).*$/",$inputData['url'])){
-            return reJson(500,'url不能带域名', []);
-        }
+//        if(preg_match("/^(http:\/\/|https:\/\/).*$/",$inputData['url'])){
+//            return reJson(500,'url不能带域名', []);
+//        }
         //判断是否已收藏
         $condition = [
             'member_code' => $inputData['member_code'],
@@ -143,7 +143,7 @@ class Memberstar extends Base
      */
     public function deleteStar(){
         //判断请求方式以及请求参数
-        $inputData = Request::delete();
+        $inputData = Request::post();
         $method = Request::method();
         $params = ['star_id'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
@@ -175,15 +175,18 @@ class Memberstar extends Base
 
         //条件拼接
         $condition['member_code'] = $inputData['member_code'];
-
         //分页处理
         $pageSize = empty($inputData['page_size'])? 20 : $inputData['page_size'];
+        //类型判断
+        if(!empty($inputData['type']) && in_array($inputData['type'],array(1,2))){
+            $condition['type'] = $inputData['type'];
+        }
         $count = $this->starModel->countStar($condition);
         $firstRow = ($inputData['index'] - 1) * $pageSize;
         $totalPage = ceil($count / $pageSize);
         $limit = $firstRow.','.$pageSize;
         $order = 'create_time desc';
-        $field = 'star_id, member_code, app_id, article_id, title, intro, pic, create_time, extend, url';
+        $field = 'star_id, member_code, app_id, article_id, title, intro, pic, create_time, extend,tag,type';
 
         //获取列表数据
         $list = $this->starModel->starList($condition, $field, $limit, $order);

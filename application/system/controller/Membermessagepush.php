@@ -5,7 +5,7 @@
  * Date: 2018/8/20
  * Time: 17:57
  */
-namespace app\member\controller;
+namespace app\system\controller;
 
 use app\member\model\PushMessageModel;
 use think\facade\Request;
@@ -47,6 +47,15 @@ class Membermessagepush extends Base
         foreach ($PushMessageList as $key => $val){
             $PushMessageList[$key]['add_time'] = date('Y-m-d h:i:s',$PushMessageList[$key]['add_time']);
             $PushMessageList[$key]['push_time'] = date('Y-m-d h:i:s',$PushMessageList[$key]['push_time']);
+            if(!empty($val['push_situation'])){
+                $push_situation = json_decode($val['push_situation'],true);
+                $PushMessageList[$key]['android_received'] = $push_situation['android_received'];
+                $PushMessageList[$key]['ios_apns_sent'] = $push_situation['ios_apns_sent'];
+                unset($PushMessageList[$key]['push_situation']);
+            }else{
+                $PushMessageList[$key]['android_received'] = 0;
+                $PushMessageList[$key]['ios_apns_sent'] = 0;
+            }
         }
         return reJson(200,'获取成功',['total_page'=>$totalPage,'now_page'=>$start_num + 1,'list'=>$PushMessageList]);
     }
@@ -70,7 +79,36 @@ class Membermessagepush extends Base
         if($messageInfo === false){
             return reJson(500,'获取数据失败', []);
         }
+        $messageInfo['add_time'] = date('Y-m-d h:i:s',$messageInfo['add_time']);
+        $messageInfo['push_time'] = date('Y-m-d h:i:s',$messageInfo['push_time']);
         return reJson(200,'获取成功',$messageInfo);
+    }
+
+    /**
+     * 保存推送信息
+     */
+    public function saveMessageInfo(){
+        //判断请求方式以及请求参数
+        $inputData = Request::post();
+        $method = Request::method();
+        $params = [];
+        $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
+        if(!$ret){
+            return reJson(500, $msg, []);
+        }
+        $condition = array();
+        if(!empty($inputData['push_time'])){
+            $inputData['push_time'] = strtotime($inputData['push_time']);//转时间戳
+        }
+        if(!empty($inputData['id']) && $inputData['id'] > 0){
+            $result = $this->PushMessageModel->updateInfo($condition,$inputData);
+        }else{
+            $result = $this->PushMessageModel->addInfo($inputData);
+        }
+        if($result){
+            return reJson(200,'保存成功', []);
+        }
+        return reJson(500,'失败',[]);
     }
 
     /**

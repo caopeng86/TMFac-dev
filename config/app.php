@@ -160,4 +160,6 @@ return [
         'app_key' => '7375019ec90b9de9bb0cc8ed',
         'master_secret' => '1deaf4babb47a22579d2db83',
     ],
+    //token保存时间
+    'token_time'=>604800,
 ];

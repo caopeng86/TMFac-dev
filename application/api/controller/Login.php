@@ -191,7 +191,7 @@ class Login extends Controller
             "access_key_create_time" => $updateData['access_key_create_time'],
             "access_key" => $updateData['access_key'],
         ];
-        Cache::set($updateData['access_key'], $cacheData, 3600*24*7);
+        Cache::set($updateData['access_key'], $cacheData, 5);
         Logservice::writeArray(['token'=>$updateData['access_key'], 'data'=>$cacheData], '用户登录缓存');
 
         //获取用户部门code,name

@@ -68,4 +68,6 @@ class MemberhistoryModel extends CommonModel
         $re =Db::table($this->member_history_db)->field($field)->where($condition)->limit($limit)->order($order)->select();
         return $re;
     }
+
+
 }

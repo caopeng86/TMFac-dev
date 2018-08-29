@@ -11,6 +11,7 @@ namespace app\api\controller;
 
 
 use app\api\model\PushModel;
+use app\member\model\PushMessageModel;
 use think\Db;
 use think\facade\Request;
 
@@ -166,5 +167,74 @@ class Jpush extends Base
 
         Db::commit();
         return reJson(200, '推送成功', []);
+    }
+
+    /**
+     *  推送消息
+     */
+    public function pushInfo(){
+        //判断请求方式以及请求参数
+        $inputData = Request::post();
+        $method = Request::method();
+        $params = [];
+        $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
+        if(!$ret){
+            return reJson(500, $msg, []);
+        }
+        //获取推送消息
+       $pushMessageModel = new PushMessageModel();
+        $condition[] = ['status','=',1];//待推送状态
+        $condition[] = ['push_time','<=',time()];//推送Jpush时间
+        $pushList = $pushMessageModel->getList($condition,false,200);
+        $JPush = new \app\extend\controller\Jpush();
+        $returnData = [
+            'success'=>0,
+            'error'=>0,
+        ];
+        foreach ($pushList as $val){
+            //推送消息
+            $extras = array('title'=>$val['title'],'content'=>$val['content'],'msg_id'=>$val['id']);
+            $re = $JPush::JPushAll($extras);
+            if($re['http_code'] == 200){
+                $pushMessageModel->updateInfo(['id'=>$val['id']],['status'=>2,'cid'=>$re['body']['msg_id']]);//推送成功
+                $returnData['info'][$val['id']] = '成功';
+                $returnData['success']++;
+            }else{
+                $returnData['info'][$val['id']] = '失败';
+                $returnData['error']++;
+            }
+        }
+        return reJson(200, '推送情况',$returnData);
+    }
+
+    /**
+     * 获取推送消息的结果
+     */
+    public function getRes(){
+        //判断请求方式以及请求参数
+        $inputData = Request::post();
+        $method = Request::method();
+        $params = [];
+        $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
+        if(!$ret){
+            return reJson(500, $msg, []);
+        }
+        //获取推送消息
+        $pushMessageModel = new PushMessageModel();
+        $condition[] = ['status','=',2];//待推送状态
+        $condition[] = ['push_time','>=',time()-7*24*3600];//推送Jpush时间
+        $pushList = $pushMessageModel->getList($condition,'cid',200);
+        if(empty($pushList)){
+            return reJson(200,'没有推送信息',[]);
+        }
+        $pushList = array_column($pushList,'cid');
+        $JPush = new \app\extend\controller\Jpush();
+        $resList = $JPush->getRes($pushList);
+        if($resList['http_code'] == 200){
+            foreach ($resList['body'] as $val){
+                $pushMessageModel->updateInfo(['cid'=>$val['msg_id']],['push_situation'=>json_encode($val)]);
+            }
+        }
+        return reJson(200,'推送情况更新完毕',[]);
     }
 }

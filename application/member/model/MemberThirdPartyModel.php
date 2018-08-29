@@ -24,11 +24,20 @@ class MemberThirdPartyModel extends CommonModel
         $data['type'] = $param['type'];
         $data['add_time'] = time();
         $data['login_time'] = time();
-        $data['device_model'] = $param['device_model'];
-        $data['device_type'] = $param['device_type'];
+        if(!empty($param['device_model'])){
+            $data['device_model'] = $param['device_model'];
+        }
+        if(!empty($param['device_type'])){
+            $data['device_type'] = $param['device_type'];
+        }
         $data['ip'] = $ip;
         $data['member_code'] = $member['member_code'];
         $data['member_id'] = $member['member_id'];
+        $data['nick_name'] = $param['member_nickname'];
+        $data['head_url'] = $param['head_pic'];
+        if(!empty($param['address'])){
+            $data['address'] = $param['address'];
+        }
         return Db::table($this->member_third_party_db)->insert($data);
     }
 
@@ -47,5 +56,28 @@ class MemberThirdPartyModel extends CommonModel
         }else{
             return $this->addThirdParty($param,$member,$ip);
         }
+    }
+
+    /**
+     *获取信息以类型方式整理
+     */
+    public function ArrayToType($data){
+        $returnData = array();
+        foreach ($data as $key => $val){
+            if($val['type'] == 1){
+                $returnData['qq'] = $val;
+            }elseif($val['type'] == 2){
+                $returnData['wx'] = $val;
+            }elseif ($val['type'] == 3){
+                $returnData['wb'] = $val;
+            }
+        }
+        return $returnData;
+    }
+    /**
+     * 获取3方信息
+     */
+    public function getThirdPartyList($condition,$field){
+       return Db::table($this->member_third_party_db)->where($condition)->field($field)->select();
     }
 }

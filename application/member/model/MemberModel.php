@@ -58,7 +58,7 @@ class MemberModel extends CommonModel
      * @return int|string
      */
     public function addMember($data){
-        $re = Db::table($this->member_db)->insert($data);
+        $re = Db::table($this->member_db)->insertGetId($data);
         return $re;
     }
 

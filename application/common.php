@@ -76,7 +76,7 @@ function checkBeforeAction(&$data, $params, $request, $rule, &$result)
     //判断请求参数
     foreach ($params as $value) {
         if (!array_key_exists($value,$data)){
-            $result = '请求参数错误';
+            $result = $value.'请求参数错误';
             return false;
         }
         if(!in_array($url, $pass)){

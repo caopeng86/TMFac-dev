@@ -10,12 +10,14 @@ class CommonModel extends Model
     protected $branch_db=TM_PREFIX.'branch';
     protected $classes_db=TM_PREFIX.'classes';
     protected $component_db=TM_PREFIX.'component';
+    protected $config_db = TM_PREFIX.'config';
     protected $fix_item_db=TM_PREFIX.'component';
     protected $kind_db=TM_PREFIX.'kind';
     protected $member_db=TM_PREFIX.'member';
     protected $member_comment_db=TM_PREFIX.'member_comment';
     protected $member_history_db=TM_PREFIX.'member_history';
     protected $member_star_db=TM_PREFIX.'member_star';
+    protected $member_footprint_db = TM_PREFIX.'member_footprint';
     protected $member_third_party_db = TM_PREFIX.'member_third_party';
     protected $member_opinion_db = TM_PREFIX.'member_opinion';
     protected $myprize_db=TM_PREFIX.'myprize';

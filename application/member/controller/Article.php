@@ -2,13 +2,12 @@
 /**
  * Created by PhpStorm.
  * User: ly
- * Date: 2018/8/16
- * Time: 16:18
+ * Date: 2018/8/21
+ * Time: 16:45
  */
-namespace app\system\controller;
+namespace app\member\controller;
 
 use app\api\model\SystemArticleModel;
-use think\Db;
 use think\facade\Request;
 
 class Article extends Base
@@ -39,26 +38,7 @@ class Article extends Base
     }
 
     /**
-     * 更新免责文章
-     */
-    public function updateReliefArticle(){
-        //判断请求方式以及请求参数
-        $inputData = Request::post();
-        $method = Request::method();
-        $params = [];
-        $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
-        if(!$ret){
-            return reJson(500, $msg, []);
-        }
-        $result = $this->systemArticleModel->updateArticleInfo(['id'=>1],$inputData);
-        if($result){
-            return reJson(200, '更新成功', []);
-        }
-        return reJson(500, '更新失败', []);
-    }
-
-    /**
-     * 获取隐私协议
+     * 获取免责文章信息
      */
     public function getPrivacyArticle(){
         //判断请求方式以及请求参数
@@ -73,24 +53,5 @@ class Article extends Base
         $info['add_time'] = date('Y-m-d h:i:s',$info['add_time']);
         $info['update_time'] = date('Y-m-d h:i:s',$info['update_time']);
         return reJson(200,'获取成功',$info);
-    }
-
-    /**
-     * 更新隐私协议
-     */
-    public function updatePrivacyArticle(){
-        //判断请求方式以及请求参数
-        $inputData = Request::post();
-        $method = Request::method();
-        $params = [];
-        $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
-        if(!$ret){
-            return reJson(500, $msg, []);
-        }
-        $result = $this->systemArticleModel->updateArticleInfo(['id'=>2],$inputData);
-        if($result){
-            return reJson(200, '更新成功', []);
-        }
-        return reJson(500, '更新失败', []);
     }
 }

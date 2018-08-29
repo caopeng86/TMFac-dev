@@ -13,6 +13,7 @@ namespace app\system\controller;
 use app\api\model\UserModel;
 use think\facade\Cache;
 use think\Controller;
+use think\facade\Config;
 use think\facade\Request;
 
 class Base extends Controller
@@ -34,7 +35,6 @@ class Base extends Controller
         //跳过验证的方法
         $pass = [
             'system\site\getsitelist',
-            'system\Article\getReliefArticle' //免责申明文章获取
         ];
         if(in_array($url, $pass)){
             return true;
@@ -54,22 +54,24 @@ class Base extends Controller
             $condition['deleted'] = 0;
             $field = 'user_id, user_code, user_name, access_key_create_time, access_key';
             $userInfo = $userModel->getUserInfo($condition, $field);
+            if($userInfo === false){
+                die('{"code":500,"msg":"获取失败","data":""}');
+            }
             //没有这个用户说明token错误
             if(!$userInfo){
-                die('{"code":500,"msg":"token错误","data":""}');
-
+                die('{"code":501,"msg":"token错误","data":""}');
             }
             //判断token是否已经超时
             $time = time() - $userInfo['access_key_create_time'];
-            if($time > 3600*24*7){
-                die('{"code":500,"msg":"token超时","data":""}');
+            if($time > Config::get('token_time')){
+                die('{"code":501,"msg":"token超时","data":""}');
             }
             //保存根据token查询到的用户数据
-            Cache::set($userInfo['access_key'], $userInfo, (3600*24*7 - $time));
+            Cache::set($userInfo['access_key'], $userInfo, (Config::get('token_time') - $time));
         }else{
             //有缓存则直接从缓存中判断token是否正确
             if(Cache::get($token)['access_key'] !== $token){
-                die('{"code":500,"msg":"token错误","data":""}');
+                die('{"code":501,"msg":"token错误","data":""}');
             }
         }
         return true;

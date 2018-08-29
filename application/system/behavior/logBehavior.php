@@ -40,7 +40,13 @@ class logBehavior
         if(in_array($url, $pass)){
             return true;
         }
-
+        $passController = [
+            'system\system'
+        ];
+        $Controller = strtolower(Request::module().'\\'.Request::controller());
+        if(in_array($Controller, $passController)){
+            return true;
+        }
         //获取需要记录的日志数据
         $token = Request::header('token');
         $userInfo = Cache::get($token);
@@ -48,23 +54,23 @@ class logBehavior
         $logType = Request::method();
 //        $input = Request::param();
 //        $logMsg = json_encode(['url' => $url, 'input' => $input]);
+        if(!empty($userInfo['user_code'])){
+            //拼接数据
+            $log = [
+                'user_code' => $userInfo['user_code'],
+                'ip' => $ip,
+                'log_type' => $logType,
+                'log_message' => $url,
+                'log_time' => time()
+            ];
 
-        //拼接数据
-        $log = [
-            'user_code' => $userInfo['user_code'],
-            'ip' => $ip,
-            'log_type' => $logType,
-            'log_message' => $url,
-            'log_time' => time()
-        ];
-
-        //记录日志
-        $logObj = new UserModel();
-        $re = $logObj->addUserLog($log);
-        if(!$re){
-            die('{"code":500,"msg":"记录用户日志错误","data":""}');
+            //记录日志
+            $logObj = new UserModel();
+            $re = $logObj->addUserLog($log);
+            if(!$re){
+                die('{"code":500,"msg":"记录用户日志错误","data":""}');
+            }
         }
-
         return true;
     }
 }

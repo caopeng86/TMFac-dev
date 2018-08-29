@@ -5,9 +5,8 @@
  * Date: 2018/8/16
  * Time: 17:14
  */
-namespace app\member\controller;
+namespace app\system\controller;
 
-use app\member\model\MemberModel;
 use app\member\model\MemberOpinionModel;
 use think\facade\Cache;
 use think\facade\Request;
@@ -35,7 +34,7 @@ class Memberopinion extends Base
         }
         $condition = array();
         $OpinionTotal = $this->OpinionModel->getCount($condition); //获取总数
-        $num = 20; //获取20条会员数据
+        $num = !empty($inputData['page_size'])?$inputData['page_size']:20; //默认获取20条数据
         $totalPage = ceil($OpinionTotal/$num); //总页数
         if(!empty($inputData['page']) && $inputData['page'] > 0 && $inputData['page'] <= $totalPage){
             $start_num = ($num * ($inputData['page']-1));
@@ -69,52 +68,11 @@ class Memberopinion extends Base
             return reJson(500, '参数异常', []);
         }
         $condition['id'] = $inputData['id'];
-        if(!in_array($inputData['status'],array(0,1))){
+        if(!in_array($inputData['status'],array(0,1,2))){
             return reJson(500, 'status参数异常', []);
         }
         $result = $this->OpinionModel->updateOpinion($condition,['status'=>$inputData['status']]);
         if($result){
-            return reJson(200, '成功', []);
-        }else{
-            return reJson(500, '失败', []);
-        }
-    }
-
-    /**
-     * 提交意见
-     */
-    public function addOpinionInfo(){
-        $inputData = Request::post();
-        $method = Request::method();
-        $token = Request::header('token');
-        $member_info = Cache::get($token);
-        if(Cache::get($token.'addOpinionInfo') == 1){
-            return reJson(500,'已提交过意见，请在3分钟后再提交');
-        }
-        $params = ['message'];
-        $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
-        if(!$ret){
-            return reJson(500, $msg, []);
-        }
-        if(empty($member_info['member_code'])){
-            return reJson(500, 'token异常', []);
-        }
-        $memberModel = new MemberModel();
-        $member = $memberModel->getMemberInfo(['member_code'=>$member_info['member_code']],'member_id');
-        if($member === false){
-            return reJson(500,'获取用户信息失败');
-        }
-        $member_info['member_id'] = $member['member_id'];
-        if(strlen($inputData['message']) > 500){
-            return reJson(500, '字符数超过500', []);
-        }
-        $data['member_id'] = $member_info['member_id'];
-        $data['message'] = $inputData['message'];
-        $data['add_time'] = time();
-        $data['status'] = 1;
-        $result = $this->OpinionModel->addOpinion($data);
-        if($result){
-            Cache::set($token.'addOpinionInfo',1,180);
             return reJson(200, '成功', []);
         }else{
             return reJson(500, '失败', []);
