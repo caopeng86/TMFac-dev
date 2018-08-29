@@ -37,8 +37,7 @@ class Portal extends Base
         if(!$ret){
             return reJson(500,$msg,[]);
         }
-
-        $portal = $this->portalModel->getPortal($inputData);
+        $portal = $this->portalModel->getPortal(['portal_key'=>$inputData['portal_key']]);
         if(!$portal){
             //应用列表不存在则获取该用户的全部应用
             //根据用户code获取对应角色

@@ -28,13 +28,18 @@ class Upload extends Controller
         if(!$ret){
             return reJson(500,$msg,[]);
         }
-
         $file = Request::file('file');
         $re = Uploads::fileUpload($file);
         if(!$re){
             return reJson(500,'上传失败',[]);
         }
-
+        $image = getimagesize(Env::get('root_path').$re);
+        if(!empty($inputData['width']) && $image[0] != $inputData['width']){
+            return reJson(503,'图片尺寸要求为'.$inputData['width'].'px*'.$inputData['height'].'px!',[]);
+        }
+        if(!empty($inputData['height']) && $image[1] != $inputData['height']){
+            return reJson(503,'图片尺寸要求为'.$inputData['width'].'px*'.$inputData['height'].'px!',[]);
+        }
         return reJson(200, '图片上传成功', $re);
     }
 }

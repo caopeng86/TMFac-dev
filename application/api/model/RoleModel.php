@@ -324,7 +324,7 @@ class RoleModel extends CommonModel
      * @throws
      */
     public function getRolePrivilegeListDetail($condition, $field=''){
-        $re = Db::table($this->role_privilege_db)->join($this->privilege_db, $this->role_privilege_db.'.privilege_code ='.$this->role_privilege_db.'.privilege_code')
+        $re = Db::table($this->role_privilege_db)->join($this->privilege_db, $this->role_privilege_db.'.privilege_code ='.$this->privilege_db.'.privilege_code')
             ->where($condition)->field($field)->select();
         return $re;
     }

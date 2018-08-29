@@ -134,7 +134,14 @@ return [
     'show_error_msg'         => false,
     // 异常处理handle类 留空使用 \think\exception\Handle
     'exception_handle'       => '',
+    //全局路由
+    'internal_api_host'      => Env::get(SERVER_ENV.'INTERNAL_API_HOST'),
 
+    'domain'      => Env::get(SERVER_ENV.'DOMAIN'),
+
+    'plate_domain' => Env::get(SERVER_ENV.'PLATFORM_DOMAIN'),
+
+    'thisdns' => Env::get(SERVER_ENV.'INTERNAL_API_HOST'),
 
     //自定义配置项
     'component_url' => 'http://39.107.74.188/develop/Componentversion/curlVersionList',//开发者组件版本数据地址
@@ -153,4 +160,6 @@ return [
         'app_key' => '7375019ec90b9de9bb0cc8ed',
         'master_secret' => '1deaf4babb47a22579d2db83',
     ],
+    //token保存时间
+    'token_time'=>604800,
 ];
