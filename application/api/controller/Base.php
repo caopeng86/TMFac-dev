@@ -30,6 +30,16 @@ class Base extends Controller
      */
     private function _checkToken(){
         $token = Request::header('token');
+        $url = Request::module().'\\'.Request::controller().'\\'.Request::action();
+        $url = strtolower($url);
+        //跳过验证的方法
+        $pass = [
+            'api\jpush\pushinfo',
+            'api\jpush\getres'
+        ];
+        if(in_array($url, $pass)){
+            return true;
+        }
         //判断是否传入token
         if(!$token){
             die('{"code":500,"msg":"token未传入","data":""}');

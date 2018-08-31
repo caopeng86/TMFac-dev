@@ -471,4 +471,65 @@ class Role extends Base
 
         return reJson(200, '成功', $roleList);
     }
+
+    /**
+     * 查找角色可以访问Portal
+     */
+    public function getRolePortalList(){
+        //判断请求方式以及请求参数
+        $inputData = Request::get();
+        $method = Request::method();
+        $params = ['role_codes'];
+        $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
+        if(!$ret){
+            return reJson(500, $msg, []);
+        }
+
+        $roleCodes = explode(',', $inputData['role_codes']);
+        $condition = [['role_code', 'in', $roleCodes]];
+        $re = $this->roleModel->getRolePortalList($condition, 'key');
+        if($re === false){
+            Logservice::writeArray(['sql'=>$this->roleModel->getLastSql()], '获取角色应用失败', 2);
+            return reJson(500, '查找应用数据失败', []);
+        }
+
+        return reJson(200, '查找应用数据成功', $re);
+    }
+
+    /**
+     * 关联角色应用
+     */
+    public function saveRolePortal(){
+        //判断请求方式以及请求参数
+        $inputData = Request::put();
+        $method = Request::method();
+        $params = ['role_code','portal_list'];
+        $ret = checkBeforeAction($inputData, $params, $method, 'PUT', $msg);
+        if(!$ret){
+            return reJson(500, $msg, []);
+        }
+
+        //处理接收数据
+        $siteCode = explode(',', $inputData['portal_list']);
+        $roleComponent = [];
+        foreach ($siteCode as $v){
+            $roleComponent[] = [
+                'role_code' => $inputData['role_code'],
+                'key' => $v
+            ];
+        }
+
+        $condition['role_code'] = $inputData['role_code'];
+        //保存角色应用数据
+        $re = $this->roleModel->saveRolePortal($condition, $roleComponent);
+        if(!$re){
+            Logservice::writeArray(['sql'=>$this->roleModel->getLastSql()], '保存角色应用失败', 2);
+            return reJson(500, '关联角色应用失败', []);
+        }
+        Logservice::writeArray(['inputData'=>$inputData], '关联角色应用');
+        return reJson(200, '关联角色应用成功', []);
+    }
+
+
+
 }

@@ -282,6 +282,66 @@ class RoleModel extends CommonModel
             ->where($condition)->field($field)->select();
         return $re;
     }
+/************************************************角色插件中间表********************************************************/
+    /**
+     * 删除角色插件表中数据
+     * @param $condition
+     * @return int
+     * @throws
+     */
+    public function deleteRolePortal($condition){
+        $re = Db::table($this->role_portal_db)->where($condition)->delete();
+        return $re;
+    }
+
+    /**
+     * 新增角色插件表中数据
+     * @param $data
+     * @return mixed
+     * @throws
+     */
+    public function addRolePortalAll($data){
+        $re = Db::table($this->role_portal_db)->insertAll($data);
+        return $re;
+    }
+
+    /**
+     * 获取角色插件数据
+     * @param $condition
+     * @param string $field
+     * @return false|\PDOStatement|string|\think\Collection
+     * @throws
+     */
+    public function getRolePortalList($condition, $field=''){
+        $re = Db::table($this->role_portal_db)->field($field)->where($condition)->select();
+        return $re;
+    }
+
+    /**
+     * 角色应用表修改数据
+     * @param $condition
+     * @param $data
+     * @return bool
+     */
+    public function saveRolePortal($condition, $data){
+        $status = false;
+        //开启事务
+        Db::startTrans();
+        try{
+            //先删除相关数据,再新增,避免重复数据
+            $this->deleteRolePortal($condition);
+            $this->addRolePortalAll($data);
+            // 提交事务
+            Db::commit();
+            $status = true;
+        } catch (\Exception $e) {
+            // 回滚事务
+            Db::rollback();
+        }
+
+        return $status;
+    }
+
 /************************************************角色权限中间表********************************************************/
     /**
      * 删除角色权限表中数据

@@ -174,10 +174,10 @@ class Jpush extends Base
      */
     public function pushInfo(){
         //判断请求方式以及请求参数
-        $inputData = Request::post();
+        $inputData = Request::get();
         $method = Request::method();
         $params = [];
-        $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
+        $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
             return reJson(500, $msg, []);
         }
@@ -212,10 +212,10 @@ class Jpush extends Base
      */
     public function getRes(){
         //判断请求方式以及请求参数
-        $inputData = Request::post();
+        $inputData = Request::get();
         $method = Request::method();
         $params = [];
-        $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
+        $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
             return reJson(500, $msg, []);
         }

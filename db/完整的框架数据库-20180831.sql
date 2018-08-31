@@ -11,7 +11,7 @@
  Target Server Version : 50553
  File Encoding         : 65001
 
- Date: 29/08/2018 13:43:10
+ Date: 31/08/2018 19:03:18
 */
 
 SET NAMES utf8mb4;
@@ -272,7 +272,7 @@ CREATE TABLE `tm_member`  (
   `site_code` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '站点code',
   `email` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '邮箱',
   `mobile` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '手机',
-  `head_pic` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '头像',
+  `head_pic` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '头像',
   `birthday` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '生日',
   `sex` tinyint(1) UNSIGNED NULL DEFAULT NULL COMMENT '性别1 男 2 女',
   `access_key` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '登录认证key',
@@ -379,7 +379,7 @@ CREATE TABLE `tm_member_footprint`  (
   `intro` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文章简介',
   `pic` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文章图片',
   `create_time` int(10) UNSIGNED NOT NULL COMMENT '收藏时间',
-  `extend` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '扩展字段',
+  `extend` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '扩展字段',
   `tag` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '标记',
   `type` tinyint(255) NULL DEFAULT 1 COMMENT '类型 1 文章 2视频',
   `status` tinyint(1) NULL DEFAULT 1 COMMENT '1正常0删除',
@@ -480,7 +480,7 @@ CREATE TABLE `tm_member_star`  (
   `intro` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文章简介',
   `pic` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文章图片',
   `create_time` int(10) UNSIGNED NOT NULL COMMENT '收藏时间',
-  `extend` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '扩展字段',
+  `extend` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '扩展字段',
   `tag` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '标记',
   `type` tinyint(255) NULL DEFAULT 1 COMMENT '类型 1 文章 2视频',
   PRIMARY KEY (`star_id`) USING BTREE
@@ -631,9 +631,10 @@ CREATE TABLE `tm_portal`  (
 -- ----------------------------
 -- Records of tm_portal
 -- ----------------------------
-INSERT INTO `tm_portal` VALUES ('27483D4C-1A45-2865-9B8C-701EA265ED92', '[{\"key\":\"0\",\"title\":\"资讯视频\",\"children\":[]},{\"key\":\"1\",\"title\":\"互动娱乐\",\"category\":\"1\",\"url\":\"\",\"children\":[],\"thunmb\":\"/uploads/default.png\"},{\"key\":\"2\",\"title\":\"管理\",\"category\":\"2\",\"url\":\"\",\"children\":[{\"key\":\"2-0\",\"title\":\"会员管理\",\"type\":\"module\",\"component_code\":\"B2433C8761B4671553FE6A45C9DCC4CB\",\"site_code\":\"00000000000000000000000000000000\",\"app_code\":\"member\",\"category\":\"2\",\"admin_url\":\"/#/Site/Member\",\"url\":\"member/Index/Index?token=3E6CAD130AAD3148FE8D1A25FAD0016E&site_id=00000000000000000000000000000000\",\"thumb\":\"/uploads/default/20180601/6b270aae57882c48982acae1e597db92.png\"},{\"key\":\"2-1\",\"title\":\"个人中心\",\"type\":\"url\",\"app_code\":\"\",\"admin_url\":\"\",\"index_url\":\"\",\"category\":\"2\",\"url\":\"\",\"thumb\":\"/uploads/default.png\",\"webUrl\":\"/application/personal/html/index.html\",\"site_code\":\"00000000000000000000000000000000\"}],\"thunmb\":\"/uploads/default.png\"}]');
+INSERT INTO `tm_portal` VALUES ('27483D4C-1A45-2865-9B8C-701EA265ED92', '[{\"key\":\"0\",\"title\":\"资讯视频\",\"children\":[]},{\"key\":\"1\",\"title\":\"互动娱乐\",\"category\":\"1\",\"url\":\"\",\"children\":[],\"thunmb\":\"/uploads/default.png\"},{\"key\":\"2\",\"title\":\"管理\",\"category\":\"2\",\"url\":\"\",\"children\":[{\"key\":\"2-0\",\"title\":\"测试\",\"type\":\"url\",\"app_code\":\"\",\"admin_url\":\"\",\"index_url\":\"\",\"category\":\"2\",\"url\":\"\",\"thumb\":\"/uploads/default.png\",\"site_code\":\"00000000000000000000000000000000\"},{\"key\":\"2-1\",\"title\":\"会员管理\",\"type\":\"module\",\"component_code\":\"B2433C8761B4671553FE6A45C9DCC4CB\",\"site_code\":\"00000000000000000000000000000000\",\"app_code\":\"member\",\"category\":\"2\",\"admin_url\":\"/#/Site/Member\",\"url\":\"member/Index/Index?token=3E6CAD130AAD3148FE8D1A25FAD0016E&site_id=00000000000000000000000000000000\",\"thumb\":\"/uploads/default/20180601/6b270aae57882c48982acae1e597db92.png\"},{\"key\":\"2-2\",\"title\":\"个人中心\",\"type\":\"url\",\"app_code\":\"\",\"admin_url\":\"\",\"index_url\":\"\",\"category\":\"2\",\"url\":\"\",\"thumb\":\"/uploads/default.png\",\"webUrl\":\"/application/personal/html/index.html\",\"site_code\":\"00000000000000000000000000000000\"},{\"key\":\"2-3\",\"title\":\"科技视频\",\"type\":\"url\",\"app_code\":\"\",\"admin_url\":\"\",\"index_url\":\"\",\"category\":\"2\",\"url\":\"\",\"thumb\":\"/uploads/default.png\",\"webUrl\":\"application/zzkj_video/view/vedio.html\"}],\"thunmb\":\"/uploads/default.png\"}]');
 INSERT INTO `tm_portal` VALUES ('2760AB599245A3B9C4CCBB023F08F151', '[{\"key\":\"0\",\"title\":\"所有应用\",\"children\":[{\"key\":\"0-0\",\"title\":\"新闻资讯\",\"type\":\"url\",\"app_code\":\"\",\"admin_url\":\"\",\"index_url\":\"\",\"category\":\"0\",\"url\":\"\",\"thumb\":\"uploads/icon/44.png\",\"webUrl\":\"/hlhj_news/index/index\",\"site_code\":\"00000000000000000000000000000000\"},{\"key\":\"0-1\",\"title\":\"投票\",\"type\":\"url\",\"app_code\":\"\",\"admin_url\":\"\",\"index_url\":\"\",\"category\":\"0\",\"url\":\"\",\"thumb\":\"uploads/icon/15.png\",\"webUrl\":\"/hlhjvote/activity/index\",\"site_code\":\"00000000000000000000000000000000\"},{\"key\":\"0-2\",\"title\":\"答题\",\"type\":\"url\",\"app_code\":\"\",\"admin_url\":\"\",\"index_url\":\"\",\"category\":\"0\",\"url\":\"\",\"thumb\":\"/uploads/default/20180511/e2fcb00b976f61dc6af34bffd175f5c9.png\",\"webUrl\":\"/hlhjanswer/activity/index\",\"site_code\":\"00000000000000000000000000000000\"}]}]');
 INSERT INTO `tm_portal` VALUES ('364F56004D97FA67AE5FD107C7B5292B', '[{\"key\":\"0\",\"title\":\"所有应用\",\"children\":[{\"key\":\"0-0\",\"title\":\"rest\",\"type\":\"url\",\"app_code\":\"\",\"admin_url\":\"\",\"index_url\":\"\",\"category\":\"0\",\"url\":\"\",\"thumb\":\"uploads/icon/11.png\",\"webUrl\":\"/application/rest/resource/tianma-admin\",\"site_code\":\"00000000000000000000000000000000\"},{\"key\":\"0-1\",\"title\":\"我要看电视\",\"type\":\"url\",\"app_code\":\"\",\"admin_url\":\"\",\"index_url\":\"\",\"category\":\"0\",\"url\":\"\",\"thumb\":\"uploads/icon/25.png\",\"webUrl\":\"/application/rest_tv/tianma-admin\"},{\"key\":\"0-2\",\"title\":\"我要听广播\",\"type\":\"url\",\"app_code\":\"\",\"admin_url\":\"\",\"index_url\":\"\",\"category\":\"0\",\"url\":\"\",\"thumb\":\"uploads/icon/38.png\",\"webUrl\":\"/application/rest_gb/tianma-admin\"}]}]');
+INSERT INTO `tm_portal` VALUES ('417E74EF54858F8018A005EDB48C056C', '[{\"key\":\"0\",\"title\":\"资讯视频\",\"children\":[]},{\"key\":\"1\",\"title\":\"互动娱乐\",\"category\":\"1\",\"url\":\"\",\"children\":[],\"thunmb\":\"/uploads/default.png\"},{\"key\":\"2\",\"title\":\"管理\",\"category\":\"2\",\"url\":\"\",\"children\":[{\"key\":\"2-0\",\"title\":\"会员管理\",\"type\":\"module\",\"component_code\":\"B2433C8761B4671553FE6A45C9DCC4CB\",\"site_code\":\"00000000000000000000000000000000\",\"app_code\":\"member\",\"category\":\"2\",\"admin_url\":\"/#/Site/Member\",\"url\":\"member/Index/Index?token=3E6CAD130AAD3148FE8D1A25FAD0016E&site_id=00000000000000000000000000000000\",\"thumb\":\"/uploads/default/20180601/6b270aae57882c48982acae1e597db92.png\"},{\"key\":\"2-1\",\"title\":\"个人中心\",\"type\":\"url\",\"app_code\":\"\",\"admin_url\":\"\",\"index_url\":\"\",\"category\":\"2\",\"url\":\"\",\"thumb\":\"/uploads/default.png\",\"webUrl\":\"/application/personal/html/index.html\",\"site_code\":\"00000000000000000000000000000000\"},{\"key\":\"2-2\",\"title\":\"测试\",\"type\":\"url\",\"app_code\":\"\",\"admin_url\":\"\",\"index_url\":\"\",\"category\":\"2\",\"url\":\"\",\"thumb\":\"/uploads/default.png\"}],\"thunmb\":\"/uploads/default.png\"}]');
 
 -- ----------------------------
 -- Table structure for tm_privilege
@@ -647,7 +648,7 @@ CREATE TABLE `tm_privilege`  (
   `privilege_intro` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '权限说明',
   `parent_pri_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '父权限代码',
   PRIMARY KEY (`privilege_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 21 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 22 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of tm_privilege
@@ -663,6 +664,7 @@ INSERT INTO `tm_privilege` VALUES (17, 0, '站点>站点管理', 'SiteManage', '
 INSERT INTO `tm_privilege` VALUES (18, 0, '门户>门户图标', 'logoSet', '菜单权限', NULL);
 INSERT INTO `tm_privilege` VALUES (19, 0, '账户>账户信息', 'mymember', '菜单权限', NULL);
 INSERT INTO `tm_privilege` VALUES (20, 0, '门户>组件设置', 'ComponentSet', '菜单权限', NULL);
+INSERT INTO `tm_privilege` VALUES (21, 0, '门户>门户配置', 'ModuleConfig', '菜单权限', NULL);
 
 -- ----------------------------
 -- Table structure for tm_prize
@@ -866,15 +868,30 @@ INSERT INTO `tm_role_component` VALUES ('A11A60B4A075515AB09134B914D6E7FF', '18A
 INSERT INTO `tm_role_component` VALUES ('A11A60B4A075515AB09134B914D6E7FF', 'D2774DD3BC69F6EF535073440170C61F');
 INSERT INTO `tm_role_component` VALUES ('A11A60B4A075515AB09134B914D6E7FF', 'B2433C8761B4671553FE6A45C9DCC4CB');
 INSERT INTO `tm_role_component` VALUES ('A11A60B4A075515AB09134B914D6E7FF', '5C13A6E742091B22A98A6F492EBC3740');
-INSERT INTO `tm_role_component` VALUES ('AC2E04794F49FC6DF05F6B78BA8CC4DB', 'E5C56F2646F50B5EC5C613E9D430427E');
-INSERT INTO `tm_role_component` VALUES ('AC2E04794F49FC6DF05F6B78BA8CC4DB', '18A88AB07872B12D767B3BD654167AC9');
-INSERT INTO `tm_role_component` VALUES ('AC2E04794F49FC6DF05F6B78BA8CC4DB', 'D2774DD3BC69F6EF535073440170C61F');
 INSERT INTO `tm_role_component` VALUES ('1', 'C5953A90CBA748A88DD3B276E6A2725B');
 INSERT INTO `tm_role_component` VALUES ('1', '85B8309028CD4A808DFE353B00C9A9AC');
 INSERT INTO `tm_role_component` VALUES ('1', 'C488967B8270400CBCD4CF6B0A599274');
 INSERT INTO `tm_role_component` VALUES ('1', 'BC49B0ED8C214EDCABA6E6F3C2D23058');
 INSERT INTO `tm_role_component` VALUES ('1', '50564A2E6B204F9AADE1A4A52C13BF68');
 INSERT INTO `tm_role_component` VALUES ('1', 'E29B1403654E42F499731ED3D23AA070');
+INSERT INTO `tm_role_component` VALUES ('AC2E04794F49FC6DF05F6B78BA8CC4DB', '');
+
+-- ----------------------------
+-- Table structure for tm_role_portal
+-- ----------------------------
+DROP TABLE IF EXISTS `tm_role_portal`;
+CREATE TABLE `tm_role_portal`  (
+  `role_code` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '角色code',
+  `key` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '能使用的Portal'
+) ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of tm_role_portal
+-- ----------------------------
+INSERT INTO `tm_role_portal` VALUES ('1', '1');
+INSERT INTO `tm_role_portal` VALUES ('AC2E04794F49FC6DF05F6B78BA8CC4DB', '2-2');
+INSERT INTO `tm_role_portal` VALUES ('AC2E04794F49FC6DF05F6B78BA8CC4DB', '2-0');
+INSERT INTO `tm_role_portal` VALUES ('A11A60B4A075515AB09134B914D6E7FF', '2-1');
 
 -- ----------------------------
 -- Table structure for tm_role_privilege
@@ -904,17 +921,18 @@ INSERT INTO `tm_role_privilege` VALUES ('DepartmentUserManage', '1');
 INSERT INTO `tm_role_privilege` VALUES ('RoleManage', '1');
 INSERT INTO `tm_role_privilege` VALUES ('PrivilegeManage', '1');
 INSERT INTO `tm_role_privilege` VALUES ('ClassManage', '1');
-INSERT INTO `tm_role_privilege` VALUES ('ComponentManage', 'A11A60B4A075515AB09134B914D6E7FF');
-INSERT INTO `tm_role_privilege` VALUES ('DepartmentUserManage', 'A11A60B4A075515AB09134B914D6E7FF');
 INSERT INTO `tm_role_privilege` VALUES ('logoSet', '1');
+INSERT INTO `tm_role_privilege` VALUES ('mymember', '1');
+INSERT INTO `tm_role_privilege` VALUES ('ComponentSet', '1');
+INSERT INTO `tm_role_privilege` VALUES ('ComponentSet', 'AC2E04794F49FC6DF05F6B78BA8CC4DB');
 INSERT INTO `tm_role_privilege` VALUES ('logoSet', 'AC2E04794F49FC6DF05F6B78BA8CC4DB');
 INSERT INTO `tm_role_privilege` VALUES ('MemberManage', 'AC2E04794F49FC6DF05F6B78BA8CC4DB');
 INSERT INTO `tm_role_privilege` VALUES ('DepartmentUserManage', 'AC2E04794F49FC6DF05F6B78BA8CC4DB');
 INSERT INTO `tm_role_privilege` VALUES ('RoleManage', 'AC2E04794F49FC6DF05F6B78BA8CC4DB');
 INSERT INTO `tm_role_privilege` VALUES ('PrivilegeManage', 'AC2E04794F49FC6DF05F6B78BA8CC4DB');
 INSERT INTO `tm_role_privilege` VALUES ('ClassManage', 'AC2E04794F49FC6DF05F6B78BA8CC4DB');
-INSERT INTO `tm_role_privilege` VALUES ('mymember', '1');
-INSERT INTO `tm_role_privilege` VALUES ('ComponentSet', '1');
+INSERT INTO `tm_role_privilege` VALUES ('', 'A11A60B4A075515AB09134B914D6E7FF');
+INSERT INTO `tm_role_privilege` VALUES ('ModuleConfig', '1');
 
 -- ----------------------------
 -- Table structure for tm_role_site
@@ -957,9 +975,8 @@ INSERT INTO `tm_role_user` VALUES ('A11A60B4A075515AB09134B914D6E7FF', '208FC72E
 INSERT INTO `tm_role_user` VALUES ('A11A60B4A075515AB09134B914D6E7FF', '00AD8317A5FC80F9F32E8A5F801C93C0');
 INSERT INTO `tm_role_user` VALUES ('A11A60B4A075515AB09134B914D6E7FF', '1E3982BAAE3459417B9AB6EBC85CAF11');
 INSERT INTO `tm_role_user` VALUES ('A11A60B4A075515AB09134B914D6E7FF', '3DB07C1C79EE6E94E93278CA0D1E4DF1');
-INSERT INTO `tm_role_user` VALUES ('A11A60B4A075515AB09134B914D6E7FF', 'A9182AC758E47A58415188DE1E352FE5');
 INSERT INTO `tm_role_user` VALUES ('AC2E04794F49FC6DF05F6B78BA8CC4DB', 'A9182AC758E47A58415188DE1E352FE5');
-INSERT INTO `tm_role_user` VALUES ('1', 'A9182AC758E47A58415188DE1E352FE5');
+INSERT INTO `tm_role_user` VALUES ('A11A60B4A075515AB09134B914D6E7FF', '417E74EF54858F8018A005EDB48C056C');
 
 -- ----------------------------
 -- Table structure for tm_ruleprize
@@ -1061,15 +1078,15 @@ CREATE TABLE `tm_user`  (
   `head_pic` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '头像',
   `extend` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '扩展字段',
   PRIMARY KEY (`user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 61 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 62 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of tm_user
 -- ----------------------------
-INSERT INTO `tm_user` VALUES (1, '27483D4C-1A45-2865-9B8C-701EA265ED92', 'admin', '超管', '14e1b600b1fd579f47433b88e8d85291', 0, 1, 0, '362811405@qq.com', NULL, '17780701461', '341370D6A4DA70044088BD4D9AA7809B', 1535515098, NULL, 0, 1543212221, '/uploads/default/20180515/c4d86ef4c589701e41760a07ecbfea10.jpg', NULL);
-INSERT INTO `tm_user` VALUES (38, 'EDC76357E2C2B0C9A0DF0B77B2C5D7DA', 'luodong', '骆东', '08d412594d31d718173b4af85b72a415', 7, 0, 0, '123@qq.com', NULL, '18777777777', 'E9EDEA4168F5654CBC4CE7A68D2E0218', 1521011941, NULL, 0, 1514954971, '\\uploads\\portal\\luodong\\20180104\\318acc067a5c3c218e35f4e35d619530.jpg', 'station_code:4');
-INSERT INTO `tm_user` VALUES (39, 'A9182AC758E47A58415188DE1E352FE5', 'bianji', '编辑', '803dcd19d598e9fa268482061a3c09c6', 5, 0, 0, '', NULL, '', '2C72675A68408F4E73AB9F2167825280', 1521182062, NULL, 0, 1514954988, NULL, 'station_code:17');
-INSERT INTO `tm_user` VALUES (40, '1E3982BAAE3459417B9AB6EBC85CAF11', 'bianji2', '编辑2', 'b2c46b9dd76351367bfa989eb0344e62', 5, 0, 0, '', NULL, '', '1E275584CEEB59E05F9503B5E94274D7', 1520994750, NULL, 0, 1514955003, NULL, 'station_code:19');
+INSERT INTO `tm_user` VALUES (1, '27483D4C-1A45-2865-9B8C-701EA265ED92', 'admin', '超管', '14e1b600b1fd579f47433b88e8d85291', 0, 1, 0, '362811405@qq.com', NULL, '17780701461', 'C23CED8EE3FB571CA00B0F032F515BA8', 1535684864, NULL, 0, 1543212221, '/uploads/default/20180515/c4d86ef4c589701e41760a07ecbfea10.jpg', NULL);
+INSERT INTO `tm_user` VALUES (38, 'EDC76357E2C2B0C9A0DF0B77B2C5D7DA', 'luodong', '骆东', '08d412594d31d718173b4af85b72a415', 7, 0, 0, '123@qq.com', NULL, '18777777777', 'E9EDEA4168F5654CBC4CE7A68D2E0218', 1535530815, NULL, 0, 1514954971, '\\uploads\\portal\\luodong\\20180104\\318acc067a5c3c218e35f4e35d619530.jpg', 'station_code:4');
+INSERT INTO `tm_user` VALUES (39, 'A9182AC758E47A58415188DE1E352FE5', 'bianji', '编辑', '803dcd19d598e9fa268482061a3c09c6', 5, 0, 0, '', NULL, '', '2C72675A68408F4E73AB9F2167825280', 1521182062, NULL, 1, 1514954988, NULL, 'station_code:17');
+INSERT INTO `tm_user` VALUES (40, '1E3982BAAE3459417B9AB6EBC85CAF11', 'bianji2', '编辑2', 'b2c46b9dd76351367bfa989eb0344e62', 5, 0, 0, '', NULL, '', '1E275584CEEB59E05F9503B5E94274D7', 1520994750, NULL, 1, 1514955003, NULL, 'station_code:19');
 INSERT INTO `tm_user` VALUES (41, 'DB4056EEDD98FA10841A3100FB0E8751', 'bianji3', '编辑3', '17bbe1c4bb02bbc399c76656058413fe', 5, 0, 0, '', NULL, '', NULL, NULL, NULL, 0, 1514955012, NULL, 'station_code:15');
 INSERT INTO `tm_user` VALUES (42, 'B30762EB040355005B25CF0265168E98', 'bianji4', '编辑4', '47df8232779ea6374e499ef5368599ff', 4, 0, 0, '', NULL, '', NULL, NULL, NULL, 0, 1514955054, NULL, NULL);
 INSERT INTO `tm_user` VALUES (43, 'BBBDDC0BE80640FEF8F9457C25C69AB9', 'bianji1', '编辑', '96cb9860597a12d63938137f3889d7a0', 4, 0, 0, '', NULL, '', NULL, NULL, NULL, 1, 1514955065, NULL, NULL);
@@ -1090,6 +1107,7 @@ INSERT INTO `tm_user` VALUES (57, '208FC72EED62175AC48816785464F595', 'test02', 
 INSERT INTO `tm_user` VALUES (58, '3DB07C1C79EE6E94E93278CA0D1E4DF1', 'test03', '测试', '14e1b600b1fd579f47433b88e8d85291', 9, 0, 0, '', NULL, '', '1BD028DC22D57F40A39F0CE618437E94', 1521081695, NULL, 0, 1520995120, '/uploads/default.png', NULL);
 INSERT INTO `tm_user` VALUES (59, '2760AB599245A3B9C4CCBB023F08F151', 'hlhjnews', 'hlhjnews', 'eb2f55cbac451399ba4071c932e4f83a', 7, 0, 0, 'hlhjnews@qq.com', NULL, '18098767651', '6FAD09109C523F873F7679C5D7C62442', 1526031879, NULL, 0, 1525342315, '/uploads/default/20180504/f8e83a0e2bd41436e0e9bde22dc13abb.jpg', NULL);
 INSERT INTO `tm_user` VALUES (60, '364F56004D97FA67AE5FD107C7B5292B', 'rest', 'rest', '5e4c33991cae746b773a8d809c945a30', 7, 0, 0, '', NULL, '', '8327EE23EE03058E560D674EF2313B11', 1526877376, NULL, 0, 1525679644, '/uploads/default.png', NULL);
+INSERT INTO `tm_user` VALUES (61, '417E74EF54858F8018A005EDB48C056C', '测试', '测试', 'fb08c36fc6e63eacdb45418a0d90f433', 7, 0, 0, '791539017@qq.com', NULL, '13880905073', 'F44776A11CD546CE5D555E5572D3EBE3', 1535612439, NULL, 0, 1535529071, '/uploads/default.png', NULL);
 
 -- ----------------------------
 -- Table structure for tm_user_log
@@ -1103,7 +1121,7 @@ CREATE TABLE `tm_user_log`  (
   `log_message` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '登陆信息',
   `log_time` int(10) UNSIGNED NOT NULL COMMENT '日志记录时间',
   PRIMARY KEY (`log_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9851 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10350 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of tm_user_log
@@ -10958,5 +10976,504 @@ INSERT INTO `tm_user_log` VALUES (9847, '27483D4C-1A45-2865-9B8C-701EA265ED92', 
 INSERT INTO `tm_user_log` VALUES (9848, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535515098);
 INSERT INTO `tm_user_log` VALUES (9849, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535515101);
 INSERT INTO `tm_user_log` VALUES (9850, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535515103);
+INSERT INTO `tm_user_log` VALUES (9851, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535522052);
+INSERT INTO `tm_user_log` VALUES (9852, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\privilege\\getprivilegelist', 1535522056);
+INSERT INTO `tm_user_log` VALUES (9853, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolebranchlist', 1535522056);
+INSERT INTO `tm_user_log` VALUES (9854, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535522056);
+INSERT INTO `tm_user_log` VALUES (9855, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolesitelist', 1535522059);
+INSERT INTO `tm_user_log` VALUES (9856, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\component\\getcomponentlist', 1535522060);
+INSERT INTO `tm_user_log` VALUES (9857, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolecomponentlist', 1535522060);
+INSERT INTO `tm_user_log` VALUES (9858, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535522065);
+INSERT INTO `tm_user_log` VALUES (9859, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535522070);
+INSERT INTO `tm_user_log` VALUES (9860, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\membermessagepush\\messagelist', 1535522070);
+INSERT INTO `tm_user_log` VALUES (9861, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535522079);
+INSERT INTO `tm_user_log` VALUES (9862, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535522124);
+INSERT INTO `tm_user_log` VALUES (9863, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\component\\getcomponentlist', 1535522141);
+INSERT INTO `tm_user_log` VALUES (9864, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535522155);
+INSERT INTO `tm_user_log` VALUES (9865, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\site\\getsysteminfo', 1535522163);
+INSERT INTO `tm_user_log` VALUES (9866, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolebranchlist', 1535522214);
+INSERT INTO `tm_user_log` VALUES (9867, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535522214);
+INSERT INTO `tm_user_log` VALUES (9868, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\privilege\\getprivilegelist', 1535522216);
+INSERT INTO `tm_user_log` VALUES (9869, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535522238);
+INSERT INTO `tm_user_log` VALUES (9870, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535522286);
+INSERT INTO `tm_user_log` VALUES (9871, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535522344);
+INSERT INTO `tm_user_log` VALUES (9872, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535522407);
+INSERT INTO `tm_user_log` VALUES (9873, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535522409);
+INSERT INTO `tm_user_log` VALUES (9874, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\membermessagepush\\messagelist', 1535522409);
+INSERT INTO `tm_user_log` VALUES (9875, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535522420);
+INSERT INTO `tm_user_log` VALUES (9876, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535522750);
+INSERT INTO `tm_user_log` VALUES (9877, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535522944);
+INSERT INTO `tm_user_log` VALUES (9878, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535522950);
+INSERT INTO `tm_user_log` VALUES (9879, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535522998);
+INSERT INTO `tm_user_log` VALUES (9880, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535523190);
+INSERT INTO `tm_user_log` VALUES (9881, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535523279);
+INSERT INTO `tm_user_log` VALUES (9882, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535523283);
+INSERT INTO `tm_user_log` VALUES (9883, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535523289);
+INSERT INTO `tm_user_log` VALUES (9884, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535523305);
+INSERT INTO `tm_user_log` VALUES (9885, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535523305);
+INSERT INTO `tm_user_log` VALUES (9886, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\membermessagepush\\messagelist', 1535523306);
+INSERT INTO `tm_user_log` VALUES (9887, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535523403);
+INSERT INTO `tm_user_log` VALUES (9888, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535523406);
+INSERT INTO `tm_user_log` VALUES (9889, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535523408);
+INSERT INTO `tm_user_log` VALUES (9890, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535523410);
+INSERT INTO `tm_user_log` VALUES (9891, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535523412);
+INSERT INTO `tm_user_log` VALUES (9892, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolebranchlist', 1535523413);
+INSERT INTO `tm_user_log` VALUES (9893, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535523413);
+INSERT INTO `tm_user_log` VALUES (9894, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolebranchlist', 1535523413);
+INSERT INTO `tm_user_log` VALUES (9895, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535523413);
+INSERT INTO `tm_user_log` VALUES (9896, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolecomponentlist', 1535523416);
+INSERT INTO `tm_user_log` VALUES (9897, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\component\\getcomponentlist', 1535523416);
+INSERT INTO `tm_user_log` VALUES (9898, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolesitelist', 1535523455);
+INSERT INTO `tm_user_log` VALUES (9899, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolecomponentlist', 1535523455);
+INSERT INTO `tm_user_log` VALUES (9900, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolecomponentlist', 1535523459);
+INSERT INTO `tm_user_log` VALUES (9901, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'PUT', 'system\\role\\saverolecomponent', 1535523465);
+INSERT INTO `tm_user_log` VALUES (9902, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolebranchlist', 1535523551);
+INSERT INTO `tm_user_log` VALUES (9903, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535523551);
+INSERT INTO `tm_user_log` VALUES (9904, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\component\\getcomponentlist', 1535523554);
+INSERT INTO `tm_user_log` VALUES (9905, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolecomponentlist', 1535523554);
+INSERT INTO `tm_user_log` VALUES (9906, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolesitelist', 1535523573);
+INSERT INTO `tm_user_log` VALUES (9907, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolecomponentlist', 1535523574);
+INSERT INTO `tm_user_log` VALUES (9908, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getroleprivilegelist', 1535523575);
+INSERT INTO `tm_user_log` VALUES (9909, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\privilege\\getprivilegelist', 1535523575);
+INSERT INTO `tm_user_log` VALUES (9910, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'PUT', 'system\\role\\saveroleprivilege', 1535523586);
+INSERT INTO `tm_user_log` VALUES (9911, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolecomponentlist', 1535523590);
+INSERT INTO `tm_user_log` VALUES (9912, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getroleprivilegelist', 1535523590);
+INSERT INTO `tm_user_log` VALUES (9913, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535523598);
+INSERT INTO `tm_user_log` VALUES (9914, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolebranchlist', 1535523598);
+INSERT INTO `tm_user_log` VALUES (9915, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getroleuserlist', 1535523604);
+INSERT INTO `tm_user_log` VALUES (9916, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getroleuserlist', 1535523605);
+INSERT INTO `tm_user_log` VALUES (9917, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\component\\getcomponentlist', 1535523607);
+INSERT INTO `tm_user_log` VALUES (9918, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolecomponentlist', 1535523607);
+INSERT INTO `tm_user_log` VALUES (9919, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\privilege\\getprivilegelist', 1535523607);
+INSERT INTO `tm_user_log` VALUES (9920, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getroleprivilegelist', 1535523607);
+INSERT INTO `tm_user_log` VALUES (9921, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getroleuserlist', 1535523629);
+INSERT INTO `tm_user_log` VALUES (9922, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getroleprivilegelist', 1535523632);
+INSERT INTO `tm_user_log` VALUES (9923, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getroleprivilegelist', 1535523634);
+INSERT INTO `tm_user_log` VALUES (9924, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getroleprivilegelist', 1535523635);
+INSERT INTO `tm_user_log` VALUES (9925, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getroleprivilegelist', 1535523636);
+INSERT INTO `tm_user_log` VALUES (9926, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getroleprivilegelist', 1535523639);
+INSERT INTO `tm_user_log` VALUES (9927, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getroleprivilegelist', 1535523641);
+INSERT INTO `tm_user_log` VALUES (9928, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getroleprivilegelist', 1535523642);
+INSERT INTO `tm_user_log` VALUES (9929, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getroleprivilegelist', 1535523643);
+INSERT INTO `tm_user_log` VALUES (9930, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getroleuserlist', 1535523653);
+INSERT INTO `tm_user_log` VALUES (9931, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'PUT', 'system\\role\\saveroleuser', 1535523657);
+INSERT INTO `tm_user_log` VALUES (9932, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getroleuserlist', 1535523657);
+INSERT INTO `tm_user_log` VALUES (9933, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'PUT', 'system\\role\\saveroleuser', 1535523661);
+INSERT INTO `tm_user_log` VALUES (9934, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getroleuserlist', 1535523661);
+INSERT INTO `tm_user_log` VALUES (9935, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolesitelist', 1535523663);
+INSERT INTO `tm_user_log` VALUES (9936, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535527062);
+INSERT INTO `tm_user_log` VALUES (9937, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolebranchlist', 1535527062);
+INSERT INTO `tm_user_log` VALUES (9938, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolesitelist', 1535527066);
+INSERT INTO `tm_user_log` VALUES (9939, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\component\\getcomponentlist', 1535527066);
+INSERT INTO `tm_user_log` VALUES (9940, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolecomponentlist', 1535527067);
+INSERT INTO `tm_user_log` VALUES (9941, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\privilege\\getprivilegelist', 1535527068);
+INSERT INTO `tm_user_log` VALUES (9942, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getroleprivilegelist', 1535527068);
+INSERT INTO `tm_user_log` VALUES (9943, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolecomponentlist', 1535527070);
+INSERT INTO `tm_user_log` VALUES (9944, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535527075);
+INSERT INTO `tm_user_log` VALUES (9945, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolebranchlist', 1535527083);
+INSERT INTO `tm_user_log` VALUES (9946, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535527083);
+INSERT INTO `tm_user_log` VALUES (9947, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\component\\getcomponentlist', 1535527086);
+INSERT INTO `tm_user_log` VALUES (9948, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolecomponentlist', 1535527087);
+INSERT INTO `tm_user_log` VALUES (9949, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolebranchlist', 1535527131);
+INSERT INTO `tm_user_log` VALUES (9950, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535527132);
+INSERT INTO `tm_user_log` VALUES (9951, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535527133);
+INSERT INTO `tm_user_log` VALUES (9952, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolebranchlist', 1535527558);
+INSERT INTO `tm_user_log` VALUES (9953, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535527558);
+INSERT INTO `tm_user_log` VALUES (9954, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535527559);
+INSERT INTO `tm_user_log` VALUES (9955, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolebranchlist', 1535527559);
+INSERT INTO `tm_user_log` VALUES (9956, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535527560);
+INSERT INTO `tm_user_log` VALUES (9957, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolebranchlist', 1535527560);
+INSERT INTO `tm_user_log` VALUES (9958, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getroleuserlist', 1535527568);
+INSERT INTO `tm_user_log` VALUES (9959, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\component\\getcomponentlist', 1535527570);
+INSERT INTO `tm_user_log` VALUES (9960, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolecomponentlist', 1535527570);
+INSERT INTO `tm_user_log` VALUES (9961, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolesitelist', 1535527571);
+INSERT INTO `tm_user_log` VALUES (9962, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\component\\getcomponentlist', 1535527573);
+INSERT INTO `tm_user_log` VALUES (9963, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolecomponentlist', 1535527573);
+INSERT INTO `tm_user_log` VALUES (9964, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\privilege\\getprivilegelist', 1535527574);
+INSERT INTO `tm_user_log` VALUES (9965, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getroleprivilegelist', 1535527575);
+INSERT INTO `tm_user_log` VALUES (9966, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\component\\getcomponentlist', 1535527580);
+INSERT INTO `tm_user_log` VALUES (9967, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolecomponentlist', 1535527580);
+INSERT INTO `tm_user_log` VALUES (9968, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535527586);
+INSERT INTO `tm_user_log` VALUES (9969, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolebranchlist', 1535527586);
+INSERT INTO `tm_user_log` VALUES (9970, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolesitelist', 1535527589);
+INSERT INTO `tm_user_log` VALUES (9971, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolecomponentlist', 1535527590);
+INSERT INTO `tm_user_log` VALUES (9972, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\component\\getcomponentlist', 1535527590);
+INSERT INTO `tm_user_log` VALUES (9973, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolesitelist', 1535527592);
+INSERT INTO `tm_user_log` VALUES (9974, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolecomponentlist', 1535527593);
+INSERT INTO `tm_user_log` VALUES (9975, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\privilege\\getprivilegelist', 1535527619);
+INSERT INTO `tm_user_log` VALUES (9976, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolebranchlist', 1535527630);
+INSERT INTO `tm_user_log` VALUES (9977, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535527630);
+INSERT INTO `tm_user_log` VALUES (9978, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getroleuserlist', 1535527637);
+INSERT INTO `tm_user_log` VALUES (9979, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\component\\getcomponentlist', 1535527641);
+INSERT INTO `tm_user_log` VALUES (9980, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolecomponentlist', 1535527641);
+INSERT INTO `tm_user_log` VALUES (9981, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolesitelist', 1535527644);
+INSERT INTO `tm_user_log` VALUES (9982, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolebranchlist', 1535527647);
+INSERT INTO `tm_user_log` VALUES (9983, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535527647);
+INSERT INTO `tm_user_log` VALUES (9984, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolesitelist', 1535527649);
+INSERT INTO `tm_user_log` VALUES (9985, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolecomponentlist', 1535527654);
+INSERT INTO `tm_user_log` VALUES (9986, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\component\\getcomponentlist', 1535527654);
+INSERT INTO `tm_user_log` VALUES (9987, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolesitelist', 1535527654);
+INSERT INTO `tm_user_log` VALUES (9988, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolecomponentlist', 1535527655);
+INSERT INTO `tm_user_log` VALUES (9989, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\privilege\\getprivilegelist', 1535527666);
+INSERT INTO `tm_user_log` VALUES (9990, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolebranchlist', 1535527671);
+INSERT INTO `tm_user_log` VALUES (9991, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535527671);
+INSERT INTO `tm_user_log` VALUES (9992, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\privilege\\getprivilegelist', 1535527673);
+INSERT INTO `tm_user_log` VALUES (9993, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535527676);
+INSERT INTO `tm_user_log` VALUES (9994, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolebranchlist', 1535527676);
+INSERT INTO `tm_user_log` VALUES (9995, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\component\\getcomponentlist', 1535527683);
+INSERT INTO `tm_user_log` VALUES (9996, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolecomponentlist', 1535527684);
+INSERT INTO `tm_user_log` VALUES (9997, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolesitelist', 1535527685);
+INSERT INTO `tm_user_log` VALUES (9998, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolecomponentlist', 1535527685);
+INSERT INTO `tm_user_log` VALUES (9999, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535527698);
+INSERT INTO `tm_user_log` VALUES (10000, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535527705);
+INSERT INTO `tm_user_log` VALUES (10001, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535527710);
+INSERT INTO `tm_user_log` VALUES (10002, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535528861);
+INSERT INTO `tm_user_log` VALUES (10003, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535528863);
+INSERT INTO `tm_user_log` VALUES (10004, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolebranchlist', 1535528863);
+INSERT INTO `tm_user_log` VALUES (10005, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getroleuserlist', 1535528873);
+INSERT INTO `tm_user_log` VALUES (10006, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getroleuserlist', 1535528877);
+INSERT INTO `tm_user_log` VALUES (10007, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\component\\getcomponentlist', 1535528878);
+INSERT INTO `tm_user_log` VALUES (10008, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\privilege\\getprivilegelist', 1535528879);
+INSERT INTO `tm_user_log` VALUES (10009, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolecomponentlist', 1535528879);
+INSERT INTO `tm_user_log` VALUES (10010, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getroleprivilegelist', 1535528879);
+INSERT INTO `tm_user_log` VALUES (10011, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolesitelist', 1535528879);
+INSERT INTO `tm_user_log` VALUES (10012, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'DELETE', 'system\\user\\deleteuser', 1535528885);
+INSERT INTO `tm_user_log` VALUES (10013, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535528885);
+INSERT INTO `tm_user_log` VALUES (10014, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'DELETE', 'system\\user\\deleteuser', 1535528891);
+INSERT INTO `tm_user_log` VALUES (10015, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535528891);
+INSERT INTO `tm_user_log` VALUES (10016, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getroleuserlist', 1535528903);
+INSERT INTO `tm_user_log` VALUES (10017, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolesitelist', 1535528905);
+INSERT INTO `tm_user_log` VALUES (10018, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\component\\getcomponentlist', 1535528905);
+INSERT INTO `tm_user_log` VALUES (10019, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolecomponentlist', 1535528906);
+INSERT INTO `tm_user_log` VALUES (10020, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolesitelist', 1535528907);
+INSERT INTO `tm_user_log` VALUES (10021, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\privilege\\getprivilegelist', 1535528908);
+INSERT INTO `tm_user_log` VALUES (10022, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getroleprivilegelist', 1535528908);
+INSERT INTO `tm_user_log` VALUES (10023, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolebranchlist', 1535528917);
+INSERT INTO `tm_user_log` VALUES (10024, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535528917);
+INSERT INTO `tm_user_log` VALUES (10025, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolecomponentlist', 1535528919);
+INSERT INTO `tm_user_log` VALUES (10026, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\component\\getcomponentlist', 1535528919);
+INSERT INTO `tm_user_log` VALUES (10027, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\privilege\\getprivilegelist', 1535528920);
+INSERT INTO `tm_user_log` VALUES (10028, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getroleprivilegelist', 1535528920);
+INSERT INTO `tm_user_log` VALUES (10029, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'PUT', 'system\\role\\saveroleprivilege', 1535528923);
+INSERT INTO `tm_user_log` VALUES (10030, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolecomponentlist', 1535528925);
+INSERT INTO `tm_user_log` VALUES (10031, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolesitelist', 1535528926);
+INSERT INTO `tm_user_log` VALUES (10032, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getroleprivilegelist', 1535528927);
+INSERT INTO `tm_user_log` VALUES (10033, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolecomponentlist', 1535528930);
+INSERT INTO `tm_user_log` VALUES (10034, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getroleprivilegelist', 1535528932);
+INSERT INTO `tm_user_log` VALUES (10035, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535528938);
+INSERT INTO `tm_user_log` VALUES (10036, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolebranchlist', 1535528938);
+INSERT INTO `tm_user_log` VALUES (10037, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535528991);
+INSERT INTO `tm_user_log` VALUES (10038, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\component\\getcomponentlist', 1535528994);
+INSERT INTO `tm_user_log` VALUES (10039, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535528996);
+INSERT INTO `tm_user_log` VALUES (10040, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535528997);
+INSERT INTO `tm_user_log` VALUES (10041, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolebranchlist', 1535528997);
+INSERT INTO `tm_user_log` VALUES (10042, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getroleuserlist', 1535529016);
+INSERT INTO `tm_user_log` VALUES (10043, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\component\\getcomponentlist', 1535529018);
+INSERT INTO `tm_user_log` VALUES (10044, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolecomponentlist', 1535529018);
+INSERT INTO `tm_user_log` VALUES (10045, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolesitelist', 1535529018);
+INSERT INTO `tm_user_log` VALUES (10046, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'POST', 'system\\user\\adduser', 1535529071);
+INSERT INTO `tm_user_log` VALUES (10047, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535529071);
+INSERT INTO `tm_user_log` VALUES (10048, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getroleuserlist', 1535529096);
+INSERT INTO `tm_user_log` VALUES (10049, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'PUT', 'system\\role\\saveroleuser', 1535529101);
+INSERT INTO `tm_user_log` VALUES (10050, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getroleuserlist', 1535529101);
+INSERT INTO `tm_user_log` VALUES (10051, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\component\\getcomponentlist', 1535529102);
+INSERT INTO `tm_user_log` VALUES (10052, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolecomponentlist', 1535529102);
+INSERT INTO `tm_user_log` VALUES (10053, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolesitelist', 1535529103);
+INSERT INTO `tm_user_log` VALUES (10054, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolesitelist', 1535529103);
+INSERT INTO `tm_user_log` VALUES (10055, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\component\\getcomponentlist', 1535529104);
+INSERT INTO `tm_user_log` VALUES (10056, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolecomponentlist', 1535529104);
+INSERT INTO `tm_user_log` VALUES (10057, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\privilege\\getprivilegelist', 1535529104);
+INSERT INTO `tm_user_log` VALUES (10058, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getroleprivilegelist', 1535529104);
+INSERT INTO `tm_user_log` VALUES (10059, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getroleprivilegelist', 1535529108);
+INSERT INTO `tm_user_log` VALUES (10060, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'PUT', 'system\\role\\saveroleuser', 1535529112);
+INSERT INTO `tm_user_log` VALUES (10061, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getroleuserlist', 1535529112);
+INSERT INTO `tm_user_log` VALUES (10062, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\component\\getcomponentlist', 1535529113);
+INSERT INTO `tm_user_log` VALUES (10063, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolecomponentlist', 1535529113);
+INSERT INTO `tm_user_log` VALUES (10064, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolesitelist', 1535529113);
+INSERT INTO `tm_user_log` VALUES (10065, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolesitelist', 1535529114);
+INSERT INTO `tm_user_log` VALUES (10066, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\component\\getcomponentlist', 1535529115);
+INSERT INTO `tm_user_log` VALUES (10067, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolecomponentlist', 1535529115);
+INSERT INTO `tm_user_log` VALUES (10068, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\privilege\\getprivilegelist', 1535529115);
+INSERT INTO `tm_user_log` VALUES (10069, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getroleprivilegelist', 1535529115);
+INSERT INTO `tm_user_log` VALUES (10070, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535529129);
+INSERT INTO `tm_user_log` VALUES (10071, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535529143);
+INSERT INTO `tm_user_log` VALUES (10072, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535529148);
+INSERT INTO `tm_user_log` VALUES (10073, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535529149);
+INSERT INTO `tm_user_log` VALUES (10074, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535529172);
+INSERT INTO `tm_user_log` VALUES (10075, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535529173);
+INSERT INTO `tm_user_log` VALUES (10076, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535529177);
+INSERT INTO `tm_user_log` VALUES (10077, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535529465);
+INSERT INTO `tm_user_log` VALUES (10078, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535529472);
+INSERT INTO `tm_user_log` VALUES (10079, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535529633);
+INSERT INTO `tm_user_log` VALUES (10080, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535529637);
+INSERT INTO `tm_user_log` VALUES (10081, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535529670);
+INSERT INTO `tm_user_log` VALUES (10082, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535529672);
+INSERT INTO `tm_user_log` VALUES (10083, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535529678);
+INSERT INTO `tm_user_log` VALUES (10084, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535529981);
+INSERT INTO `tm_user_log` VALUES (10085, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535529995);
+INSERT INTO `tm_user_log` VALUES (10086, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535530011);
+INSERT INTO `tm_user_log` VALUES (10087, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535530043);
+INSERT INTO `tm_user_log` VALUES (10088, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535530083);
+INSERT INTO `tm_user_log` VALUES (10089, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535530159);
+INSERT INTO `tm_user_log` VALUES (10090, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'POST', 'system\\portal\\saveportal', 1535530211);
+INSERT INTO `tm_user_log` VALUES (10091, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535530226);
+INSERT INTO `tm_user_log` VALUES (10092, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535530278);
+INSERT INTO `tm_user_log` VALUES (10093, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535530342);
+INSERT INTO `tm_user_log` VALUES (10094, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'POST', 'system\\portal\\saveportal', 1535530349);
+INSERT INTO `tm_user_log` VALUES (10095, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535530351);
+INSERT INTO `tm_user_log` VALUES (10096, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535530362);
+INSERT INTO `tm_user_log` VALUES (10097, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535530645);
+INSERT INTO `tm_user_log` VALUES (10098, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'POST', 'system\\portal\\saveportal', 1535530656);
+INSERT INTO `tm_user_log` VALUES (10099, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535530663);
+INSERT INTO `tm_user_log` VALUES (10100, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535530697);
+INSERT INTO `tm_user_log` VALUES (10101, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535530709);
+INSERT INTO `tm_user_log` VALUES (10102, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535530711);
+INSERT INTO `tm_user_log` VALUES (10103, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535530816);
+INSERT INTO `tm_user_log` VALUES (10104, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535530818);
+INSERT INTO `tm_user_log` VALUES (10105, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535530819);
+INSERT INTO `tm_user_log` VALUES (10106, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolebranchlist', 1535530819);
+INSERT INTO `tm_user_log` VALUES (10107, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\component\\getcomponentlist', 1535530823);
+INSERT INTO `tm_user_log` VALUES (10108, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolecomponentlist', 1535530823);
+INSERT INTO `tm_user_log` VALUES (10109, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolesitelist', 1535530842);
+INSERT INTO `tm_user_log` VALUES (10110, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolecomponentlist', 1535530858);
+INSERT INTO `tm_user_log` VALUES (10111, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolesitelist', 1535530984);
+INSERT INTO `tm_user_log` VALUES (10112, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolecomponentlist', 1535530985);
+INSERT INTO `tm_user_log` VALUES (10113, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolesitelist', 1535531007);
+INSERT INTO `tm_user_log` VALUES (10114, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolesitelist', 1535531013);
+INSERT INTO `tm_user_log` VALUES (10115, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolecomponentlist', 1535531015);
+INSERT INTO `tm_user_log` VALUES (10116, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolebranchlist', 1535531022);
+INSERT INTO `tm_user_log` VALUES (10117, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535531022);
+INSERT INTO `tm_user_log` VALUES (10118, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535531025);
+INSERT INTO `tm_user_log` VALUES (10119, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolebranchlist', 1535531025);
+INSERT INTO `tm_user_log` VALUES (10120, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolesitelist', 1535531046);
+INSERT INTO `tm_user_log` VALUES (10121, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\component\\getcomponentlist', 1535531048);
+INSERT INTO `tm_user_log` VALUES (10122, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolecomponentlist', 1535531049);
+INSERT INTO `tm_user_log` VALUES (10123, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolesitelist', 1535531293);
+INSERT INTO `tm_user_log` VALUES (10124, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolecomponentlist', 1535531294);
+INSERT INTO `tm_user_log` VALUES (10125, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolesitelist', 1535531325);
+INSERT INTO `tm_user_log` VALUES (10126, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolecomponentlist', 1535531325);
+INSERT INTO `tm_user_log` VALUES (10127, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535531359);
+INSERT INTO `tm_user_log` VALUES (10128, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535531361);
+INSERT INTO `tm_user_log` VALUES (10129, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535531390);
+INSERT INTO `tm_user_log` VALUES (10130, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolebranchlist', 1535531390);
+INSERT INTO `tm_user_log` VALUES (10131, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolecomponentlist', 1535531394);
+INSERT INTO `tm_user_log` VALUES (10132, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\component\\getcomponentlist', 1535531394);
+INSERT INTO `tm_user_log` VALUES (10133, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535531404);
+INSERT INTO `tm_user_log` VALUES (10134, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolebranchlist', 1535531437);
+INSERT INTO `tm_user_log` VALUES (10135, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535531437);
+INSERT INTO `tm_user_log` VALUES (10136, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolecomponentlist', 1535531439);
+INSERT INTO `tm_user_log` VALUES (10137, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\component\\getcomponentlist', 1535531439);
+INSERT INTO `tm_user_log` VALUES (10138, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535531450);
+INSERT INTO `tm_user_log` VALUES (10139, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolebranchlist', 1535531468);
+INSERT INTO `tm_user_log` VALUES (10140, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535531468);
+INSERT INTO `tm_user_log` VALUES (10141, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolecomponentlist', 1535531471);
+INSERT INTO `tm_user_log` VALUES (10142, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\component\\getcomponentlist', 1535531471);
+INSERT INTO `tm_user_log` VALUES (10143, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535531487);
+INSERT INTO `tm_user_log` VALUES (10144, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolebranchlist', 1535531511);
+INSERT INTO `tm_user_log` VALUES (10145, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535531511);
+INSERT INTO `tm_user_log` VALUES (10146, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolesitelist', 1535531513);
+INSERT INTO `tm_user_log` VALUES (10147, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\component\\getcomponentlist', 1535531514);
+INSERT INTO `tm_user_log` VALUES (10148, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolecomponentlist', 1535531516);
+INSERT INTO `tm_user_log` VALUES (10149, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535531521);
+INSERT INTO `tm_user_log` VALUES (10150, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535531528);
+INSERT INTO `tm_user_log` VALUES (10151, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolebranchlist', 1535531528);
+INSERT INTO `tm_user_log` VALUES (10152, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolesitelist', 1535531531);
+INSERT INTO `tm_user_log` VALUES (10153, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolecomponentlist', 1535531534);
+INSERT INTO `tm_user_log` VALUES (10154, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\component\\getcomponentlist', 1535531534);
+INSERT INTO `tm_user_log` VALUES (10155, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535531537);
+INSERT INTO `tm_user_log` VALUES (10156, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535531822);
+INSERT INTO `tm_user_log` VALUES (10157, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolebranchlist', 1535531822);
+INSERT INTO `tm_user_log` VALUES (10158, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535531822);
+INSERT INTO `tm_user_log` VALUES (10159, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\component\\getcomponentlist', 1535531825);
+INSERT INTO `tm_user_log` VALUES (10160, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolecomponentlist', 1535531826);
+INSERT INTO `tm_user_log` VALUES (10161, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolesitelist', 1535531830);
+INSERT INTO `tm_user_log` VALUES (10162, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535531833);
+INSERT INTO `tm_user_log` VALUES (10163, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'POST', 'system\\portal\\saveportal', 1535532832);
+INSERT INTO `tm_user_log` VALUES (10164, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535533271);
+INSERT INTO `tm_user_log` VALUES (10165, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolebranchlist', 1535533272);
+INSERT INTO `tm_user_log` VALUES (10166, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535533273);
+INSERT INTO `tm_user_log` VALUES (10167, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'POST', 'system\\portal\\saveportal', 1535533404);
+INSERT INTO `tm_user_log` VALUES (10168, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'POST', 'system\\portal\\saveportal', 1535533472);
+INSERT INTO `tm_user_log` VALUES (10169, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'POST', 'system\\portal\\saveportal', 1535533474);
+INSERT INTO `tm_user_log` VALUES (10170, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolebranchlist', 1535533577);
+INSERT INTO `tm_user_log` VALUES (10171, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535533577);
+INSERT INTO `tm_user_log` VALUES (10172, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\component\\getcomponentlist', 1535533580);
+INSERT INTO `tm_user_log` VALUES (10173, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolecomponentlist', 1535533580);
+INSERT INTO `tm_user_log` VALUES (10174, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'PUT', 'system\\role\\saverolecomponent', 1535534258);
+INSERT INTO `tm_user_log` VALUES (10175, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolebranchlist', 1535534492);
+INSERT INTO `tm_user_log` VALUES (10176, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535534493);
+INSERT INTO `tm_user_log` VALUES (10177, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\component\\getcomponentlist', 1535534495);
+INSERT INTO `tm_user_log` VALUES (10178, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolecomponentlist', 1535534495);
+INSERT INTO `tm_user_log` VALUES (10179, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535535990);
+INSERT INTO `tm_user_log` VALUES (10180, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535536742);
+INSERT INTO `tm_user_log` VALUES (10181, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535536752);
+INSERT INTO `tm_user_log` VALUES (10182, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535536840);
+INSERT INTO `tm_user_log` VALUES (10183, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535536977);
+INSERT INTO `tm_user_log` VALUES (10184, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535537019);
+INSERT INTO `tm_user_log` VALUES (10185, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535537999);
+INSERT INTO `tm_user_log` VALUES (10186, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535538055);
+INSERT INTO `tm_user_log` VALUES (10187, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535538084);
+INSERT INTO `tm_user_log` VALUES (10188, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportalchildren', 1535595265);
+INSERT INTO `tm_user_log` VALUES (10189, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportalchildren', 1535595333);
+INSERT INTO `tm_user_log` VALUES (10190, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportalchildren', 1535595478);
+INSERT INTO `tm_user_log` VALUES (10191, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportalchildren', 1535595491);
+INSERT INTO `tm_user_log` VALUES (10192, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535601330);
+INSERT INTO `tm_user_log` VALUES (10193, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535601340);
+INSERT INTO `tm_user_log` VALUES (10194, 'EDC76357E2C2B0C9A0DF0B77B2C5D7DA', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535607788);
+INSERT INTO `tm_user_log` VALUES (10195, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportal', 1535607867);
+INSERT INTO `tm_user_log` VALUES (10196, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\component\\getcomponentlist', 1535607874);
+INSERT INTO `tm_user_log` VALUES (10197, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\site\\getsysteminfo', 1535607876);
+INSERT INTO `tm_user_log` VALUES (10198, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535607878);
+INSERT INTO `tm_user_log` VALUES (10199, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolebranchlist', 1535607878);
+INSERT INTO `tm_user_log` VALUES (10200, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolebranchlist', 1535607879);
+INSERT INTO `tm_user_log` VALUES (10201, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535607879);
+INSERT INTO `tm_user_log` VALUES (10202, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolesitelist', 1535607882);
+INSERT INTO `tm_user_log` VALUES (10203, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolecomponentlist', 1535607884);
+INSERT INTO `tm_user_log` VALUES (10204, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\component\\getcomponentlist', 1535607884);
+INSERT INTO `tm_user_log` VALUES (10205, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolebranchlist', 1535607918);
+INSERT INTO `tm_user_log` VALUES (10206, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535607918);
+INSERT INTO `tm_user_log` VALUES (10207, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\component\\getcomponentlist', 1535607923);
+INSERT INTO `tm_user_log` VALUES (10208, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolecomponentlist', 1535607923);
+INSERT INTO `tm_user_log` VALUES (10209, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolebranchlist', 1535607930);
+INSERT INTO `tm_user_log` VALUES (10210, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535607930);
+INSERT INTO `tm_user_log` VALUES (10211, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\site\\getsysteminfo', 1535607937);
+INSERT INTO `tm_user_log` VALUES (10212, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolebranchlist', 1535607938);
+INSERT INTO `tm_user_log` VALUES (10213, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535607939);
+INSERT INTO `tm_user_log` VALUES (10214, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535607939);
+INSERT INTO `tm_user_log` VALUES (10215, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolebranchlist', 1535607939);
+INSERT INTO `tm_user_log` VALUES (10216, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolecomponentlist', 1535607941);
+INSERT INTO `tm_user_log` VALUES (10217, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\component\\getcomponentlist', 1535607941);
+INSERT INTO `tm_user_log` VALUES (10218, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolebranchlist', 1535607950);
+INSERT INTO `tm_user_log` VALUES (10219, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535607950);
+INSERT INTO `tm_user_log` VALUES (10220, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\component\\getcomponentlist', 1535607953);
+INSERT INTO `tm_user_log` VALUES (10221, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolecomponentlist', 1535607953);
+INSERT INTO `tm_user_log` VALUES (10222, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolebranchlist', 1535608294);
+INSERT INTO `tm_user_log` VALUES (10223, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535608295);
+INSERT INTO `tm_user_log` VALUES (10224, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolesitelist', 1535608297);
+INSERT INTO `tm_user_log` VALUES (10225, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportalchildren', 1535608298);
+INSERT INTO `tm_user_log` VALUES (10226, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getroleportallist', 1535608298);
+INSERT INTO `tm_user_log` VALUES (10227, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'PUT', 'system\\role\\saveroleportal', 1535608301);
+INSERT INTO `tm_user_log` VALUES (10228, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535608307);
+INSERT INTO `tm_user_log` VALUES (10229, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolebranchlist', 1535608308);
+INSERT INTO `tm_user_log` VALUES (10230, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getroleuserlist', 1535608313);
+INSERT INTO `tm_user_log` VALUES (10231, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getroleuserlist', 1535608323);
+INSERT INTO `tm_user_log` VALUES (10232, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getroleuserlist', 1535608328);
+INSERT INTO `tm_user_log` VALUES (10233, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolesitelist', 1535608329);
+INSERT INTO `tm_user_log` VALUES (10234, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportalchildren', 1535608330);
+INSERT INTO `tm_user_log` VALUES (10235, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getroleportallist', 1535608330);
+INSERT INTO `tm_user_log` VALUES (10236, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolebranchlist', 1535608332);
+INSERT INTO `tm_user_log` VALUES (10237, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535608332);
+INSERT INTO `tm_user_log` VALUES (10238, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolesitelist', 1535608334);
+INSERT INTO `tm_user_log` VALUES (10239, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportalchildren', 1535608335);
+INSERT INTO `tm_user_log` VALUES (10240, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getroleportallist', 1535608335);
+INSERT INTO `tm_user_log` VALUES (10241, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'PUT', 'system\\role\\saveroleportal', 1535608336);
+INSERT INTO `tm_user_log` VALUES (10242, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535608340);
+INSERT INTO `tm_user_log` VALUES (10243, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolebranchlist', 1535608340);
+INSERT INTO `tm_user_log` VALUES (10244, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getroleuserlist', 1535608347);
+INSERT INTO `tm_user_log` VALUES (10245, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportalchildren', 1535608348);
+INSERT INTO `tm_user_log` VALUES (10246, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getroleportallist', 1535608348);
+INSERT INTO `tm_user_log` VALUES (10247, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getroleuserlist', 1535608411);
+INSERT INTO `tm_user_log` VALUES (10248, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535608475);
+INSERT INTO `tm_user_log` VALUES (10249, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535608483);
+INSERT INTO `tm_user_log` VALUES (10250, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535608499);
+INSERT INTO `tm_user_log` VALUES (10251, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolebranchlist', 1535608499);
+INSERT INTO `tm_user_log` VALUES (10252, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolesitelist', 1535608502);
+INSERT INTO `tm_user_log` VALUES (10253, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportalchildren', 1535608502);
+INSERT INTO `tm_user_log` VALUES (10254, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getroleportallist', 1535608502);
+INSERT INTO `tm_user_log` VALUES (10255, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getroleportallist', 1535608507);
+INSERT INTO `tm_user_log` VALUES (10256, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'PUT', 'system\\role\\saveroleportal', 1535608510);
+INSERT INTO `tm_user_log` VALUES (10257, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535608546);
+INSERT INTO `tm_user_log` VALUES (10258, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535608547);
+INSERT INTO `tm_user_log` VALUES (10259, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\member\\getcount', 1535608548);
+INSERT INTO `tm_user_log` VALUES (10260, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\member\\getmemberlist', 1535608549);
+INSERT INTO `tm_user_log` VALUES (10261, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535608549);
+INSERT INTO `tm_user_log` VALUES (10262, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535608550);
+INSERT INTO `tm_user_log` VALUES (10263, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535608553);
+INSERT INTO `tm_user_log` VALUES (10264, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535611788);
+INSERT INTO `tm_user_log` VALUES (10265, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535611837);
+INSERT INTO `tm_user_log` VALUES (10266, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535611949);
+INSERT INTO `tm_user_log` VALUES (10267, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535611991);
+INSERT INTO `tm_user_log` VALUES (10268, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535612356);
+INSERT INTO `tm_user_log` VALUES (10269, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535612374);
+INSERT INTO `tm_user_log` VALUES (10270, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'PUT', 'system\\role\\saveroleportal', 1535612410);
+INSERT INTO `tm_user_log` VALUES (10271, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'PUT', 'system\\role\\saveroleportal', 1535612415);
+INSERT INTO `tm_user_log` VALUES (10272, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535612439);
+INSERT INTO `tm_user_log` VALUES (10273, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535612489);
+INSERT INTO `tm_user_log` VALUES (10274, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535612883);
+INSERT INTO `tm_user_log` VALUES (10275, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535612943);
+INSERT INTO `tm_user_log` VALUES (10276, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535613011);
+INSERT INTO `tm_user_log` VALUES (10277, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535613442);
+INSERT INTO `tm_user_log` VALUES (10278, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535613516);
+INSERT INTO `tm_user_log` VALUES (10279, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535613518);
+INSERT INTO `tm_user_log` VALUES (10280, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\membermessagepush\\messagelist', 1535613518);
+INSERT INTO `tm_user_log` VALUES (10281, '417E74EF54858F8018A005EDB48C056C', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535613519);
+INSERT INTO `tm_user_log` VALUES (10282, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535617418);
+INSERT INTO `tm_user_log` VALUES (10283, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\site\\getsysteminfo', 1535617420);
+INSERT INTO `tm_user_log` VALUES (10284, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\site\\getsysteminfo', 1535617422);
+INSERT INTO `tm_user_log` VALUES (10285, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535617426);
+INSERT INTO `tm_user_log` VALUES (10286, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolebranchlist', 1535617426);
+INSERT INTO `tm_user_log` VALUES (10287, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolebranchlist', 1535617426);
+INSERT INTO `tm_user_log` VALUES (10288, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535617426);
+INSERT INTO `tm_user_log` VALUES (10289, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\privilege\\getprivilegelist', 1535617427);
+INSERT INTO `tm_user_log` VALUES (10290, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolebranchlist', 1535617436);
+INSERT INTO `tm_user_log` VALUES (10291, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535617436);
+INSERT INTO `tm_user_log` VALUES (10292, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535617436);
+INSERT INTO `tm_user_log` VALUES (10293, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolebranchlist', 1535617436);
+INSERT INTO `tm_user_log` VALUES (10294, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\privilege\\getprivilegelist', 1535617437);
+INSERT INTO `tm_user_log` VALUES (10295, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\site\\getsysteminfo', 1535617479);
+INSERT INTO `tm_user_log` VALUES (10296, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535617480);
+INSERT INTO `tm_user_log` VALUES (10297, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\site\\getsysteminfo', 1535617481);
+INSERT INTO `tm_user_log` VALUES (10298, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535617495);
+INSERT INTO `tm_user_log` VALUES (10299, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\site\\getsysteminfo', 1535617496);
+INSERT INTO `tm_user_log` VALUES (10300, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolebranchlist', 1535617500);
+INSERT INTO `tm_user_log` VALUES (10301, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535617500);
+INSERT INTO `tm_user_log` VALUES (10302, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\branch\\getbranchlist', 1535617500);
+INSERT INTO `tm_user_log` VALUES (10303, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\role\\getrolebranchlist', 1535617500);
+INSERT INTO `tm_user_log` VALUES (10304, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\site\\getsysteminfo', 1535617502);
+INSERT INTO `tm_user_log` VALUES (10305, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\site\\getsysteminfo', 1535617513);
+INSERT INTO `tm_user_log` VALUES (10306, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\privilege\\getprivilegelist', 1535617514);
+INSERT INTO `tm_user_log` VALUES (10307, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\privilege\\getprivilegelist', 1535617521);
+INSERT INTO `tm_user_log` VALUES (10308, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\privilege\\getprivilegelist', 1535617524);
+INSERT INTO `tm_user_log` VALUES (10309, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\privilege\\getprivilegelist', 1535617546);
+INSERT INTO `tm_user_log` VALUES (10310, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535617568);
+INSERT INTO `tm_user_log` VALUES (10311, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\site\\getsysteminfo', 1535617569);
+INSERT INTO `tm_user_log` VALUES (10312, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535617571);
+INSERT INTO `tm_user_log` VALUES (10313, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535617575);
+INSERT INTO `tm_user_log` VALUES (10314, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\membermessagepush\\messagelist', 1535617575);
+INSERT INTO `tm_user_log` VALUES (10315, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535617865);
+INSERT INTO `tm_user_log` VALUES (10316, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\site\\getsysteminfo', 1535617866);
+INSERT INTO `tm_user_log` VALUES (10317, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\privilege\\getprivilegelist', 1535617873);
+INSERT INTO `tm_user_log` VALUES (10318, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\privilege\\getprivilegelist', 1535617876);
+INSERT INTO `tm_user_log` VALUES (10319, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\privilege\\getprivilegelist', 1535617879);
+INSERT INTO `tm_user_log` VALUES (10320, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'POST', 'system\\privilege\\addprivilege', 1535617961);
+INSERT INTO `tm_user_log` VALUES (10321, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\privilege\\getprivilegelist', 1535617962);
+INSERT INTO `tm_user_log` VALUES (10322, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\privilege\\getprivilegelist', 1535617964);
+INSERT INTO `tm_user_log` VALUES (10323, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535617987);
+INSERT INTO `tm_user_log` VALUES (10324, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\site\\getsysteminfo', 1535617989);
+INSERT INTO `tm_user_log` VALUES (10325, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535617991);
+INSERT INTO `tm_user_log` VALUES (10326, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535619357);
+INSERT INTO `tm_user_log` VALUES (10327, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\site\\getsysteminfo', 1535619358);
+INSERT INTO `tm_user_log` VALUES (10328, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535619360);
+INSERT INTO `tm_user_log` VALUES (10329, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'POST', 'system\\portal\\saveportal', 1535619380);
+INSERT INTO `tm_user_log` VALUES (10330, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'POST', 'system\\portal\\saveportal', 1535619435);
+INSERT INTO `tm_user_log` VALUES (10331, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535619438);
+INSERT INTO `tm_user_log` VALUES (10332, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535619439);
+INSERT INTO `tm_user_log` VALUES (10333, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535619470);
+INSERT INTO `tm_user_log` VALUES (10334, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\site\\getsysteminfo', 1535619472);
+INSERT INTO `tm_user_log` VALUES (10335, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535619474);
+INSERT INTO `tm_user_log` VALUES (10336, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535619767);
+INSERT INTO `tm_user_log` VALUES (10337, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535619769);
+INSERT INTO `tm_user_log` VALUES (10338, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535679792);
+INSERT INTO `tm_user_log` VALUES (10339, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535679794);
+INSERT INTO `tm_user_log` VALUES (10340, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535679807);
+INSERT INTO `tm_user_log` VALUES (10341, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535679808);
+INSERT INTO `tm_user_log` VALUES (10342, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535679809);
+INSERT INTO `tm_user_log` VALUES (10343, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535680242);
+INSERT INTO `tm_user_log` VALUES (10344, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535680243);
+INSERT INTO `tm_user_log` VALUES (10345, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535680244);
+INSERT INTO `tm_user_log` VALUES (10346, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535684865);
+INSERT INTO `tm_user_log` VALUES (10347, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535684866);
+INSERT INTO `tm_user_log` VALUES (10348, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\site\\getsysteminfo', 1535685436);
+INSERT INTO `tm_user_log` VALUES (10349, '27483D4C-1A45-2865-9B8C-701EA265ED92', '127.0.0.1', 'GET', 'system\\portal\\getportalcheckauthority', 1535685437);
 
 SET FOREIGN_KEY_CHECKS = 1;

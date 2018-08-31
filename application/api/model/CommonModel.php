@@ -30,6 +30,7 @@ class CommonModel extends Model
     protected $question_db=TM_PREFIX.'question';
     protected $role_db=TM_PREFIX.'role';
     protected $role_component_db=TM_PREFIX.'role_component';
+    protected $role_portal_db=TM_PREFIX.'role_portal';
     protected $role_site_db=TM_PREFIX.'role_site';
     protected $role_privilege_db=TM_PREFIX.'role_privilege';
     protected $role_user_db=TM_PREFIX.'role_user';

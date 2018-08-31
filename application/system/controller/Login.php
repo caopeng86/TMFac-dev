@@ -343,11 +343,11 @@ class Login extends Controller
             return reJson(500, '获取用户站点失败', []);
         }
 
-        //获取所有应用code,name,app_code
-        $component = $this->_getComponent($roleCodes);
-        if($component === false){
-            return reJson(500, '获取用户站点失败', []);
-        }
+//        //获取所有应用code,name,app_code
+//        $component = $this->_getComponent($roleCodes);
+//        if($component === false){
+//            return reJson(500, '获取用户站点失败', []);
+//        }
 
         $return = [
 //            'type' => $decrypt['type'],
@@ -356,9 +356,8 @@ class Login extends Controller
             'role' => $role,
             'site' => $site,
             'privilege' => $privilege,
-            'component' => $component
+            'component' => ''
         ];
-
         return reJson(200, '登录成功', $return);
     }
 
