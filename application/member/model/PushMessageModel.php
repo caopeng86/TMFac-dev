@@ -49,7 +49,7 @@ class PushMessageModel extends CommonModel
      */
     public function addInfo($opinion){
         $opinion['add_time'] = time();
-        return Db::table($this->push_message_db)->insert($opinion);
+        return Db::table($this->push_message_db)->insertGetId($opinion);
     }
 
     /**

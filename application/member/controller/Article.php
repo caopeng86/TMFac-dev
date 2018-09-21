@@ -54,4 +54,22 @@ class Article extends Base
         $info['update_time'] = date('Y-m-d h:i:s',$info['update_time']);
         return reJson(200,'获取成功',$info);
     }
+
+    /**
+     * 获取关于我们
+     */
+    public function getAboutUsArticle(){
+        //判断请求方式以及请求参数
+        $inputData = Request::get();
+        $method = Request::method();
+        $params = [];
+        $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
+        if(!$ret){
+            return reJson(500, $msg, []);
+        }
+        $info = $this->systemArticleModel->getArticleInfo(['id'=>3]);
+        $info['add_time'] = date('Y-m-d h:i:s',$info['add_time']);
+        $info['update_time'] = date('Y-m-d h:i:s',$info['update_time']);
+        return reJson(200,'获取成功',$info);
+    }
 }

@@ -193,7 +193,13 @@ class Jpush extends Base
         ];
         foreach ($pushList as $val){
             //推送消息
-            $extras = array('title'=>$val['title'],'content'=>$val['content'],'msg_id'=>$val['id']);
+            $extras = array(
+                'title'=>$val['title'],
+                'content'=>$val['content'],
+                'msg_id'=>$val['id'],
+                'iosInfo'=>json_decode($val['ios_info'],true),
+                'androidInfo'=>json_decode($val['android_info'],true)
+            );
             $re = $JPush::JPushAll($extras);
             if($re['http_code'] == 200){
                 $pushMessageModel->updateInfo(['id'=>$val['id']],['status'=>2,'cid'=>$re['body']['msg_id']]);//推送成功

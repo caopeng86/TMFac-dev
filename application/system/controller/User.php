@@ -155,4 +155,28 @@ class User extends Base
         return reJson(200, '删除用户成功', []);
     }
 
+    /**
+     * 重置用户密码
+     */
+    public function resetPassword(){
+        //判断请求方式以及请求参数
+        $inputData = Request::post();
+        $method = Request::method();
+        $params = ['user_code'];
+        $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
+        if(!$ret){
+            return reJson(500, $msg, []);
+        }
+
+        $condition = ['user_code' => $inputData['user_code']];
+        //重置密码
+        $re = $this->userModel->updateUserInfo($condition, ['password' => md5(md5(123456))]);
+        if($re === false){
+            Logservice::writeArray(['sql'=>$this->userModel->getLastSql()], '重置用户密码失败', 2);
+            return reJson(500, '重置失败', []);
+        }
+        Logservice::writeArray([], '重置用户密码');
+        return reJson(200, '重置成功', []);
+    }
+
 }

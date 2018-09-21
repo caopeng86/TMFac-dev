@@ -10,17 +10,21 @@ class ComposerStaticInitc56f27cfede3576e1d016ef2f085780b
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
         'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
+        '9b552a3cc426e3287cc811caefa3cf53' => __DIR__ . '/..' . '/topthink/think-helper/src/helper.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         '1cfd2761b63b0a29ed23657ea394cb2d' => __DIR__ . '/..' . '/topthink/think-captcha/src/helper.php',
         'ddc3cd2a04224f9638c5d0de6a69c7e3' => __DIR__ . '/..' . '/topthink/think-migration/src/config.php',
+        'cc56288302d9df745d97c934d6a6e5f0' => __DIR__ . '/..' . '/topthink/think-queue/src/common.php',
     );
 
     public static $prefixLengthsPsr4 = array (
         't' => 
         array (
             'think\\migration\\' => 16,
+            'think\\helper\\' => 13,
             'think\\composer\\' => 15,
             'think\\captcha\\' => 14,
+            'think\\' => 6,
         ),
         'a' => 
         array (
@@ -35,6 +39,10 @@ class ComposerStaticInitc56f27cfede3576e1d016ef2f085780b
         array (
             'Psr\\Http\\Message\\' => 17,
             'Phinx\\' => 6,
+        ),
+        'O' => 
+        array (
+            'OSS\\' => 4,
         ),
         'G' => 
         array (
@@ -57,6 +65,10 @@ class ComposerStaticInitc56f27cfede3576e1d016ef2f085780b
         array (
             0 => __DIR__ . '/..' . '/topthink/think-migration/src',
         ),
+        'think\\helper\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/topthink/think-helper/src',
+        ),
         'think\\composer\\' => 
         array (
             0 => __DIR__ . '/..' . '/topthink/think-installer/src',
@@ -64,6 +76,10 @@ class ComposerStaticInitc56f27cfede3576e1d016ef2f085780b
         'think\\captcha\\' => 
         array (
             0 => __DIR__ . '/..' . '/topthink/think-captcha/src',
+        ),
+        'think\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/topthink/think-queue/src',
         ),
         'app\\' => 
         array (
@@ -84,6 +100,10 @@ class ComposerStaticInitc56f27cfede3576e1d016ef2f085780b
         'Phinx\\' => 
         array (
             0 => __DIR__ . '/..' . '/topthink/think-migration/phinx/src/Phinx',
+        ),
+        'OSS\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/aliyuncs/oss-sdk-php/src/OSS',
         ),
         'GuzzleHttp\\Psr7\\' => 
         array (

@@ -39,6 +39,8 @@ class Base extends Controller
             'member\member\checkcode',
             'member\article\getreliefarticle',
             'member\article\getprivacyarticle',
+            'member\article\getaboutusarticle',
+            'member\membermessagepush\messagelist',//系统消息
             'member\member\updatepass'
         ];
         if(in_array($url, $pass)){

@@ -35,7 +35,8 @@ class Base extends Controller
         //跳过验证的方法
         $pass = [
             'api\jpush\pushinfo',
-            'api\jpush\getres'
+            'api\jpush\getres',
+            'api\site\savecomplain'
         ];
         if(in_array($url, $pass)){
             return true;

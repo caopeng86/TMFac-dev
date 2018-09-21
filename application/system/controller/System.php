@@ -8,6 +8,7 @@
 namespace app\system\controller;
 
 use app\api\model\ConfigModel;
+use app\api\model\UserModel;
 use think\Db;
 use think\Controller;
 use think\facade\Request;
@@ -127,7 +128,7 @@ class System extends Controller
             return reJson(500, $msg, []);
         }
         $condition = [];
-        $condition['key'] = ['app_start_image','app_start_url','app_start_title'];
+        $condition['key'] = ['app_start_image','app_start_image_m','app_start_image_s','app_start_url','app_start_title'];
         $condition['type'] = 'client';
         $ConfigList = $this->ConfigModel->getConfigList($condition);
         if($ConfigList === false){
@@ -144,16 +145,17 @@ class System extends Controller
         //判断请求方式以及请求参数
         $inputData = Request::post();
         $method = Request::method();
-        $params = ['app_start_image','app_start_url','app_start_title'];
-        $remarks = ['app_start_image'=>'启动页图片','app_start_url'=>'启动页跳转链接','app_start_title'=>'启动页标题'];
+        $params = ['app_start_image','app_start_image_m','app_start_image_s'];
+        $remarks = ['app_start_image'=>'启动页图片','app_start_image_m'=>'中等启动页','app_start_image_s'=>'小启动页','app_start_url'=>'启动页跳转链接','app_start_title'=>'启动页标题'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
+        $params[] = 'app_start_url';
+        $params[] = 'app_start_title';
         if(!$ret){
             return reJson(500, $msg, []);
         }
         foreach ($params as $val){
-            if(!empty($inputData[$val])){
+                if(empty($inputData[$val]))$inputData[$val] = ''; //未定义则赋予空值
                 $this->ConfigModel->batchSaveConfig($val,$inputData[$val],$remarks[$val],'client');
-            }
         }
         return reJson(200,'保存成功',[]);
     }
@@ -165,8 +167,8 @@ class System extends Controller
         //判断请求方式以及请求参数
         $inputData = Request::post();
         $method = Request::method();
-        $params = ['ali_sms_key_id','ali_sign_name','ali_key_secret'];
-        $remarks = ['ali_sms_key_id'=>'阿里短信服务key','ali_sign_name'=>'阿里短信签名','ali_key_secret'=>'阿里短信服务secret'];
+        $params = ['ali_sms_key_id','ali_sign_name','ali_key_secret','ali_check_template_code'];
+        $remarks = ['ali_sms_key_id'=>'阿里短信服务key','ali_sign_name'=>'阿里短信签名','ali_key_secret'=>'阿里短信服务secret','ali_check_template_code'=>'阿里验证短信模板code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
             return reJson(500, $msg, []);
@@ -192,7 +194,7 @@ class System extends Controller
             return reJson(500, $msg, []);
         }
         $condition = [];
-        $condition['key'] = ['ali_sms_key_id','ali_sign_name','ali_key_secret'];
+        $condition['key'] = ['ali_sms_key_id','ali_sign_name','ali_key_secret','ali_check_template_code'];
         $condition['type'] = 'client';
         $ConfigList = $this->ConfigModel->getConfigList($condition);
         if($ConfigList === false){
@@ -293,5 +295,29 @@ class System extends Controller
             unlink($update_data[$version]);
         }
         return reJson(200,'更新完成',[]);
+    }
+
+    /**
+     * 验证登陆信息
+     */
+
+    public function checkToken(){
+        //判断请求方式以及请求参数
+        $inputData = Request::get();
+        $method = Request::method();
+        $params = ['token'];
+        $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
+        if(!$ret){
+            return reJson(500, $msg, []);
+        }
+        $condition = [
+            ['access_key','=',$inputData['token']]
+        ];
+        $userModel = new UserModel();
+        $user = $userModel->getUserCount($condition);
+        if($user >= 1){
+            return reJson(200,'有效', []);
+        }
+        return reJson(500,'无效', []);
     }
 }

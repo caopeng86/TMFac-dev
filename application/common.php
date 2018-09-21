@@ -9,6 +9,9 @@
  * @return \think\response\Json
  */
 function reJson($status,$msg,$data = []){
+    if(is_array($data) && 0 == count($data)){
+        $data = json($data);
+    }
     return json([
         'code'=>$status,
         'data'=>$data,

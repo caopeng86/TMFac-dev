@@ -162,4 +162,7 @@ return [
     ],
     //token保存时间
     'token_time'=>604800,
+    'queue' =>[
+        'connector'=>'database'
+    ]
 ];

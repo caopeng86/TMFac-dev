@@ -240,18 +240,17 @@ class Login extends Controller
     public function getVerify(){
 //        var_dump('hello');exit();
         ob_clean();
-        $this->captcha->codeSet = '1';
+//        $this->captcha->codeSet = '1';
         $captchaData = $this->captcha->entry();
         return $captchaData;
     }
-    public function getEnv(){
-        $env=Env::get(SERVER_ENV.'HOSTNAME');
 
-        var_dump($env);
-        var_dump(SERVER_ENV.'HOSTNAME');
-        var_dump(Env::get('EXTEND_PATH'));
-        var_dump(Env::get());
-//        var_dump($_SERVER);
+    /**
+     * 获取验证码
+     */
+    public function getCode(){
+       $code = $this->captcha->createCode();
+        return reJson(200, '成功', ['code'=>$code]);
     }
 
     /**
@@ -267,11 +266,11 @@ class Login extends Controller
             return reJson(500,$msg,[]);
         }
 
-        //验证验证码
-        $chkVerify = $this->captcha->check($inputData['verify']);
-        if($chkVerify === false){
-            return reJson(500,'验证码输入错误',[]);
-        }
+//        //验证验证码
+//        $chkVerify = $this->captcha->check($inputData['verify']);
+//        if($chkVerify === false){
+//            return reJson(500,'验证码输入错误',[]);
+//        }
 
         //验证用户名
         $condition = ['user_name' => $inputData['user_name']];
