@@ -49,4 +49,14 @@ class Appconf extends Controller
         $file = base64_decode($file);
         echo $file;die;
     }
+
+    /**
+     * 获取配置中心接口生成文件
+     */
+    public function getConfigurationConfig(){
+
+    }
+
+
+
 }

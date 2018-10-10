@@ -195,7 +195,7 @@
             typeof this.onSuccess === 'function' && this.onSuccess()
           } else {
             addClass(this.sliderContainer, 'sliderContainer_fail')
-            this.text.innerHTML = '再试一次'
+            // this.text.innerHTML = '再试一次'
             this.reset()
           }
         } else {

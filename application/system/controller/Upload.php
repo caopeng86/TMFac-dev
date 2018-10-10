@@ -29,7 +29,11 @@ class Upload extends Controller
             return reJson(500,$msg,[]);
         }
         $file = Request::file('file');
-        $re = Uploads::fileUpload($file);
+        $path = '';
+        if(!empty($inputData['path'])){
+            $path = $inputData['path'];
+        }
+        $re = Uploads::fileUpload($file,$path);
         if(!$re){
             return reJson(500,'上传失败',[]);
         }

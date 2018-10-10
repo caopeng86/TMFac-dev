@@ -15,6 +15,11 @@ namespace think;
 // 加载基础文件
 require __DIR__ . '/thinkphp/base.php';
 
+//定义环境，用于区别线上和开发环境，方便切换
+define('SERVER_ENV',strtoupper(str_replace('.','_','dev.tmfac')).'_');
+
+//天马工场 model前缀
+define('TM_PREFIX','tm_');
 // 应用初始化
 Container::get('app')->path(__DIR__ . '/application/')->initialize();
 
