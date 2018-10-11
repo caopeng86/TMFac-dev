@@ -49,8 +49,8 @@ class Membermessagepush extends Base
             return reJson(500,'获取数据失败', []);
         }
         foreach ($PushMessageList as $key => $val){
-            $PushMessageList[$key]['add_time'] = date('Y-m-d h:i:s',$PushMessageList[$key]['add_time']);
-            $PushMessageList[$key]['push_time'] = date('Y-m-d h:i:s',$PushMessageList[$key]['push_time']);
+            $PushMessageList[$key]['add_time'] = date('Y-m-d H:i:s',$PushMessageList[$key]['add_time']);
+            $PushMessageList[$key]['push_time'] = date('Y-m-d H:i:s',$PushMessageList[$key]['push_time']);
             if(!empty($val['push_situation'])){
                 $push_situation = json_decode($val['push_situation'],true);
                 $PushMessageList[$key]['android_received'] = $push_situation['android_received'];

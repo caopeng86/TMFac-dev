@@ -105,7 +105,7 @@ class Member extends Base
         }
 
         $condition['member_code'] = $inputData['member_code'];
-        $field = 'member_code, member_name, member_nickname, member_real_name, site_code, email, mobile, head_pic, create_time, status, wx, qq, zfb, wb,receive_notice,wifi_show_image,list_auto_play';
+        $field = 'member_id,member_code, member_name, member_nickname, member_real_name, site_code, email, mobile, head_pic, create_time, status, wx, qq, zfb, wb,receive_notice,wifi_show_image,list_auto_play';
         $memberInfo = $this->memberModel->getMemberInfo($condition, $field);
         if($memberInfo === false){
             Logservice::writeArray(['sql'=>$this->memberModel->getLastSql()], '获取会员详情失败', 2);
