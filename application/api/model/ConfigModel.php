@@ -79,7 +79,7 @@ class ConfigModel extends CommonModel
      * 获取阿里短信配置信息
      */
     public static function getAliMsg(){
-        $condition['key'] = ['ali_sms_key_id','ali_sign_name','ali_key_secret'];
+        $condition['key'] = ['ali_sms_key_id','ali_sign_name','ali_key_secret','ali_sign_name'];
         $condition['type'] = 'client';
         $ConfigModel = new ConfigModel();
         $ConfigList = $ConfigModel->getConfigList($condition);

@@ -317,4 +317,23 @@ class Captcha
         $str = substr(md5($str), 8, 10);
         return md5($key . $str);
     }
+
+    /**
+     * 创建CODE
+     */
+    public function createCode($id = ''){
+        $code   = []; // 验证码
+        for ($i = 0; $i < $this->length; $i++) {
+            $code[$i] = $this->codeSet[mt_rand(0, strlen($this->codeSet) - 1)];
+        }
+        // 保存验证码
+        $returnCode = implode('', $code);
+        $key                   = $this->authcode($this->seKey);
+        $code                  = $this->authcode(strtoupper(implode('', $code)));
+        $secode                = [];
+        $secode['verify_code'] = $code; // 把校验码保存到session
+        $secode['verify_time'] = time(); // 验证码创建时间
+        Session::set($key . $id, $secode, '');
+        return $returnCode;
+    }
 }

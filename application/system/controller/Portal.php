@@ -14,11 +14,13 @@ use app\api\model\ComponentModel;
 use app\api\model\PortalModel;
 use app\api\model\RoleModel;
 use app\api\model\SiteModel;
+use think\facade\Cache;
 use think\facade\Request;
 
 class Portal extends Base
 {
     protected $portalModel;
+    protected $portal_key = '27483D4C-1A45-2865-9B8C-701EA265ED92';
     public function __construct()
     {
         parent::__construct();
@@ -37,6 +39,7 @@ class Portal extends Base
         if(!$ret){
             return reJson(500,$msg,[]);
         }
+        $inputData['portal_key'] = $this->portal_key; //默认
         $portal = $this->portalModel->getPortal(['portal_key'=>$inputData['portal_key']]);
         if(!$portal){
             //应用列表不存在则获取该用户的全部应用
@@ -86,6 +89,76 @@ class Portal extends Base
         }
     }
 
+
+    /**
+     * 获取应用列表 并检验用户是否有权限调用
+     */
+    public function getPortalCheckAuthority(){
+        //判断请求方式以及请求参数A
+        $inputData = Request::get();
+        $method = Request::method();
+        $params = ['portal_key'];
+        $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
+        if(!$ret){
+            return reJson(500,$msg,[]);
+        }
+        $inputData['portal_key'] = $this->portal_key; //默认
+        //获取应用列表
+        $portal = $this->portalModel->getPortal(['portal_key'=>$inputData['portal_key']]);
+        //获取能访问的应用
+        $roleModel = new RoleModel();
+        $token = Request::header('token');
+        $user_info = Cache::get($token);
+        $role_code = $roleModel->getRoleUserList(['user_code'=>$user_info['user_code']],'role_code');
+        if(!is_array($role_code)){
+            return reJson(500,'没有找到角色',[]);
+        }
+        $role_code = array_column($role_code,'role_code');
+        //管理员直接返回数据
+        if(in_array(1,$role_code))return reJson(200,'获取应用列表成功',['list' => $portal['portal_value'],'status' => 1]);
+        $RolePortal = $roleModel->getRolePortalList([['role_code','in',$role_code]],'key');
+        $RolePortal = array_column($RolePortal,'key');
+        $portal['portal_value'] = json_decode($portal['portal_value'],true);
+        foreach ($portal['portal_value'] as $key => $val){
+//            if(!in_array($val['key'],$RolePortal)){
+//                unset($portal['portal_value'][$key]);
+//            }
+            if(is_array($val['children'])){
+                foreach ($val['children'] as $k => $v){
+                    if(!in_array($v['key'],$RolePortal)) {
+                        unset($portal['portal_value'][$key]['children'][$k]);
+                    }
+                }
+                $portal['portal_value'][$key]['children'] = array_merge($portal['portal_value'][$key]['children']);
+            }
+        }
+        $portal['portal_value'] = json_encode($portal['portal_value'],256);
+        return reJson(200,'获取应用列表成功',['list' => $portal['portal_value'],'status' => 1]);
+    }
+
+    /**
+     *  只返回应用表
+     */
+    public function getPortalChildren(){
+        //判断请求方式以及请求参数
+        $inputData = Request::get();
+        $method = Request::method();
+        $params = [];
+        $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
+        if(!$ret){
+            return reJson(500,$msg,[]);
+        }
+        $inputData['portal_key'] = $this->portal_key; //默认
+        $portal = $this->portalModel->getPortal(['portal_key'=>$inputData['portal_key']]);
+        $portal_value = json_decode($portal['portal_value'],true);
+        $data = [];
+        foreach ($portal_value as $val){
+           $data = array_merge($data,$val['children']);
+        }
+        $data = json_encode($data);
+        return reJson(200,'获取应用列表成功',['list' => $data,'status' => 1]);
+    }
+
     /**
      * 保存应用列表
      */
@@ -98,7 +171,7 @@ class Portal extends Base
         if(!$ret){
             return reJson(500,$msg,[]);
         }
-
+        $inputData['portal_key'] = $this->portal_key; //默认
         //查找名称是否已经存在
         $condition = ['portal_key' => $inputData['portal_key']];
         $key = $this->portalModel->getPortal($condition);

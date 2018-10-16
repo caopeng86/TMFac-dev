@@ -101,4 +101,20 @@ class Site extends Base
 
         return reJson(200, '获取站点信息成功', $site_info);
     }
+
+    /**
+     *  保存投诉信息
+     */
+    public function saveComplain(){
+        //判断请求方式以及请求参数
+        $inputData = Request::post();
+        $method = Request::method();
+        $params = ['id','message'];
+        $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
+        if(!$ret){
+            return reJson(500, $msg, []);
+        }
+        return reJson(200,'投诉成功',[]);
+    }
+
 }

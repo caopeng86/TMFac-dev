@@ -172,6 +172,16 @@ abstract class Rule
     }
 
     /**
+     * 获取路由所在域名
+     * @access public
+     * @return string
+     */
+    public function getDomain()
+    {
+        return $this->parent->getDomain();
+    }
+
+    /**
      * 获取变量规则定义
      * @access public
      * @param  string  $name 变量名
@@ -809,9 +819,9 @@ abstract class Rule
 
         $result = new ControllerDispatch($request, $this, implode('/', $route), $var);
 
-        $request->action(array_pop($route));
-        $request->controller($route ? array_pop($route) : $this->getConfig('default_controller'));
-        $request->module($route ? array_pop($route) : $this->getConfig('default_module'));
+        $request->setAction(array_pop($route));
+        $request->setController($route ? array_pop($route) : $this->getConfig('default_controller'));
+        $request->setModule($route ? array_pop($route) : $this->getConfig('default_module'));
 
         return $result;
     }
@@ -839,7 +849,7 @@ abstract class Rule
         }
 
         // 设置当前请求的路由变量
-        $request->route($var);
+        $request->setRouteVars($var);
 
         // 路由到模块/控制器/操作
         return new ModuleDispatch($request, $this, [$module, $controller, $action], ['convert' => false]);
@@ -891,7 +901,7 @@ abstract class Rule
         // 请求参数检查
         if (isset($option['filter'])) {
             foreach ($option['filter'] as $name => $value) {
-                if ($request->param($name) != $value) {
+                if ($request->param($name, '', null) != $value) {
                     return false;
                 }
             }
@@ -922,11 +932,11 @@ abstract class Rule
 
     /**
      * 解析URL的pathinfo参数和变量
-     * @access protected
+     * @access public
      * @param  string    $url URL地址
      * @return array
      */
-    protected function parseUrlPath($url)
+    public function parseUrlPath($url)
     {
         // 分隔符替换 确保路由定义使用统一的分隔符
         $url = str_replace('|', '/', $url);
@@ -943,6 +953,7 @@ abstract class Rule
             $path = explode('/', $url);
         } elseif (false !== strpos($url, '=')) {
             // 参数1=值1&参数2=值2...
+            $path = [];
             parse_str($url, $var);
         } else {
             $path = [$url];

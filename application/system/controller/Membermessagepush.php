@@ -8,7 +8,9 @@
 namespace app\system\controller;
 
 use app\member\model\PushMessageModel;
+use app\queue\controller\Job;
 use think\facade\Request;
+use think\Queue;
 
 class Membermessagepush extends Base
 {
@@ -31,7 +33,9 @@ class Membermessagepush extends Base
         if(!$ret){
             return reJson(500, $msg, []);
         }
-        $condition = array();
+        $condition = array(
+            ['status','IN',[1,2]]
+        );
         $Total = $this->PushMessageModel->getCount($condition); //获取总数
         $num = !empty($inputData['page_size'])?$inputData['page_size']:20; //默认获取20条数据
         $totalPage = ceil($Total/$num); //总页数
@@ -45,8 +49,8 @@ class Membermessagepush extends Base
             return reJson(500,'获取数据失败', []);
         }
         foreach ($PushMessageList as $key => $val){
-            $PushMessageList[$key]['add_time'] = date('Y-m-d h:i:s',$PushMessageList[$key]['add_time']);
-            $PushMessageList[$key]['push_time'] = date('Y-m-d h:i:s',$PushMessageList[$key]['push_time']);
+            $PushMessageList[$key]['add_time'] = date('Y-m-d H:i:s',$PushMessageList[$key]['add_time']);
+            $PushMessageList[$key]['push_time'] = date('Y-m-d H:i:s',$PushMessageList[$key]['push_time']);
             if(!empty($val['push_situation'])){
                 $push_situation = json_decode($val['push_situation'],true);
                 $PushMessageList[$key]['android_received'] = $push_situation['android_received'];
@@ -103,9 +107,28 @@ class Membermessagepush extends Base
         if(!empty($inputData['id']) && $inputData['id'] > 0){
             $result = $this->PushMessageModel->updateInfo($condition,$inputData);
         }else{
+            $inputData['ios_info'] = json_encode([
+                'native'=>true,
+                'src'=>'SetI001MessageController',
+                'paramStr'=>'',
+                'wwwFolder'=>'',
+            ]);
+            $inputData['android_info'] = json_encode([
+                'native'=>true,
+                'src'=>'com.tenma.ventures.usercenter.view.PcWeiduNewActivity',
+                'paramStr'=>'',
+                'wwwFolder'=>''
+            ]);
+            $inputData['type'] = '系统消息';
             $result = $this->PushMessageModel->addInfo($inputData);
+            if($result){
+                $this->addPushMessage($result);
+            }
         }
         if($result){
+            $jobController = new Job();
+            $jobController->actionPushMessage();
+            $jobController->actionGetRes();
             return reJson(200,'保存成功', []);
         }
         return reJson(500,'失败',[]);
@@ -136,6 +159,21 @@ class Membermessagepush extends Base
             return reJson(200, '成功', []);
         }else{
             return reJson(500, '失败', []);
+        }
+    }
+
+    /**
+     * 添加队列
+     */
+    private function addPushMessage($id){
+        $jobName = 'app\job\pushMessage\sendMessage';  //负责处理队列任务的类
+        $data = ['id' => $id]; //当前任务所需的业务数据
+        $jobQueueName = 'sendMessage'; //当前任务归属的队列名称，如果为新队列，会自动创建
+        $result = Queue::push($jobName, $data, $jobQueueName);
+        if ($result) {
+           return true;
+        } else {
+          return false;
         }
     }
 

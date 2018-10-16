@@ -370,7 +370,7 @@ class Login extends Controller
             return reJson(500, $msg, []);
         }
         $condition = [];
-        $condition['key'] = ['app_start_image','app_start_url','app_start_title'];
+        $condition['key'] = ['app_start_image','app_start_image_m','app_start_image_s','app_start_url','app_start_title'];
         $condition['type'] = 'client';
         $ConfigModel = new ConfigModel();
         $ConfigList = $ConfigModel->getConfigList($condition);
@@ -378,6 +378,9 @@ class Login extends Controller
             return reJson(500, '获取失败', []);
         }
         $ConfigList = $ConfigModel->ArrayToKey($ConfigList);
+        foreach ($ConfigList as $key => $val){
+            if(!$val)unset($ConfigList[$key]);
+        }
         return reJson(200, '获取成功', $ConfigList);
     }
 }

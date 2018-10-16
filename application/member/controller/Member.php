@@ -113,16 +113,16 @@ class Member extends Base
         }
 
         //state 1: 登录 2: 密码找回 3: 修改密码 4: 原手机号验证 5: 新手机号验证
-        $arr = [1,2,3,4,5];
-        $template_code = 'SMS_125026751';
-        if(in_array($inputData['state'], $arr)){
-            $template_code = 'SMS_125026751';
-        }
+//        $arr = [1,2,3,4,5];
+//        $template_code = 'SMS_125026751';
+//        if(in_array($inputData['state'], $arr)){
+//            $template_code = 'SMS_125026751';
+//        }
 
         //配置发送短信的配置
         $config = [
             'phone_numbers' => $inputData['mobile'],
-            'template_code' => $template_code,
+            'template_code' => 'ali_check_template_code',
             'code' => rand(100000, 999999),
         ];
 

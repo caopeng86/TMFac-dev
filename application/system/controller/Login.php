@@ -9,6 +9,7 @@
 namespace app\system\controller;
 
 
+use app\extend\controller\Aes;
 use app\extend\controller\Logservice;
 use app\api\model\BranchModel;
 use app\api\model\RoleModel;
@@ -240,18 +241,17 @@ class Login extends Controller
     public function getVerify(){
 //        var_dump('hello');exit();
         ob_clean();
-        $this->captcha->codeSet = '1';
+//        $this->captcha->codeSet = '1';
         $captchaData = $this->captcha->entry();
         return $captchaData;
     }
-    public function getEnv(){
-        $env=Env::get(SERVER_ENV.'HOSTNAME');
 
-        var_dump($env);
-        var_dump(SERVER_ENV.'HOSTNAME');
-        var_dump(Env::get('EXTEND_PATH'));
-        var_dump(Env::get());
-//        var_dump($_SERVER);
+    /**
+     * 获取验证码
+     */
+    public function getCode(){
+       $code = $this->captcha->createCode();
+        return reJson(200, '成功', ['code'=>$code]);
     }
 
     /**
@@ -267,11 +267,11 @@ class Login extends Controller
             return reJson(500,$msg,[]);
         }
 
-        //验证验证码
-        $chkVerify = $this->captcha->check($inputData['verify']);
-        if($chkVerify === false){
-            return reJson(500,'验证码输入错误',[]);
-        }
+//        //验证验证码
+//        $chkVerify = $this->captcha->check($inputData['verify']);
+//        if($chkVerify === false){
+//            return reJson(500,'验证码输入错误',[]);
+//        }
 
         //验证用户名
         $condition = ['user_name' => $inputData['user_name']];
@@ -343,11 +343,11 @@ class Login extends Controller
             return reJson(500, '获取用户站点失败', []);
         }
 
-        //获取所有应用code,name,app_code
-        $component = $this->_getComponent($roleCodes);
-        if($component === false){
-            return reJson(500, '获取用户站点失败', []);
-        }
+//        //获取所有应用code,name,app_code
+//        $component = $this->_getComponent($roleCodes);
+//        if($component === false){
+//            return reJson(500, '获取用户站点失败', []);
+//        }
 
         $return = [
 //            'type' => $decrypt['type'],
@@ -356,9 +356,8 @@ class Login extends Controller
             'role' => $role,
             'site' => $site,
             'privilege' => $privilege,
-            'component' => $component
+            'component' => ''
         ];
-
         return reJson(200, '登录成功', $return);
     }
 
@@ -446,4 +445,116 @@ class Login extends Controller
 
         return reJson(500, '成功', []);
     }
+
+    /**
+     *MCH注册登录
+     */
+    public function mchLogin(){
+        //判断请求方式以及请求参数
+        $inputData = Request::post();
+        $method = Request::method();
+        $params = ['token','systemcode','siteCode','logininfo'];
+        $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
+        if(!$ret){
+            return reJson(500, $msg, []);
+        }
+        $token = $inputData['token'];
+        $systemcode = $inputData['systemcode'];
+        $site_code = $inputData['siteCode'];
+        $login_info = $inputData['logininfo'];
+        $key = 'SobeyHive1234567';
+        $AES= new Aes($key);;
+        $login_info = $AES->decrypt($login_info);
+        if(!$login_info){
+            return reJson(500, '解析用户信息失败', []);
+        }
+        $login_info_key = ['user_code','timestamp','real_name','user_name'];
+        $login_info = explode('_&&_',$login_info);
+        $user_info = array_combine($login_info_key,$login_info);
+        if(empty($user_info['user_code']) || empty($user_info['timestamp']) || empty($user_info['real_name']) || empty($user_info['user_name'])){
+            return reJson(500, '用户信息不完整，登录失败', []);
+        }
+        $condition = [
+            ['user_code','=',$user_info['user_code'].$systemcode]
+        ];
+        $remember = $this->userModel->getUserInfo($condition,false);
+        if($remember === false){
+            return reJson(500, '查询用户失败', []);
+        }
+        if(!$remember){
+            //创建用户
+            $data['user_code'] = $user_info['user_code'].$systemcode;
+            $data['real_name'] = $user_info['real_name'];
+            $data['user_name'] = $user_info['user_name'];
+            $data['head_pic'] = '/uploads/default/20180515/c4d86ef4c589701e41760a07ecbfea10.jpg';//默认头像
+            $data['status'] = 0;
+            $data['is_branch_admin'] = 0;
+            $data['branch_id'] = 4; //挂在运营部门
+            $data['password'] = md5(md5(123456));//默认密码为123456
+            $data['create_time'] = time();
+            $result = $this->userModel->addUser($data);
+            $remember = $this->userModel->getUserInfo($condition,false);
+            if($remember === false){
+                return reJson(500, '查询用户失败', []);
+            }
+            $this->roleModel->addRoleUserAll([['user_code'=>$data['user_code'],'role_code'=>1]]);
+        }
+        //记录登录信息到数据库
+        $updateCondition = ['user_id' => $remember['user_id']];
+        $updateData['access_key'] = $token;
+        $updateData['access_key_create_time'] = time();
+        $result = $this->userModel->updateUserInfo($updateCondition, $updateData);
+        if($result === false){
+            return reJson(500, '记录登录信息失败', []);
+        }
+
+        //保存用户信息到缓存 7天
+        $cacheData = [
+            "user_id" => $remember['user_id'],
+            "user_code" => $remember['user_code'],
+            "user_name" => $remember['user_name'],
+            "access_key_create_time" => $updateData['access_key_create_time'],
+            "access_key" => $updateData['access_key'],
+        ];
+        Cache::set($updateData['access_key'], $cacheData, 5);
+        Logservice::writeArray(['token'=>$updateData['access_key'], 'data'=>$cacheData], '记录登录缓存数据');
+        //获取用户部门code,name
+        $branch = $this->_getBranch($remember['branch_id']);
+        if($branch === false){
+            return reJson(500, '获取用户部门失败', []);
+        }
+        $userInfo['branch_code'] = $branch['branch_code'];
+        $userInfo['branch_name'] = $branch['branch_name'];
+
+        //获取用户所有角色code,name
+        $role = $this->_getRole($remember['user_code']);
+        if($role === false){
+            return reJson(500, '获取用户所有角色失败', []);
+        }
+        $roleCodes = array_column($role, 'role_code');
+
+        //获取用户权限code,name
+        $privilege = $this->_getPrivilege($roleCodes);
+        if($privilege === false){
+            return reJson(500, '获取用户权限失败', []);
+        }
+
+        //获取用户所有站点code,name
+        $site = $this->_getSite($roleCodes);
+        if($site === false){
+            return reJson(500, '获取用户站点失败', []);
+        }
+        unset($remember['password']);
+        $return = [
+//            'type' => $decrypt['type'],
+            'token' => $token,
+            'user_info' => $remember,
+            'role' => $role,
+            'site' => $site,
+            'privilege' => $privilege,
+            'component' => ''
+        ];
+        return reJson(200, '登录成功', $return);
+    }
+
 }

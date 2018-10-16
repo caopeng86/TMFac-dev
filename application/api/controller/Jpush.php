@@ -174,10 +174,10 @@ class Jpush extends Base
      */
     public function pushInfo(){
         //判断请求方式以及请求参数
-        $inputData = Request::post();
+        $inputData = Request::get();
         $method = Request::method();
         $params = [];
-        $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
+        $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
             return reJson(500, $msg, []);
         }
@@ -193,7 +193,13 @@ class Jpush extends Base
         ];
         foreach ($pushList as $val){
             //推送消息
-            $extras = array('title'=>$val['title'],'content'=>$val['content'],'msg_id'=>$val['id']);
+            $extras = array(
+                'title'=>$val['title'],
+                'content'=>$val['content'],
+                'msg_id'=>$val['id'],
+                'iosInfo'=>json_decode($val['ios_info'],true),
+                'androidInfo'=>json_decode($val['android_info'],true)
+            );
             $re = $JPush::JPushAll($extras);
             if($re['http_code'] == 200){
                 $pushMessageModel->updateInfo(['id'=>$val['id']],['status'=>2,'cid'=>$re['body']['msg_id']]);//推送成功
@@ -212,10 +218,10 @@ class Jpush extends Base
      */
     public function getRes(){
         //判断请求方式以及请求参数
-        $inputData = Request::post();
+        $inputData = Request::get();
         $method = Request::method();
         $params = [];
-        $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
+        $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
             return reJson(500, $msg, []);
         }
