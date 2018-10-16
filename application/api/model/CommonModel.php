@@ -39,4 +39,5 @@ class CommonModel extends Model
     protected $user_db = TM_PREFIX.'user';
     protected $user_log_db=TM_PREFIX.'user_log';
     protected $system_article_db = TM_PREFIX.'system_article';
+    protected $member_point_log = TM_PREFIX.'member_point_log';
 }
