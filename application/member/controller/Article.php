@@ -38,7 +38,7 @@ class Article extends Base
     }
 
     /**
-     * 获取免责文章信息
+     * 获取隐私协议信息
      */
     public function getPrivacyArticle(){
         //判断请求方式以及请求参数

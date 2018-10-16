@@ -18,6 +18,8 @@ use think\facade\Request;
 
 class Base extends Controller
 {
+    public $memberInfo;
+
     public function __construct()
     {
         parent::__construct();
@@ -70,6 +72,7 @@ class Base extends Controller
             if($time > Config::get('token_time')){
                 die('{"code":501,"msg":"token超时","data":""}');
             }
+            $this->memberInfo = $memberInfo;
             //保存根据token查询到的用户数据
             Cache::set($memberInfo['access_key'], $memberInfo, (Config::get('token_time')- $time));
         }else{
@@ -77,6 +80,7 @@ class Base extends Controller
             if(Cache::get($token)['access_key'] !== $token){
                 die('{"code":501,"msg":"token错误","data":""}');
             }
+            $this->memberInfo = Cache::get($token);
         }
         return true;
     }
