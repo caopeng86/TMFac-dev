@@ -130,7 +130,8 @@ class Route
         $this->app     = $app;
         $this->request = $app['request'];
         $this->config  = $config;
-        $this->host    = $this->request->host(true);
+
+        $this->host = $this->request->host(true) ?: $config['app_host'];
 
         $this->setDefaultDomain();
     }
@@ -165,6 +166,17 @@ class Route
             ->mergeRuleRegex($config['route_rule_merge']);
 
         return $route;
+    }
+
+    /**
+     * 设置路由的请求对象实例
+     * @access public
+     * @param  Request     $request   请求对象实例
+     * @return void
+     */
+    public function setRequest($request)
+    {
+        $this->request = $request;
     }
 
     /**
@@ -382,11 +394,39 @@ class Route
      * 读取路由标识
      * @access public
      * @param  string    $name 路由标识
+     * @param  string    $domain 域名
      * @return mixed
      */
-    public function getName($name = null)
+    public function getName($name = null, $domain = null)
     {
-        return $this->app['rule_name']->get($name);
+        return $this->app['rule_name']->get($name, $domain);
+    }
+
+    /**
+     * 读取路由
+     * @access public
+     * @param  string    $rule 路由规则
+     * @param  string    $domain 域名
+     * @return array
+     */
+    public function getRule($rule, $domain = null)
+    {
+        if (is_null($domain)) {
+            $domain = $this->domain;
+        }
+
+        return $this->app['rule_name']->getRule($rule, $domain);
+    }
+
+    /**
+     * 读取路由
+     * @access public
+     * @param  string    $domain 域名
+     * @return array
+     */
+    public function getRuleList($domain = null)
+    {
+        return $this->app['rule_name']->getRuleList($domain);
     }
 
     /**
@@ -872,7 +912,7 @@ class Route
 
             if (isset($panDomain)) {
                 // 保存当前泛域名
-                $this->request->panDomain($panDomain);
+                $this->request->setPanDomain($panDomain);
             }
         }
 

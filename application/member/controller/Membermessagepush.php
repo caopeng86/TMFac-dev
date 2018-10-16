@@ -31,7 +31,9 @@ class Membermessagepush extends Base
         if(!$ret){
             return reJson(500, $msg, []);
         }
-        $condition = array();
+        $condition = array(
+            ['status','eq',2]
+        );
         $Total = $this->PushMessageModel->getCount($condition); //获取总数
         $num = !empty($inputData['page_size'])?$inputData['page_size']:20; //默认获取20条数据
         $totalPage = ceil($Total/$num); //总页数
@@ -40,12 +42,12 @@ class Membermessagepush extends Base
         }else{
             $start_num = 0;
         }
-        $PushMessageList = $this->PushMessageModel->getList($condition,'',$start_num .','.$num,'add_time desc');
+        $field = 'id,title,content,push_time,url';
+        $PushMessageList = $this->PushMessageModel->getList($condition,$field,$start_num .','.$num,'push_time desc');
         if($PushMessageList === false){
             return reJson(500,'获取数据失败', []);
         }
         foreach ($PushMessageList as $key => $val){
-            $PushMessageList[$key]['add_time'] = date('Y-m-d h:i:s',$PushMessageList[$key]['add_time']);
             $PushMessageList[$key]['push_time'] = date('Y-m-d h:i:s',$PushMessageList[$key]['push_time']);
         }
         return reJson(200,'获取成功',['total_page'=>$totalPage,'now_page'=>$start_num + 1,'list'=>$PushMessageList]);

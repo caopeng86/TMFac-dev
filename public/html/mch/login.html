@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>MCH登陆界面</title>
+  <style>
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}table{border-collapse:collapse;border-spacing:0}
+</style>
+    <style>
+body {
+ 	background: #000; 
+}
+img {
+  display: block;
+  margin: 0 auto;
+}
+canvas {
+	display: block;
+	margin:10% auto;
+}
+.mch{
+    font-size: 34px;
+    position: relative;
+    color: #eee;
+    text-align: center;
+}
+</style>
+    <script src="js/prefixfree.min.js"></script>
+</head>
+<body>
+    <canvas id="c"></canvas>
+    <div class="mch">MCH验证登陆中</div>
+  <script src='js/jquery.js'></script>
+  <script src="js/index.js"></script>
+<div style="text-align:center;clear:both;">
+</div>
+    <script type="application/javascript">
+        $(function(){
+            var $_GET = (function(){
+                var url = window.document.location.href.toString();
+                var u = url.split("?");
+                if(typeof(u[1]) == "string"){
+                    u = u[1].split("&");
+                    var get = {};
+                    for(var i in u){
+                        var j = u[i].split("=");
+                        get[j[0]] = j[1];
+                    }
+                    return get;
+                } else {
+                    return {};
+                }
+            })();
+            if(null == $_GET['token'] || "undefined" == typeof($_GET['token']) || "" == $_GET['token']){
+                showError('token丢失');
+                return false;
+            }
+            if(null == $_GET['systemcode'] || "undefined" == typeof($_GET['systemcode']) || "" == $_GET['systemcode']){
+                showError('systemcode丢失');
+                return false;
+            }
+            if(null == $_GET['siteCode'] || "undefined" == typeof($_GET['siteCode']) || "" == $_GET['siteCode']){
+                showError('siteCode丢失');
+                return false;
+            }
+            if(null == $_GET['logininfo'] || "undefined" == typeof($_GET['logininfo']) || "" == $_GET['logininfo']){
+                showError('logininfo丢失');
+                return false;
+            }
+            $.post('/system/login/mchLogin',{token:$_GET['token'],systemcode:$_GET['systemcode'],siteCode:$_GET['siteCode'],logininfo:$_GET['logininfo']},function (info) {
+                if(info.code == 200){
+                    showError(info.msg);
+                    window.localStorage.setItem('token',info.data['token']);
+                    window.localStorage.setItem('userData',JSON.stringify(info.data));
+                    window.localStorage.setItem('userInfo',JSON.stringify(info.data['user_info']));
+                    window.location.href = '/#/Module';
+                }else{
+                    showError(info.msg);
+                }
+            },'json');
+
+            //显示错误信息
+            function showError(msg) {
+                $('.mch').html(msg);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -87,7 +87,7 @@ class Query
      * 读取主库的表
      * @var array
      */
-    private static $readMaster = [];
+    protected static $readMaster = [];
 
     /**
      * 日期查询表达式
@@ -528,7 +528,7 @@ class Query
      * @param  array  $data  操作的数据
      * @param  string $field 分表依据的字段
      * @param  array  $rule  分表规则
-     * @return string
+     * @return array
      */
     public function getPartitionTableName($data, $field, $rule = [])
     {
@@ -575,9 +575,7 @@ class Query
             $tableName[] = 'SELECT * FROM ' . $this->getTable() . '_' . ($i + 1);
         }
 
-        $tableName = '( ' . implode(" UNION ", $tableName) . ') AS ' . $this->name;
-
-        return $tableName;
+        return ['( ' . implode(" UNION ", $tableName) . ' )' => $this->name];
     }
 
     /**
@@ -635,11 +633,11 @@ class Query
      * COUNT查询
      * @access public
      * @param  string $field 字段名
-     * @return integer|string
+     * @return float|string
      */
     public function count($field = '*')
     {
-        if (isset($this->options['group'])) {
+        if (!empty($this->options['group'])) {
             // 支持GROUP
             $options = $this->getOptions();
             $subSql  = $this->options($options)->field('count(' . $field . ') AS think_count')->bind($this->bind)->buildSql();
@@ -660,7 +658,7 @@ class Query
      * SUM查询
      * @access public
      * @param  string $field 字段名
-     * @return float|int
+     * @return float
      */
     public function sum($field)
     {
@@ -695,7 +693,7 @@ class Query
      * AVG查询
      * @access public
      * @param  string $field 字段名
-     * @return float|int
+     * @return float
      */
     public function avg($field)
     {
@@ -2124,11 +2122,13 @@ class Query
      * 设置JSON字段信息
      * @access public
      * @param  array $json JSON字段
+     * @param  bool  $assoc 是否取出数组
      * @return $this
      */
-    public function json(array $json = [])
+    public function json(array $json = [], $assoc = false)
     {
-        $this->options['json'] = $json;
+        $this->options['json']       = $json;
+        $this->options['json_assoc'] = $assoc;
         return $this;
     }
 
@@ -2245,6 +2245,32 @@ class Query
         }
 
         return $this->parseWhereExp($logic, $field, strtolower($op) . ' time', $range, [], true);
+    }
+
+    /**
+     * 查询当前时间在两个时间字段范围
+     * @access public
+     * @param  string    $startField    开始时间字段
+     * @param  string    $endField 结束时间字段
+     * @return $this
+     */
+    public function whereBetweenTimeField($startField, $endField)
+    {
+        return $this->whereTime($startField, '<=', time())
+            ->whereTime($endField, '>=', time());
+    }
+
+    /**
+     * 查询当前时间不在两个时间字段范围
+     * @access public
+     * @param  string    $startField    开始时间字段
+     * @param  string    $endField 结束时间字段
+     * @return $this
+     */
+    public function whereNotBetweenTimeField($startField, $endField)
+    {
+        return $this->whereTime($startField, '>', time())
+            ->whereTime($endField, '<', time(), 'OR');
     }
 
     /**
@@ -2695,10 +2721,12 @@ class Query
         if (!empty($this->options['soft_delete'])) {
             // 软删除
             list($field, $condition) = $this->options['soft_delete'];
-            unset($this->options['soft_delete']);
-            $this->options['data'] = [$field => $condition];
+            if ($condition) {
+                unset($this->options['soft_delete']);
+                $this->options['data'] = [$field => $condition];
 
-            return $this->connection->update($this);
+                return $this->connection->update($this);
+            }
         }
 
         $this->options['data'] = $data;
@@ -2897,7 +2925,7 @@ class Query
     protected function resultToModel(&$result, $options = [], $resultSet = false)
     {
         if (!empty($options['json'])) {
-            $this->jsonResult($result, $options['json']);
+            $this->jsonResult($result, $options['json'], $options['json_assoc']);
         }
 
         $condition = (!$resultSet && isset($options['where']['AND'])) ? $options['where']['AND'] : null;
