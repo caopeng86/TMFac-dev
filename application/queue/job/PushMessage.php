@@ -23,17 +23,16 @@
               return;
           }
           $isJobDone = $this->doPushMessageJob();
-
           if ($isJobDone) {
               //如果任务执行成功， 记得删除任务
               $job->delete();
           }else{
               if ($job->attempts() > 3) {
                   //通过这个方法可以检查这个任务已经重试了几次了
-                  $job->delete();
+//                  $job->delete();
                   // 也可以重新发布这个任务
                   //print("<info>Hello Job will be availabe again after 2s."."</info>\n");
-                  //$job->release(2); //$delay为延迟时间，表示该任务延迟2秒后再执行
+                  $job->release(10); //$delay为延迟时间，表示该任务延迟2秒后再执行
               }
           }
       }
@@ -60,10 +59,6 @@
           $condition[] = ['push_time','<=',time()];//推送Jpush时间
           $pushList = $pushMessageModel->getList($condition,false,200);
           $JPush = new \app\extend\controller\Jpush();
-          $returnData = [
-              'success'=>0,
-              'error'=>0,
-          ];
           foreach ($pushList as $val){
               //推送消息
               $extras = array(
@@ -74,13 +69,8 @@
                   'androidInfo'=>json_decode($val['android_info'],true)
               );
               $re = $JPush::JPushAll($extras);
-              if($re['http_code'] == 200){
-                  $pushMessageModel->updateInfo(['id'=>$val['id']],['status'=>2,'cid'=>$re['body']['msg_id']]);//推送成功
-                  $returnData['info'][$val['id']] = '成功';
-                  $returnData['success']++;
-              }else{
-                  $returnData['info'][$val['id']] = '失败';
-                  $returnData['error']++;
+              if ($re['http_code'] == 200) {
+                  $pushMessageModel->updateInfo(['id' => $val['id']], ['status' => 2, 'cid' => $re['body']['msg_id']]);//推送成功
               }
           }
           return true;

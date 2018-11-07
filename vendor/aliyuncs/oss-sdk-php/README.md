@@ -1,67 +1,65 @@
-﻿# Alibaba Cloud OSS SDK for PHP
+# Aliyun OSS SDK for PHP
 
 [![Latest Stable Version](https://poser.pugx.org/aliyuncs/oss-sdk-php/v/stable)](https://packagist.org/packages/aliyuncs/oss-sdk-php)
 [![Build Status](https://travis-ci.org/aliyun/aliyun-oss-php-sdk.svg?branch=master)](https://travis-ci.org/aliyun/aliyun-oss-php-sdk)
 [![Coverage Status](https://coveralls.io/repos/github/aliyun/aliyun-oss-php-sdk/badge.svg?branch=master)](https://coveralls.io/github/aliyun/aliyun-oss-php-sdk?branch=master)
 
-## [README of Chinese](https://github.com/aliyun/aliyun-oss-php-sdk/blob/master/README-CN.md)
+## 概述
 
-## Overview
-
-Alibaba Cloud Object Storage Service (OSS) is a cloud storage service provided by Alibaba Cloud, featuring a massive capacity, security, a low cost, and high reliability. You can upload and download data on any application anytime and anywhere by calling APIs, and perform simple management of data through the web console. The OSS can store any type of files and therefore applies to various websites, development enterprises and developers.
+阿里云对象存储（Object Storage Service，简称OSS），是阿里云对外提供的海量、安全、低成本、高可靠的云存储服务。用户可以通过调用API，在任何应用、任何时间、任何地点上传和下载数据，也可以通过用户Web控制台对数据进行简单的管理。OSS适合存放任意文件类型，适合各种网站、开发企业及开发者使用。
 
 
-## Run environment
-- PHP 5.3+.
-- cURL extension.
+## 运行环境
+- PHP 5.3+
+- cURL extension
 
-Tips:
+提示：
 
-- In Ubuntu, you can use the ***apt-get*** package manager to install the *PHP cURL extension*: `sudo apt-get install php5-curl`.
+- Ubuntu下可以使用apt-get包管理器安装php的cURL扩展 `sudo apt-get install php5-curl`
 
-## Install OSS PHP SDK
+## 安装方法
 
-- If you use the ***composer*** to manage project dependencies, run the following command in your project's root directory:
+1. 如果您通过composer管理您的项目依赖，可以在你的项目根目录运行：
 
-        composer require aliyuncs/oss-sdk-php
+        $ composer require aliyuncs/oss-sdk-php
 
-   You can also declare the dependency on Alibaba Cloud OSS SDK for PHP in the `composer.json` file.
+   或者在你的`composer.json`中声明对Aliyun OSS SDK for PHP的依赖：
 
         "require": {
             "aliyuncs/oss-sdk-php": "~2.0"
         }
 
-   Then run `composer install` to install the dependency. After the Composer Dependency Manager is installed, import the dependency in your PHP code: 
+   然后通过`composer install`安装依赖。composer安装完成后，在您的PHP代码中引入依赖即可：
 
         require_once __DIR__ . '/vendor/autoload.php';
 
-- You can also directly download the packaged [PHAR File][releases-page], and 
-   introduce the file to your code: 
+2. 您也可以直接下载已经打包好的[phar文件][releases-page]，然后在你
+   的代码中引入这个文件即可：
 
         require_once '/path/to/oss-sdk-php.phar';
 
-- Download the SDK source code, and introduce the `autoload.php` file under the SDK directory to your code: 
+3. 下载SDK源码，在您的代码中引入SDK目录下的`autoload.php`文件：
 
         require_once '/path/to/oss-sdk/autoload.php';
 
-## Quick use
+## 快速使用
 
-### Common classes
+### 常用类
 
-| Class | Explanation |
+| 类名 | 解释 |
 |:------------------|:------------------------------------|
-|OSS\OSSClient | OSS client class. An OSSClient instance can be used to call the interface.  |
-|OSS\Core\OSSException |OSS Exception class . You only need to pay attention to this exception when you use the OSSClient. |
+|OSS\OssClient | OSS客户端类，用户通过OssClient的实例调用接口 |
+|OSS\Core\OssException | OSS异常类，用户在使用的过程中，只需要注意这个异常|
 
-### Initialize an OSSClient
+### OssClient初始化
 
-The SDK's operations for the OSS are performed through the OSSClient class. The code below creates an OSSClient object:
+SDK的OSS操作通过OssClient类完成的，下面代码创建一个OssClient对象:
 
 ```php
 <?php
-$accessKeyId = "<AccessKeyID that you obtain from OSS>";
-$accessKeySecret = "<AccessKeySecret that you obtain from OSS>";
-$endpoint = "<Domain that you select to access an OSS data center, such as "oss-cn-hangzhou.aliyuncs.com>";
+$accessKeyId = "<您从OSS获得的AccessKeyId>"; ;
+$accessKeySecret = "<您从OSS获得的AccessKeySecret>";
+$endpoint = "<您选定的OSS数据中心访问域名，例如oss-cn-hangzhou.aliyuncs.com>";
 try {
     $ossClient = new OssClient($accessKeyId, $accessKeySecret, $endpoint);
 } catch (OssException $e) {
@@ -69,15 +67,15 @@ try {
 }
 ```
 
-### Operations on objects
+### 文件操作
 
-Objects are the most basic data units on the OSS. You can simply consider objects as files. The following code uploads an object:
+文件(又称对象,Object)是OSS中最基本的数据单元，您可以把它简单地理解为文件，用下面代码可以实现一个Object的上传：
 
 ```php
 <?php
-$bucket= "<Name of the bucket in use. Pay attention to naming conventions>";
-$object = "<Name of the object in use. Pay attention to naming conventions>";
-$content = "Hello, OSS!"; // Content of the uploaded file
+$bucket = "<您使用的Bucket名字，注意命名规范>";
+$object = "<您使用的Object名字，注意命名规范>";
+$content = "Hello, OSS!"; // 上传的文件内容
 try {
     $ossClient->putObject($bucket, $object, $content);
 } catch (OssException $e) {
@@ -85,13 +83,13 @@ try {
 }
 ```
 
-### Operations on buckets
+### 存储空间操作
 
-Buckets are the space that you use to manage the stored objects. It is an object management unit for users. Each object must belong to a bucket. You can create a bucket with the following code:
+存储空间(又称Bucket)是一个用户用来管理所存储Object的存储空间,对于用户来说是一个管理Object的单元，所有的Object都必须隶属于某个Bucket。您可以按照下面的代码新建一个Bucket：
 
 ```php
 <?php
-$bucket= "<Name of the bucket in use. Pay attention to naming conventions>";
+$bucket = "<您使用的Bucket名字，注意命名规范>";
 try {
     $ossClient->createBucket($bucket);
 } catch (OssException $e) {
@@ -99,52 +97,56 @@ try {
 }
 ```
 
-### Handle returned results
+### 返回结果处理
 
-The OSSClient provides the following two types of returned data from interfaces:
+OssClient提供的接口返回返回数据分为两种：
 
-- Put and Delete interfaces: The *PUT* and *DELETE* operations are deemed successful if *null* is returned by the interfaces without *OSSException*.
-- Get and List interfaces: The *GET* and *LIST* operations are deemed successful if the desired data is returned by the interfaces without *OSSException*. For example, 
+* Put，Delete类接口，接口返回null，如果没有OssException，即可认为操作成功
+* Get，List类接口，接口返回对应的数据，如果没有OssException，即可认为操作成功，举个例子：
 
-    ```php
-    <?php
-    $bucketListInfo = $ossClient->listBuckets();
-    $bucketList = $bucketListInfo->getBucketList();
-    foreach($bucketList as $bucket) {
-        print($bucket->getLocation() . "\t" . $bucket->getName() . "\t" . $bucket->getCreatedate() . "\n");
-    }
-    ```
-In the above code, $bucketListInfo falls into the 'OSS\Model\BucketListInfo' data type.
+```php
+<?php
+$bucketListInfo = $ossClient->listBuckets();
+$bucketList = $bucketListInfo->getBucketList();
+foreach($bucketList as $bucket) {
+    print($bucket->getLocation() . "\t" . $bucket->getName() . "\t" . $bucket->getCreatedate() . "\n");
+}
+```
+上面代码中的$bucketListInfo的数据类型是 `OSS\Model\BucketListInfo`
 
 
-### Run a sample project
+### 运行Sample程序
 
-- Modify `samples/Config.php` to complete the configuration information. 
-- Run `cd samples/ && php RunAll.php`. 
+1. 修改 `samples/Config.php`， 补充配置信息
+2. 执行 `cd samples/ && php RunAll.php`
 
-### Run a unit test
+### 运行单元测试
 
-- Run `composer install` to download the dependent libraries. 
-- Set the environment variable. 
+1. 执行`composer install`下载依赖的库
+2. 设置环境变量
 
         export OSS_ACCESS_KEY_ID=access-key-id
         export OSS_ACCESS_KEY_SECRET=access-key-secret
         export OSS_ENDPOINT=endpoint
         export OSS_BUCKET=bucket-name
 
-- Run `php vendor/bin/phpunit`
+3. 执行 `php vendor/bin/phpunit`
 
-## License
+## 贡献代码
 
-- MIT
+0. 开发流程参考：https://github.com/rockuw/oss-sdk-status#development-oss-members-only
+1. 提交代码后，确保travis CI是PASS的
+2. 每发布一个新的版本：
+  - 运行`build-phar.sh`生成相应的phar包（需要安装[phar-composer][phar-composer])
+  - 在[Release页面][releases-page]发布一个版本
+  - 将生成的phar包上传到相应的Release下面
 
-## Contact us
+## 联系我们
 
-- [Alibaba Cloud OSS official website](http://oss.aliyun.com).
-- [Alibaba Cloud OSS official forum](http://bbs.aliyun.com).
-- [Alibaba Cloud OSS official documentation center](http://www.aliyun.com/product/oss#Docs).
-- Alibaba Cloud official technical support: [Submit a ticket](https://workorder.console.aliyun.com/#/ticket/createIndex).
+- [阿里云OSS官方网站](http://oss.aliyun.com)
+- [阿里云OSS官方论坛](http://bbs.aliyun.com)
+- [阿里云OSS官方文档中心](http://www.aliyun.com/product/oss#Docs)
+- 阿里云官方技术支持：[提交工单](https://workorder.console.aliyun.com/#/ticket/createIndex)
 
 [releases-page]: https://github.com/aliyun/aliyun-oss-php-sdk/releases
 [phar-composer]: https://github.com/clue/phar-composer
-

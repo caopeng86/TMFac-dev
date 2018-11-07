@@ -35,6 +35,7 @@ class Base extends Controller
         //跳过验证的方法
         $pass = [
             'system\site\getsitelist',
+            'system\member\exportmembertoexcel',
         ];
         if(in_array($url, $pass)){
             return true;
@@ -73,6 +74,7 @@ class Base extends Controller
             if(Cache::get($token)['access_key'] !== $token){
                 die('{"code":501,"msg":"token错误","data":""}');
             }
+            $this->memberInfo = Cache::get($token);
         }
         return true;
     }

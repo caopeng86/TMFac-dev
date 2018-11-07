@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>导出Excel</title>
+    <link  rel="stylesheet" type="text/css" href="lib/layui/css/layui.css" />
+    <style>
+        #demo1{
+            width:344px;
+            height:135px;
+            margin: 20px 0;
+        }
+        .sort{
+            margin: 10px 0;
+            width:100px
+        }
+        .layui-btn-normal {
+            background-color: #1E9FFF!important;
+            height: 30px;
+            line-height: 30px !important;
+            width: 90px;
+
+        }
+        .title{
+            border-bottom: 1px solid #e6e6e6;
+            padding: 15px;
+            font-weight: bolder;
+        }
+        .tips{
+            text-align: center;
+            margin-top: 100px;
+        }
+        .tips p{
+            font-size: 24px;
+            margin-top: 20px;
+        }
+        .layui-input-block{
+            margin-left: 0;
+            text-align: center;
+            margin-top: 40px;
+        }
+        .cancel{
+            color: #3399FF;
+            background-color: #ffffff!important;
+            border: 1px solid #3399FF;
+        }
+        .cancel:hover{
+            color: #3399FF;
+        }
+        .integralList-box{
+            font-size: 25px;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .integralList-box span{
+            font-size: 20px;
+            color: rgb(255,102,0);
+        }
+    </style>
+</head>
+<body>
+<form class="layui-form" action="">
+    <div class="title">导出到Excel</div>
+    <div class="tips">
+        <p class="integralList-box">已选中 <span>0</span> 条</p>
+        <p>确定要导出到EXCEL吗？</p>
+    </div>
+</form>
+<div class="layui-form-item">
+    <div class="layui-input-block">
+        <button class="layui-btn layui-btn-normal cancel">取消</button>
+        <button class="layui-btn layui-btn-normal submit">确定</button>
+    </div>
+</div>
+</body>
+<script src="lib/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="lib/layui/layui.all.js"></script>
+<script>
+    $(window).ready(function(){
+        $('.integralList-box span').html(getQueryString("idDataNum"))
+    })
+    $(".submit").click(function(){
+        var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+        if(getQueryString('isExclude')=="true"){
+            downloadFile('/system/Member/exportMemberToExcel?no_member_id='+getQueryString("idData")+'&member_name='+getQueryString('member_name')+'&account='+getQueryString('account')+'&mobile='+getQueryString('mobile')+'&status='+getQueryString('status')+'&sex='+getQueryString('sex'))
+        }else{
+            downloadFile('/system/Member/exportMemberToExcel?member_id='+getQueryString("idData")+'&member_name='+getQueryString('member_name')+'&account='+getQueryString('account')+'&mobile='+getQueryString('mobile')+'&status='+getQueryString('status')+'&sex='+getQueryString('sex'))
+        }
+        setTimeout(function(){
+            parent.layer.close(index);
+        },500)
+    })
+    $(".cancel").click(function(){
+        var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+        parent.layer.close(index);
+    })
+
+    function downloadFile(url) {
+        try{
+            var elemIF = document.createElement("iframe");
+            elemIF.src = url;
+            elemIF.style.display = "none";
+            document.body.appendChild(elemIF);
+        }catch(e){
+            zzrw.alert("下载异常！");
+        }
+    }
+
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
+</script>
+</html>

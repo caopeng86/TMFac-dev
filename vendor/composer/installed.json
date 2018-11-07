@@ -1,17 +1,17 @@
 [
     {
         "name": "aliyuncs/oss-sdk-php",
-        "version": "v2.3.0",
-        "version_normalized": "2.3.0.0",
+        "version": "v2.2.4",
+        "version_normalized": "2.2.4.0",
         "source": {
             "type": "git",
             "url": "https://github.com/aliyun/aliyun-oss-php-sdk.git",
-            "reference": "e69f57916678458642ac9d2fd341ae78a56996c8"
+            "reference": "0b9b85b6c5c38cfc4ef3b0205a5a62d1e36acf2e"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/aliyun/aliyun-oss-php-sdk/zipball/e69f57916678458642ac9d2fd341ae78a56996c8",
-            "reference": "e69f57916678458642ac9d2fd341ae78a56996c8",
+            "url": "https://api.github.com/repos/aliyun/aliyun-oss-php-sdk/zipball/0b9b85b6c5c38cfc4ef3b0205a5a62d1e36acf2e",
+            "reference": "0b9b85b6c5c38cfc4ef3b0205a5a62d1e36acf2e",
             "shasum": ""
         },
         "require": {
@@ -21,7 +21,7 @@
             "phpunit/phpunit": "~4.0",
             "satooshi/php-coveralls": "~1.0"
         },
-        "time": "2018-01-08T06:59:35+00:00",
+        "time": "2017-04-25T09:15:12+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -282,6 +282,53 @@
         ]
     },
     {
+        "name": "itxiao6/upload",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/itxiao6/upload.git",
+            "reference": "b010589884dc5d4cc805fcd684ec610819d190ce"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/itxiao6/upload/zipball/b010589884dc5d4cc805fcd684ec610819d190ce",
+            "reference": "b010589884dc5d4cc805fcd684ec610819d190ce",
+            "shasum": ""
+        },
+        "require": {
+            "aliyuncs/oss-sdk-php": "v2.2.4",
+            "php": ">=5.3.0",
+            "qiniu/php-sdk": "v7.2.2"
+        },
+        "time": "2017-11-24T09:04:05+00:00",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Itxiao6\\Upload\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Small six",
+                "email": "itxiao6@qq.com"
+            }
+        ],
+        "description": "minkenrel upload",
+        "homepage": "http://github.com/itxiao6/upload",
+        "keywords": [
+            "Minkernel",
+            "file",
+            "upload",
+            "validation"
+        ]
+    },
+    {
         "name": "nesbot/carbon",
         "version": "1.22.1",
         "version_normalized": "1.22.1.0",
@@ -386,6 +433,59 @@
             "psr-7",
             "request",
             "response"
+        ]
+    },
+    {
+        "name": "qiniu/php-sdk",
+        "version": "v7.2.2",
+        "version_normalized": "7.2.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/qiniu/php-sdk.git",
+            "reference": "79290fd9cb5d72cc2feef779008b3aaeeac49eb9"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/qiniu/php-sdk/zipball/79290fd9cb5d72cc2feef779008b3aaeeac49eb9",
+            "reference": "79290fd9cb5d72cc2feef779008b3aaeeac49eb9",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.3"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "~4.0",
+            "squizlabs/php_codesniffer": "~2.3"
+        },
+        "time": "2017-11-07T06:12:11+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Qiniu\\": "src/Qiniu"
+            },
+            "files": [
+                "src/Qiniu/functions.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Qiniu",
+                "email": "sdk@qiniu.com",
+                "homepage": "http://www.qiniu.com"
+            }
+        ],
+        "description": "Qiniu Resource (Cloud) Storage SDK for PHP",
+        "homepage": "http://developer.qiniu.com/",
+        "keywords": [
+            "cloud",
+            "qiniu",
+            "sdk",
+            "storage"
         ]
     },
     {
@@ -781,5 +881,52 @@
             }
         ],
         "description": "The ThinkPHP5 Queue Package"
+    },
+    {
+        "name": "yansongda/pay",
+        "version": "v1.3.4",
+        "version_normalized": "1.3.4.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/yansongda/pay.git",
+            "reference": "f732b1a32cf0e1a17464a705fc8685c2ff296cd3"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/yansongda/pay/zipball/f732b1a32cf0e1a17464a705fc8685c2ff296cd3",
+            "reference": "f732b1a32cf0e1a17464a705fc8685c2ff296cd3",
+            "shasum": ""
+        },
+        "require": {
+            "guzzlehttp/guzzle": "^6.3",
+            "php": ">=5.6"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "^6.2"
+        },
+        "time": "2018-08-25T07:22:30+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Yansongda\\Pay\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "yansongda",
+                "email": "me@yansongda.cn"
+            }
+        ],
+        "description": "专注 Alipay 和 WeChat 的支付扩展包",
+        "keywords": [
+            "alipay",
+            "pay",
+            "wechat"
+        ]
     }
 ]
