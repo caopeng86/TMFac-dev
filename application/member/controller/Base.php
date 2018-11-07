@@ -87,6 +87,7 @@ class Base extends Controller
             if(Cache::get($token)['access_key'] !== $token){
                 die('{"code":501,"msg":"token错误","data":""}');
             }
+
             if(1 == Cache::get($token)['status']){
                 die('{"code":502,"msg":"很遗憾，该账户已被列入企业黑名单","data":""}');
             }
