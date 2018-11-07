@@ -1,0 +1,359 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="lib/html5shiv.js"></script>
+    <script type="text/javascript" src="lib/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link  rel="stylesheet" type="text/css" href="lib/layui/css/layui.css" />
+    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
+    <!--[if IE 6]>
+    <script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+    <script>DD_belatedPNG.fix('*');</script>
+    <![endif]-->
+    <title>会员信息</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> <a href="javascript:window.history.go(-1) ">会员管理</a> <span class="c-gray en">&gt;</span> 会员信息 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+    <div class="user-box">
+        <div class="layui-row">
+            <div class="layui-col-md6">
+                <div class="left-info">
+                    <img src="./temp/tou.png" style="border-radius: 50%" id="avatar" width="70px" alt="">
+                    <div class="userInfo">
+                        <p class="account"></p>
+                        <p class="username"></p>
+                    </div>
+                    <img src="./temp/woman.png" id="woman" width="20" alt="">
+                    <img src="./temp/man.png" id="man" width="20" alt="">
+                </div>
+            </div>
+            <div class="layui-col-md4 layui-col-md-offset2 operationBtnBox">
+                <button class="layui-btn" id="addBacklist"><span>加入</span>黑名单</button>
+                <button class="layui-btn" id="kick">封号</button>
+                <button class="layui-btn" id="removekick" style="display: none;">解除封号</button>
+            </div>
+        </div>
+        <img class="statusImg" src="" width="80" alt="">
+
+    </div>
+    <div class="userInfo-box">
+        <ul>
+            <li>
+                <div class="userInfo-title">积分</div>
+                <div class="userInfo-content">
+                    <img src="./temp/integral.png" width="18px" alt="">
+                    <span class="num"></span>
+                    <img id="editImg" style="cursor: pointer" src="./temp/edit.png" width="18px" alt="">
+                </div>
+            </li>
+            <li>
+                <div class="userInfo-title">生日</div>
+                <div class="userInfo-content">
+                    <span class="birth"></span>
+                </div>
+            </li>
+            <li>
+                <div class="userInfo-title">手机号</div>
+                <div class="userInfo-content">
+                    <span class="mobile"></span>
+                </div>
+            </li>
+            <li>
+                <div class="userInfo-title">社交账号</div>
+                <div class="userInfo-content">
+                    <ul>
+                        <li class="wb">
+                            <div class="contactName">
+                                <img src="./temp/tou.png" width="25px" alt="">
+                                <span></span>
+                            </div>
+                            <div class="contactType">
+                                <img src="./temp/wb.png" width="15px" alt="">
+                                <span>微博</span>
+                            </div>
+                        </li>
+                        <li class="wx">
+                            <div class="contactName">
+                                <img src="./temp/tou.png" width="25px" alt="">
+                                <span></span>
+                            </div>
+                            <div class="contactType">
+                                <img src="./temp/wx.png" width="15px" alt="">
+                                <span>微信</span>
+                            </div>
+                        </li>
+                        <li class="qq">
+                            <div class="contactName">
+                                <img src="./temp/tou.png" width="25px" alt="">
+                                <span></span>
+                            </div>
+                            <div class="contactType">
+                                <img src="./temp/qq.png" width="15px" alt="">
+                                <span>QQ</span>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="noBind">未绑定</div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="userRecords-box">
+        <div class="layui-tab layui-tab-card">
+            <ul class="layui-tab-title">
+                <li class="layui-this">积分变动记录</li>
+                <li>会员行为记录</li>
+            </ul>
+            <div class="layui-tab-content" style="padding: 0">
+                <div class="layui-tab-item layui-show">
+                    <table class="layui-hide" id="test1"></table>
+                </div>
+                <div class="layui-tab-item">
+                    <table class="layui-hide" id="test2"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="lib/layui-2.4.3/layui.all.js"></script>
+<script type="text/javascript" src="lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<!--<script type="text/javascript" src="lib/laypage/1.2/laypage.js"></script>-->
+<script type="text/javascript">
+    var member_status = 0;
+    var member_info = '';
+    $(window).ready(function(){
+        if(getQueryString('member_code')!=null&&getQueryString('member_code')!=''){
+            $.ajax({
+                type: "get",
+                url: "/system/Member/getMemberInfo",
+                cache: false,  //禁用缓存
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("token", localStorage.getItem("token"));
+                },
+                data: {"member_code":getQueryString("member_code")},  //传入组装的参数
+                dataType: "json",
+                success: function (data) {
+                    var userInfo = data.data;
+                    member_info = data.data;
+                    if (data.code == 200) {
+                        //用户状态
+                      if(userInfo.status==1){
+                            $('.statusImg').attr('src','./temp/backlist.png')
+                            $('#addBacklist span').html('解除')
+                        }else if(userInfo.close==1){
+                            $('.statusImg').attr('src','./temp/kick.png')
+                            $('#kick').hide()
+                            $('#removekick').show()
+                        }else if(userInfo.status==0){
+                            $('.statusImg').attr('src','./temp/normal.png')
+                        }
+
+                        //账号判断
+                        if(userInfo.mobile!=''&&userInfo.mobile!=null){
+                            userInfo.account=userInfo.mobile
+                        }else if(userInfo.wx!=''&&userInfo.wx!=null){
+                            userInfo.account=userInfo.wx
+                        }else if(userInfo.qq !=''&&userInfo.qq!=null){
+                            userInfo.account=userInfo.qq
+                        }else if(userInfo.wb!=''&&userInfo.wb!=null){
+                            userInfo.account=userInfo.wb
+                        }else{
+                            userInfo.account=""
+                        }
+
+                        //性别
+                        if(userInfo.sex==1){
+                            $('#man').css('display','inline-block')
+                        }else if (userInfo.sex==2) {
+                            $('#woman').css('display','inline-block')
+                        }
+
+                        //黑名单
+                        if(userInfo.status==0){
+                            $('.addBacklist').html('加入黑名单')
+                        }else{
+                            $('.addBacklist').html('解除黑名单')
+                        }
+
+                        member_status = userInfo.status;
+                        $('.account').html(userInfo.account);
+                        $('.username').html(userInfo.member_nickname);
+                        $('#avatar').attr('src',userInfo.head_pic);
+                        $('.num').html(userInfo.point);
+                        $('.birth').html(userInfo.birthday ? userInfo.birthday : '未设置');
+                        $('.mobile').html(userInfo.mobile ? userInfo.mobile : '未绑定');
+
+                        $('.wb').css("display",'wb' in userInfo.other_info ? 'inline-block' : 'none')
+                        $('.wb .contactName span').html('wb' in userInfo.other_info ? userInfo.other_info.wb.nick_name : '未绑定' );
+                        $('.wb .contactName img').attr('src','wb' in userInfo.other_info ? userInfo.other_info.wb.head_url : './temp/tou.png' );
+                        $('.wx').css("display",'wx' in userInfo.other_info ? 'inline-block' : 'none')
+                        $('.wx .contactName span').html('wx' in userInfo.other_info ? userInfo.other_info.wx.nick_name : '未绑定');
+                        $('.wx .contactName img').attr('src','wx' in userInfo.other_info ? userInfo.other_info.wx.head_url : './temp/tou.png' );
+                        $('.qq').css("display",'qq' in userInfo.other_info ? 'inline-block' : 'none')
+                        $('.qq .contactName span').html('qq' in userInfo.other_info ? userInfo.other_info.qq.nick_name : '未绑定');
+                        $('.qq .contactName img').attr('src','qq' in userInfo.other_info ? userInfo.other_info.qq.head_url : './temp/tou.png' );
+                        $('.userInfo-content ul').css('display',JSON.stringify(userInfo.other_info) == "{}"? 'none':'block')
+                        $('.noBind').css('display',JSON.stringify(userInfo.other_info) == "[]"? 'block':'none')
+                    } else if (data.code == 501) {
+                        parent.parent.parent.checkToken()
+                    } else {
+                        layer.msg(data.msg)
+                    }
+                }
+            })
+        }
+    })
+    $(function(){
+
+        //调整积分
+        $("#editImg").click(function () {
+            layer.open({
+                type: 2,
+                title: false,
+                shade: 0.8,
+                // shadeClose:true,
+                area: ['500px', '400px'],
+                content: 'integralmodal.html?idData='+getQueryString('member_id')+'&idDataNum=1'+'&point='+member_info.point //iframe的url
+            });
+        });
+
+        //加入黑名单
+      $("#addBacklist").click(function () {
+          layer.open({
+              type: 2,
+              title: false,
+              shade: 0.8,
+              // shadeClose:true,
+              area: ['500px', '350px'],
+              content: 'addBacklist.html?member_id='+getQueryString('member_id')+'&member_status='+member_status + '&member_nickname=' + member_info.member_nickname //iframe的url
+          });
+      })
+        //封号
+        $("#kick").click(function () {
+            layer.open({
+                type: 2,
+                title: false,
+                shade: 0.8,
+                // shadeClose:true,
+                area: ['500px', '450px'],
+                content: 'addKick.html?member_id='+getQueryString('member_id')+'&nowPoint='+member_info.point+'&close_start_time='+member_info.close_start_time+'&close_end_time='+member_info.close_end_time //iframe的url
+            });
+        })
+        //解除封号
+        $("#removekick").click(function () {
+            layer.open({
+                type: 2,
+                title: false,
+                shade: 0.8,
+                // shadeClose:true,
+                area: ['500px', '350px'],
+                content: 'removeKick.html?member_id='+getQueryString('member_id') + '&member_nickname=' + member_info.member_nickname //iframe的url
+            });
+        })
+    });
+    layui.use('table', function(){
+        var table = layui.table;
+        table.render({
+            elem: '#test1'
+            ,url:'/system/Member/getMemberPointList'
+            ,headers: {"token":localStorage.getItem("token")}
+            ,where: { //设定异步数据接口的额外参数，任意设
+                member_id: getQueryString('member_id')
+            }
+            ,request: {
+                pageName: 'index' //页码的参数名称，默认：page
+                ,limitName: 'page_size' //每页数据量的参数名，默认：limit
+            }
+            ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                layout: ['count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
+                //,curr: 5 //设定初始在第 5 页
+                ,groups: 1 //只显示 1 个连续页码
+                ,first: false //不显示首页
+                ,last: false //不显示尾页
+            }
+            ,cols: [[
+                { field:'id', width:130, title: 'ID'}
+                ,{ field:'remark', title: '内容'}
+                ,{ field:'change_point', title: '积分'}
+                ,{ field:'add_time', title: '时间'}
+                ,{ field:'remarks', title: '备注'}
+            ]]
+            ,response: {
+                statusCode: 200 //重新规定成功的状态码为 200，table 组件默认为 0
+            }
+            ,parseData: function(res){ //将原始数据解析成 table 组件所规定的数据
+                return {
+                    "code": res.code, //解析接口状态
+                    "msg": res.msg, //解析提示文本
+                    "count": res.data.total, //解析数据长度
+                    "data": res.data.list //解析数据列表
+                };
+            }
+
+        },);
+        table.render({
+            elem: '#test2'
+            ,url:'/system/Member/getMemberBehaviorList'
+            ,headers: {"token":localStorage.getItem("token")}
+            ,where: { //设定异步数据接口的额外参数，任意设
+                member_id: getQueryString('member_id')
+            }
+            ,request: {
+                pageName: 'index' //页码的参数名称，默认：page
+                ,limitName: 'page_size' //每页数据量的参数名，默认：limit
+            }
+            ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                layout: ['count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
+                //,curr: 5 //设定初始在第 5 页
+                ,groups: 1 //只显示 1 个连续页码
+                ,first: false //不显示首页
+                ,last: false //不显示尾页
+
+            }
+            ,cols: [[
+                { field:'id', width:130, title: 'ID'}
+                ,{ field:'content', title: '内容'}
+                ,{ field:'create_time', title: '发生时间'}
+                ,{ field:'remarks', title: '备注'}
+            ]]
+            ,response: {
+                statusCode: 200 //重新规定成功的状态码为 200，table 组件默认为 0
+            }
+            ,parseData: function(res){ //将原始数据解析成 table 组件所规定的数据
+                return {
+                    "code": res.code, //解析接口状态
+                    "msg": res.msg, //解析提示文本
+                    "count": res.data.total, //解析数据长度
+                    "data": res.data.list //解析数据列表
+                };
+            }
+
+        },);
+    });
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
+</script>
+</body>
+</html>

@@ -58,4 +58,20 @@ class PushMessageModel extends CommonModel
     public function getInfo($condition){
         return Db::table($this->push_message_db)->where($condition)->find();
     }
+
+    /**
+     * 添加队列
+     */
+
+    public function addPushMessage($id){
+        $jobName = 'app\job\pushMessage\sendMessage';  //负责处理队列任务的类
+        $data = ['id' => $id]; //当前任务所需的业务数据
+        $jobQueueName = 'sendMessage'; //当前任务归属的队列名称，如果为新队列，会自动创建
+        $result = \think\Queue::push($jobName, $data, $jobQueueName);
+        if ($result) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

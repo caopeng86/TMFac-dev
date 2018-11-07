@@ -20,10 +20,11 @@ class Index extends \think\Controller {
 		}
 	}
     public function test(){
-
-        echo "<hr />去除注释后：<br />";
-            highlight_string(removeComment(file_get_contents(Env::get('root_path').'db/sql.sql')));
-
+	    $sql = '201410245.sql';
+        var_dump(strstr($sql,'.sql',true));
+//        echo "<hr />去除注释后：<br />";
+//            highlight_string(removeComment(file_get_contents(Env::get('root_path').'db/sql.sql')));
+//
 
     }
 
@@ -100,7 +101,7 @@ class Index extends \think\Controller {
 				if (!$db->execute($sql)) {
 					return $this->error('创建数据库失败');
 				} else {
-					return $this->redirect('install/index/sql');
+					return $this->redirect('/install/index/sql');
 				}
 			}
 		} else {
@@ -128,7 +129,7 @@ class Index extends \think\Controller {
 			$dbconfig = session('db_config');
 			$db       = \think\Db::connect($dbconfig);
 			//创建数据表
-            create_tables_multi($db, $dbconfig['prefix']);
+            $dbconfig['sql_version'] = create_tables_multi($db, $dbconfig['prefix']);
 			//注册创始人帐号
 			$admin = session('admin_info');
 			register_administrator($db, $dbconfig['prefix'], $admin);
@@ -141,7 +142,8 @@ class Index extends \think\Controller {
 		if (session('error')) {
 			show_msg('失败');
 		} else {
-			echo '<script type="text/javascript">location.href = "'.url('install/index/complete').'";</script>';
+            show_msg('部署成功');
+			echo '<script type="text/javascript">$(".btn-warning").text("部署完成");setTimeout(location.href = "/install/index/complete",3);</script>';
 		}
 	}
 

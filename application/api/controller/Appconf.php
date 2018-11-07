@@ -47,6 +47,8 @@ class Appconf extends Controller
         }
 
         $file = base64_decode($file);
-        echo $file;die;
+        $file = json_decode($file, true);
+        return json($file);
+       // echo $file;die;
     }
 }

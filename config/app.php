@@ -164,5 +164,25 @@ return [
     'token_time'=>604800,
     'queue' =>[
         'connector'=>'database'
-    ]
+    ],
+     //从平台拉取数据的配置
+    'PullData' => [
+        'key' => 'aaaa'
+        ],
+    'upload_info' => [
+        'type'=>'qn',//local(本地),oss(阿里云对象存储),qn(七牛对象存储)
+        'oss_param'=>[ //对应需要的参数配置
+            'accessKeyId'=>'LTAItVl4NjfG303c',
+            'accessKeySecret'=>'2x0vFnfq0y7FHaniCN2Wo3sA8k6Izu',
+            'endpoint'=>'http://oss-cn-qingdao.aliyuncs.com',
+            'bucket'=>'tianma-shop-goods',
+        ],
+        'qn_param'=>[
+            'accessKey'=>'mOmsEmq2vOKp5AwAged65eMLWiZXbjO31XC6lXem',
+            'secretKey'=>'ZY0IpAlLwpjBSW4R04Asc4mIY-fAUALwYThQzRGz',
+            'bucket'=>'cases',
+            'upload'=>'http://upload.qiniup.com',
+            'cdn'=>'http://pdhfer5jc.bkt.clouddn.com',
+        ]
+    ],
 ];

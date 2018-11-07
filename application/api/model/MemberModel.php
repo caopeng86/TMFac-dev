@@ -28,7 +28,8 @@ class MemberModel extends CommonModel
      * @throws
      */
     public function getCount($condition){
-        $re = Db::table($this->member_db)->where($condition)->count('member_id');
+        $join_exp= $this->member_db.'.site_code = '.$this->site_db.'.site_code';
+        $re = Db::table($this->member_db)->where($condition)->join($this->site_db, $join_exp)->count('member_id');
         return $re;
     }
 
