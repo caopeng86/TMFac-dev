@@ -130,9 +130,37 @@ CREATE TABLE `tm_adv`  (
 
 INSERT INTO `tm_adv`(`image`, `url`, `sort`, `is_login_skip`, `status`, `form`, `ios_info`, `android_info`, `unit_id`, `unit_name`) VALUES ('/images/banner.png', '', 5, 1, 1, 0, NULL, NULL, NULL, NULL);
 
-ALTER TABLE tm_member`
-ADD COLUMN `member_sn` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户sn账号' AFTER `login_type`;
-
 ALTER TABLE `tm_adv`
 ADD COLUMN `add_time` bigint(11) NULL COMMENT '新增时间' AFTER `unit_name`,
 ADD COLUMN `update_time` bigint(11) NULL COMMENT '更新时间' AFTER `add_time`;
+
+CREATE TABLE `tm_start_adv`  (
+  `id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `app_start_image` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '图片链接大',
+  `url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '跳转链接',
+  `sort` int(8) NULL DEFAULT NULL COMMENT '排序',
+  `status` int(1) NULL DEFAULT 1 COMMENT '0不显示1显示',
+  `form` int(1) NULL DEFAULT 0 COMMENT '类型 0为非原生 1为原生',
+  `ios_info` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'ios跳转信息',
+  `android_info` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'android跳转信息',
+  `unit_id` int(8) NULL DEFAULT NULL COMMENT '组件id',
+  `unit_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '组件名称',
+  `add_time` bigint(11) NULL DEFAULT NULL COMMENT '新增时间',
+  `update_time` bigint(11) NULL DEFAULT NULL COMMENT '更新时间',
+  `show_duration` int(11) NULL DEFAULT 3 COMMENT '显示时长',
+  `start_time` bigint(11) NULL DEFAULT NULL COMMENT '启用时间',
+  `app_start_image_m` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '图片链接中',
+  `app_start_image_s` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '图片链接小',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+INSERT INTO `tm_config`(`key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ('start_adv_type', '1', '启动页播放方式', 'app', 1541584929, 1541584929);
+
+INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'Baidu_Api_Key', 'ASiveWjeR4yfH7XjbrmH8c6f', '百度统计key', 'BaiduAnalysis', 1541584929, 1541584929);
+INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'Baidu_Secret_Key', 'bnP3h9GNlXD7BSdCkiwwcfoM0uLCMUG8', '百度统计密钥', 'BaiduAnalysis', 1541584929, 1541584929);
+INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'Baidu_android_App_Key', '47b455ccc0', '百度统计应用安卓key', 'BaiduAnalysis', 1541584929, 1541584929);
+INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'Baidu_iOS_App_Key', '24219d0a17', '百度统计应用iOSkey', 'BaiduAnalysis', 1541584929, 1541584929);
+INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'Baidu_refresh_token', '22.645a1e7db518610cc669585a819a9934.315360000.1857023811.892630829-14721012', '长期refresh_token缓存', 'BaiduAnalysis', 1541663812, 1541663812);
+
+update tm_member set login_type = 'mobile' where login_type is NULL;
+update tm_member set sex = 0 where sex is NULL;
