@@ -43,25 +43,7 @@ CREATE TABLE `tm_user_behavior_log` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
-CREATE TABLE `tm_adv`  (
-  `id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `image` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '图片链接',
-  `url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '调整链接',
-  `sort` int(8) NULL DEFAULT NULL COMMENT '排序',
-  `is_login_skip` int(1) NULL DEFAULT 0 COMMENT '是否登录显示',
-  `status` int(1) NULL DEFAULT 1 COMMENT '0删除1正常',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
-INSERT INTO `tm_adv`(`image`, `url`, `sort`, `is_login_skip`, `status`) VALUES ('/images/banner.png','', 5, 1, 1);
 INSERT INTO `tm_config`(`key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ('BackGroupPic', '/images/backgroup.png', '个人中心背景图', 'client', 1541059566, 1541059566);
-
-ALTER TABLE `tm_adv`
-ADD COLUMN `form` int(1) NULL DEFAULT 0 COMMENT '类型 0为非原生 1为原生' AFTER `status`,
-ADD COLUMN `ios_info` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT 'ios跳转信息' AFTER `form`,
-ADD COLUMN `android_info` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT 'android跳转信息' AFTER `ios_info`,
-ADD COLUMN `unit_id` int(8) NULL DEFAULT NULL COMMENT '组件id' AFTER `android_info`,
-ADD COLUMN `unit_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '组件名称' AFTER `unit_id`;
 
 ALTER TABLE `tm_member`
 ADD COLUMN `member_sn` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '用户sn账号' AFTER `login_type`;
@@ -164,3 +146,14 @@ INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_
 
 update tm_member set login_type = 'mobile' where login_type is NULL;
 update tm_member set sex = 0 where sex is NULL;
+
+INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'type', 'local', '设置上传方式', 'upload', 1541753932, 1541753932);
+INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'accessKeyId', '12346', 'OSS的key', 'OSSupload', 1541754539, 1541754539);
+INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'accessKeySecret', '123456', 'OSS的Secret', 'OSSupload', 1541754539, 1541754539);
+INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'endpoint', '123456', 'OSS的域名', 'OSSupload', 1541754539, 1541754539);
+INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'bucket', '123456', 'OSS的空间', 'OSSupload', 1541754539, 1541754539);
+INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'accessKey', '12346', '七牛key', 'QNupload', 1541754846, 1541754846);
+INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'secretKey', '123456', '七牛secret', 'QNupload', 1541754846, 1541754846);
+INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'bucket', '123456', '七牛空间', 'QNupload', 1541754846, 1541754846);
+INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'upload', '123456', '七牛上传地址', 'QNupload', 1541754846, 1541754846);
+INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'cdn', '123456', '七牛获取文件域名', 'QNupload', 1541754846, 1541754846);
