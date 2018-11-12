@@ -73,4 +73,5 @@ class MemberModel extends CommonModel
         $re = Db::table($this->member_db)->where($condition)->update($data);
         return $re;
     }
+
 }

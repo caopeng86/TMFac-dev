@@ -86,7 +86,6 @@ class MemberpointModel extends CommonModel
     /**
      * 添加用户积分日志
      */
-
     public function addPointLog($member_id,$change_point,$remarks,$now_point,$from_component){
         $data = [
             'change_point'=>$change_point,
@@ -119,4 +118,7 @@ class MemberpointModel extends CommonModel
         $re = Db::table($this->member_point_log)->where($condition)->count('id');
         return $re;
     }
+
+
+
 }

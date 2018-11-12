@@ -43,5 +43,5 @@ class CommonModel extends Model
     protected $user_behavior_log = TM_PREFIX.'user_behavior_log';
     protected $common_article = TM_PREFIX.'common_article';
     protected $adv_db = TM_PREFIX.'adv';
-
+    protected $startadv_db = TM_PREFIX.'start_adv';
 }

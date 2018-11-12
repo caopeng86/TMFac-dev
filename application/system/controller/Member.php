@@ -713,6 +713,78 @@ class Member extends Base
         }
     }
 
+    /**
+     * 统计会员性别
+     */
+    public function memberAnalysisSex(){
+        $inputData = Request::get();
+        $method = Request::method();
+        $params = [];
+        $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
+        if(!$ret){
+            return reJson(500, $msg, []);
+        }
+        $memberModel = new MemberModel();
+        $condition = [
+            ['status','=',0]
+        ];
+        $group = 'sex';
+        $field = 'sex,count(*) as num';
+        $memberCount = $memberModel->countGroupMember($condition,$group,$field,10);
+        if($memberCount){
+            $sexData = [];
+            foreach ($memberCount as $val) {
+                if($val['sex'] === null){
+                    $sexData['key'][] = '未知';
+                }elseif($val['sex'] === 0){
+                    $sexData['key'][] = '保密';
+                }elseif($val['sex'] === 1){
+                    $sexData['key'][] = '男';
+                }elseif($val['sex'] === 2){
+                    $sexData['key'][] = '女';
+                }
+                $sexData['value'][] = $val['num'];
+            }
+            return reJson(200,'获取成功',$sexData);
+        }
+        return reJson(500,'获取失败', []);
+    }
+
+    /**
+     * 统计用户注册方式
+     */
+    public function memberAnalysisLoginType(){
+        $inputData = Request::get();
+        $method = Request::method();
+        $params = [];
+        $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
+        if(!$ret){
+            return reJson(500, $msg, []);
+        }
+        $memberModel = new MemberModel();
+        $condition = [
+            ['status','=',0]
+        ];
+        $group = 'login_type';
+        $field = 'login_type,count(*) as num';
+        $memberCount = $memberModel->countGroupMember($condition,$group,$field,10);
+        $type_name = [
+            'mobile'=>'手机号码',
+            'qq'=>'QQ',
+            'wx'=>'微信',
+            'wb'=>'微博'
+        ];
+        if($memberCount){
+            $login_typeData = [];
+            foreach ($memberCount as $val) {
+                $login_typeData['key'][] = $type_name[$val['login_type']];
+                $login_typeData['value'][] = $val['num'];
+            }
+            return reJson(200,'获取成功',$login_typeData);
+        }
+        return reJson(500,'获取失败', []);
+    }
+
 
 
 }

@@ -116,23 +116,23 @@ class Portal extends Base
         $role_code = array_column($role_code,'role_code');
         //管理员直接返回数据
         if(in_array(1,$role_code))return reJson(200,'获取应用列表成功',['list' => $portal['portal_value'],'status' => 1]);
-//        $RolePortal = $roleModel->getRolePortalList([['role_code','in',$role_code]],'key');
-//        $RolePortal = array_column($RolePortal,'key');
-//        $portal['portal_value'] = json_decode($portal['portal_value'],true);
-//        foreach ($portal['portal_value'] as $key => $val){
-////            if(!in_array($val['key'],$RolePortal)){
-////                unset($portal['portal_value'][$key]);
-////            }
-//            if(is_array($val['children'])){
-//                foreach ($val['children'] as $k => $v){
-//                    if(!in_array($v['key'],$RolePortal)) {
-//                        unset($portal['portal_value'][$key]['children'][$k]);
-//                    }
-//                }
-//                $portal['portal_value'][$key]['children'] = array_merge($portal['portal_value'][$key]['children']);
+        $RolePortal = $roleModel->getRolePortalList([['role_code','in',$role_code]],'key');
+        $RolePortal = array_column($RolePortal,'key');
+        $portal['portal_value'] = json_decode($portal['portal_value'],true);
+        foreach ($portal['portal_value'] as $key => $val){
+//            if(!in_array($val['key'],$RolePortal)){
+//                unset($portal['portal_value'][$key]);
 //            }
-//        }
-//        $portal['portal_value'] = json_encode($portal['portal_value'],256);
+            if(is_array($val['children'])){
+                foreach ($val['children'] as $k => $v){
+                    if(!in_array($v['key'],$RolePortal)) {
+                        unset($portal['portal_value'][$key]['children'][$k]);
+                    }
+                }
+                $portal['portal_value'][$key]['children'] = array_merge($portal['portal_value'][$key]['children']);
+            }
+        }
+        $portal['portal_value'] = json_encode($portal['portal_value'],256);
         return reJson(200,'获取应用列表成功',['list' => $portal['portal_value'],'status' => 1]);
     }
 
@@ -172,6 +172,10 @@ class Portal extends Base
             return reJson(500,$msg,[]);
         }
         $inputData['portal_key'] = $this->portal_key; //默认
+        if(!empty($inputData['add_key'])){
+            $add_key = $inputData['add_key'];
+            unset($inputData['add_key']);
+        }
         //查找名称是否已经存在
         $condition = ['portal_key' => $inputData['portal_key']];
         $key = $this->portalModel->getPortal($condition);
@@ -181,6 +185,14 @@ class Portal extends Base
         }else{
             //不存在则新增
             $re = $this->portalModel->addPortal($inputData);
+        }
+        if(!empty($add_key)){
+            //新增后赋予访问权限
+            $RoleModel = new RoleModel();
+            $RoleUser = $RoleModel->getRoleUserInfo(['user_code'=>$this->memberInfo['user_code']]);
+            if($RoleUser['role_code'] != 1){
+                $RoleModel->addRolePortalAll([['role_code'=>$RoleUser['role_code'],'key'=>$add_key]]);
+            }
         }
         if($re === false){
             Logservice::writeArray(['sql'=>$this->portalModel->getLastSql()], '保存应用列表失败', 2);

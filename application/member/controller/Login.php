@@ -10,6 +10,7 @@ namespace app\member\controller;
 
 
 use app\api\model\ConfigModel;
+use app\api\model\StartadvModel;
 use app\extend\controller\Logservice;
 use app\member\model\MemberModel;
 use app\member\model\MemberThirdPartyModel;
@@ -216,7 +217,7 @@ class Login extends Controller
         $condition['site_code'] = $inputData['site_code'];
        /* $field = 'member_id, member_code, member_name,member_nickname,site_code, email, mobile, head_pic, create_time, status, deleted,
         birthday, sex,password,wx,qq,wb';*/
-        $field = 'member_id,member_code, member_name, member_nickname, member_real_name,site_code,email,deleted,sex_edit_time,birthday_edit_time,mobile_edit_time,wb_edit_time,wx_edit_time,qq_edit_time,
+        $field = 'member_id,member_code, member_name,member_sn,member_nickname, member_real_name,site_code,email,deleted,sex_edit_time,birthday_edit_time,mobile_edit_time,wb_edit_time,wx_edit_time,qq_edit_time,
          mobile, head_pic, create_time, status, wx, qq, zfb, wb,birthday,sex,ip,point,access_key_create_time,close_start_time,close_end_time,password,receive_notice,wifi_show_image,list_auto_play,login_type';
         $memberInfo = $this->memberModel->getMemberInfo($condition, $field);
         if(!empty($memberInfo)){
@@ -488,19 +489,51 @@ class Login extends Controller
         if(!$ret){
             return reJson(500, $msg, []);
         }
+        $StartAdvModel = new StartadvModel();
         $condition = [];
-        $condition['key'] = ['app_start_image','app_start_image_m','app_start_image_s','app_start_url','app_start_title'];
-        $condition['type'] = 'client';
+        $condition['key'] = ['start_adv_type'];
+        $condition['type'] = 'app';
         $ConfigModel = new ConfigModel();
-        $ConfigList = $ConfigModel->getConfigList($condition);
-        if($ConfigList === false){
+        $Config = $ConfigModel->getOneConfig($condition);
+        if($Config === false){
             return reJson(500, '获取失败', []);
         }
-        $ConfigList = $ConfigModel->ArrayToKey($ConfigList);
-//        foreach ($ConfigList as $key => $val){
-//            if(!$val)unset($ConfigList[$key]);
-//        }
-        return reJson(200, '获取成功', $ConfigList);
+        $field = 'app_start_image,app_start_image_m,app_start_image_s,url,show_duration';
+        $condition  = [
+            ['status','=',1],
+            ['start_time','<',time()]
+        ];
+        $startAdvList = $StartAdvModel->advList($condition,$field,false,'sort desc');
+        if($startAdvList === false){
+            return reJson(500, '获取失败', []);
+        }
+        if(!(count($startAdvList) > 0)){ //如果没有启动图则获取配置项中的启动图
+            $condition = [];
+            $condition['key'] = ['app_start_image','app_start_image_m','app_start_image_s','app_start_url','app_start_title'];
+            $condition['type'] = 'client';
+            $ConfigModel = new ConfigModel();
+            $ConfigList = $ConfigModel->getConfigList($condition);
+            if($ConfigList === false){
+                return reJson(500, '获取失败', []);
+            }
+            $ConfigList = $ConfigModel->ArrayToKey($ConfigList);
+            return reJson(200, '获取成功',$ConfigList);
+        }
+        if($Config['value'] == 1){ //随机
+            $startAdvInfo = $startAdvList[rand(0,count($startAdvList) - 1)];
+        }else{ //默认从大到小
+            $startAdvInfo = $startAdvList[0];
+        }
+        $startAdvInfo['app_start_url'] = $startAdvInfo['url'];
+        $condition = [];
+        $condition['key'] = ['site_name'];
+        $condition['type'] = 'base';
+        $ConfigSiteName = $ConfigModel->getOneConfig($condition);
+        if($ConfigSiteName === false){
+            return reJson(500, '获取失败', []);
+        }
+        $startAdvInfo['app_start_title'] = $ConfigSiteName['value'];
+        return reJson(200, '获取成功', $startAdvInfo);
     }
 
     /**

@@ -8,6 +8,7 @@
 namespace app\extend\controller;
 
 
+use app\api\model\ConfigModel;
 use OSS\OssClient;
 use Qiniu\Auth;
 use Qiniu\Storage\UploadManager;
@@ -19,17 +20,28 @@ class Upload
 
     public function __construct()
     {
-        $this->ConfigUploadInfo = Config::get('upload_info');
+        //获取调用方式
+        $ConfigModel = new ConfigModel();
+        $condition = [];
+        $condition['key'] = ['type'];
+        $condition['type'] = 'upload';
+        $ConfigType = $ConfigModel->getOneConfig($condition);
+        $this->ConfigUploadInfo['type'] = $ConfigType['value'];
         if(!in_array($this->ConfigUploadInfo['type'],['local','qn','oss'])){ // 默认file
             $this->ConfigUploadInfo['type'] = 'local';
         }
-    }
-
-    /**
-     * 获取文件域名信息
-     */
-    public static function getHostInfo(){
-        $Upload = new Upload();
+        if($this->ConfigUploadInfo['type'] == 'qn'){
+            $condition = [];
+            $condition['type'] = 'QNupload';
+            $ConfigList = $ConfigModel->getConfigList($condition);
+            $this->ConfigUploadInfo['qn_param'] = $ConfigModel->ArrayToKey($ConfigList);
+        }
+        if($this->ConfigUploadInfo['type'] == 'oss'){
+            $condition = [];
+            $condition['type'] = 'OSSupload';
+            $ConfigList = $ConfigModel->getConfigList($condition);
+            $this->ConfigUploadInfo['oss_param'] = $ConfigModel->ArrayToKey($ConfigList);
+        }
     }
 
     /**

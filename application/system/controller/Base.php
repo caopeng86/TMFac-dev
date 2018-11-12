@@ -18,6 +18,9 @@ use think\facade\Request;
 
 class Base extends Controller
 {
+
+    public $memberInfo;
+
     public function __construct()
     {
         parent::__construct();
@@ -74,8 +77,8 @@ class Base extends Controller
             if(Cache::get($token)['access_key'] !== $token){
                 die('{"code":501,"msg":"token错误","data":""}');
             }
-            $this->memberInfo = Cache::get($token);
         }
+        $this->memberInfo = Cache::get($token);
         return true;
     }
 }
