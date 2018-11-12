@@ -424,6 +424,16 @@ class RoleModel extends CommonModel
     }
 
     /**
+     * 获取用户关联角色信息
+     * @param $condition
+     * @return array|null|\PDOStatement|string|Model
+     */
+    public function getRoleUserInfo($condition){
+        $re = Db::table($this->role_user_db)->where($condition)->find();
+        return $re;
+    }
+
+    /**
      * 获取用户对应的角色详细数据
      * @param $condition
      * @param string $field

@@ -33,6 +33,9 @@ class Upload extends Controller
         }
         $file = Request::file('file');
         $name = preg_replace('# #','',$file->getInfo()['name']); //去除空格
+//        if(preg_match('/[\x{4e00}-\x{9fa5}]/u',$name)>0){ //如果存在中文则转换名字
+        $name = time().rand(1,1000).strrchr($name,'.');
+//        }
         $image = getimagesize($file->getInfo()['tmp_name']);
         if(!empty($inputData['width']) && $image[0] != $inputData['width']){
             return reJson(503,'图片尺寸要求为'.$inputData['width'].'px*'.$inputData['height'].'px!',[]);

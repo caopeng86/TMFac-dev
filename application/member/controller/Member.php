@@ -216,7 +216,7 @@ class Member extends Base
         $ConfigList = $this->ConfigModel->getConfigList($Configcondition,'key,value');
         $ConfigList = array_column($ConfigList,null,'key');
         $re = $this->memberModel->updateMember($condition, $inputData);
-        $re1 = false;
+        $re1 = true;
         if(isset($inputData['sex'])){
             $re1 = $this->updatePoint($getMemberInfo,$ConfigList,$condition,"sex_edit_time","sex","完善性别");
         }
@@ -416,7 +416,7 @@ class Member extends Base
         $condition['member_code'] = $inputData['member_code'];
         //  $field = 'member_id,member_code, member_name, member_nickname, member_real_name, site_code, email, mobile, head_pic, create_time, status, wx, qq, zfb, wb,receive_notice,wifi_show_image,list_auto_play';
 
-        $field = 'member_id,member_code, member_name, member_nickname, member_real_name,site_code,email,deleted,sex_edit_time,birthday_edit_time,mobile_edit_time,wb_edit_time,wx_edit_time,qq_edit_time,
+        $field = 'member_id,member_code, member_name, member_nickname,member_sn,member_real_name,site_code,email,deleted,sex_edit_time,birthday_edit_time,mobile_edit_time,wb_edit_time,wx_edit_time,qq_edit_time,
          mobile, head_pic, create_time, status, wx, qq, zfb, wb,birthday,sex,ip,point,access_key_create_time,close_start_time,close_end_time,password,receive_notice,wifi_show_image,list_auto_play,login_type';
         $memberInfo = $this->memberModel->getMemberInfo($condition, $field);
         if($memberInfo === false){

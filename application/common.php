@@ -85,7 +85,7 @@ function checkBeforeAction(&$data, $params, $request, $rule, &$result)
         if(!in_array($url, $pass)){
             if($data[$value] !== 0 && $data[$value] != '0' ){
                 if(empty($data[$value])){
-                    $result = '必传参数不能为空';
+                    $result = '网络异常，请刷新后重试';
                     return false;
                 }
             }

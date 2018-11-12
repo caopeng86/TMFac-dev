@@ -82,4 +82,17 @@ class MemberModel extends CommonModel
         $re = Db::table($this->member_db)->where($condition)->update($data);
         return $re;
     }
+
+
+    /**
+     * 统计分组用户数据
+     */
+    public function countGroupMember($condition,$group,$field,$cache = false){
+        $re = Db::table($this->member_db)->where($condition);
+        if($cache > 0){ //缓存
+            $re = $re->cache(true,$cache);
+        }
+        $re = $re->group($group)->field($field)->select();
+        return $re;
+    }
 }

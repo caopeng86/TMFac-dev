@@ -616,5 +616,224 @@ class System extends Controller
         return reJson(200,'保存成功',[]);
     }
 
+    /**
+     * 获取启动页播放方式
+     * start_adv_type 1随机展示 2 顺序展示
+     */
+    public function getStartAdvType(){
+        //判断请求方式以及请求参数
+        $inputData = Request::get();
+        $method = Request::method();
+        $params = [];
+        $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
+        if(!$ret){
+            return reJson(500, $msg, []);
+        }
+        $condition = [];
+        $condition['key'] = ['start_adv_type'];
+        $condition['type'] = 'app';
+        $ConfigList = $this->ConfigModel->getOneConfig($condition);
+        if($ConfigList === false){
+            return reJson(500, '获取失败', []);
+        }
+        return reJson(200, '获取成功',[$ConfigList['key']=>$ConfigList['value']]);
+    }
+
+    /**
+     *  保存启动页播放方式
+     */
+    public function setStartAdvType(){
+        //判断请求方式以及请求参数
+        $inputData = Request::post();
+        $method = Request::method();
+        $params = ['start_adv_type'];
+        $remarks = ['start_adv_type'=>'启动页播放方式'];
+        $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
+        if(!$ret){
+            return reJson(500, $msg, []);
+        }
+        foreach ($params as $val){
+            if(!empty($inputData[$val])){
+                $this->ConfigModel->batchSaveConfig($val,$inputData[$val],$remarks[$val],'app');
+            }
+        }
+        return reJson(200,'保存成功',[]);
+    }
+
+    /**
+     * 设置上传方式
+     * local(本地),oss(阿里云对象存储),qn(七牛对象存储)
+     */
+    public function setUploadType(){
+        //判断请求方式以及请求参数
+        $inputData = Request::post();
+        $method = Request::method();
+        $params = ['type'];
+        $remarks = ['type'=>'设置上传方式'];
+        $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
+        if(!$ret){
+            return reJson(500, $msg, []);
+        }
+        foreach ($params as $val){
+            if(!empty($inputData[$val])){
+                $this->ConfigModel->batchSaveConfig($val,$inputData[$val],$remarks[$val],'upload');
+            }
+        }
+        return reJson(200,'保存成功',[]);
+    }
+
+    /**
+     * 获取上传方式
+     */
+    public function getUploadType(){
+        //判断请求方式以及请求参数
+        $inputData = Request::get();
+        $method = Request::method();
+        $params = [];
+        $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
+        if(!$ret){
+            return reJson(500, $msg, []);
+        }
+        $condition = [];
+        $condition['key'] = ['type'];
+        $condition['type'] = 'upload';
+        $ConfigList = $this->ConfigModel->getOneConfig($condition);
+        if($ConfigList === false){
+            return reJson(500, '获取失败', []);
+        }
+        return reJson(200, '获取成功',[$ConfigList['key']=>$ConfigList['value']]);
+    }
+
+    /**
+     *  设置oss参数
+     */
+    public function setOss(){
+        //判断请求方式以及请求参数
+        $inputData = Request::post();
+        $method = Request::method();
+        $params = ['accessKeyId','accessKeySecret','endpoint','bucket'];
+        $remarks = ['accessKeyId'=>'OSS的key','accessKeySecret'=>'OSS的Secret','endpoint'=>'OSS的域名','bucket'=>'OSS的空间'];
+        $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
+        if(!$ret){
+            return reJson(500, $msg, []);
+        }
+        foreach ($params as $val){
+            if(!empty($inputData[$val])){
+                $this->ConfigModel->batchSaveConfig($val,$inputData[$val],$remarks[$val],'OSSupload');
+            }
+        }
+        return reJson(200,'保存成功',[]);
+    }
+
+    /**
+     *  获取oss参数
+     */
+    public function getOss(){
+        //判断请求方式以及请求参数
+        $inputData = Request::get();
+        $method = Request::method();
+        $params = [];
+        $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
+        if(!$ret){
+            return reJson(500, $msg, []);
+        }
+        $condition = [];
+        $condition['key'] = ['accessKeyId','accessKeySecret','endpoint','bucket'];
+        $condition['type'] = 'OSSupload';
+        $ConfigList = $this->ConfigModel->getConfigList($condition);
+        if($ConfigList === false){
+            return reJson(500, '获取失败', []);
+        }
+        $ConfigList = $this->ConfigModel->ArrayToKey($ConfigList);
+        return reJson(200, '获取成功', $ConfigList);
+    }
+
+    /**
+     * 设置七牛参数
+     */
+    public function setQiniu(){
+        //判断请求方式以及请求参数
+        $inputData = Request::post();
+        $method = Request::method();
+        $params = ['accessKey','secretKey','bucket','upload','cdn'];
+        $remarks = ['accessKey'=>'七牛key','secretKey'=>'七牛secret','bucket'=>'七牛空间','upload'=>'七牛上传地址','cdn'=>'七牛获取文件域名'];
+        $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
+        if(!$ret){
+            return reJson(500, $msg, []);
+        }
+        foreach ($params as $val){
+            if(!empty($inputData[$val])){
+                $this->ConfigModel->batchSaveConfig($val,$inputData[$val],$remarks[$val],'QNupload');
+            }
+        }
+        return reJson(200,'保存成功',[]);
+    }
+
+    /**
+     * 获取七牛参数
+     */
+    public function getQiniu(){
+        //判断请求方式以及请求参数
+        $inputData = Request::get();
+        $method = Request::method();
+        $params = [];
+        $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
+        if(!$ret){
+            return reJson(500, $msg, []);
+        }
+        $condition = [];
+        $condition['key'] = ['accessKey','secretKey','bucket','upload','cdn'];
+        $condition['type'] = 'QNupload';
+        $ConfigList = $this->ConfigModel->getConfigList($condition);
+        if($ConfigList === false){
+            return reJson(500, '获取失败', []);
+        }
+        $ConfigList = $this->ConfigModel->ArrayToKey($ConfigList);
+        return reJson(200, '获取成功', $ConfigList);
+    }
+
+    /**
+     * 设置百度统计参数
+     */
+    public function setBaiduAnalysis(){
+        //判断请求方式以及请求参数
+        $inputData = Request::post();
+        $method = Request::method();
+        $params = ['Baidu_Api_Key','Baidu_Secret_Key','Baidu_android_App_Key','Baidu_iOS_App_Key'];
+        $remarks = ['Baidu_Api_Key'=>'百度统计key','Baidu_Secret_Key'=>'百度统计密钥','Baidu_android_App_Key'=>'百度统计应用安卓key','Baidu_iOS_App_Key'=>'百度统计应用iOSkey'];
+        $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
+        if(!$ret){
+            return reJson(500, $msg, []);
+        }
+        foreach ($params as $val){
+            if(!empty($inputData[$val])){
+                $this->ConfigModel->batchSaveConfig($val,$inputData[$val],$remarks[$val],'BaiduAnalysis');
+            }
+        }
+        return reJson(200,'保存成功',[]);
+    }
+
+    /**
+     * 获取百度统计参数
+     */
+    public function getBaiduAnalysis(){
+        //判断请求方式以及请求参数
+        $inputData = Request::get();
+        $method = Request::method();
+        $params = [];
+        $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
+        if(!$ret){
+            return reJson(500, $msg, []);
+        }
+        $condition = [];
+        $condition['key'] = ['Baidu_Api_Key','Baidu_Secret_Key','Baidu_android_App_Key','Baidu_iOS_App_Key'];
+        $condition['type'] = 'BaiduAnalysis';
+        $ConfigList = $this->ConfigModel->getConfigList($condition);
+        if($ConfigList === false){
+            return reJson(500, '获取失败', []);
+        }
+        $ConfigList = $this->ConfigModel->ArrayToKey($ConfigList);
+        return reJson(200, '获取成功', $ConfigList);
+    }
 
 }
