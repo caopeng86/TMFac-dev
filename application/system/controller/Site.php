@@ -15,6 +15,7 @@ use app\api\model\RoleModel;
 use app\api\model\SiteModel;
 use think\Db;
 use think\facade\Cache;
+use think\facade\Env;
 use think\facade\Request;
 
 class Site extends Base
