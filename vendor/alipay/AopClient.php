@@ -8,11 +8,13 @@ class AopClient {
 	public $appId='';
 	
 	//私钥文件路径
-	public $rsaPrivateKeyFilePath='../vendor/alipay/key/rsa_private_key.pem';
+	//public $rsaPrivateKeyFilePath='../vendor/alipay/key/rsa_private_key.pem';
+    public $rsaPrivateKeyFilePath;
 	//私钥值
 	public $rsaPrivateKey='../vendor/alipay/key/rsa_private_key.pem';
 	//网关
-	public $gatewayUrl = "https://openapi.alipay.com/gateway.do";
+	//public $gatewayUrl = "https://openapi.alipay.com/gateway.do";
+    public $gatewayUrl;
 	//返回数据格式
 	public $format = "json";
 	//api版本

@@ -113,9 +113,9 @@ INSERT INTO `tm_role_privilege`(`privilege_code`, `role_code`) VALUES ('logoSet'
 INSERT INTO `tm_role_privilege`(`privilege_code`, `role_code`) VALUES ('ModuleConfig', '1');
 INSERT INTO `tm_role_privilege`(`privilege_code`, `role_code`) VALUES ('ComponentSet', '1');
 
-INSERT INTO `tm_config`(`key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ('ali_sms_key_id', 'LTAIT0JSTQtwRYUG', '阿里短信服务key', 'client', 1535446213, 1535446213);
-INSERT INTO `tm_config`(`key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ('ali_sign_name', '天马工场', '阿里短信签名', 'client', 1535446213, 1535446213);
-INSERT INTO `tm_config`(`key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ('ali_key_secret', 'BP3VgP76RWnHrdI4IW8Hy8pF85mtlL', '阿里短信服务secret', 'client', 1535446213, 1535446213);
-INSERT INTO `tm_config`(`key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ('Jpush_key', '7375019ec90b9de9bb0cc8ed', '极光key', 'client', 1535446252, 1535446252);
-INSERT INTO `tm_config`(`key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ('Jpush_secret', '1deaf4babb47a22579d2db83', '极光secret', 'client', 1535446252, 1535446252);
+INSERT INTO `tm_config`(`key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ('ali_sms_key_id', '', '阿里短信服务key', 'client', 1535446213, 1535446213);
+INSERT INTO `tm_config`(`key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ('ali_sign_name', '', '阿里短信签名', 'client', 1535446213, 1535446213);
+INSERT INTO `tm_config`(`key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ('ali_key_secret', '', '阿里短信服务secret', 'client', 1535446213, 1535446213);
+INSERT INTO `tm_config`(`key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ('Jpush_key', '', '极光key', 'client', 1535446252, 1535446252);
+INSERT INTO `tm_config`(`key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ('Jpush_secret', '', '极光secret', 'client', 1535446252, 1535446252);
 

@@ -208,6 +208,59 @@ body{
     overflow: visible;
     text-overflow: initial;
 }
+
+/*  首页  */
+.basic_box{
+    background-color: #ffffff;
+    padding: 25px;
+}
+.basic_box .title{
+    font-size: 15px;
+    font-weight: bold;
+}
+.basic_box .basic_data{
+    margin-top: 20px;
+}
+.basic_box .basic_data ul{
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+    padding: 0 40px;
+}
+.basic_box .basic_data img{
+    vertical-align: top;
+}
+.basic_box .basic_data  .basic_data_type{
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 5px;
+}
+.basic_box .basic_data  .basic_data_type p{
+    font-size: 20px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.visual_box{
+    margin-top: 30px;
+}
+.visual_box .visual_list{
+    min-width: 745px;
+    width: 47.5%;
+    height:400px;
+    float: left;
+    margin-bottom: 30px;
+    position: relative;
+}
+.visual_box .visual_list:nth-child(2n+1){
+    /*margin-right: 5%;*/
+    margin-right: 30px;
+}
+
+
+
+
 .layui-layer,.layui-layer-content{
     border-radius: 5px!important;
 }
+

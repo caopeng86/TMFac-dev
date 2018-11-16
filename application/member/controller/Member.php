@@ -138,7 +138,6 @@ class Member extends Base
         //配置发送短信的配置
         $config = [
             'phone_numbers' => $inputData['mobile'],
-            'template_code' => 'ali_check_template_code',
             'code' => rand(100000, 999999),
         ];
 

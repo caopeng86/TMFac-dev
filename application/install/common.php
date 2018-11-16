@@ -192,7 +192,7 @@ function create_tables_multi($db=null, $prefix = '',$dir = 'db'){
  * 创建数据表
  * @param  resource $db 数据库连接资源
  */
-function create_tables($db, $prefix = '',$sqlFile='db/backup/cl01kkdy_6RrqH.sql')
+function create_tables($db, $prefix = '',$sqlFile='db/backup/cl01kkdy_6RrqH.sql',$is_show_msg = true)
 {
 
     //读取SQL文件
@@ -209,7 +209,9 @@ function create_tables($db, $prefix = '',$sqlFile='db/backup/cl01kkdy_6RrqH.sql'
 //    $orginal = 'tm_';
 //    $sql = str_replace(" `{$orginal}", " `{$prefix}", $sql);
     //开始安装
-    show_msg('开始安装数据库...');
+    if($is_show_msg){
+        show_msg('开始安装数据库...');
+    }
     foreach ($sql as $value) {
         $value = trim($value);
         if (empty($value)) continue;
@@ -225,11 +227,13 @@ function create_tables($db, $prefix = '',$sqlFile='db/backup/cl01kkdy_6RrqH.sql'
                 $name=$outValue2[1];
             }
             $msg = "创建数据表{$name}";
-            if (false !== $db->execute($value)) {
+            if (false !== $db->execute($value) && $is_show_msg) {
                 show_msg($msg . '...成功');
             } else {
-                show_msg($msg . '...失败！', 'error');
-                session('error', true);
+                if($is_show_msg){
+                    show_msg($msg . '...失败！', 'error');
+                    session('error', true);
+                }
             }
         } else {
             $db->execute($value);

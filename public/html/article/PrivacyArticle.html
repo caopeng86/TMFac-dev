@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>隐私协议</title>
+    <script src='js/jquery.js'></script>
+</head>
+<body>
+<div id="content" style="padding: 18px 8px;">
+</div>
+<script type="text/javascript">
+    $.get('/Member/Article/getPrivacyArticle',function (info) {
+        console.log(info);
+        if(info.code == 200){
+            $('#content').html(info.data.content);
+        }
+    },'json');
+</script>
+</body>
+</html>

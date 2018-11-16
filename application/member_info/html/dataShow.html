@@ -1,0 +1,942 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="lib/html5shiv.js"></script>
+    <script type="text/javascript" src="lib/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link  rel="stylesheet" type="text/css" href="lib/layui/css/layui.css" />
+    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
+    <style type="text/css">
+        .layui-table-tool{
+            height: auto;
+        }
+        .selectBtn.layui-btn{
+            width: 40px;
+            height: 25px;
+            line-height: 25px;
+            margin: 0;
+            padding: 0;
+            font-size: 12px;
+        }
+        .tool-btn .layui-btn{
+            margin-bottom: 0;
+        }
+        .layui-table-tool-self{
+            display: none;
+        }
+    </style>
+    <!--[if IE 6]>
+    <script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+    <script>DD_belatedPNG.fix('*');</script>
+    <![endif]-->
+    <title>数据展示</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+    <div class="dataShowBox">
+        <div class="basic_box">
+            <div class="title">基础数据统计</div>
+            <div class="basic_data">
+                <ul>
+                    <li>
+                        <img src="./temp/addpeople.png" width="30" alt="">
+                        <div class="basic_data_type">
+                            <p>月新增用户</p>
+                            <p id="addNum">--</p>
+                        </div>
+                    </li>
+                    <li>
+                        <img src="./temp/activity.png" width="30" alt="">
+                        <div class="basic_data_type">
+                            <p>月活跃用户</p>
+                            <p id="actNum">--</p>
+                        </div>
+                    </li>
+                    <li>
+                        <img src="./temp/allpeople.png" width="30" alt="">
+                        <div class="basic_data_type">
+                            <p>总用户数</p>
+                            <p id="allNum">--</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+        <div class="visual_box">
+            <div class="visual_list" id="main"></div><div class="visual_list" id="main1"></div><div class="visual_list" id="main2"></div><div class="visual_list" id="main3"></div>
+        </div>
+    </div>
+</div>
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="lib/echarts/3.4.0/echarts.common.min.js"></script>
+<script type="text/javascript" src="lib/layui-2.4.3/layui.all.js"></script>
+<script type="text/javascript" src="lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="lib/json2csv.js"></script>
+<!--<script type="text/javascript" src="lib/laypage/1.2/laypage.js"></script>-->
+<script type="text/javascript">
+
+
+    window.onload=function () {
+        onresize();
+        function onresize() {
+            var width = $(".visual_box").width();
+            var listwidth = ($(".visual_box").width()-30)/2;
+            if(($(".visual_box").width()-30)/2>745){
+                $(".visual_list").css({"width":listwidth,"display":'block',"float":'left'})
+                $(".visual_list:nth-child(2n+1)").css({"margin-right":30})
+            }else{
+                $(".visual_list").css({"width":745,"margin-right":0,"float":'none',"display":'inline-block'})
+                $(".visual_box").css("text-align","center")
+            }
+        }
+        window.onresize = function(){
+            onresize();
+        }
+    }
+
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+    var myChart1 = echarts.init(document.getElementById('main1'));
+    var myChart2 = echarts.init(document.getElementById('main2'));
+    var myChart3 = echarts.init(document.getElementById('main3'));
+
+    var download1={
+        title:[],
+        value:[]
+    };
+    var download2={
+        title:[],
+        value:[]
+    };
+    var download3={
+        title:[],
+        value:[]
+    };
+    var download4={
+        title:[],
+        value:[]
+    };
+    // 指定图表的配置项和数据
+    var option = {
+        title: {
+            text: '用户增长情况统计',
+            textStyle: {
+                fontSize: 15
+            },
+            subtext: '最近一个月',
+            x: 'left',
+            padding: 30,
+        },
+        grid: {
+            top: 100
+        },
+        toolbox:{
+            show:true,
+            right: 25,
+            top: 10,
+            itemSize:20,
+            feature: {
+                myTool1: {
+                    show: true,
+                    title: '导出Excel',
+                    icon: 'image://./temp/download.png',
+                    onclick: function (){
+                        var csv = json2csv({ data: download1.value, fields: download1.title });
+                        // console.log(download1)
+                        // 下载文件方法
+                        var funDownload = function (content, filename) {
+                            var content = content;
+                            content = "\uFEFF"+content;
+                            var eleLink = document.createElement('a');
+                            eleLink.download = filename;
+                            eleLink.style.display = 'none';
+                            // 字符内容转变成blob地址
+                            var blob = new Blob([content],{type: 'text/plain'});
+                            eleLink.href = URL.createObjectURL(blob);
+                            // 触发点击
+                            document.body.appendChild(eleLink);
+                            eleLink.click();
+                            // 然后移除
+                            document.body.removeChild(eleLink);
+                        };
+
+                        if ('download' in document.createElement('a')) {
+                            // 作为test.html文件下载
+                            // eleButton.addEventListener('click', function () {
+                                funDownload(csv, 'test.csv');
+                            // });
+                        } else {
+                            eleButton.onclick = function () {
+                                alert('浏览器不支持');
+                            };
+                        }
+                    }
+                },
+            }
+        },
+        // tooltip: {
+        //     trigger: 'axis',
+        //     position: function (pt) {
+        //         return [pt[0], '10%'];
+        //     }
+        // },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                animation: false
+            },
+            formatter:'{b0}<br/>用户增长：{c0}'
+        },
+        xAxis: {
+            type: 'category',
+            data: [],
+            textStyle:{
+                fontSize:12
+            },
+            // axisLabel: {
+            //     // interval:0,
+            // },
+        },
+        yAxis: {
+            type: 'value',
+            axisLine:{
+                lineStyle:{
+                }
+            }
+        },
+        series: [{
+            data: [],
+            type: 'line',
+            itemStyle: {
+                normal: {
+                    color: 'rgb(27,176,212)'
+                }
+            }
+        }],
+        backgroundColor: '#ffffff'
+    };
+
+    var option1 = {
+        title: {
+            text: '用户活跃度情况统计',
+            textStyle: {
+                fontSize: 15
+            },
+            subtext: '最近一个月',
+            x: 'left',
+            padding: 30,
+        },
+        grid: {
+            top: 100
+        },
+        // tooltip: {
+        //     trigger: 'axis',
+        //     position: function (pt) {
+        //         return [pt[0], '10%'];
+        //     }
+        // },
+        toolbox:{
+            show:true,
+            right: 25,
+            top: 10,
+            itemSize:20,
+            feature: {
+                myTool1: {
+                    show: true,
+                    title: '导出Excel',
+                    icon: 'image://./temp/download.png',
+                    onclick: function (){
+                        var csv = json2csv({ data: download2.value, fields: download2.title });
+                        // console.log(download1)
+                        // 下载文件方法
+                        var funDownload = function (content, filename) {
+                            var content = content;
+                            content = "\uFEFF"+content;
+                            var eleLink = document.createElement('a');
+                            eleLink.download = filename;
+                            eleLink.style.display = 'none';
+                            // 字符内容转变成blob地址
+                            var blob = new Blob([content],{type: 'text/plain'});
+                            eleLink.href = URL.createObjectURL(blob);
+                            // 触发点击
+                            document.body.appendChild(eleLink);
+                            eleLink.click();
+                            // 然后移除
+                            document.body.removeChild(eleLink);
+                        };
+
+                        if ('download' in document.createElement('a')) {
+                            // 作为test.html文件下载
+                            // eleButton.addEventListener('click', function () {
+                            funDownload(csv, 'test.csv');
+                            // });
+                        } else {
+                            eleButton.onclick = function () {
+                                alert('浏览器不支持');
+                            };
+                        }
+                    }
+                },
+            }
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                animation: false
+            },
+            formatter:'{b0}<br/>用户活跃度：{c0}'
+        },
+        xAxis: {
+            type: 'category',
+            data: [],
+            textStyle:{
+                fontSize:12
+            },
+            // axisLabel: {
+            //     interval:0,
+            // },
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [{
+            data: [],
+            type: 'line',
+            itemStyle: {
+                normal: {
+                    color: 'rgb(27,176,212)'
+                }
+            },
+            markLine:{
+                color:'red'
+            }
+        }],
+        backgroundColor: '#ffffff'
+    };
+
+    var option2 = {
+        backgroundColor: '#ffffff',
+        color:["rgb(216,122,128)","rgb(182,162,222)","rgb(90,177,239)","rgb(255,185,128)","rgb(46,199,201)"],
+        // title: {
+        //     text: 'Customized Pie',
+        //     left: 'center',
+        //     top: 20,
+        //     textStyle: {
+        //         color: '#ccc'
+        //     }
+        // },
+        title: {
+            text: '各渠道用户统计',
+            textStyle: {
+                fontSize: 15,
+                color:"#333333"
+            },
+            // subtext: '最近一个月',
+            x: 'left',
+            padding: 30,
+        },
+        grid: {
+            top: 100
+        },
+        toolbox:{
+            show:true,
+            right: 25,
+            top: 10,
+            itemSize:20,
+            feature: {
+                myTool1: {
+                    show: true,
+                    title: '导出Excel',
+                    icon: 'image://./temp/download.png',
+                    onclick: function (){
+                        var csv = json2csv({ data: download3.value, fields: download3.title });
+                        // console.log(download1)
+                        // 下载文件方法
+                        var funDownload = function (content, filename) {
+                            var content = content;
+                            content = "\uFEFF"+content;
+                            var eleLink = document.createElement('a');
+                            eleLink.download = filename;
+                            eleLink.style.display = 'none';
+                            // 字符内容转变成blob地址
+                            var blob = new Blob([content],{type: 'text/plain'});
+                            eleLink.href = URL.createObjectURL(blob);
+                            // 触发点击
+                            document.body.appendChild(eleLink);
+                            eleLink.click();
+                            // 然后移除
+                            document.body.removeChild(eleLink);
+                        };
+
+                        if ('download' in document.createElement('a')) {
+                            // 作为test.html文件下载
+                            // eleButton.addEventListener('click', function () {
+                            funDownload(csv, 'test.csv');
+                            // });
+                        } else {
+                            eleButton.onclick = function () {
+                                alert('浏览器不支持');
+                            };
+                        }
+                    }
+                },
+            }
+        },
+
+        tooltip : {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        visualMap: {
+            show: false,
+            min: 80,
+            max: 600,
+            inRange: {
+                colorLightness: [0, 1]
+            }
+        },
+        series : [
+
+            {
+                roseType: 'radius',
+                label: {
+                    normal: {
+                        formatter: '{b}: {c}({d}%)',
+                    }
+                },
+                labelLine: {
+                    normal: {
+                        // lineStyle: {
+                            // color: 'rgba(255, 255, 255, 0.3)'
+                            // color: 'red'
+                        // },
+                        smooth: 0.2,
+                        length: 10,
+                        length2: 20
+                    }
+                },
+                itemStyle: {
+                    normal: {
+                        // color: ['#c23531'],
+                        shadowBlur: 200,
+                        shadowColor: 'rgba(0, 0, 0, 0)'
+                    }
+                },
+
+                name:'新增用户',
+                type:'pie',
+                radius : '55%',
+                center: ['50%', '50%'],
+                data:[].sort(function (a, b) { return a.value - b.value; }),
+
+                animationType: 'scale',
+                animationEasing: 'elasticOut',
+                animationDelay: function (idx) {
+                    return Math.random() * 200;
+                }
+            }
+        ]
+    };
+
+    var option3 = {
+        backgroundColor:"#ffffff",
+        color:["#999999","rgb(0,158,211)","rgb(255,222,82)"],
+        title: {
+            text: '年龄分布以及男女比例统计',
+            textStyle: {
+                fontSize: 15,
+                color:"#333333"
+            },
+            // subtext: '最近一个月',
+            x: 'left',
+            padding: 30,
+        },
+
+        toolbox:{
+            show:true,
+            right: 25,
+            top: 10,
+            itemSize:20,
+            feature: {
+                myTool1: {
+                    show: true,
+                    title: '导出Excel',
+                    icon: 'image://./temp/download.png',
+                    onclick: function (){
+                        var csv = json2csv({ data: download4.value, fields: download4.title });
+                        // console.log(download1)
+                        // 下载文件方法
+                        var funDownload = function (content, filename) {
+                            var content = content;
+                            content = "\uFEFF"+content;
+                            var eleLink = document.createElement('a');
+                            eleLink.download = filename;
+                            eleLink.style.display = 'none';
+                            // 字符内容转变成blob地址
+                            var blob = new Blob([content], {type: 'text/plain'});
+                            eleLink.href = URL.createObjectURL(blob);
+                            // 触发点击
+                            document.body.appendChild(eleLink);
+                            eleLink.click();
+                            // 然后移除
+                            document.body.removeChild(eleLink);
+                        };
+
+                        if ('download' in document.createElement('a')) {
+                            // 作为test.html文件下载
+                            // eleButton.addEventListener('click', function () {
+                            funDownload(csv, 'test.csv');
+                            // });
+                        } else {
+                            eleButton.onclick = function () {
+                                alert('浏览器不支持');
+                            };
+                        }
+                    }
+                },
+            }
+        },
+
+        tooltip : {
+            trigger: 'axis',
+            axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+            }
+        },
+        legend: {
+            // data: ['男', '女',"未知","保密"]
+        },
+        grid: {
+            top: 100,
+            // left: '3%',
+            // right: '4%',
+            // bottom: '3%',
+            // containLabel: true
+        },
+        xAxis:  {
+            // type: 'value',
+            data:[]
+        },
+        yAxis: {
+            // type: 'category',
+            // data: ['25以下','25-40岁','40-55岁','55岁以上']
+        },
+        series: [{
+            type: 'bar',
+            label: {
+                normal: {
+                    show: true,
+                    position: 'top'
+                }
+            },
+            data:[]
+            // {
+            //     name: '男',
+            //     type: 'bar',
+            //     label: {
+            //         normal: {
+            //             show: true,
+            //             // position: 'insideRight'
+            //         }
+            //     },
+            //     data: [320]
+            // },
+            // {
+            //     name: '女',
+            //     type: 'bar',
+            //     label: {
+            //         normal: {
+            //             show: true,
+            //             // position: 'insideRight'
+            //         }
+            //     },
+            //     data: [302]
+            // },
+            // {
+            //     name: '未知',
+            //     type: 'bar',
+            //     label: {
+            //         normal: {
+            //             show: true,
+            //             // position: 'insideRight'
+            //         }
+            //     },
+            //     data: [322]
+            // },
+            // {
+            //     name: '保密',
+            //     type: 'bar',
+            //     label: {
+            //         normal: {
+            //             show: true,
+            //             // position: 'insideRight'
+            //         }
+            //     },
+            //     data: [307]
+            // },
+            // {
+            //     name: '女',
+            //     type: 'bar',
+            //     stack: '总量',
+            //     label: {
+            //         normal: {
+            //             show: true,
+            //             position: 'insideRight'
+            //         }
+            //     },
+            //     data: [120, 132, 101, 134]
+            // },
+            // {
+            //     name: '保密',
+            //     type: 'bar',
+            //     stack: '总量',
+            //     label: {
+            //         normal: {
+            //             show: true,
+            //             position: 'insideRight'
+            //         }
+            //     },
+            //     data: [220, 182, 191, 234]
+            // },
+            // {
+            //     name: '视频广告',
+            //     type: 'bar',
+            //     stack: '总量',
+            //     label: {
+            //         normal: {
+            //             show: true,
+            //             position: 'insideRight'
+            //         }
+            //     },
+            //     data: [150, 212, 201, 154, 190, 330, 410]
+            // },
+            // {
+            //     name: '搜索引擎',
+            //     type: 'bar',
+            //     stack: '总量',
+            //     label: {
+            //         normal: {
+            //             show: true,
+            //             position: 'insideRight'
+            //         }
+            //     },
+            //     data: [820, 832, 901, 934, 1290, 1330, 1320]
+            // }
+    }]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+    myChart1.setOption(option1);
+    myChart2.setOption(option2);
+    myChart3.setOption(option3);
+
+
+
+    $.ajax({
+        type: "get",
+        url: "/api/baidu/getMember",
+        cache: false,  //禁用缓存
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader("token", localStorage.getItem("token"));
+        },
+        dataType: "json",
+        success: function (data) {
+            // console.log(data)
+            var info = data.data;
+            var addNum=0;
+            var actNum=0;
+            var allNum=0;
+            if(data.code==200){
+                for(var i=0;i<info.android[0].length;i++){
+                    if(info.android[0][i]=="--"||info.android[0][i]==""){
+                        info.android[0][i]=0
+                    }
+                    if(info.iOS[0][i]=="--"||info.iOS[0][i]==""){
+                        info.iOS[0][i]=0
+                    }
+                }
+
+
+                addNum = info.android[0][1]+info.iOS[0][1];
+                actNum = info.android[0][0]+info.iOS[0][0];
+                allNum = info.android[0][1]+info.iOS[0][1]+info.android[0][2]+info.android[0][2];
+
+                $("#addNum").html(addNum)
+                $("#actNum").html(actNum)
+                $("#allNum").html(allNum)
+
+
+
+                // console.log(info);
+
+            }else if(data.code==502){
+                window.location="/api/baidu/getCode.html"
+            }else if(data.code==501){
+                parent.parent.checkToken()
+            }else{
+                layer.msg(data.msg)
+            }
+        },error:function(){
+            layer.msg("网络错误，请稍后再试")
+        }
+    })
+
+    $.ajax({
+        type: "get",
+        url: "/api/baidu/getNewMember",
+        cache: false,  //禁用缓存
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader("token", localStorage.getItem("token"));
+        },
+        dataType: "json",
+        success: function (data) {
+            // console.log(data)
+            var info = data.data;
+            var addNumArry=[];
+            var addNumTime=[];
+            var downloadData=[]
+            if(data.code==200){
+                // console.log(info);
+                for(var i=0;i<info.android.length;i++){
+                    addNumArry.push(
+                        info.android[i][0]+ info.iOS[i][0]
+                    )
+                    downloadData.push(
+                        {
+                            "日期":String(info.date[i]),
+                            "新增用户数":info.android[i][0]+ info.iOS[i][0]
+                        }
+                    )
+                }
+                download2={
+                    title:[
+                        '日期',
+                        '新增用户数',
+                    ],
+                    value:downloadData
+                }
+                myChart.setOption(
+                    {
+                        xAxis: {
+                            data: info.date,
+                        },
+                        series: [{
+                            data: addNumArry,
+                        }],
+                    }
+                );
+
+            }else if(data.code==502){
+                window.location="/api/baidu/getCode.html"
+            }else if(data.code==501){
+                parent.parent.checkToken()
+            }else{
+                layer.msg(data.msg)
+            }
+        },error:function(){
+            layer.msg("网络错误，请稍后再试")
+        }
+    })
+
+    $.ajax({
+        type: "get",
+        url: "/api/baidu/getMemberActivity",
+        cache: false,  //禁用缓存
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader("token", localStorage.getItem("token"));
+        },
+        dataType: "json",
+        success: function (data) {
+            // console.log(data)
+            var info = data.data;
+            var addNumArry=[];
+            var addNumTime=[];
+            var downloadData =[];
+            if(data.code==200){
+                // console.log(info);
+                for(var i=0;i<info.android.length;i++){
+                    addNumArry.push(
+                        info.android[i][0]+ info.iOS[i][0]
+                    )
+                    downloadData.push(
+                        {
+                            "日期":String(info.date[i]),
+                            "用户活跃度":info.android[i][0]+ info.iOS[i][0]
+                        }
+                    )
+                }
+                download2={
+                    title:[
+                        '日期',
+                        '用户活跃度',
+                    ],
+                    value:downloadData
+                }
+                myChart1.setOption(
+                    {
+                        xAxis: {
+                            data: info.date,
+                        },
+                        series: [{
+                            data: addNumArry,
+                        }],
+                    }
+                );
+
+            }else if(data.code==502){
+                window.location="/api/baidu/getCode.html"
+            }else if(data.code==501){
+                parent.parent.checkToken()
+            }else{
+                layer.msg(data.msg)
+            }
+        },error:function(){
+            layer.msg("网络错误，请稍后再试")
+        }
+    })
+
+    $.ajax({
+        type: "get",
+        url: "/system/member/memberAnalysisLoginType",
+        cache: false,  //禁用缓存
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader("token", localStorage.getItem("token"));
+        },
+        dataType: "json",
+        success: function (data) {
+            // console.log(data)
+            var info = data.data;
+            var showData=[];
+            var downloadData=[];
+            if(data.code==200){
+                // console.log(info);
+                for(var i=0;i<info.key.length;i++){
+                    showData.push(
+                        {
+                            name:info.key[i],
+                            value:info.value[i],
+                        }
+                    )
+                    downloadData.push({
+                        '登录渠道':info.key[i],
+                        '新增用户数':info.value[i],
+                    })
+                }
+
+                download3={
+                    title:[
+                        '登录渠道',
+                        '新增用户数',
+                    ],
+                    value:downloadData
+                }
+
+                myChart2.setOption(
+                    {
+                        series: [{
+                            data:showData.sort(function (a, b) { return a.value - b.value; }),
+                            // data:[{name:"手机",value:20},{name:"微博",value:30},{name:"微信",value:22},{name:"QQ",value:10}].sort(function (a, b) { return a.value - b.value; }),
+                        }],
+                    }
+                );
+
+            }else if(data.code==502){
+                window.location="/api/baidu/getCode.html"
+            }else if(data.code==501){
+                parent.parent.checkToken()
+            }else{
+                layer.msg(data.msg)
+            }
+        },error:function(){
+            layer.msg("网络错误，请稍后再试")
+        }
+    })
+
+    $.ajax({
+        type: "get",
+        url: "/system/member/memberAnalysisSex",
+        cache: false,  //禁用缓存
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader("token", localStorage.getItem("token"));
+        },
+        dataType: "json",
+        success: function (data) {
+            var info = data.data;
+            var downloadData = [];
+            if(data.code==200){
+                for (var i=0;i<info.key.length;i++){
+                    downloadData.push(
+                        {
+                            '性别':info.key[i],
+                            '人数':info.value[i]
+                        }
+                    )
+                }
+                download4={
+                    title:[
+                        '性别',
+                        '人数',
+                    ],
+                    value:downloadData
+                };
+                var intInfo=[];
+                for(var n=0;n<info.key.length;n++){
+                    intInfo.push({
+                        name: info.key[n],
+                        type: 'bar',
+                        label: {
+                            normal: {
+                                show: true,
+                                position: 'top',
+                            },
+                        },
+                        data: [info.value[n]]
+                    })
+                }
+                myChart3.setOption(
+                    {
+                        legend: {
+                            data: info.key
+                        },
+                        xAxis: [
+                            {
+                                type: 'category',
+                            }
+                        ],
+                        series: intInfo,
+                    }
+                );
+
+            }else if(data.code==502){
+                // window.location="/api/baidu/getCode.html"
+            }else if(data.code==501){
+                parent.parent.checkToken()
+            }else{
+                layer.msg(data.msg)
+            }
+        },error:function(){
+            layer.msg("网络错误，请稍后再试")
+        }
+    })
+</script>
+</body>
+</html>
