@@ -189,7 +189,7 @@ class Portal extends Base
         if(!empty($add_key)){
             //新增后赋予访问权限
             $RoleModel = new RoleModel();
-            $RoleUser = $RoleModel->getRoleUserInfo(['user_code'=>$this->memberInfo['user_code']]);
+            $RoleUser = $RoleModel->getRoleUserInfo(['user_code'=>$this->userInfo['user_code']]);
             if($RoleUser['role_code'] != 1){
                 $RoleModel->addRolePortalAll([['role_code'=>$RoleUser['role_code'],'key'=>$add_key]]);
             }

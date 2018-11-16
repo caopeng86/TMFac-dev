@@ -13,7 +13,6 @@ use think\Db;
 use think\Controller;
 use think\facade\Request;
 use think\facade\Env;
-use Yansongda\Pay\Pay;
 
 class System extends Controller
 {
@@ -23,7 +22,6 @@ class System extends Controller
         parent::__construct();
         $this->ConfigModel = new ConfigModel();
     }
-
     /**
      * 获取系统配置
      */
@@ -157,8 +155,8 @@ class System extends Controller
             return reJson(500, $msg, []);
         }
         foreach ($params as $val){
-                if(empty($inputData[$val]))$inputData[$val] = ''; //未定义则赋予空值
-                $this->ConfigModel->batchSaveConfig($val,$inputData[$val],$remarks[$val],'client');
+            if(empty($inputData[$val]))$inputData[$val] = ''; //未定义则赋予空值
+            $this->ConfigModel->batchSaveConfig($val,$inputData[$val],$remarks[$val],'client');
         }
         return reJson(200,'保存成功',[]);
     }
@@ -402,12 +400,12 @@ class System extends Controller
         if(!$ret){
             return reJson(500, $msg, []);
         }
-        if(!file_exists(Env::get('root_path')."/Wechatpayfile/apiclient_cert.pem")){
+       /* if(!file_exists(Env::get('root_path')."/Wechatpayfile/apiclient_cert.pem")){
             return reJson(500, "客户端证书文件未上传", []);
         }
         if( !file_exists(Env::get('root_path')."/Wechatpayfile/apiclient_key.pem")){
             return reJson(500, "客户端秘钥文件未上传", []);
-        }
+        }*/
         foreach ($params as $val){
             if(!empty($inputData[$val])){
                 $this->ConfigModel->batchSaveConfig($val,$inputData[$val],$remarks[$val],'payment');
@@ -417,7 +415,7 @@ class System extends Controller
     }
 
     /**
-     * 获取极光推送配置
+     * 获取支付宝支付配置
      */
     public function getAlipayConfig(){
         //判断请求方式以及请求参数
@@ -443,7 +441,7 @@ class System extends Controller
     }
 
     /**
-     * 获取极光推送配置
+     * 获取微信支付配置
      */
     public function getWecatpayConfig(){
         //判断请求方式以及请求参数
@@ -489,7 +487,7 @@ class System extends Controller
         $arr = $_FILES["file"];
 
         if(strpos(strrchr($arr['name'], '.'),'pem')){
-          //  move_uploaded_file($arr["tmp_name"],$filename);
+            //  move_uploaded_file($arr["tmp_name"],$filename);
             if(is_uploaded_file($arr['tmp_name'])) {
                 $uploaded_file=$arr['tmp_name'];
                 $path=Env::get('root_path')."/Wechatpayfile";

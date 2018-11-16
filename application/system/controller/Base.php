@@ -19,7 +19,7 @@ use think\facade\Request;
 class Base extends Controller
 {
 
-    public $memberInfo;
+    public $userInfo;
 
     public function __construct()
     {
@@ -78,7 +78,7 @@ class Base extends Controller
                 die('{"code":501,"msg":"token错误","data":""}');
             }
         }
-        $this->memberInfo = Cache::get($token);
+        $this->userInfo = Cache::get($token);
         return true;
     }
 }

@@ -9,13 +9,10 @@
 namespace app\system\controller;
 
 
-use app\extend\controller\Uploads;
-use Qiniu\Auth;
-use think\facade\Config;
+use app\extend\controller\TmUpload;
 use think\Controller;
 use think\facade\Env;
 use think\facade\Request;
-use Qiniu\Storage\UploadManager;
 
 class Upload extends Controller
 {
@@ -32,10 +29,6 @@ class Upload extends Controller
             return reJson(500,$msg,[]);
         }
         $file = Request::file('file');
-        $name = preg_replace('# #','',$file->getInfo()['name']); //去除空格
-//        if(preg_match('/[\x{4e00}-\x{9fa5}]/u',$name)>0){ //如果存在中文则转换名字
-        $name = time().rand(1,1000).strrchr($name,'.');
-//        }
         $image = getimagesize($file->getInfo()['tmp_name']);
         if(!empty($inputData['width']) && $image[0] != $inputData['width']){
             return reJson(503,'图片尺寸要求为'.$inputData['width'].'px*'.$inputData['height'].'px!',[]);
@@ -43,18 +36,32 @@ class Upload extends Controller
         if(!empty($inputData['height']) && $image[1] != $inputData['height']){
             return reJson(503,'图片尺寸要求为'.$inputData['width'].'px*'.$inputData['height'].'px!',[]);
         }
-        $path = '';
-        if(!empty($inputData['path'])){
-            $path = $inputData['path'];
-        }
-        $re = \app\extend\controller\Upload::uploadFile($file,$path,$name);
-        if(!$re){
-            return reJson(500,'上传失败',[]);
-        }
-        $data = \app\extend\controller\Upload::getUrl($re['path'],'',$re['type']);
+        $upload = new TmUpload($file->getInfo());
+        $re = $upload->uploadFile();
+        if ($re==false)return reJson(500,$upload->getErrorMessage(),[]);
+        $data = TmUpload::getUrl($re['type']) . $re['path'];
         return reJson(200, '图片上传成功',$data);
     }
 
+    /**
+     * 文件上传,返回保存到服务器的路径,并未存入数据库
+     */
+    public function fileUpload(){
+        //判断请求方式以及请求参数
+        $inputData = Request::post();
+        $method = Request::method();
+        $params = [];
+        $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
+        if(!$ret){
+            return reJson(500,$msg,[]);
+        }
+        $file = Request::file('file');
+        $upload = new TmUpload($file->getInfo());
+        $re = $upload->uploadFile();
+        if ($re==false)return reJson(500,$upload->getErrorMessage(),[]);
+        $data = TmUpload::getUrl($re['type']) . $re['path'];
+        return reJson(200, '上传成功',$data);
+    }
 
     /**
      * 图片上传,返回保存到服务器的路径,并未存入数据库 返回包含域名

@@ -138,22 +138,22 @@ CREATE TABLE `tm_start_adv`  (
 
 INSERT INTO `tm_config`(`key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ('start_adv_type', '1', '启动页播放方式', 'app', 1541584929, 1541584929);
 
-INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'Baidu_Api_Key', 'ASiveWjeR4yfH7XjbrmH8c6f', '百度统计key', 'BaiduAnalysis', 1541584929, 1541584929);
-INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'Baidu_Secret_Key', 'bnP3h9GNlXD7BSdCkiwwcfoM0uLCMUG8', '百度统计密钥', 'BaiduAnalysis', 1541584929, 1541584929);
-INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'Baidu_android_App_Key', '47b455ccc0', '百度统计应用安卓key', 'BaiduAnalysis', 1541584929, 1541584929);
-INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'Baidu_iOS_App_Key', '24219d0a17', '百度统计应用iOSkey', 'BaiduAnalysis', 1541584929, 1541584929);
-INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'Baidu_refresh_token', '22.645a1e7db518610cc669585a819a9934.315360000.1857023811.892630829-14721012', '长期refresh_token缓存', 'BaiduAnalysis', 1541663812, 1541663812);
+INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'Baidu_Api_Key', '', '百度统计key', 'BaiduAnalysis', 1541584929, 1541584929);
+INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'Baidu_Secret_Key', '', '百度统计密钥', 'BaiduAnalysis', 1541584929, 1541584929);
+INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'Baidu_android_App_Key', '', '百度统计应用安卓key', 'BaiduAnalysis', 1541584929, 1541584929);
+INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'Baidu_iOS_App_Key', '', '百度统计应用iOSkey', 'BaiduAnalysis', 1541584929, 1541584929);
+INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'Baidu_refresh_token', '', '长期refresh_token缓存', 'BaiduAnalysis', 1541663812, 1541663812);
 
 update tm_member set login_type = 'mobile' where login_type is NULL;
 update tm_member set sex = 0 where sex is NULL;
 
 INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'type', 'local', '设置上传方式', 'upload', 1541753932, 1541753932);
-INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'accessKeyId', '12346', 'OSS的key', 'OSSupload', 1541754539, 1541754539);
-INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'accessKeySecret', '123456', 'OSS的Secret', 'OSSupload', 1541754539, 1541754539);
-INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'endpoint', '123456', 'OSS的域名', 'OSSupload', 1541754539, 1541754539);
-INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'bucket', '123456', 'OSS的空间', 'OSSupload', 1541754539, 1541754539);
-INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'accessKey', '12346', '七牛key', 'QNupload', 1541754846, 1541754846);
-INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'secretKey', '123456', '七牛secret', 'QNupload', 1541754846, 1541754846);
-INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'bucket', '123456', '七牛空间', 'QNupload', 1541754846, 1541754846);
-INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'upload', '123456', '七牛上传地址', 'QNupload', 1541754846, 1541754846);
-INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'cdn', '123456', '七牛获取文件域名', 'QNupload', 1541754846, 1541754846);
+INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'accessKeyId', '', 'OSS的key', 'OSSupload', 1541754539, 1541754539);
+INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'accessKeySecret', '', 'OSS的Secret', 'OSSupload', 1541754539, 1541754539);
+INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'endpoint', '', 'OSS的域名', 'OSSupload', 1541754539, 1541754539);
+INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'bucket', '', 'OSS的空间', 'OSSupload', 1541754539, 1541754539);
+INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'accessKey', '', '七牛key', 'QNupload', 1541754846, 1541754846);
+INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'secretKey', '', '七牛secret', 'QNupload', 1541754846, 1541754846);
+INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'bucket', '', '七牛空间', 'QNupload', 1541754846, 1541754846);
+INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'upload', '', '七牛上传地址', 'QNupload', 1541754846, 1541754846);
+INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'cdn', '', '七牛获取文件域名', 'QNupload', 1541754846, 1541754846);
