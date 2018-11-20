@@ -132,7 +132,7 @@ function write_config($config)
         $config['internal_api_host']=$config['domain'];
         $config['platform_domain']=$config['domain'];
         //读取配置内容
-        $conf = file_get_contents(Env::get('root_path') . 'db/tpl/env');
+        $conf = file_get_contents(Env::get('root_path') . 'public/tpl/env');
         //替换配置项
         foreach ($config as $name => $value) {
             $name=strtoupper($name);
@@ -159,26 +159,40 @@ function write_config($config)
  * @return string 去除注释之后的内容
  */
 function removeComment($content){
-    $reg="/(\/\*.*?\*\/.*?\n)|(--.*?\n)/s";
+    $reg="/(\/\*.*?\*\/.*?\n)|(-- .*?\n)|(--)/s"; //--
 //    $content=preg_replace('/.*?TRANSACTION.*?\n/i','',$content);
 //    $content=preg_replace('/^COMMIT.*?\n/i','',$content);
     return preg_replace($reg, '', str_replace(array("\r\n", "\r"), "\n", $content));
 }
 
-function create_tables_multi($db=null, $prefix = ''){
-    $file=scandir(Env::get('root_path').'db');
-    foreach ($file as $sql){
-        if (is_file(Env::get('root_path').'db/'.$sql))
-            create_tables($db,$prefix,'db/'.$sql);
+function create_tables_multi($db=null, $prefix = '',$dir = 'db'){
+    $file=scandir(Env::get('root_path').$dir);
+    $sql_version = '';
+    $dir_array = [];
+    foreach ($file as $sql){  //当前sql文件处理
+        if (is_file(Env::get('root_path').$dir.'/'.$sql)){
+            create_tables($db,$prefix,$dir.'/'.$sql);
+            if(is_numeric(strstr($sql,'.sql',true))){
+                $sql_version = strstr($sql,'.sql',true);
+            }
+        }elseif($sql != '.' && $sql != '..' && is_dir(Env::get('root_path').$dir.'/'.$sql)){
+            $dir_array[] = $sql;
+        }
     }
-//    var_dump($file);
+    if(count($dir_array) > 0){  //递归文件夹处理
+        foreach ($dir_array as $sql){
+            $version = create_tables_multi($db,$prefix,$dir.'/'.$sql);
+            write_component($db,$sql,$version);
+        }
+    }
+    return $sql_version;
 }
 
 /**
  * 创建数据表
  * @param  resource $db 数据库连接资源
  */
-function create_tables($db, $prefix = '',$sqlFile='db/backup/cl01kkdy_6RrqH.sql')
+function create_tables($db, $prefix = '',$sqlFile='db/backup/cl01kkdy_6RrqH.sql',$is_show_msg = true)
 {
 
     //读取SQL文件
@@ -191,11 +205,13 @@ function create_tables($db, $prefix = '',$sqlFile='db/backup/cl01kkdy_6RrqH.sql'
     $sql = str_replace("\r", "\n", $sql);
     $sql = explode(";\n", $sql);
 
-    //替换表前缀
-    $orginal = 'tm_';
-    $sql = str_replace(" `{$orginal}", " `{$prefix}", $sql);
+//    //替换表前缀
+//    $orginal = 'tm_';
+//    $sql = str_replace(" `{$orginal}", " `{$prefix}", $sql);
     //开始安装
-    show_msg('开始安装数据库...');
+    if($is_show_msg){
+        show_msg('开始安装数据库...');
+    }
     foreach ($sql as $value) {
         $value = trim($value);
         if (empty($value)) continue;
@@ -211,17 +227,27 @@ function create_tables($db, $prefix = '',$sqlFile='db/backup/cl01kkdy_6RrqH.sql'
                 $name=$outValue2[1];
             }
             $msg = "创建数据表{$name}";
-            if (false !== $db->execute($value)) {
+            if (false !== $db->execute($value) && $is_show_msg) {
                 show_msg($msg . '...成功');
             } else {
-                show_msg($msg . '...失败！', 'error');
-                session('error', true);
+                if($is_show_msg){
+                    show_msg($msg . '...失败！', 'error');
+                    session('error', true);
+                }
             }
         } else {
             $db->execute($value);
         }
     }
 }
+
+/**
+ * 写入组件版本
+ */
+function write_component($db,$component_code,$version){
+    $db->execute('update tm_component set `sql_version` = \''.$version.'\' where component_code = \''.$component_code.'\';');
+}
+
 
 function register_administrator($db, $prefix, $admin)
 {

@@ -1,0 +1,96 @@
+@import "layui/css/layui.css";
+.public-bg1 {
+  background-color: #3399FF;
+}
+.public-bg2 {
+  border: 1px solid #3399FF;
+  color: #3399FF;
+  background-color: #ffffff;
+}
+.public-bg2:hover {
+  color: #3399FF;
+}
+.layui-form-checked span,
+.layui-form-checked[lay-skin=primary] i,
+.layui-form-onswitch,
+.layui-form-checked:hover span,
+.layui-form-select dl dd.layui-this,
+.layui-laypage .layui-laypage-curr .layui-laypage-em {
+  background-color: #3399FF;
+}
+.layui-form-checked i,
+.layui-form-checked:hover i,
+.layui-form-radio > i:hover,
+.layui-form-radioed > i {
+  color: #3399FF;
+}
+.layui-form-onswitch,
+.layui-form-checked[lay-skin=primary] i,
+.layui-form-checkbox[lay-skin=primary]:hover i {
+  border-color: #3399FF;
+}
+.layui-table-sort[lay-sort=asc] .layui-table-sort-asc,
+.layui-table-sort .layui-table-sort-asc:hover {
+  border-bottom-color: #3399FF;
+}
+.layui-table-sort[lay-sort=desc] .layui-table-sort-desc,
+.layui-table-sort .layui-table-sort-desc:hover {
+  border-top-color: #3399FF;
+}
+.layui-table tbody tr:hover,
+.layui-table thead tr,
+.layui-table-click,
+.layui-table-header,
+.layui-table-hover,
+.layui-table-mend,
+.layui-table-patch,
+.layui-table-tool,
+.layui-table[lay-even] tr:nth-child(even) {
+  background-color: #f5fafe;
+}
+.layui-form-checkbox[lay-skin=primary] span {
+  background: 0 0;
+}
+.publicStyle.layui-btn {
+  border-radius: 5px;
+  height: 30px;
+  line-height: 30px;
+}
+.publicStyle.layui-btn-normal,
+.publicStyle.layui-btn {
+  background-color: #3399FF;
+  width: 100px;
+  color: #ffffff;
+}
+.publicStyle.layui-btn-normal:hover {
+  color: #ffffff;
+  background-color: #3399FF;
+  border-color: #3399FF;
+}
+.publicStyle.layui-btn-primary {
+  background-color: #ffffff;
+  border-color: #3399FF;
+  color: #3399FF;
+}
+.layui-nav,
+.layui-bg-black {
+  background-color: rgba(238, 238, 238, 0.98) !important;
+}
+.layui-nav .layui-nav-item a {
+  color: #333333;
+}
+.layui-nav .layui-nav-mored,
+.layui-nav-itemed > a .layui-nav-more {
+  border-color: transparent transparent #b6b7b8;
+}
+.layui-nav .layui-nav-more {
+  border-top-color: #b6b7b8;
+}
+.layui-nav .layui-nav-item a:hover,
+.layui-nav .layui-nav-item a {
+  background-color: rgba(238, 238, 238, 0.98) !important;
+  color: #333333 !important;
+}
+.layui-nav-child dd a {
+  text-indent: 1em;
+}

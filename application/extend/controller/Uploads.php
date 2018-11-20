@@ -30,7 +30,7 @@ class Uploads extends Controller
      * @param string $path
      * @return bool|string
      */
-    public static function fileUpload($file, $path=''){
+    public static function fileUpload($file, $path='',$name = ''){
         if(!is_object($file)){
             Logservice::writeArray(['err'=>'file参数需是一个对象'], '文件上传失败', 2);
             return false;
@@ -39,7 +39,7 @@ class Uploads extends Controller
             $path = 'default';
         }
         // 移动到目录下
-        $info = $file->move(Env::get('root_path').'uploads/'.$path.'/');
+        $info = $file->move(Env::get('root_path').'uploads/'.$path.'/',$name);
         if($info){
             // 成功上传后返回保存路径
             return '/uploads/'.$path.'/'.$info->getSaveName();

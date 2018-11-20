@@ -18,6 +18,9 @@ use think\facade\Request;
 
 class Base extends Controller
 {
+
+    public $userInfo;
+
     public function __construct()
     {
         parent::__construct();
@@ -35,6 +38,7 @@ class Base extends Controller
         //跳过验证的方法
         $pass = [
             'system\site\getsitelist',
+            'system\member\exportmembertoexcel',
         ];
         if(in_array($url, $pass)){
             return true;
@@ -74,6 +78,7 @@ class Base extends Controller
                 die('{"code":501,"msg":"token错误","data":""}');
             }
         }
+        $this->userInfo = Cache::get($token);
         return true;
     }
 }

@@ -121,15 +121,12 @@ class Membermessagepush extends Base
             ]);
             $inputData['type'] = '系统消息';
             $result = $this->PushMessageModel->addInfo($inputData);
-            if($result){
-                $this->addPushMessage($result);
-            }
         }
         if($result){
             $jobController = new Job();
             $jobController->actionPushMessage();
             $jobController->actionGetRes();
-            return reJson(200,'保存成功', []);
+            return reJson(200,'提交成功', []);
         }
         return reJson(500,'失败',[]);
     }

@@ -19,13 +19,6 @@ class Index extends \think\Controller {
 			return $this->redirect('/');
 		}
 	}
-    public function test(){
-
-        echo "<hr />去除注释后：<br />";
-            highlight_string(removeComment(file_get_contents(Env::get('root_path').'db/sql.sql')));
-
-
-    }
 
     /**
      * 去除PHP代码注释
@@ -100,7 +93,7 @@ class Index extends \think\Controller {
 				if (!$db->execute($sql)) {
 					return $this->error('创建数据库失败');
 				} else {
-					return $this->redirect('install/index/sql');
+					return $this->redirect('/install/index/sql');
 				}
 			}
 		} else {
@@ -127,8 +120,12 @@ class Index extends \think\Controller {
 			//连接数据库
 			$dbconfig = session('db_config');
 			$db       = \think\Db::connect($dbconfig);
+            //初始化数据库
+            if(!$this->dropBeforeCreateDb($db,$dbconfig['database'])){
+                die;
+            }
 			//创建数据表
-            create_tables_multi($db, $dbconfig['prefix']);
+            $dbconfig['sql_version'] = create_tables_multi($db, $dbconfig['prefix']);
 			//注册创始人帐号
 			$admin = session('admin_info');
 			register_administrator($db, $dbconfig['prefix'], $admin);
@@ -141,7 +138,8 @@ class Index extends \think\Controller {
 		if (session('error')) {
 			show_msg('失败');
 		} else {
-			echo '<script type="text/javascript">location.href = "'.url('install/index/complete').'";</script>';
+            show_msg('部署成功');
+			echo '<script type="text/javascript">$(".btn-warning").text("部署完成");setTimeout(location.href = "/install/index/complete",3);</script>';
 		}
 	}
 
@@ -168,4 +166,20 @@ class Index extends \think\Controller {
 		$this->assign('status', $this->status);
 		return $this->fetch();
 	}
+
+	protected function dropBeforeCreateDb($db,$dbname){
+//        $drop_sql="DROP DATABASE  IF EXISTS $dbname;";
+//        $create_sql="CREATE DATABASE $dbname DEFAULT CHARSET utf8mb4 COLLATE utf8mb4_unicode_ci;";
+        $create_sql = "CREATE DATABASE IF NOT EXISTS `{$dbname}` DEFAULT CHARACTER SET utf8";
+        $retval = $db->execute($create_sql);
+        if(!$retval)
+        {
+            show_msg('数据库:'.$dbname.'.初始化失败！');
+            return false;
+        }
+        else{
+            show_msg('数据库:'.$dbname.'.初始化成功！');
+            return true;
+        }
+    }
 }

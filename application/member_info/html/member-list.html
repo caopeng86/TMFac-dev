@@ -1,0 +1,545 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="lib/html5shiv.js"></script>
+    <script type="text/javascript" src="lib/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link  rel="stylesheet" type="text/css" href="lib/layui/css/layui.css" />
+    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
+    <style type="text/css">
+        .layui-table-tool{
+            height: auto;
+        }
+        .selectBtn.layui-btn{
+            width: 40px;
+            height: 25px;
+            line-height: 25px;
+            margin: 0;
+            padding: 0;
+            font-size: 12px;
+        }
+        .tool-btn .layui-btn{
+            margin-bottom: 0;
+        }
+        .layui-table-tool-self{
+            display: none;
+        }
+    </style>
+    <!--[if IE 6]>
+    <script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+    <script>DD_belatedPNG.fix('*');</script>
+    <![endif]-->
+    <title>会员信息</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 会员管理 <!-- <span class="c-gray en">&gt;</span> -->  <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+    <div>
+        <div class="filter_condition_box">
+            <p class="title">筛选条件</p>
+            <form class="layui-form" action="">
+                <div class="filter_condition">
+                    <ul>
+                        <li>
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <input type="text" name="account" placeholder="账号" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <input type="text" name="nickname" placeholder="昵称" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <input type="text" onkeyup="this.value=this.value.replace(/[^\d]/g,'')" onpaste="this.value=this.value.replace(/[^\d]/g,'') "  name="mobile" placeholder="手机号" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <select name="status">
+                                        <option value="">状态筛选</option>
+                                        <option value="0">正常</option>
+                                        <option value="10">封号中</option>
+                                        <option value="1">黑名单</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <select name="sex">
+                                        <option value="">性别</option>
+                                        <option value="1">男</option>
+                                        <option value="2">女</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <button class="layui-btn submit" lay-submit lay-filter="filterBtn">筛选</button>
+                                    <button type="reset" class="layui-btn layui-btn-primary reset">清除条件</button>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+        <div class="member_form_box">
+            <table class="layui-hide" id="test" lay-filter="test"></table>
+            <script type="text/html" id="toolbarDemo">
+                <div class="layui-btn-container" style="display: flex;flex-direction: row;justify-content: space-between">
+                    <div class="titleBox">
+                        <p>会员列表 <span>(共计<span class="allCount">0</span>条记录)</span>
+                            <span>已选中<span class="selected">0</span>条</span>
+                            <button class="layui-btn selectBtn" style="border: 1px solid #e2e2e2;color: #333333;">全选</button>
+                        </p>
+                    </div>
+                    <div class="tool-btn">
+                        <button class="layui-btn layui-btn-sm" lay-event="changeData">
+                            积分调整
+                        </button>
+                        <!--<button class="layui-btn layui-btn-sm" lay-event="allchangeData">-->
+                            <!--全部积分调整-->
+                        <!--</button>-->
+                        <button class="layui-btn layui-btn-sm" lay-event="exportData">
+                            导出Excel
+                        </button>
+                        <!--<button class="layui-btn layui-btn-sm" lay-event="allexportData">-->
+                            <!--全部导出Excel-->
+                        <!--</button>-->
+                    </div>
+
+                </div>
+            </script>
+
+            <script type="text/html" id="barDemo">
+                <a class="layui-btn layui-btn-xs" style="background-color: #3399FF;color: #ffffff;" lay-event="edit">详情</a>
+            </script>
+
+        </div>
+    </div>
+</div>
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="lib/layui-2.4.3/layui.all.js"></script>
+<script type="text/javascript" src="lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<!--<script type="text/javascript" src="lib/laypage/1.2/laypage.js"></script>-->
+<script type="text/javascript">
+    $(function(){
+
+        //定义初始数据
+            var member_name = '';
+            var account = '';
+            var mobile = '';
+            var status = '';
+            var sex = '';
+            var dataLength = '';
+            var isHaveInfo = false;
+            var selectedNum = 0; //已选中条数
+            var isExclude = false;//是否排除
+            var ExcludeData = [];
+            var getNowDataList = 0;
+
+        // layui.use('table', function(){
+            var table = layui.table;
+            var tableIns = table.render({
+                elem: '#test'
+                ,title:'会员列表'
+                ,url:'/system/Member/getMemberList'
+                ,headers: {"token":localStorage.getItem("token")}
+                ,limit:20
+                ,request: {
+                    pageName: 'index' //页码的参数名称，默认：page
+                    ,limitName: 'page_size' //每页数据量的参数名，默认：limit
+                }
+                ,toolbar: '#toolbarDemo'
+                ,cols: [[
+                    {type: 'checkbox', fixed: 'left'}
+                    ,{field:'member_id', title:'ID', width:80, fixed: 'left', unresize: true}
+                    ,{field:'account', title:'账号'}
+                    ,{field:'avatar', title:'头像',width: 70,align:'center'
+                    ,templet: function(data){
+                        return '<img src="'+data.avatar+'" style="border-radius: 50%" width="28" alt=""> '
+                    }}
+                    ,{field:'member_nickname', title:'昵称'}
+                    ,{field:'point', title:'积分', width:80}
+                    ,{field:'birthday', title:'生日', width: 130}
+                    ,{field:'sex', title:'性别', width: 75}
+                    ,{field:'mobile', title:'手机号', width: 150}
+                    ,{field:'status', title:'状态', width:80}
+                    ,{field:'create_time', title:'注册时间', width:175,sort: true}
+                    ,{field:'access_key_create_time', title:'最近登录时间', width:175,sort: true}
+                    ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width: 80}
+                ]]
+                ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                    layout: [/*'count',*/ 'prev', 'page', 'next', 'skip','limit'] //自定义分页布局
+                    //,curr: 5 //设定初始在第 5 页
+                    ,groups: 3 //只显示 1 个连续页码
+                    ,first: 1 //不显示首页
+                    // ,last: false //不显示尾页
+                }
+                ,done:function(res,curr,count){
+                    $(".selectBtn").click(function () {
+                        if(isExclude==false){
+                            for(var i=0;i<table.cache.test.length;i++){
+                                $('.layui-table tr[data-index='+i+'] input[type="checkbox"]').prop('checked', true);
+                                $('.layui-table tr[data-index='+i+'] input[type="checkbox"]').next().addClass('layui-form-checked');
+                            }
+                            // $(".layui-unselect.layui-form-checkbox").addClass("layui-form-checked");
+                            selectedNum = res.count;
+                            isExclude = true;
+                            ExcludeData=[];
+                            $(this).html("取消")
+                        }else{
+                            for(var i=0;i<table.cache.test.length;i++){
+                                $('.layui-table tr[data-index='+i+'] input[type="checkbox"]').prop('checked', false);
+                                $('.layui-table tr[data-index='+i+'] input[type="checkbox"]').next().removeClass('layui-form-checked');
+                            }
+                            // $(".layui-unselect.layui-form-checkbox").addClass("layui-form-checked");
+                            selectedNum = 0;
+                            isExclude = false;
+                            ExcludeData=[];
+                            $(this).html("全选")
+                        }
+                        $(".selected").html(selectedNum)
+
+                    })
+                    getNowDataList=res.data.length;
+                }
+                ,response: {
+                    statusCode: 200 //重新规定成功的状态码为 200，table 组件默认为 0
+                }
+                ,parseData: function(res){ //将原始数据解析成 table 组件所规定的数据
+                    for(var i = 0;i<res.data.list.length;i++){
+                        // if(res.data.list[i].mobile!=''&&res.data.list[i].mobile!=null){
+                        //     res.data.list[i].account=res.data.list[i].mobile
+                        // }
+                        // else if(res.data.list[i].wx!=''&&res.data.list[i].wx!=null){
+                        //     res.data.list[i].account="微信登录（"+res.data.list[i].member_sn+"）"
+                        // }else if(res.data.list[i].qq!=''&&res.data.list[i].qq!=null){
+                        //     res.data.list[i].account="QQ登录（"+res.data.list[i].member_sn+"）"
+                        // }else if(res.data.list[i].wb!=''&&res.data.list[i].wb!=null){
+                        //     res.data.list[i].account="微博登录（"+res.data.list[i].member_sn+"）"
+                        // }
+                        // else
+                        if(res.data.list[i].member_sn!=""&&res.data.list[i].member_sn!=null){
+                            res.data.list[i].account=res.data.list[i].member_sn
+                        }else{
+                            res.data.list[i].account="未设置"
+                        }
+                        if(res.data.list[i].sex==1){
+                            res.data.list[i].sex='男'
+                        }else if(res.data.list[i].sex==2){
+                            res.data.list[i].sex='女'
+                        }else{
+                            res.data.list[i].sex='未设置'
+                        }
+                        if (res.data.list[i].close==1) {
+                            res.data.list[i].status='拉黑'
+                        }else if (res.data.list[i].status==10){
+                            res.data.list[i].status='封号'
+                        }else if(res.data.list[i].status==0){
+                            res.data.list[i].status='正常'
+                        }
+
+                        if(res.data.list[i].member_nickname==""||res.data.list[i].member_nickname==null){
+                            res.data.list[i].member_nickname="未设置"
+                        }
+
+                        if(res.data.list[i].birthday==""||res.data.list[i].birthday==null){
+                            res.data.list[i].birthday="未设置"
+                        }
+                        if(res.data.list[i].mobile==""||res.data.list[i].mobile==null){
+                            res.data.list[i].mobile="未绑定"
+                        }
+                        if(res.data.list[i].head_pic==""||res.data.list[i].head_pic==null){
+                            res.data.list[i].avatar="未设置"
+                        }else{
+                            res.data.list[i].avatar = res.data.list[i].head_pic
+                        }
+                    }
+                    // res.count=200;
+                    dataLength = res.data.total;
+                    isHaveInfo = true;
+                    $(".allCount").html(res.data.total)
+                    return {
+                        "code": res.code, //解析接口状态
+                        "msg": res.msg, //解析提示文本
+                        "count": res.data.total, //解析数据长度
+                        "data": res.data.list //解析数据列表
+                    };
+                }
+            });
+        table.on('checkbox(test)', function(obj){
+            if(obj.type=='all'&&obj.checked==true){
+                selectedNum = getNowDataList;
+                isExclude = false;
+            }else if(obj.type=='all'&&obj.checked==false){
+                selectedNum =selectedNum - getNowDataList
+            }else if(obj.type=='one'&&obj.checked==false){
+                selectedNum =selectedNum - 1
+                ExcludeData.push(obj.data)
+            }else if(obj.type=='one'&&obj.checked==true){
+                selectedNum =selectedNum + 1
+            }
+
+            $(".selected").html(selectedNum)
+            // console.log(obj.checked); //当前是否选中状态
+            // console.log(obj.data); //选中行的相关数据
+            // console.log(obj.type); //如果触发的是全选，则为：all，如果触发的是单选，则为：one
+        });
+
+            //头工具栏事件
+            table.on('toolbar(test)', function(obj){
+                var allData = table.cache.test;
+                var checkStatus = table.checkStatus(obj.config.id);
+                switch(obj.event){
+                    case 'changeData':
+                        var data = checkStatus.data;
+                        var idData = '';
+                        var point = '';
+                        if(selectedNum<1){
+                            layer.msg('至少选择一个用户')
+                            return false
+                        }
+                        console.log(123)
+                        if(isExclude){
+                            for(var i=0;i<ExcludeData.length;i++){
+                                if(i<ExcludeData.length-1){
+                                    idData=idData+String(ExcludeData[i].member_id)+','
+                                }else{
+                                    idData=idData+String(ExcludeData[i].member_id)
+                                }
+                            }
+                        }else{
+                            for(var i = 0;i<data.length;i++){
+                                if(i<data.length-1){
+                                    idData=idData+String(data[i].member_id)+','
+                                }else{
+                                    idData=idData+String(data[i].member_id)
+                                }
+                                if(data.length==1){
+                                    point = data[i].point
+                                }
+                            }
+                        }
+                        //iframe层
+                        layer.open({
+                            type: 2,
+                            title: false,
+                            shade: 0.8,
+                            // shadeClose:true,
+                            area: ['500px', '400px'],
+                            content: 'integralmodal.html?idData='+idData+'&idDataNum='+selectedNum+'&point='+point+'&member_name='+member_name+'&account='+account+'&mobile='+mobile+'&status='+status+'&sex='+sex+'&isExclude='+isExclude //iframe的url
+                        });
+                        break;
+                    case 'allchangeData':
+                        var data = checkStatus.data;
+                        if(isHaveInfo==false){
+                            layer.msg('暂无数据，等待加载')
+                            return false;
+                        }
+                        //iframe层
+                        layer.open({
+                            type: 2,
+                            title: false,
+                            shade: 0.8,
+                            // shadeClose:true,
+                            area: ['500px', '400px'],
+                            content: 'integralmodal.html?member_name='+member_name+'&account='+account+'&mobile='+mobile+'&status='+status+'&sex='+sex+'&idDataNum='+dataLength //iframe的url
+                        });
+                        break;
+
+                    case 'exportData':
+                        var data = checkStatus.data;
+                        var idData = '';
+                        if(selectedNum<1){
+                            layer.msg('至少选择一个用户')
+                            return false;
+                        }
+                        if(isExclude){
+                            for(var i=0;i<ExcludeData.length;i++){
+                                if(i<ExcludeData.length-1){
+                                    idData=idData+String(ExcludeData[i].member_id)+','
+                                }else{
+                                    idData=idData+String(ExcludeData[i].member_id)
+                                }
+                            }
+                        }else{
+                            for(var i = 0;i<data.length;i++){
+                                if(i<data.length-1){
+                                    idData=idData+String(data[i].member_id)+','
+                                }else{
+                                    idData=idData+String(data[i].member_id)
+                                }
+                                if(data.length==1){
+                                    point = data[i].point
+                                }
+                            }
+                        }
+                        // if(data.length<1){
+                        //     layer.msg('至少选择一个用户')
+                        //     return true;
+                        // }
+                        // for(var i = 0;i<data.length;i++){
+                        //     if(i<data.length-1){
+                        //         idData=idData+String(data[i].member_id)+','
+                        //     }else{
+                        //         idData=idData+String(data[i].member_id)
+                        //     }
+                        // }
+                        //iframe层
+                        layer.open({
+                            type: 2,
+                            title: false,
+                            shade: 0.8,
+                            // shadeClose:true,
+                            area: ['500px', '380px'],
+                            content: 'downloadFile.html?idData='+idData+'&member_name='+member_name+'&account='+account+'&mobile='+mobile+'&status='+status+'&sex='+sex+'&idDataNum='+selectedNum+'&isExclude='+isExclude //iframe的url
+                        });
+                        // downloadFile("/system/Member/exportMemberToExcel?member_id"+idData)
+                        // window.open("/system/Member/exportMemberToExcel?member_id"+idData);
+                        break;
+
+                    case 'allexportData':
+                        var data = checkStatus.data;
+                        if(isHaveInfo==false){
+                            layer.msg('暂无数据，等待加载')
+                            return false;
+                        }
+                        //iframe层
+                        layer.open({
+                            type: 2,
+                            title: false,
+                            shade: 0.8,
+                            // shadeClose:true,
+                            area: ['500px', '380px'],
+                            content: 'downloadFile.html?member_name='+member_name+'&account='+account+'&mobile='+mobile+'&status='+status+'&sex='+sex+'&idDataNum='+dataLength //iframe的url
+                        });
+                        // downloadFile("/system/Member/exportMemberToExcel?member_id"+idData)
+                        // window.open("/system/Member/exportMemberToExcel?member_id"+idData);
+                        break;
+                };
+            });
+
+            //监听行工具事件
+            table.on('tool(test)', function(obj){
+                var data = obj.data;
+                if(obj.event === 'del'){
+                    layer.confirm('真的删除行么', function(index){
+                        obj.del();
+                        layer.close(index);
+                    });
+                } else if(obj.event === 'edit'){
+                    window.location.href="member-info.html?member_code="+data.member_code+"&member_id="+data.member_id;
+                    // window.location.replace("member-info.html?member_code="+data.member_code+'&member_id='+data.member_id);
+                    // layer.prompt({
+                    //     formType: 2
+                    //     ,value: data.email
+                    // }, function(value, index){
+                    //     obj.update({
+                    //         email: value
+                    //     });
+                    //     layer.close(index);
+                    // });
+                }
+            });
+        // });
+
+
+
+        // layui.use('form', function(){
+        var form = layui.form;
+        //监听提交
+        form.on('submit(filterBtn)', function(data){
+             member_name = data.field.nickname;
+             account = data.field.account;
+             mobile = data.field.mobile;
+             status = data.field.status;
+             sex = data.field.sex;
+            tableIns.reload({
+                where: { //设定异步数据接口的额外参数，任意设
+                    member_nickname: data.field.nickname,
+                    account: data.field.account,
+                    mobile: data.field.mobile,
+                    status: data.field.status,
+                    sex: data.field.sex,
+                }
+                // ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                //     layout: [/*'count',*/ 'prev', 'page', 'next'] //自定义分页布局
+                //     ,groups: 2 //只显示 1 个连续页码
+                //     ,first: 1 //不显示首页
+                //     ,last: false //不显示尾页
+                //     ,curr: 1 //重新从第 1 页开始
+                // }
+                ,page: {
+                    layout: [/*'count',*/ 'prev', 'page', 'next','skip'] //自定义分页布局
+                    ,groups: 3 //只显示 1 个连续页码
+                    ,first: 1 //不显示首页
+                    // ,last: false //不显示尾页
+                    ,curr: 1 //重新从第 1 页开始
+                }
+            });
+            return false;
+        });
+        $(".reset").click(function(){
+            member_name = '';
+            account ='';
+            mobile = '';
+            status = '';
+            sex = '';
+            tableIns.reload({
+                where: { //设定异步数据接口的额外参数，任意设
+                }
+                ,page: {
+                    layout: [/*'count',*/ 'prev', 'page', 'next','skip'] //自定义分页布局
+                    ,groups: 3 //只显示 1 个连续页码
+                    ,first: 1 //不显示首页
+                    // ,last: false //不显示尾页
+                    ,curr: 1 //重新从第 1 页开始
+                }
+            });
+        })
+    })
+
+    function downloadFile(url) {
+        try{
+            var elemIF = document.createElement("iframe");
+            elemIF.src = url;
+            elemIF.style.display = "none";
+            document.body.appendChild(elemIF);
+        }catch(e){
+            zzrw.alert("下载异常！");
+        }
+    }
+
+</script>
+</body>
+</html>

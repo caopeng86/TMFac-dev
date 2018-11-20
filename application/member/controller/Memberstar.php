@@ -9,6 +9,7 @@
 namespace app\member\controller;
 
 
+use app\member\model\MemberfootprintModel;
 use app\member\model\MemberstarModel;
 use think\facade\Request;
 
@@ -201,5 +202,28 @@ class Memberstar extends Base
         ];
 
         return reJson(200, '获取列表成功', $return);
+    }
+
+    /**
+     * 统计收藏条数和历史记录条数
+     */
+    public function countStarAndFootprint(){
+        //判断请求方式以及请求参数
+        $inputData = Request::get();
+        $method = Request::method();
+        $params = ['member_code'];
+        $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
+        if(!$ret){
+            return reJson(500, $msg, []);
+        }
+        $condition = [
+            ['member_code','=',$inputData['member_code']]
+        ];
+        //收藏条数
+        $starNum = $this->starModel->countStar($condition);
+        $MemberfootprintModel = new MemberfootprintModel();
+        $condition[] = ['create_time','>=',time() - 7*24*3600];
+        $footprintNum = $MemberfootprintModel->countFootprint($condition);
+        return reJson(200,'成功',['starNum'=>$starNum,'footprintNum'=>$footprintNum]);
     }
 }

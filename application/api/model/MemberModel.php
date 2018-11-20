@@ -28,7 +28,8 @@ class MemberModel extends CommonModel
      * @throws
      */
     public function getCount($condition){
-        $re = Db::table($this->member_db)->where($condition)->count('member_id');
+        $join_exp= $this->member_db.'.site_code = '.$this->site_db.'.site_code';
+        $re = Db::table($this->member_db)->where($condition)->join($this->site_db, $join_exp)->count('member_id');
         return $re;
     }
 
@@ -79,6 +80,19 @@ class MemberModel extends CommonModel
      */
     public function updateMember($condition, $data){
         $re = Db::table($this->member_db)->where($condition)->update($data);
+        return $re;
+    }
+
+
+    /**
+     * 统计分组用户数据
+     */
+    public function countGroupMember($condition,$group,$field,$cache = false){
+        $re = Db::table($this->member_db)->where($condition);
+        if($cache > 0){ //缓存
+            $re = $re->cache(true,$cache);
+        }
+        $re = $re->group($group)->field($field)->select();
         return $re;
     }
 }

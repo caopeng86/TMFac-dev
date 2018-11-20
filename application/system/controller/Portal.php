@@ -172,6 +172,10 @@ class Portal extends Base
             return reJson(500,$msg,[]);
         }
         $inputData['portal_key'] = $this->portal_key; //默认
+        if(!empty($inputData['add_key'])){
+            $add_key = $inputData['add_key'];
+            unset($inputData['add_key']);
+        }
         //查找名称是否已经存在
         $condition = ['portal_key' => $inputData['portal_key']];
         $key = $this->portalModel->getPortal($condition);
@@ -181,6 +185,14 @@ class Portal extends Base
         }else{
             //不存在则新增
             $re = $this->portalModel->addPortal($inputData);
+        }
+        if(!empty($add_key)){
+            //新增后赋予访问权限
+            $RoleModel = new RoleModel();
+            $RoleUser = $RoleModel->getRoleUserInfo(['user_code'=>$this->userInfo['user_code']]);
+            if($RoleUser['role_code'] != 1){
+                $RoleModel->addRolePortalAll([['role_code'=>$RoleUser['role_code'],'key'=>$add_key]]);
+            }
         }
         if($re === false){
             Logservice::writeArray(['sql'=>$this->portalModel->getLastSql()], '保存应用列表失败', 2);

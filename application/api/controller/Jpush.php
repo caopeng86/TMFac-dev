@@ -243,4 +243,26 @@ class Jpush extends Base
         }
         return reJson(200,'推送情况更新完毕',[]);
     }
+
+    /**
+     * 新增信息
+     */
+    public function addInfo(){
+        //判断请求方式以及请求参数
+        $inputData = Request::post();
+        $method = Request::method();
+        $params = ['title','content','url','android_info','ios_info','type'];
+        $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
+        if(!$ret){
+            return reJson(500, $msg, []);
+        }
+        $result =  pushMessage($inputData['title'],$inputData['content'],$inputData['url'],$inputData['android_info'],$inputData['ios_info'],$inputData['type']);
+        if($result){
+            return reJson(200,'成功',[]);
+        }else{
+            return reJson(500,'失败',[]);
+        }
+    }
+
+
 }

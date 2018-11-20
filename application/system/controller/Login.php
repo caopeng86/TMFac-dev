@@ -313,7 +313,7 @@ class Login extends Controller
             "access_key_create_time" => $updateData['access_key_create_time'],
             "access_key" => $updateData['access_key'],
         ];
-        Cache::set($updateData['access_key'], $cacheData, 5);
+        Cache::set($updateData['access_key'], $cacheData, Config::get('token_time'));
         Logservice::writeArray(['token'=>$updateData['access_key'], 'data'=>$cacheData], '记录登录缓存数据');
 
         //获取用户部门code,name

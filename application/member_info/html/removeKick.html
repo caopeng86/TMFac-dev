@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>解除封号</title>
+    <link  rel="stylesheet" type="text/css" href="lib/layui/css/layui.css" />
+    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
+    <style>
+        #demo1{
+            width:344px;
+            height:135px;
+            margin: 20px 0;
+        }
+        .sort{
+            margin: 10px 0;
+            width:100px
+        }
+        .layui-btn-normal {
+            background-color: #1E9FFF!important;
+            height: 30px;
+            line-height: 30px !important;
+            width: 90px;
+
+        }
+        .title{
+            border-bottom: 1px solid #e6e6e6;
+            padding: 15px;
+            font-weight: bolder;
+        }
+        .tips{
+            text-align: center;
+            margin-top: 50px;
+        }
+        .tips p{
+            font-size: 16px;
+            margin-top: 20px;
+        }
+        .layui-input-block{
+            margin-left: 0;
+            text-align: center;
+            margin-top: 40px;
+        }
+        .cancel{
+            color: #3399FF;
+            background-color: #ffffff!important;
+            border: 1px solid #3399FF;
+        }
+        .cancel:hover{
+            color: #3399FF;
+        }
+    </style>
+</head>
+<body>
+<form class="layui-form" action="">
+    <div class="title">解除封号</div>
+    <div class="tips">
+        <img src="./temp/tips.png" width="90px" alt="">
+        <p>确定要用户将 <span class="member_nickname"></span> 解除封号吗？</p>
+    </div>
+</form>
+<div class="layui-form-item">
+    <div class="layui-input-block">
+        <button class="layui-btn layui-btn-normal cancel">取消</button>
+        <button class="layui-btn layui-btn-normal submit">确定</button>
+    </div>
+</div>
+</body>
+<script src="lib/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="lib/layui/layui.all.js"></script>
+<script>
+    $(window).ready(function(){
+        if(getQueryString('member_nickname')==null||getQueryString('member_nickname')==""||getQueryString('member_nickname')=="null"||getQueryString('member_nickname')=="undefined"||getQueryString('member_nickname')==undefined){
+            $('.member_nickname').html("该用户")
+        }else{
+            $('.member_nickname').html(decodeURI(escape(getQueryString('member_nickname'))))
+        }
+    })
+
+    $(".submit").click(function(){
+        $.ajax({
+            type: "post",
+            url: "/system/Member/startMember",
+            cache: false,  //禁用缓存
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("token", localStorage.getItem("token"));
+            },
+            data: {"member_id": getQueryString("member_id")},//传入组装的参数
+            dataType: "json",
+            success: function (data) {
+                if (data.code == 200) {
+                    layer.msg(data.msg)
+                    parent.window.location.reload()
+                } else if (data.code == 501) {
+                    parent.parent.parent.checkToken()
+                } else {
+                    layer.msg(data.msg)
+                }
+            }
+        })
+
+    })
+    $(".cancel").click(function(){
+        var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+        parent.layer.close(index);
+    })
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
+</script>
+</html>
