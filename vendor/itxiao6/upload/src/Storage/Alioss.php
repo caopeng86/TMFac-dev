@@ -94,7 +94,7 @@ class Alioss implements Storage
         }
         # 获取随机文件名
         $name = explode('.',$_FILES[$file]['name']);
-        $file_name = Tool::getARandLetter(15).'.'.$name;
+        $file_name = Tool::getARandLetter(15).'.'.end($name);
         # 获取新文件名
         $res = $this -> ossClient->putObject($this -> bucket,$path.$file_name,file_get_contents($_FILES[$file]['tmp_name']));
         # 判断是否上传成功

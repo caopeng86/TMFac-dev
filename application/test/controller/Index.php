@@ -9,10 +9,14 @@
 
 namespace app\test\controller;
 
+use app\extend\controller\TmUpload;
 use think\Controller;
 use think\facade\Env;
 use Itxiao6\Upload\Upload;
-
+use app\extend\controller\FtpInternal;
+use FtpClient\FtpClient;
+use think\facade\Request;
+use think\facade\Cache;
 
 class Index extends controller
 {
@@ -103,5 +107,61 @@ class Index extends controller
     public function upload()
     {
         return $this->fetch();
+    }
+    public function testInternal(){
+//        $file = $_FILES['image'];
+        $file = Request::file('image');
+
+        $upload=new TmUpload($file->getInfo());
+        $re=$upload->uploadFile();
+        if ($re==false)
+            var_dump($upload->getErrorMessage());
+        else{
+            var_dump($re);
+            var_dump(TmUpload::getUrls(),TmUpload::getUrl($re['type']).$re['path']);
+
+            if($upload->delFile($re['path'],$re['type']))
+                var_dump("删除成功");
+            else
+                var_dump($upload->getException());
+        }
+
+    }
+    public function testToken(){
+//        Cache::get('B87C2FA03339EB69A92523B5A2EA208C');
+//        var_dump(Env::get('app_path'));
+//            var_dump());
+        $file='/uploads/181113/269185573841331746611631949613052016145520287.png';
+        $upload=new TmUpload();
+        if($upload->delFile($file,'local'))
+            var_dump("删除成功");
+        else
+            var_dump($upload->getException());
+
+    }
+    public function testDelFtp(){
+        $file='/uploads/181113/413484343522469102417555380290415292903929472.png';
+        $upload=new TmUpload();
+        if($upload->delFile($file,'ftp'))
+            var_dump("删除成功");
+        else
+            var_dump($upload->getException());
+    }
+    public function testDelOss(){
+        $file='/181113/1683022024817111753919736290194093381275206.png';
+        $upload=new TmUpload();
+        if($upload->delFile($file,'oss'))
+            var_dump("删除成功");
+        else
+            var_dump($upload->getException());
+    }
+
+    public function testDelQn(){
+        $file='/181113/5636116916382342232435399922030950041115130.png';
+        $upload=new TmUpload();
+        if($upload->delFile($file,'qn'))
+            var_dump("删除成功");
+        else
+            var_dump($upload->getException());
     }
 }

@@ -375,12 +375,12 @@ class System extends Controller
         $method = Request::method();
         $params = ['alipay_app_id','alipay_public_key','alipay_private_key'];
         $remarks = ['alipay_app_id'=>'支付宝支付appid','alipay_public_key'=>'支付宝支付公钥','alipay_private_key'=>'支付宝支付私钥'];
-        $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
+        /*$ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
             return reJson(500, $msg, []);
-        }
+        }*/
         foreach ($params as $val){
-            if(!empty($inputData[$val])){
+            if(isset($inputData[$val])){
                 $this->ConfigModel->batchSaveConfig($val,$inputData[$val],$remarks[$val],'payment');
             }
         }
@@ -396,10 +396,10 @@ class System extends Controller
         $method = Request::method();
         $params = ['wechat_app_id','wechat_mch_id','wechat_key'];
         $remarks = ['wechat_app_id'=>'微信appid','wechat_mch_id'=>'微信商户号','wechat_key'=>'微信PAI秘钥'];
-        $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
+        /*$ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
             return reJson(500, $msg, []);
-        }
+        }*/
        /* if(!file_exists(Env::get('root_path')."/Wechatpayfile/apiclient_cert.pem")){
             return reJson(500, "客户端证书文件未上传", []);
         }
@@ -407,7 +407,7 @@ class System extends Controller
             return reJson(500, "客户端秘钥文件未上传", []);
         }*/
         foreach ($params as $val){
-            if(!empty($inputData[$val])){
+            if(isset($inputData[$val])){
                 $this->ConfigModel->batchSaveConfig($val,$inputData[$val],$remarks[$val],'payment');
             }
         }
@@ -703,14 +703,104 @@ class System extends Controller
     }
 
     /**
+     *  设置本地参数
+     */
+    public function setLocal(){
+        //判断请求方式以及请求参数
+        $inputData = Request::post();
+        $method = Request::method();
+        $params = ['path'];
+        $remarks = ['path'=>'路径','absolute_path'=>'扩展资源盘绝对路径','cdn'=>'资源盘域名'];
+        $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
+        if(!$ret){
+            return reJson(500, $msg, []);
+        }
+        $params[] = 'absolute_path';
+        $params[] = 'cdn';
+        foreach ($params as $val){
+            if(!empty($inputData[$val])){
+                $this->ConfigModel->batchSaveConfig($val,$inputData[$val],$remarks[$val],'LOCALupload');
+            }
+        }
+        return reJson(200,'保存成功',[]);
+    }
+
+    /**
+     *  获取本地参数
+     */
+    public function getLocal(){
+        //判断请求方式以及请求参数
+        $inputData = Request::get();
+        $method = Request::method();
+        $params = [];
+        $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
+        if(!$ret){
+            return reJson(500, $msg, []);
+        }
+        $condition = [];
+        $condition['key'] = ['path','absolute_path','cdn'];
+        $condition['type'] = 'LOCALupload';
+        $ConfigList = $this->ConfigModel->getConfigList($condition);
+        if($ConfigList === false){
+            return reJson(500, '获取失败', []);
+        }
+        $ConfigList = $this->ConfigModel->ArrayToKey($ConfigList);
+        return reJson(200, '获取成功', $ConfigList);
+    }
+
+    /**
+     *  设置oss参数
+     */
+    public function setFtp(){
+        //判断请求方式以及请求参数
+        $inputData = Request::post();
+        $method = Request::method();
+        $params = ['host','username','password','port','path'];
+        $remarks = ['host'=>'域名','username'=>'用户名','password'=>'密码','port'=>'端口号','path'=>'路径'];
+        $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
+        if(!$ret){
+            return reJson(500, $msg, []);
+        }
+        foreach ($params as $val){
+            if(!empty($inputData[$val])){
+                $this->ConfigModel->batchSaveConfig($val,$inputData[$val],$remarks[$val],'FTPupload');
+            }
+        }
+        return reJson(200,'保存成功',[]);
+    }
+
+    /**
+     *  获取oss参数
+     */
+    public function getFtp(){
+        //判断请求方式以及请求参数
+        $inputData = Request::get();
+        $method = Request::method();
+        $params = [];
+        $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
+        if(!$ret){
+            return reJson(500, $msg, []);
+        }
+        $condition = [];
+        $condition['key'] = ['host','username','password','port','path'];
+        $condition['type'] = 'FTPupload';
+        $ConfigList = $this->ConfigModel->getConfigList($condition);
+        if($ConfigList === false){
+            return reJson(500, '获取失败', []);
+        }
+        $ConfigList = $this->ConfigModel->ArrayToKey($ConfigList);
+        return reJson(200, '获取成功', $ConfigList);
+    }
+
+    /**
      *  设置oss参数
      */
     public function setOss(){
         //判断请求方式以及请求参数
         $inputData = Request::post();
         $method = Request::method();
-        $params = ['accessKeyId','accessKeySecret','endpoint','bucket'];
-        $remarks = ['accessKeyId'=>'OSS的key','accessKeySecret'=>'OSS的Secret','endpoint'=>'OSS的域名','bucket'=>'OSS的空间'];
+        $params = ['accessKeyId','accessKeySecret','endpoint','bucket','cdn'];
+        $remarks = ['accessKeyId'=>'OSS的key','accessKeySecret'=>'OSS的Secret','endpoint'=>'OSS的域名','bucket'=>'OSS的空间','cdn'=>'外网访问域名'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
             return reJson(500, $msg, []);
@@ -736,7 +826,7 @@ class System extends Controller
             return reJson(500, $msg, []);
         }
         $condition = [];
-        $condition['key'] = ['accessKeyId','accessKeySecret','endpoint','bucket'];
+        $condition['key'] = ['accessKeyId','accessKeySecret','endpoint','bucket','cdn'];
         $condition['type'] = 'OSSupload';
         $ConfigList = $this->ConfigModel->getConfigList($condition);
         if($ConfigList === false){

@@ -155,7 +155,7 @@ class Qiniu implements Storage
         }
         # 获取随机文件名
         $name = explode('.',$_FILES[$file]['name']);
-        $file_name = Tool::getARandLetter(15).'.'.$name;
+        $file_name = Tool::getARandLetter(15).'.'.end($name);
         # 上传文件
         list($ret, $error) = $this -> upManager->put($this -> token,$path.$file_name, file_get_contents($_FILES[$file]['tmp_name']));
         if($error!=null){

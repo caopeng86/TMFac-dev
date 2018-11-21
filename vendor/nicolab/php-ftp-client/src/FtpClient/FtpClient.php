@@ -207,7 +207,6 @@ class FtpClient implements Countable
     public function login($username = 'anonymous', $password = '')
     {
         $result = $this->ftp->login($username, $password);
-
         if ($result === false) {
             throw new FtpException('Login incorrect');
         }

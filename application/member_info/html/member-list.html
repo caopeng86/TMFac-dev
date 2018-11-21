@@ -238,9 +238,9 @@
                 }
                 ,parseData: function(res){ //将原始数据解析成 table 组件所规定的数据
                     for(var i = 0;i<res.data.list.length;i++){
-                        if(res.data.list[i].mobile!=''&&res.data.list[i].mobile!=null){
-                            res.data.list[i].account=res.data.list[i].mobile
-                        }
+                        // if(res.data.list[i].mobile!=''&&res.data.list[i].mobile!=null){
+                        //     res.data.list[i].account=res.data.list[i].mobile
+                        // }
                         // else if(res.data.list[i].wx!=''&&res.data.list[i].wx!=null){
                         //     res.data.list[i].account="微信登录（"+res.data.list[i].member_sn+"）"
                         // }else if(res.data.list[i].qq!=''&&res.data.list[i].qq!=null){
@@ -248,7 +248,8 @@
                         // }else if(res.data.list[i].wb!=''&&res.data.list[i].wb!=null){
                         //     res.data.list[i].account="微博登录（"+res.data.list[i].member_sn+"）"
                         // }
-                        else if(res.data.list[i].member_sn!=""&&res.data.list[i].member_sn!=null){
+                        // else
+                        if(res.data.list[i].member_sn!=""&&res.data.list[i].member_sn!=null){
                             res.data.list[i].account=res.data.list[i].member_sn
                         }else{
                             res.data.list[i].account="未设置"

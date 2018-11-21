@@ -138,11 +138,11 @@ CREATE TABLE `tm_start_adv`  (
 
 INSERT INTO `tm_config`(`key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ('start_adv_type', '1', '启动页播放方式', 'app', 1541584929, 1541584929);
 
-INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'Baidu_Api_Key', '', '百度统计key', 'BaiduAnalysis', 1541584929, 1541584929);
-INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'Baidu_Secret_Key', '', '百度统计密钥', 'BaiduAnalysis', 1541584929, 1541584929);
-INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'Baidu_android_App_Key', '', '百度统计应用安卓key', 'BaiduAnalysis', 1541584929, 1541584929);
-INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'Baidu_iOS_App_Key', '', '百度统计应用iOSkey', 'BaiduAnalysis', 1541584929, 1541584929);
-INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'Baidu_refresh_token', '', '长期refresh_token缓存', 'BaiduAnalysis', 1541663812, 1541663812);
+INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'Baidu_Api_Key', 'ASiveWjeR4yfH7XjbrmH8c6f', '百度统计key', 'BaiduAnalysis', 1541584929, 1541584929);
+INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'Baidu_Secret_Key', 'bnP3h9GNlXD7BSdCkiwwcfoM0uLCMUG8', '百度统计密钥', 'BaiduAnalysis', 1541584929, 1541584929);
+INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'Baidu_android_App_Key', '47b455ccc0', '百度统计应用安卓key', 'BaiduAnalysis', 1541584929, 1541584929);
+INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'Baidu_iOS_App_Key', '24219d0a17', '百度统计应用iOSkey', 'BaiduAnalysis', 1541584929, 1541584929);
+INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'Baidu_refresh_token', '22.645a1e7db518610cc669585a819a9934.315360000.1857023811.892630829-14721012', '长期refresh_token缓存', 'BaiduAnalysis', 1541663812, 1541663812);
 
 update tm_member set login_type = 'mobile' where login_type is NULL;
 update tm_member set sex = 0 where sex is NULL;

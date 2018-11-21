@@ -197,7 +197,7 @@ class Member extends Base
                 return reJson(500, '修改失败', []);
             }
             if(!empty($mobile)){
-                return reJson(500, '手机号已存在', []);
+                return reJson(500, '该手机号已绑定', []);
             }
         }
 
@@ -379,7 +379,7 @@ class Member extends Base
             return reJson(500, '修改失败', []);
         }
         if(!empty($mobile)){
-            return reJson(500, '手机号已存在', []);
+            return reJson(500, '该手机号已绑定', []);
         }
 
         $condition['member_code'] = $inputData['member_code'];

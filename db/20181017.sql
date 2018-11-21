@@ -38,7 +38,7 @@ CREATE TABLE `tm_jobs` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'ali_check_template_code', '', '阿里验证短信模板code', 'client', 1536215833, 1536215833);
+INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'ali_check_template_code', '321211', '阿里验证短信模板code', 'client', 1536215833, 1536215833);
 
 ALTER TABLE `tm_component`
 ADD COLUMN `ios_info` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'ios入口' AFTER `component_pic`,

@@ -20,7 +20,7 @@ require __DIR__ . '/../thinkphp/base.php';
 //允许跨域访问
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE");
-header("Access-Control-Allow-Headers: Authorization, Content-Type, If-Match, If-Modified-Since, If-None-Match, If-Unmodified-Since, X-Requested-With");
+header("Access-Control-Allow-Headers: Authorization, Content-Type, If-Match, If-Modified-Since, If-None-Match, If-Unmodified-Since, X-Requested-With, token");
 
 //定义环境，用于区别线上和开发环境，方便切换
 define('SERVER_ENV',strtoupper(str_replace('.','_',$_SERVER['SERVER_NAME'])).'_');

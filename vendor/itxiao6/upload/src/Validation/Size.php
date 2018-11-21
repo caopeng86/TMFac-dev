@@ -59,7 +59,7 @@ class Size implements Base
     public function validation($file)
     {
         # 获取文件大小
-        $this -> fileSize = filesize($file['tmp_name']);
+        $this -> fileSize = ceil(filesize($file['tmp_name'])/1024); //转为kb
         if($this -> fileSize > $this -> MaxSize){
             $this -> Message = '文件超出最大的尺寸的限制:'.$this -> MaxSize.'kb';
             # 抛出异常
