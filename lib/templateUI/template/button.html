@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>常用按钮</title>
+    <link rel="stylesheet" type="text/css" href="http://dev.360tianma.com/lib/templateUI/publicStyle.css" />
+    <style type="text/css">
+        body{
+            display: flex;
+            flex: 1;
+            align-items: center;
+            justify-content: center;
+            width: 100vw;
+            height: 100vh;
+        }
+        .box ul li{
+            text-align: center;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <ul>
+        <li>
+            <button class="layui-btn layui-btn-primary publicStyle">原始按钮</button>
+            <pre class="layui-code" lay-encode="true"><button class="layui-btn layui-btn-primary publicStyle">原始按钮</button></pre>
+        </li>
+        <li>
+            <button class="layui-btn layui-btn-normal publicStyle">天马按钮</button>
+            <pre class="layui-code" lay-encode="true"> <button class="layui-btn layui-btn-normal publicStyle">天马按钮</button></pre>
+        </li>
+        <li>
+            <a href="../demo.html" class="layui-btn publicStyle">跳转按钮</a>
+            <pre class="layui-code" lay-encode="true"><a href="" class="layui-btn publicStyle">跳转按钮</a></pre>
+        </li>
+        <li>
+            <button class="layui-btn layui-btn-disabled">禁用按钮</button>
+            <pre class="layui-code" lay-encode="true"><button class="layui-btn layui-btn-disabled">禁用按钮</button></pre>
+        </li>
+    </ul>
+</div>
+
+<script src="http://dev.360tianma.com/lib/templateUI/layui/layui.all.js"></script>
+<script>
+    layui.use('code', function(){ //加载code模块
+        layui.code(); //引用code方法
+    });
+</script>
+</body>
+</html>

@@ -16,6 +16,7 @@ use app\extend\controller\Logservice;
 use think\captcha\Captcha;
 use think\Controller;
 use think\facade\Cache;
+use think\facade\Config;
 use think\facade\Request;
 
 
@@ -191,7 +192,7 @@ class Login extends Controller
             "access_key_create_time" => $updateData['access_key_create_time'],
             "access_key" => $updateData['access_key'],
         ];
-        Cache::set($updateData['access_key'], $cacheData, 3600*24*7);
+        Cache::set($updateData['access_key'], $cacheData, Config::get('token_time'));
         Logservice::writeArray(['token'=>$updateData['access_key'], 'data'=>$cacheData], '用户登录缓存');
 
         //获取用户部门code,name

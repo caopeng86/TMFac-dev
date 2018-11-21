@@ -102,7 +102,7 @@ class Memberhistory extends Base
         //判断请求方式以及请求参数
         $inputData = Request::get();
         $method = Request::method();
-        $params = ['index','member_code'];
+        $params = ['index','member_code','get_time_list'];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
             return reJson(500, $msg, []);
@@ -110,7 +110,10 @@ class Memberhistory extends Base
 
         //条件拼接
         $condition['member_code'] = $inputData['member_code'];
-
+        //根据时间排序统计条数
+        if($inputData['get_time_list'] == 1){
+           $time_list = $this->historyModel->historyTimeList($condition);
+        }
         //分页处理
         $pageSize = empty($inputData['page_size'])? 20 : $inputData['page_size'];
         $count = $this->historyModel->countHistory($condition);
@@ -119,7 +122,6 @@ class Memberhistory extends Base
         $limit = $firstRow.','.$pageSize;
         $order = 'create_time desc';
         $field = 'history_id, member_code, app_id, article_id, title, create_time, extend';
-
         //获取列表数据
         $list = $this->historyModel->historyList($condition, $field, $limit, $order);
         if($list === false){
@@ -129,7 +131,7 @@ class Memberhistory extends Base
         $return = [
             'total' => $count,
             'totla_page' => $totalPage,
-            'list' => $list
+            'list' => $list,
         ];
 
         return reJson(200, '获取列表成功', $return);

@@ -7,12 +7,14 @@
  */
 
 namespace app\extend\controller;
+use app\api\model\ConfigModel;
 use think\facade\Env;
 include_once Env::get('root_path').'vendor/Jpush/Client.php';
 include_once Env::get('root_path').'vendor/Jpush/Config.php';
 include_once Env::get('root_path').'vendor/Jpush/DevicePayload.php';
 include_once Env::get('root_path').'vendor/Jpush/Http.php';
 include_once Env::get('root_path').'vendor/Jpush/PushPayload.php';
+include_once Env::get('root_path').'vendor/Jpush/ReportPayload.php';
 include_once Env::get('root_path').'vendor/Jpush/Exceptions/JPushException.php';
 include_once Env::get('root_path').'vendor/Jpush/Exceptions/APIRequestException.php';
 include_once Env::get('root_path').'vendor/Jpush/Exceptions/ServiceNotAvaliable.php';
@@ -41,8 +43,19 @@ class Jpush extends Controller
     public function __construct()
     {
         parent::__construct();
-        $this::$appKye = Config::get('Jpush')['app_key'];
-        $this::$masterSecret = Config::get('Jpush')['master_secret'];
+        $ConfigModel = new ConfigModel();
+        $condition = array(
+            'key'=>array('Jpush_key','Jpush_secret')
+        );
+        $JpushConfig = $ConfigModel->getConfigList($condition);
+        if(!$JpushConfig){
+            return reJson(500, 'Jpush配置信息不存在', []);
+        }
+        $JpushConfig = $ConfigModel->ArrayToKey($JpushConfig);
+//        $this::$appKye = Config::get('Jpush')['app_key'];
+//        $this::$masterSecret = Config::get('Jpush')['master_secret'];
+        $this::$appKye = $JpushConfig['Jpush_key'];
+        $this::$masterSecret = $JpushConfig['Jpush_secret'];
         $this::$cilent = new \JPush\Client($this::$appKye, $this::$masterSecret);
         $this::$push = Jpush::$cilent->push();
         $this::$device = Jpush::$cilent->device();
@@ -89,7 +102,8 @@ class Jpush extends Controller
 //        ];
         //可选参数
         $options = [
-            'apns_production' => false  //true是生产环境false是开发环境
+            'apns_production' => false,  //true是生产环境false是开发环境
+//            'override_msg_id' => $extras['msg_id']
         ];
         $res = Jpush::$push->setPlatform($platform)
             ->addAllAudience()
@@ -201,5 +215,12 @@ class Jpush extends Controller
             ->options($options)
             ->send();
         return $res;
+    }
+
+    /**
+     *  获取推送情况
+     */
+    public function getRes($id){
+        return Jpush::$cilent->report()->getReceived($id);
     }
 }

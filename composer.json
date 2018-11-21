@@ -22,7 +22,10 @@
         "topthink/think-captcha": "^2.0",
         "guzzlehttp/guzzle": "^6.3",
         "nesbot/carbon": "^1.22",
-        "fzaninotto/faker": "^1.7"
+        "fzaninotto/faker": "^1.7",
+        "aliyuncs/oss-sdk-php": "~2.0",
+        "topthink/think-queue": "^2.0",
+        "itxiao6/upload": "dev-master"
     },
     "autoload": {
         "psr-4": {

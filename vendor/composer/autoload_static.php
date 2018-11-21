@@ -7,34 +7,55 @@ namespace Composer\Autoload;
 class ComposerStaticInitc56f27cfede3576e1d016ef2f085780b
 {
     public static $files = array (
-        '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
         'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
+        '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
+        '841780ea2e1d6545ea3a253239d59c05' => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu/functions.php',
+        '9b552a3cc426e3287cc811caefa3cf53' => __DIR__ . '/..' . '/topthink/think-helper/src/helper.php',
         '1cfd2761b63b0a29ed23657ea394cb2d' => __DIR__ . '/..' . '/topthink/think-captcha/src/helper.php',
         'ddc3cd2a04224f9638c5d0de6a69c7e3' => __DIR__ . '/..' . '/topthink/think-migration/src/config.php',
+        'cc56288302d9df745d97c934d6a6e5f0' => __DIR__ . '/..' . '/topthink/think-queue/src/common.php',
     );
 
     public static $prefixLengthsPsr4 = array (
         't' => 
         array (
             'think\\migration\\' => 16,
+            'think\\helper\\' => 13,
             'think\\composer\\' => 15,
             'think\\captcha\\' => 14,
+            'think\\' => 6,
         ),
         'a' => 
         array (
             'app\\' => 4,
+        ),
+        'Y' => 
+        array (
+            'Yansongda\\Pay\\' => 14,
         ),
         'S' => 
         array (
             'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Symfony\\Component\\Translation\\' => 30,
         ),
+        'Q' => 
+        array (
+            'Qiniu\\' => 6,
+        ),
         'P' => 
         array (
             'Psr\\Http\\Message\\' => 17,
             'Phinx\\' => 6,
+        ),
+        'O' => 
+        array (
+            'OSS\\' => 4,
+        ),
+        'I' => 
+        array (
+            'Itxiao6\\Upload\\' => 15,
         ),
         'G' => 
         array (
@@ -57,6 +78,10 @@ class ComposerStaticInitc56f27cfede3576e1d016ef2f085780b
         array (
             0 => __DIR__ . '/..' . '/topthink/think-migration/src',
         ),
+        'think\\helper\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/topthink/think-helper/src',
+        ),
         'think\\composer\\' => 
         array (
             0 => __DIR__ . '/..' . '/topthink/think-installer/src',
@@ -65,9 +90,17 @@ class ComposerStaticInitc56f27cfede3576e1d016ef2f085780b
         array (
             0 => __DIR__ . '/..' . '/topthink/think-captcha/src',
         ),
+        'think\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/topthink/think-queue/src',
+        ),
         'app\\' => 
         array (
             0 => __DIR__ . '/../..' . '/application',
+        ),
+        'Yansongda\\Pay\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/yansongda/pay/src',
         ),
         'Symfony\\Polyfill\\Mbstring\\' => 
         array (
@@ -77,6 +110,10 @@ class ComposerStaticInitc56f27cfede3576e1d016ef2f085780b
         array (
             0 => __DIR__ . '/..' . '/symfony/translation',
         ),
+        'Qiniu\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu',
+        ),
         'Psr\\Http\\Message\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/http-message/src',
@@ -84,6 +121,14 @@ class ComposerStaticInitc56f27cfede3576e1d016ef2f085780b
         'Phinx\\' => 
         array (
             0 => __DIR__ . '/..' . '/topthink/think-migration/phinx/src/Phinx',
+        ),
+        'OSS\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/aliyuncs/oss-sdk-php/src/OSS',
+        ),
+        'Itxiao6\\Upload\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/itxiao6/upload/src',
         ),
         'GuzzleHttp\\Psr7\\' => 
         array (
@@ -107,11 +152,22 @@ class ComposerStaticInitc56f27cfede3576e1d016ef2f085780b
         ),
     );
 
+    public static $prefixesPsr0 = array (
+        'F' => 
+        array (
+            'FtpClient' => 
+            array (
+                0 => __DIR__ . '/..' . '/nicolab/php-ftp-client/src',
+            ),
+        ),
+    );
+
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInitc56f27cfede3576e1d016ef2f085780b::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInitc56f27cfede3576e1d016ef2f085780b::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInitc56f27cfede3576e1d016ef2f085780b::$prefixesPsr0;
 
         }, null, ClassLoader::class);
     }

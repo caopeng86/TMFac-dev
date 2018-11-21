@@ -33,6 +33,10 @@ class HasMany extends Relation
         $this->foreignKey = $foreignKey;
         $this->localKey   = $localKey;
         $this->query      = (new $model)->db();
+
+        if (get_class($parent) == $model) {
+            $this->selfRelation = true;
+        }
     }
 
     /**
@@ -189,13 +193,13 @@ class HasMany extends Relation
     /**
      * 一对多 关联模型预查询
      * @access public
-     * @param  array  $where       关联预查询条件
-     * @param  string $relation    关联名
-     * @param  string $subRelation 子关联
-     * @param  bool   $closure
+     * @param  array    $where       关联预查询条件
+     * @param  string   $relation    关联名
+     * @param  string   $subRelation 子关联
+     * @param  \Closure $closure
      * @return array
      */
-    protected function eagerlyOneToMany($where, $relation, $subRelation = '', $closure = false)
+    protected function eagerlyOneToMany($where, $relation, $subRelation = '', $closure = null)
     {
         $foreignKey = $this->foreignKey;
 

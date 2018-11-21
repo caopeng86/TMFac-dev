@@ -1,0 +1,242 @@
+<?php
+namespace Itxiao6\Upload\Storage;
+use Itxiao6\Upload\Interfaces\Storage;
+use OSS\OssClient;
+use Itxiao6\Upload\Tools\Tool;
+use OSS\Core\OssException;
+use Itxiao6\Upload\Exception\UploadException;
+use Itxiao6\Upload\Validation\Code;
+/**
+ * 阿里Oss文件存储
+ * Class FileSystem
+ * @package Itxiao6\Upload\Storage
+ */
+class Alioss implements Storage
+{
+
+    /**
+     * 异常信息
+     * @var null|array
+     */
+    protected $exception = null;
+
+    /**
+     * Oss 客户端
+     * @var OssClient
+     */
+    protected $ossClient;
+    /**
+     * 桶的名字
+     * @var
+     */
+    protected $bucket;
+
+
+
+    /**
+     * 阿里OSS储存构造器
+     * @param $accessKey
+     * @param $secretKey
+     * @param $Bucket_Name
+     * @param $data_host OSS数据中心访问域名
+     */
+    protected function __construct($accessKey,$secretKey,$Bucket_Name,$data_host)
+    {
+        try {
+            $this -> ossClient = new OssClient($accessKey, $secretKey, $data_host);
+        } catch (OssException $e) {
+            print $e->getMessage();
+        }
+        # 存储桶的名字
+        $this -> bucket = $Bucket_Name;
+        # 返回本对象用于连贯操作
+        return $this;
+    }
+
+    /**
+     * 上传单个文件
+     * @param string|array $file
+     * @param null|array $validation 验证规则
+     * @return bool|string
+     */
+    public function upload($file,$path='', $validation = null)
+    {
+        # 判断是否为数组
+        if(is_array($file)){
+            $_FILES[$file['name']] = $file;
+            $file = $file['name'];
+        }else{
+            # 判断是否为通过Files上传的
+            if(!isset($_FILES[$file])){
+                # 保存异常信息
+                $this -> exception[$file] = new UploadException('要上传的文件不存在');
+                return false;
+            }
+        }
+        # 验证验证规则
+        try{
+            if($validation == null){
+                # 默认的验证规则
+                $validation = [new Code()];
+            }
+            # 判断是否存在验证
+            if($validation!=null){
+                # 循环处理验证规则
+                foreach ($validation as $item){
+                    # 验证
+                    $item -> validation($_FILES[$file]);
+                }
+            }
+        }catch (UploadException $exception){
+            # 保存异常信息
+            $this -> exception[$file] = $exception;
+            return false;
+        }
+        # 获取随机文件名
+        $name = explode('.',$_FILES[$file]['name']);
+        $file_name = Tool::getARandLetter(15).'.'.end($name);
+        # 获取新文件名
+        $res = $this -> ossClient->putObject($this -> bucket,$path.$file_name,file_get_contents($_FILES[$file]['tmp_name']));
+        # 判断是否上传成功
+        if(isset($res['info']['url']) && $res['info']['url']!=''){
+            return '/'.$path.$file_name;
+//            return $res['info']['url'];
+        }else{
+            return false;
+        }
+    }
+
+    /**
+     * 删除单个文件
+     * @param null|array $validation 验证规则
+     * @return bool|string
+     */
+    public function remove($path='')
+    {
+        if (!$this->isExits($path))
+        {
+            $this->exception=new UploadException('待删除文件不存在');
+            return false;
+        }
+        try{
+            $res=$this->ossClient->deleteObject($this -> bucket,$path);
+        }catch(OssException $e) {
+            $this->exception=$e;
+            return false;
+        }
+        return true;
+
+
+//        # 删除文件
+//
+//        var_dump($res);
+//        # 判断是否删除成功
+//        if(is_null($res)){
+//            return false;
+//        }
+//        return true;
+
+    }
+    /**
+     * 判断文件是否存在
+     * @param null|array $object
+     * @return bool|null
+     */
+    protected function isExits($object){
+        try{
+
+            $res=$this->ossClient->doesObjectExist($this -> bucket,$object);
+        } catch(OssException $e) {
+           $this->exception=$e;
+            return;
+        }
+        return $res;
+    }
+
+    /**
+     * 上传多个文件
+     * @param $file
+     * @param null $validation
+     * @return array|bool|string
+     */
+    public function uploads($file, $validation = null)
+    {
+        $files = [];
+        foreach (Tool::files_to_item($file) as $key=>$item){
+            $files[] = $this -> upload($item,$validation);
+        }
+        return $files;
+    }
+
+    /**
+     * 创建存储器
+     * @return AliOss
+     */
+    public static function create()
+    {
+        return new self(...func_get_args());
+    }
+    /**
+     * 获取异常
+     * @return array | string
+     */
+    public function get_exception(){
+        return $this->exception;
+    }
+    /**
+     * 获取错误信息
+     * @param null|string $name
+     * @return array|bool
+     */
+    public function get_error_message($name = null)
+    {
+        if($name!=null){
+            return $this -> exception[$name] -> getMessage();
+        }else{
+            if($this -> exception === null){
+                return false;
+            }
+            $message = [];
+            foreach ($this -> exception as $item) {
+                $message[] = $item -> getMessage();
+            }
+            return $message;
+        }
+    }
+    /**
+     * 上传一个base64类型的文件
+     * @param $file
+     * @param null $validation
+     * @return bool|string
+     */
+    public function upload_base64($file, $validation = null)
+    {
+        # 上传文件
+        return $this -> upload(Tool::base64_to_file($file,$validation));
+    }
+
+    /**
+     * 上传多个base64类型的文件
+     * @param $file
+     * @param null $validation
+     * @return array|bool|string
+     */
+    public function uploads_base64( $file, $validation = null)
+    {
+        # 定义上传结果
+        $result = [];
+        # 判断是否为多个文件
+        if(is_array($file)){
+            # 循环上传文件
+            foreach ($file as $name=>$item){
+                # 累加上传结果
+                $result[$name] = $this -> upload_base64($item,$validation);
+            }
+        }else{
+            # 返回一个文件的上传结果
+            return $this -> upload_base64($file,$validation);
+        }
+        # 返回上传结果
+        return $result;
+    }
+}

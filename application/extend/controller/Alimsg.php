@@ -8,6 +8,7 @@
 
 namespace app\extend\controller;
 //vendor('alimsg.vendor.autoload');
+use app\api\model\ConfigModel;
 use think\facade\Env;
 include_once Env::get('root_path').'vendor/alimsg/vendor/autoload.php';
 
@@ -34,11 +35,19 @@ class Alimsg extends Controller
     public function __construct($config=array())
     {
         parent::__construct();
-        $this::$accessKeyId = \think\facade\Config::get('alimsg')['access_key_id'];
-        $this::$accessKeySecret = \think\facade\Config::get('alimsg')['access_key_secret'];
-        $this::$signName = \think\facade\Config::get('alimsg')['sign_name'];
+        $ConfigModel = new ConfigModel();
+        $condition['key'] = ['ali_sms_key_id','ali_sign_name','ali_key_secret','ali_check_template_code'];
+        $condition['type'] = 'client';
+        $ConfigList = $ConfigModel->getConfigList($condition);
+        if(!is_array($ConfigList)){
+            $ConfigList = json_decode( json_encode( $ConfigList),true);
+        }
+        $ConfigList = $ConfigModel->ArrayToKey($ConfigList);
+        $this::$accessKeyId = $ConfigList['ali_sms_key_id'];
+        $this::$accessKeySecret = $ConfigList['ali_key_secret'];
+        $this::$signName = $ConfigList['ali_sign_name'];
         $this::$phoneNumbers = $config['phone_numbers'];
-        $this::$templateCode = $config['template_code'];
+        $this::$templateCode =  empty($config['template_code'])?$ConfigList['ali_check_template_code']:$config['template_code'];
         $this::$code = $config['code'];
     }
 

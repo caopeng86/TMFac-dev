@@ -1,0 +1,263 @@
+@charset "utf-8";
+/* 你自己的样式 */
+/*  */
+body{
+    background-color: #f2f2f2;
+}
+.filter_condition_box{
+    background-color: #ffffff;
+    padding: 25px;
+}
+.filter_condition_box .title{
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+ .filter_condition_box .filter_condition ul li{
+    display: inline-block;
+     margin-right: 10px;
+}
+ .filter_condition_box .filter_condition ul li .layui-input-block{
+     margin-left: 0;
+ }
+.filter_condition_box .filter_condition ul li .layui-input-block input{
+    height: 30px;
+}
+.layui-form-checked[lay-skin=primary] i{
+    background-color: #3399FF;
+    border-color: #3399FF;
+}
+.layui-table tbody tr:hover,.layui-table thead tr,.layui-table-click,.layui-table-header,.layui-table-hover,.layui-table-mend,.layui-table-patch,.layui-table[lay-even] tr:nth-child(even){
+    background-color:  rgb( 245, 250, 254);
+}
+.layui-table-sort[lay-sort=asc] .layui-table-sort-asc,.layui-table-sort .layui-table-sort-asc:hover{
+    border-bottom-color: #3399FF;
+}
+.layui-table-sort[lay-sort=desc] .layui-table-sort-desc,.layui-table-sort .layui-table-sort-desc:hover{
+    border-top-color: #3399FF;
+}
+.member_form_box .titleBox{
+    text-align: left;
+}
+.member_form_box .titleBox p{
+    font-size: 18px;
+    color: #333333;
+}
+.member_form_box .titleBox p span{
+    color: #999999;
+    font-size: 14px;
+}
+.member_form_box .layui-btn{
+    color: #3399FF;
+    background-color: #ffffff;
+    border: 1px solid #3399FF;
+    border-radius: 5px;
+}
+.member_form_box .layui-btn-container{
+    text-align: right;
+}
+.member_form_box .layui-btn:hover{
+    color: #3399FF;
+    background-color: #ffffff;
+    border: 1px solid #3399FF;
+}
+ .layui-btn.submit{
+     background-color: #3399FF;
+     width: 100px;
+     border-radius: 5px;
+     height: 30px;
+ }
+.layui-btn.reset{
+    border: 1px solid #3399FF;
+    color: #3399FF;
+    width: 100px;
+    border-radius: 5px;
+    height: 30px;
+}
+.layui-form-select dl dd.layui-this{
+    background-color: #3399FF;
+}
+.layui-laypage .layui-laypage-curr .layui-laypage-em{
+    background-color: #3399FF;
+}
+/* member-info 样式 */
+.user-box{
+    background-color: #ffffff;
+    padding: 25px;
+    position: relative;
+}
+.user-box .statusImg{
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.user-box .left-info{
+    padding-left: 30px;
+}
+.user-box .left-info .userInfo,.user-box .left-info img{
+    display: inline-block;
+    vertical-align: top;
+}
+#man,#woman{
+    display: none;
+}
+.user-box .left-info .userInfo .account, .user-box .left-info .userInfo .username{
+    margin-top: 5px;
+    margin-left: 10px;
+}
+.user-box .left-info #sex{
+    margin-left: 15px;
+    margin-top: 5px;
+}
+.operationBtnBox{
+    text-align: right;
+}
+.operationBtnBox .layui-btn{
+    width: 106px;
+    background-color: #ffffff;
+    border: 1px solid #3399FF;
+    color: #3399FF;
+    height: 30px;
+}
+.operationBtnBox .layui-btn:hover{
+    color: #3399FF;
+}
+.userInfo-box{
+    margin-top: 25px;
+    background-color: #ffffff;
+    padding: 25px;
+}
+.userInfo-box .userInfo-title{
+    width: 70px;
+    text-align: right;
+}
+.userInfo-box ul li{
+    margin-bottom: 20px;
+}
+.userInfo-box .userInfo-title,.userInfo-box .userInfo-content{
+    display: inline-block;
+    vertical-align: top;
+}
+.userInfo-box .userInfo-content{
+    margin-left: 10px;
+}
+.userInfo-box .userInfo-content .num{
+    font-weight: bold;
+    font-size: 18px;
+}
+.userInfo-box .userInfo-content img,.userInfo-box .userInfo-content span{
+    vertical-align: middle;
+}
+.userInfo-box .userInfo-content ul li{
+    border: 1px solid #f2f2f2;
+    width: 180px;
+    text-align: center;
+    color: #999999;
+    display: none;
+    margin-right: 20px;
+}
+.userInfo-box .userInfo-content .contactName{
+    padding: 5px;
+    min-height: 50px;
+    /*line-height: 50px;*/
+    padding-top: 15px;
+}
+.userInfo-box .userInfo-content .noBind{
+    display: none;
+}
+.userInfo-box .userInfo-content .contactName img{
+    border-radius: 50%;
+}
+.userInfo-box .userInfo-content .contactType{
+    border-top: 1px solid #f2f2f2;
+    padding: 3px;
+}
+.userRecords-box .layui-table thead tr{
+    background-color: #ffffff;
+}
+.userRecords-box .layui-table thead tr th{
+    border: none;
+}
+.userRecords-box .layui-table td{
+    border: none;
+}
+.userRecords-box  .layui-tab-card>.layui-tab-title .layui-this{
+    color: #ffffff;
+    background-color: #3399FF;
+}
+.userRecords-box .layui-tab-title{
+    height: auto;
+}
+.userRecords-box .layui-tab-title .layui-this:after{
+    display: none;
+}
+.userRecords-box  .layui-table-view{
+    margin: 0;
+}
+.userRecords-box .layui-tab-title li{
+    border: 1px solid #3399FF;
+    color: #3399FF;
+    background-color: #ffffff;
+    line-height: 30px;
+}
+.userRecords-box .layui-laypage .layui-laypage-curr .layui-laypage-em{
+    background-color: #3399FF;
+}
+.userRecords-box .layui-table-cell{
+    height: auto;
+    white-space: inherit;
+    overflow: visible;
+    text-overflow: initial;
+}
+
+/*  首页  */
+.basic_box{
+    background-color: #ffffff;
+    padding: 25px;
+}
+.basic_box .title{
+    font-size: 15px;
+    font-weight: bold;
+}
+.basic_box .basic_data{
+    margin-top: 20px;
+}
+.basic_box .basic_data ul{
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+    padding: 0 40px;
+}
+.basic_box .basic_data img{
+    vertical-align: top;
+}
+.basic_box .basic_data  .basic_data_type{
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 5px;
+}
+.basic_box .basic_data  .basic_data_type p{
+    font-size: 20px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.visual_box{
+    margin-top: 30px;
+}
+.visual_box .visual_list{
+    min-width: 745px;
+    width: 47.5%;
+    height:400px;
+    float: left;
+    margin-bottom: 30px;
+    position: relative;
+}
+.visual_box .visual_list:nth-child(2n+1){
+    /*margin-right: 5%;*/
+    margin-right: 30px;
+}
+
+.layui-layer,.layui-layer-content{
+    border-radius: 5px!important;
+}
+
