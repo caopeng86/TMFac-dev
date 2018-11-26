@@ -262,10 +262,17 @@ function curlPost($url, $postData, $header = array()){
         from_id 对应的来源名称
        1：澎湃新闻
 */
-function getCommonArticle($index = 1,$pageSize = 20){
+function getCommonArticle($index = 1,$pageSize = 20,$from_id = 0,$column_id = 0){
+    $condition = [];
+    if(0!=$from_id){
+        $condition["from_id"] = $from_id;
+    }
+    if(0!=$column_id){
+        $condition["column_id"] = $column_id;
+    }
     $firstRow = ($index - 1) * $pageSize;
     $limit = $firstRow . ',' . $pageSize;
-    $re = Db::table(TM_PREFIX."common_article")->field("aid as 'otheraid',".TM_PREFIX."common_article.*")->limit($limit)->order("article_id desc")->group('aid')->select();
+    $re = Db::table(TM_PREFIX."common_article")->field("aid as 'otheraid',".TM_PREFIX."common_article.*")->where($condition)->limit($limit)->order("article_id desc")->group('aid')->select();
     if(empty($re)){
         return [];
     }
@@ -273,6 +280,83 @@ function getCommonArticle($index = 1,$pageSize = 20){
         unset($value['otheraid']);
     }
     return $re;
+}
+
+/*获取公共新闻来源和栏目方法
+
+     * 入参： 无
+    返回值：如果获取失败返回false。否则返回一个数组，格式如下
+        array(2) {
+          ["column_arrs"] => array(20) {   //栏目
+            [0] => object(stdClass)#42 (2) {
+              ["id"] => int(1)   //对应tm_commom_article表中的column_id字段或getCommonArticle()方法返回的column_id字段
+              ["value"] => string(12) "热点头条"
+            }
+            [1] => object(stdClass)#43 (2) {
+              ["id"] => int(2)
+              ["value"] => string(6) "科技"
+            }
+          }
+          ["from_arrs"] => array(5) {   //来源网站
+            [0] => object(stdClass)#63 (2) {
+              ["id"] => int(1)   //对应tm_commom_article表中的from_id字段或getCommonArticle()方法返回的from_id字段
+              ["value"] => string(6) "彭湃"
+            }
+            [1] => object(stdClass)#64 (2) {
+              ["id"] => int(2)
+              ["value"] => string(6) "搜狐"
+            }
+          }
+        }
+*/
+function getCommonArticleType(){
+    $config_data = Db::table(TM_PREFIX.'config')->field("value")->where(['key'=>"PullDataKey"])->find();
+    if(empty($config_data)){
+       return false;
+    }
+    $getFromids = tmBaseHttp("http://www.360tianma.com/reptile/Reptile/getFromids",['key'=>$config_data['value']],'POST');
+    if(empty($getFromids)){
+        return false;
+    }
+    $getFromids = json_decode($getFromids);
+    if(!isset($getFromids->code) || 200 != $getFromids->code){
+        return false;
+    }
+    return (array)$getFromids->data;
+}
+
+function tmBaseHttp($url, $params, $method = 'GET', $multi = false, $header = array()){
+    $opts = array(
+        CURLOPT_TIMEOUT        => 6000,
+        CURLOPT_RETURNTRANSFER => 1,
+        CURLOPT_SSL_VERIFYPEER => false,
+        CURLOPT_SSL_VERIFYHOST => false,
+        CURLOPT_HTTPHEADER     => $header,
+        CURLOPT_USERAGENT      => 'curl'
+    );
+    /* 根据请求类型设置特定参数 */
+    switch(strtoupper($method)){
+        case 'GET':
+            $opts[CURLOPT_URL] = $url . '?' . http_build_query($params);
+            break;
+        case 'POST':
+            //判断是否传输文件
+            $params = $multi ? $params : http_build_query($params);
+            $opts[CURLOPT_URL] = $url;
+            $opts[CURLOPT_POST] = 1;
+            $opts[CURLOPT_POSTFIELDS] = $params;
+            break;
+        default:
+            throw new Exception('不支持的请求方式！');
+    }
+    /* 初始化并执行curl请求 */
+    $ch = curl_init();
+    curl_setopt_array($ch, $opts);
+    $data  = curl_exec($ch);
+    $error = curl_error($ch);
+    curl_close($ch);
+    if($error) throw new Exception('请求发生错误：' . $error);
+    return  $data;
 }
 
 /*获取微信配置信息*/
@@ -611,3 +695,4 @@ function returnNotify($type = 1){
      return $xml;
  }
 }
+
