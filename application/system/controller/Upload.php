@@ -56,6 +56,9 @@ class Upload extends Controller
             return reJson(500,$msg,[]);
         }
         $file = Request::file('file');
+        if(!$file){
+            return reJson(500, '上传失败');
+        }
         $upload = new TmUpload($file->getInfo());
         $re = $upload->uploadFile();
         if ($re==false)return reJson(500,$upload->getErrorMessage(),[]);

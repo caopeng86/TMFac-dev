@@ -120,9 +120,9 @@ class Index extends \think\Controller {
 			//连接数据库
 			$dbconfig = session('db_config');
 			$db       = \think\Db::connect($dbconfig);
-			//初始化数据库
+            //初始化数据库
             if(!$this->dropBeforeCreateDb($db,$dbconfig['database'])){
-			    die;
+                die;
             }
 			//创建数据表
             $dbconfig['sql_version'] = create_tables_multi($db, $dbconfig['prefix']);
@@ -167,7 +167,7 @@ class Index extends \think\Controller {
 		return $this->fetch();
 	}
 
-    protected function dropBeforeCreateDb($db,$dbname){
+	protected function dropBeforeCreateDb($db,$dbname){
 //        $drop_sql="DROP DATABASE  IF EXISTS $dbname;";
 //        $create_sql="CREATE DATABASE $dbname DEFAULT CHARSET utf8mb4 COLLATE utf8mb4_unicode_ci;";
         $create_sql = "CREATE DATABASE IF NOT EXISTS `{$dbname}` DEFAULT CHARACTER SET utf8";

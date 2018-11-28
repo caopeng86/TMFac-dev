@@ -25,8 +25,8 @@ class ConfigModel extends CommonModel
     /**
      * 获取配置
      */
-    public function getOneConfig($condition){
-        return Db::table($this->config_db)->where($condition)->find();
+    public function getOneConfig($condition,$cache = false){
+        return Db::table($this->config_db)->cache($cache,60)->where($condition)->find();
     }
 
     /**
@@ -34,8 +34,8 @@ class ConfigModel extends CommonModel
      * @param $condition
      * @return array|\PDOStatement|string|\think\Collection
      */
-    public function getConfigList($condition,$field = false){
-        return Db::table($this->config_db)->where($condition)->field($field)->select();
+    public function getConfigList($condition,$field = false,$cache = false){
+        return Db::table($this->config_db)->where($condition)->cache($cache,60)->field($field)->select();
     }
 
     /**
@@ -72,7 +72,10 @@ class ConfigModel extends CommonModel
      * 调整数组为键对方式
      */
     public function ArrayToKey($data){
-       return array_column($data,'value','key');
+        if(is_array($data)){
+            return array_column($data,'value','key');
+        };
+        return false;
     }
 
     /**

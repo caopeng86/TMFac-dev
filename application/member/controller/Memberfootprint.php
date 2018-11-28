@@ -26,7 +26,7 @@ class Memberfootprint extends Base
         //判断请求方式以及请求参数
         $inputData = Request::post();
         $method = Request::method();
-        $params = ['member_code','title','app_id','article_id','extend','intro','type'];
+        $params = ['member_code','title','app_id','article_id','extend','type'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
             return reJson(500, $msg, []);

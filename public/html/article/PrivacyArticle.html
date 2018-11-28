@@ -10,7 +10,6 @@
 </div>
 <script type="text/javascript">
     $.get('/Member/Article/getPrivacyArticle',function (info) {
-        console.log(info);
         if(info.code == 200){
             $('#content').html(info.data.content);
         }

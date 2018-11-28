@@ -123,19 +123,19 @@ class Member extends Base
         }
         $exportToExcelAllArr = [];
         foreach ($memberList as $k => $v){
-            $accout = "";
-            if(!empty($v['wb'])){
-                $accout = $v['wb'];
-            }
-            if(!empty($v['qq'])){
-                $accout = $v['qq'];
-            }
-            if(!empty($v['wx'])){
-                $accout = $v['wx'];
-            }
-            if(!empty($v['mobile'])){
-                $accout = $v['mobile'];
-            }
+//            $accout = "";
+//            if(!empty($v['wb'])){
+//                $accout = $v['wb'];
+//            }
+//            if(!empty($v['qq'])){
+//                $accout = $v['qq'];
+//            }
+//            if(!empty($v['wx'])){
+//                $accout = $v['wx'];
+//            }
+//            if(!empty($v['mobile'])){
+//                $accout = $v['mobile'];
+//            }
             if(empty($v['head_pic'])){ //头像处理
                 $v['head_pic'] = '/images/member_default_head.png';
             }else{
@@ -163,7 +163,7 @@ class Member extends Base
             if(1 == $v['status']){
                 $status = "拉黑";
             }
-            $exportToExcelArr = [$v['member_id'],$accout,$v['head_pic'],$v['member_nickname'],$v['point'],
+            $exportToExcelArr = [$v['member_id'],$v['member_sn'],$v['head_pic'],$v['member_nickname'],$v['point'],
                 $v['birthday'],$sex,$v['mobile'],$status,$v['create_time'],$v['access_key_create_time']
             ];
             $exportToExcelAllArr[] = $exportToExcelArr;

@@ -1,0 +1,1 @@
+INSERT INTO `tm_config`(`key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ('cdn', '', '访问域名', 'FTPupload', 1542356401, 1542356401);

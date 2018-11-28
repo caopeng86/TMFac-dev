@@ -171,8 +171,8 @@ function create_tables_multi($db=null, $prefix = '',$dir = 'db'){
     $dir_array = [];
     foreach ($file as $sql){  //当前sql文件处理
         if (is_file(Env::get('root_path').$dir.'/'.$sql)){
-            create_tables($db,$prefix,$dir.'/'.$sql);
-            if(is_numeric(strstr($sql,'.sql',true))){
+            if(is_numeric(strstr($sql,'.sql',true))){ //只有数字的sql文件才能被执行
+                create_tables($db,$prefix,$dir.'/'.$sql);
                 $sql_version = strstr($sql,'.sql',true);
             }
         }elseif($sql != '.' && $sql != '..' && is_dir(Env::get('root_path').$dir.'/'.$sql)){
@@ -182,7 +182,7 @@ function create_tables_multi($db=null, $prefix = '',$dir = 'db'){
     if(count($dir_array) > 0){  //递归文件夹处理
         foreach ($dir_array as $sql){
             $version = create_tables_multi($db,$prefix,$dir.'/'.$sql);
-            write_component($db,$sql,$version);
+            write_component($db,$sql,$version,$dir);
         }
     }
     return $sql_version;
@@ -244,7 +244,12 @@ function create_tables($db, $prefix = '',$sqlFile='db/backup/cl01kkdy_6RrqH.sql'
 /**
  * 写入组件版本
  */
-function write_component($db,$component_code,$version){
+function write_component($db,$component_code,$version,$dir = '/'){
+    //检查是否存在组件
+    $component = $db->execute('select * from tm_component where `component_code` = \''.$component_code.'\' limit 1;');
+    if(!$component){ //如果不存在
+        create_tables($db,'',$dir.'/'.$component_code.'/component.sql');
+    }
     $db->execute('update tm_component set `sql_version` = \''.$version.'\' where component_code = \''.$component_code.'\';');
 }
 

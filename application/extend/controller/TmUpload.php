@@ -7,6 +7,7 @@
  */
 namespace app\extend\controller;
 
+use app\api\model\ConfigModel;
 use think\exception\ErrorException;
 use think\facade\Env;
 use think\facade\Config;
@@ -49,7 +50,16 @@ class TmUpload
         if(is_null($this->file))
             return;
         $this->ConfigUploadInfo = Config::get('upload_info');
-        if(!in_array($this->ConfigUploadInfo['type'],['local','qn','oss','ftp'])){ // 默认file
+        //获取调用方式
+        $ConfigModel = new ConfigModel();
+        $condition = [];
+        $condition['key'] = ['type'];
+        $condition['type'] = 'upload';
+        $ConfigType = $ConfigModel->getOneConfig($condition);
+        if($ConfigType){
+            $this->ConfigUploadInfo['type'] = $ConfigType['value'];
+        }
+        if(!in_array($this->ConfigUploadInfo['type'],['local','qn','oss','ftp'])){ // 默认本地local
             $this->ConfigUploadInfo['type'] = 'local';
         }
         $this->size_limit=$this->ConfigUploadInfo['size_limit'];
@@ -131,6 +141,9 @@ class TmUpload
      */
     public function getErrorMessage()
     {
+        if(!method_exists($this->exception,'getMessage')){ //检查getMessage方法是否存在
+            return '请检查当前上传配置参数是否正确！';
+        }
         return $this->exception->getMessage();
     }
 
@@ -177,16 +190,22 @@ class TmUpload
     public function local($path='',$name=''){
 
         # 本地存储器
-
+        $ConfigModel = new ConfigModel();
+        $condition = [];
+        $condition['type'] = 'LOCALupload';
+        $ConfigList = $ConfigModel->getConfigList($condition,'key,value',true);
+        if($ConfigList){
+            $this->ConfigUploadInfo['local_param'] =  $ConfigModel->ArrayToKey($ConfigList);
+        }
         # 设置文件存储驱动
         Upload::set_driver('Local');
-        if(!empty(Config::get('upload_info')['local_param']['absolute_path'])){
+        if(!empty($this->ConfigUploadInfo['local_param']['absolute_path'])){
             # 定义上传的文件夹
-            $directory = Config::get('upload_info')['local_param']['path'].date("ymd").'/';
-            $upload_path = Config::get('upload_info')['local_param']['absolute_path'].$directory;
+            $directory = $this->ConfigUploadInfo['local_param']['path'].date("ymd").'/';
+            $upload_path = $this->ConfigUploadInfo['local_param']['absolute_path'].$directory;
         }else{
             # 定义上传的文件夹
-            $directory = Config::get('upload_info')['local_param']['path'].date("ymd").'/';
+            $directory = $this->ConfigUploadInfo['local_param']['path'].date("ymd").'/';
             $upload_path = Env::get('root_path').$directory;
         }
 
@@ -209,13 +228,19 @@ class TmUpload
      * @return boolean
      */
     public function localDel($path=''){
-
+        $ConfigModel = new ConfigModel();
+        $condition = [];
+        $condition['type'] = 'LOCALupload';
+        $ConfigList = $ConfigModel->getConfigList($condition,'key,value',true);
+        if($ConfigList){
+            $this->ConfigUploadInfo['local_param'] =  $ConfigModel->ArrayToKey($ConfigList);
+        }
         # 设置文件存储驱动
         Upload::set_driver('Local');
         try{
             //获取绝对路径
-            if(!empty(Config::get('upload_info')['local_param']['absolute_path'])){
-                $upload_path = Config::get('upload_info')['local_param']['absolute_path'].$path;
+            if(!empty($this->ConfigUploadInfo['local_param']['absolute_path'])){
+                $upload_path = $this->ConfigUploadInfo['local_param']['absolute_path'].$path;
             }else{
                 $upload_path = Env::get('root_path').$path;
             }
@@ -233,16 +258,23 @@ class TmUpload
      * @return array|boolean 存储介质域名
      */
     public function oss($path='',$name=''){
+        $ConfigModel = new ConfigModel();
+        $condition = [];
+        $condition['type'] = 'OSSupload';
+        $ConfigList = $ConfigModel->getConfigList($condition,'key,value',true);
+        if($ConfigList){
+            $this->ConfigUploadInfo['oss_param'] =  $ConfigModel->ArrayToKey($ConfigList);
+        }
         # 阿里云OSS存储器
         Upload::set_driver('Alioss');
         // 桶的名字
-        $bucket_name =Config::get('upload_info')['oss_param']['bucket'];
+        $bucket_name =$this->ConfigUploadInfo['oss_param']['bucket'];
         # 您选定的OSS数据中心访问域名 参考(https://help.aliyun.com/document_detail/31837.html?spm=5176.doc32100.2.4.QQpTvt)
-        $data_host = Config::get('upload_info')['oss_param']['endpoint'];
+        $data_host = $this->ConfigUploadInfo['oss_param']['endpoint'];
         # 阿里云的secretKey
-        $accessKey = Config::get('upload_info')['oss_param']['accessKeyId'];
+        $accessKey = $this->ConfigUploadInfo['oss_param']['accessKeyId'];
         # 阿里云的secretKey
-        $secretKey = Config::get('upload_info')['oss_param']['accessKeySecret'];
+        $secretKey = $this->ConfigUploadInfo['oss_param']['accessKeySecret'];
 
         $directory = date("ymd").'/';
 
@@ -264,16 +296,22 @@ class TmUpload
      * @return boolean
      */
     public function ossDel($path=''){
-
+        $ConfigModel = new ConfigModel();
+        $condition = [];
+        $condition['type'] = 'OSSupload';
+        $ConfigList = $ConfigModel->getConfigList($condition,'key,value',true);
+        if($ConfigList){
+            $this->ConfigUploadInfo['oss_param'] =  $ConfigModel->ArrayToKey($ConfigList);
+        }
         Upload::set_driver('Alioss');
         // 桶的名字
-        $bucket_name =Config::get('upload_info')['oss_param']['bucket'];
+        $bucket_name =$this->ConfigUploadInfo['oss_param']['bucket'];
         # 您选定的OSS数据中心访问域名 参考(https://help.aliyun.com/document_detail/31837.html?spm=5176.doc32100.2.4.QQpTvt)
-        $data_host = Config::get('upload_info')['oss_param']['endpoint'];
+        $data_host = $this->ConfigUploadInfo['oss_param']['endpoint'];
         # 阿里云的secretKey
-        $accessKey = Config::get('upload_info')['oss_param']['accessKeyId'];
+        $accessKey = $this->ConfigUploadInfo['oss_param']['accessKeyId'];
         # 阿里云的secretKey
-        $secretKey = Config::get('upload_info')['oss_param']['accessKeySecret'];
+        $secretKey = $this->ConfigUploadInfo['oss_param']['accessKeySecret'];
 
         Upload::start($accessKey, $secretKey, $bucket_name, $data_host);
         # 删除文件
@@ -302,24 +340,30 @@ class TmUpload
      */
     public function qn($path='',$name=''){
         # 七牛云存储器
+        $ConfigModel = new ConfigModel();
+        $condition = [];
+        $condition['type'] = 'QNupload';
+        $ConfigList = $ConfigModel->getConfigList($condition,'key,value',true);
+        if($ConfigList){
+            $this->ConfigUploadInfo['qn_param'] =  $ConfigModel->ArrayToKey($ConfigList);
+        }
         # 设置文件存储驱动
         Upload::set_driver('Qiniu');
 
         # 定义accessKey
-        $accessKey = Config::get('upload_info')['qn_param']['accessKey'];
+        $accessKey =  $this->ConfigUploadInfo['qn_param']['accessKey'];
         # 定义secretKey
-        $secretKey = Config::get('upload_info')['qn_param']['secretKey'];
+        $secretKey =  $this->ConfigUploadInfo['qn_param']['secretKey'];
         # 定义桶的名字
-        $Bucket_Name = Config::get('upload_info')['qn_param']['bucket'];
+        $Bucket_Name =  $this->ConfigUploadInfo['qn_param']['bucket'];
 
         # 定义外网访问路径
-        $host = Config::get('upload_info')['qn_param']['cdn'];
+        $host =  $this->ConfigUploadInfo['qn_param']['cdn'];
 
         # 上级目录
         $directory = date("ymd").'/';
         # 启动上传组件
-        Upload::start($accessKey, $secretKey, $Bucket_Name, $host);
-
+        $result = Upload::start($accessKey, $secretKey, $Bucket_Name, $host);
         # 上传文件
         $data = Upload::upload($this->file,$directory);
         # 判断是否上传成功
@@ -338,18 +382,25 @@ class TmUpload
      */
     public function qnDel($path=''){
         # 七牛云存储器
+        $ConfigModel = new ConfigModel();
+        $condition = [];
+        $condition['type'] = 'QNupload';
+        $ConfigList = $ConfigModel->getConfigList($condition,'key,value',true);
+        if($ConfigList){
+            $this->ConfigUploadInfo['qn_param'] =  $ConfigModel->ArrayToKey($ConfigList);
+        }
         # 设置文件存储驱动
         Upload::set_driver('Qiniu');
 
         # 定义accessKey
-        $accessKey = Config::get('upload_info')['qn_param']['accessKey'];
+        $accessKey = $this->ConfigUploadInfo['qn_param']['accessKey'];
         # 定义secretKey
-        $secretKey = Config::get('upload_info')['qn_param']['secretKey'];
+        $secretKey = $this->ConfigUploadInfo['qn_param']['secretKey'];
         # 定义桶的名字
-        $Bucket_Name = Config::get('upload_info')['qn_param']['bucket'];
+        $Bucket_Name = $this->ConfigUploadInfo['qn_param']['bucket'];
 
         # 定义外网访问路径
-        $host = Config::get('upload_info')['qn_param']['cdn'];
+        $host = $this->ConfigUploadInfo['qn_param']['cdn'];
 
         # 启动上传组件
         Upload::start($accessKey, $secretKey, $Bucket_Name, $host);
@@ -384,31 +435,70 @@ class TmUpload
      * @return string
      */
     private static function ossUrl(){
-        return Config::get('upload_info')['oss_param']['cdn'];
+        $cdn = Config::get('upload_info')['oss_param']['cdn'];
+        //获取调用方式
+        $ConfigModel = new ConfigModel();
+        $condition = [];
+        $condition['key'] = ['cdn'];
+        $condition['type'] = 'OSSupload';
+        $ConfigType = $ConfigModel->getOneConfig($condition,true);
+        if($ConfigType){
+            $cdn = $ConfigType['value'];
+        }
+        return $cdn;
     }
     /**
      * 获取七牛域名
      * @return string
      */
     private static function qnUrl(){
-        return Config::get('upload_info')['qn_param']['cdn'];
+        $cdn = Config::get('upload_info')['qn_param']['cdn'];
+        //获取调用方式
+        $ConfigModel = new ConfigModel();
+        $condition = [];
+        $condition['key'] = ['cdn'];
+        $condition['type'] = 'QNupload';
+        $ConfigType = $ConfigModel->getOneConfig($condition,true);
+        if($ConfigType){
+            $cdn = $ConfigType['value'];
+        }
+        return $cdn;
     }
     /**
      * 获取ftp域名
      * @return string
      */
     private static function ftpUrl(){
-        return 'http://'.Config::get('upload_info')['ftp_param']['host'];
+        $host = !empty(Config::get('upload_info')['ftp_param']['cdn'])?Config::get('upload_info')['ftp_param']['cdn']:'';
+        //获取调用方式
+        $ConfigModel = new ConfigModel();
+        $condition = [];
+        $condition['key'] = ['cdn'];
+        $condition['type'] = 'FTPupload';
+        $ConfigType = $ConfigModel->getOneConfig($condition,true);
+        if($ConfigType){
+            $host = $ConfigType['value'];
+        }
+        return 'http://'.$host;
     }
     /**
      * 获取本地域名
      * @return string
      */
     private static function localUrl(){
-        if(!empty(Config::get('upload_info')['local_param']['absolute_path'])){
-            return Config::get('upload_info')['local_param']['cdn'];
+        $local_param = Config::get('upload_info')['local_param'];
+        $ConfigModel = new ConfigModel();
+        $condition = [];
+        $condition['type'] = 'LOCALupload';
+        $ConfigList = $ConfigModel->getConfigList($condition,'key,value',true);
+        if($ConfigList){
+            $local_param = $ConfigModel->ArrayToKey($ConfigList);
+            $local_param['host'] = Env::get(SERVER_ENV.'DOMAIN');
+        }
+        if(!empty($local_param['absolute_path'])){
+            return $local_param['cdn'];
         }else{
-            return Config::get('upload_info')['local_param']['host'];
+            return $local_param['host'];
         }
     }
 

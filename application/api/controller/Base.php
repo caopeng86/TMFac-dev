@@ -36,9 +36,7 @@ class Base extends Controller
         $pass = [
             'api\jpush\pushinfo',
             'api\jpush\getres',
-            'api\site\savecomplain',
-            'api\system\haswechatalipayconfig',
-            'api\system\checkupdateclient'
+            'api\site\savecomplain'
         ];
         if(in_array($url, $pass)){
             return true;

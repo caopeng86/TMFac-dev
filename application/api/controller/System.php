@@ -13,14 +13,17 @@ namespace app\api\controller;
 
 use app\api\model\ClientVersionModel;
 use think\facade\Request;
+use app\api\model\ConfigModel;
+use think\Controller;
 
-class System extends Base
+class System extends Controller
 {
 
-
+    protected  $ConfigModel = '';
     public function __construct()
     {
         parent::__construct();
+        $this->ConfigModel = new ConfigModel();
 
     }
 
@@ -82,6 +85,33 @@ class System extends Base
         }else{
             return reJson(200,'已经是最新版本');
         }
+    }
+
+    /*是否开启签到*/
+    public function hasopensign(){
+        $inputData = Request::get();
+        $method = Request::method();
+        $params = [];
+        $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
+        if(!$ret){
+            return reJson(500, $msg, []);
+        }
+        $condition = [];
+       // $condition['key'] = ['wechat_app_id','wechat_mch_id','wechat_key'];
+        $condition['type'] = 'point';
+        $ConfigList = $this->ConfigModel->getConfigList($condition);
+        if(empty($ConfigList)){
+            return reJson(500, '获取失败', []);
+        }
+        $ConfigList = $this->ConfigModel->ArrayToKey($ConfigList);
+        $retList = [];
+        $arr = [
+            "first_login", "sex", "birthday", "mobile", "wb", "wx", "qq", "sign", "sign_cycle_first", "sign_cycle_two", "sign_extra_two",
+        "sign_extra_first", "first_login_switch", "perfect_information_switch", "sign_switch"];
+        foreach ($arr as $value){
+            $retList[$value] = empty($ConfigList[$value])?0:(int)$ConfigList[$value];
+        }
+        return reJson(200, '获取成功', $retList);
     }
 
 

@@ -8,6 +8,7 @@
 
 namespace app\extend\controller;
 
+use app\api\model\ConfigModel;
 use think\Exception;
 use think\exception\ErrorException;
 use think\facade\Config;
@@ -59,8 +60,14 @@ class FtpInternal
                 return false;
             }
         }
-
-        $this->ConfigUploadInfo = Config::get('upload_info');
+        $ConfigModel = new ConfigModel();
+        $condition = [];
+        $condition['type'] = 'FTPupload';
+        $ConfigList = $ConfigModel->getConfigList($condition,'key,value',true);
+        $this->ConfigUploadInfo['ftp_param'] = $ConfigModel->ArrayToKey($ConfigList);
+        if(!$this->ConfigUploadInfo['ftp_param']){ //如果为空,则找配置文件
+            $this->ConfigUploadInfo = Config::get('upload_info');
+        }
         $this->FTP_HOST=$this->ConfigUploadInfo['ftp_param']['host'];
         $this->FTP_PORT=$this->ConfigUploadInfo['ftp_param']['port'];
         $this->FTP_USER=$this->ConfigUploadInfo['ftp_param']['username'];
@@ -69,13 +76,12 @@ class FtpInternal
         try{
             $this->ftp=new FtpClient();
             $this->ftp->connect($this->FTP_HOST,false,$this->FTP_PORT);
-
             $this->ftp->login($this->FTP_USER, $this->FTP_PASS);
+            $this->ftp->pasv(true);
         }catch (FtpException $e){
             $this -> exception[$this->name] = new FtpException($e);
             return false;
         }
-
     }
 
     /**
