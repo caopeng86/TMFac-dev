@@ -39,9 +39,9 @@ class Startadv extends Base
             return reJson(500,'获取数据失败', []);
         }
         foreach ($advList as $key => $val){
-            $advList[$key]['start_time'] = date('Y-m-d h:i:s',$val['start_time']);
-            $advList[$key]['update_time'] = date('Y-m-d h:i:s',$val['update_time']);
-            $advList[$key]['add_time'] = date('Y-m-d h:i:s',$val['add_time']);
+            $advList[$key]['start_time'] = date('Y-m-d H:i:s',$val['start_time']);
+            $advList[$key]['update_time'] = date('Y-m-d H:i:s',$val['update_time']);
+            $advList[$key]['add_time'] = date('Y-m-d H:i:s',$val['add_time']);
         }
         return reJson(200,'获取数据成功',$advList);
     }
@@ -79,9 +79,9 @@ class Startadv extends Base
         }
         if($result){
             $advInfo = $this->StartAdvModel->getAdvInfo(['id'=>$inputData['id']]);
-            $advInfo['start_time'] = date('Y-m-d h:i:s',$advInfo['start_time']);
-            $advInfo['update_time'] = date('Y-m-d h:i:s',$advInfo['update_time']);
-            $advInfo['add_time'] = date('Y-m-d h:i:s',$advInfo['add_time']);
+            $advInfo['start_time'] = date('Y-m-d H:i:s',$advInfo['start_time']);
+            $advInfo['update_time'] = date('Y-m-d H:i:s',$advInfo['update_time']);
+            $advInfo['add_time'] = date('Y-m-d H:i:s',$advInfo['add_time']);
             return reJson(200,'操作成功',$advInfo);
         }else{
             return reJson(500,'操作失败');
@@ -139,9 +139,9 @@ class Startadv extends Base
         ];
         $advInfo = $this->StartAdvModel->getAdvInfo($condition);
         if($advInfo){
-            $advInfo['start_time'] = date('Y-m-d h:i:s',$advInfo['start_time']);
-            $advInfo['update_time'] = date('Y-m-d h:i:s',$advInfo['update_time']);
-            $advInfo['add_time'] = date('Y-m-d h:i:s',$advInfo['add_time']);
+            $advInfo['start_time'] = date('Y-m-d H:i:s',$advInfo['start_time']);
+            $advInfo['update_time'] = date('Y-m-d H:i:s',$advInfo['update_time']);
+            $advInfo['add_time'] = date('Y-m-d H:i:s',$advInfo['add_time']);
             return reJson(200,'操作成功',$advInfo);
         }else{
             return reJson(500,'获取失败');

@@ -141,6 +141,9 @@ class TmUpload
      */
     public function getErrorMessage()
     {
+        if(!method_exists($this->exception,'getMessage')){ //检查getMessage方法是否存在
+            return '请检查当前上传配置参数是否正确！';
+        }
         return $this->exception->getMessage();
     }
 
@@ -360,8 +363,7 @@ class TmUpload
         # 上级目录
         $directory = date("ymd").'/';
         # 启动上传组件
-        Upload::start($accessKey, $secretKey, $Bucket_Name, $host);
-
+        $result = Upload::start($accessKey, $secretKey, $Bucket_Name, $host);
         # 上传文件
         $data = Upload::upload($this->file,$directory);
         # 判断是否上传成功
@@ -467,11 +469,11 @@ class TmUpload
      * @return string
      */
     private static function ftpUrl(){
-        $host = !empty(Config::get('upload_info')['ftp_param']['host'])?Config::get('upload_info')['ftp_param']['host']:'';
+        $host = !empty(Config::get('upload_info')['ftp_param']['cdn'])?Config::get('upload_info')['ftp_param']['cdn']:'';
         //获取调用方式
         $ConfigModel = new ConfigModel();
         $condition = [];
-        $condition['key'] = ['host'];
+        $condition['key'] = ['cdn'];
         $condition['type'] = 'FTPupload';
         $ConfigType = $ConfigModel->getOneConfig($condition,true);
         if($ConfigType){

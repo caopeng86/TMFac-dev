@@ -70,6 +70,15 @@ class Baidu extends Controller
     }
 
     /**
+     * 清除token
+     */
+    public function clearToken(){
+        $ConfigModel = new ConfigModel();
+        $ConfigModel->batchSaveConfig('Baidu_refresh_token','','长期refresh_token缓存','BaiduAnalysis');
+        session('baidu_token',' ');
+    }
+
+    /**
      * 获取access_token
      */
     private function getSessionToken($Analysis){
@@ -108,6 +117,7 @@ class Baidu extends Controller
         $android = $Analysis->setKey($this->android_App_Key)->getDataByKey($session_token->access_token,$data);
         $android = json_decode($android);
         if(empty($android->result)){
+            $this->clearToken();
             return reJson(500,'账号没有访问权限');
         }
         $info['metrics'] = $data['metrics'];
@@ -116,6 +126,7 @@ class Baidu extends Controller
         $iOS  = $Analysis->setKey($this->iOS_App_Key)->getDataByKey($session_token->access_token,$data);
         $iOS  = json_decode($iOS);
         if(empty($iOS->result)){
+            $this->clearToken();
             return reJson(500,'账号没有访问权限');
         }
         if($iOS->result->items[1]){
@@ -143,6 +154,7 @@ class Baidu extends Controller
         $android = $Analysis->setKey($this->android_App_Key)->getDataByKey($session_token->access_token,$data);
         $android = json_decode($android);
         if(empty($android->result)){
+            $this->clearToken();
             return reJson(500,'账号没有访问权限');
         }
         $info['date'] =  array_reverse($android->result->items[0]);
@@ -150,6 +162,7 @@ class Baidu extends Controller
         $iOS  = $Analysis->setKey($this->iOS_App_Key)->getDataByKey($session_token->access_token,$data);
         $iOS  = json_decode($iOS);
         if(empty($iOS->result)){
+            $this->clearToken();
             return reJson(500,'账号没有访问权限');
         }
         if($iOS->result->items[1]){
@@ -177,6 +190,7 @@ class Baidu extends Controller
         $android = $Analysis->setKey($this->android_App_Key)->getDataByKey($session_token->access_token,$data);
         $android = json_decode($android);
         if(empty($android->result)){
+            $this->clearToken();
             return reJson(500,'账号没有访问权限');
         }
         $info['date'] =  array_reverse($android->result->items[0]);
@@ -184,6 +198,7 @@ class Baidu extends Controller
         $iOS  = $Analysis->setKey($this->iOS_App_Key)->getDataByKey($session_token->access_token,$data);
         $iOS  = json_decode($iOS);
         if(empty($iOS->result)){
+            $this->clearToken();
             return reJson(500,'账号没有访问权限');
         }
         if($iOS->result->items[1]){

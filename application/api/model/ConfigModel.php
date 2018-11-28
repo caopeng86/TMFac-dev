@@ -72,7 +72,10 @@ class ConfigModel extends CommonModel
      * 调整数组为键对方式
      */
     public function ArrayToKey($data){
-       return array_column($data,'value','key');
+        if(is_array($data)){
+            return array_column($data,'value','key');
+        };
+        return false;
     }
 
     /**
