@@ -262,10 +262,17 @@ function curlPost($url, $postData, $header = array()){
         from_id 对应的来源名称
        1：澎湃新闻
 */
-function getCommonArticle($index = 1,$pageSize = 20){
+function getCommonArticle($index = 1,$pageSize = 20,$from_id = 0,$column_id = 0){
+    $condition = [];
+    if(0!=$from_id){
+        $condition["from_id"] = $from_id;
+    }
+    if(0!=$column_id){
+        $condition["column_id"] = $column_id;
+    }
     $firstRow = ($index - 1) * $pageSize;
     $limit = $firstRow . ',' . $pageSize;
-    $re = Db::table(TM_PREFIX."common_article")->field("aid as 'otheraid',".TM_PREFIX."common_article.*")->limit($limit)->order("article_id desc")->group('aid')->select();
+    $re = Db::table(TM_PREFIX."common_article")->field("aid as 'otheraid',".TM_PREFIX."common_article.*")->where($condition)->limit($limit)->order("article_id desc")->group('aid')->select();
     if(empty($re)){
         return [];
     }
@@ -273,6 +280,83 @@ function getCommonArticle($index = 1,$pageSize = 20){
         unset($value['otheraid']);
     }
     return $re;
+}
+
+/*获取公共新闻来源和栏目方法
+
+     * 入参： 无
+    返回值：如果获取失败返回false。否则返回一个数组，格式如下
+        array(2) {
+          ["column_arrs"] => array(20) {   //栏目
+            [0] => object(stdClass)#42 (2) {
+              ["id"] => int(1)   //对应tm_commom_article表中的column_id字段或getCommonArticle()方法返回的column_id字段
+              ["value"] => string(12) "热点头条"
+            }
+            [1] => object(stdClass)#43 (2) {
+              ["id"] => int(2)
+              ["value"] => string(6) "科技"
+            }
+          }
+          ["from_arrs"] => array(5) {   //来源网站
+            [0] => object(stdClass)#63 (2) {
+              ["id"] => int(1)   //对应tm_commom_article表中的from_id字段或getCommonArticle()方法返回的from_id字段
+              ["value"] => string(6) "彭湃"
+            }
+            [1] => object(stdClass)#64 (2) {
+              ["id"] => int(2)
+              ["value"] => string(6) "搜狐"
+            }
+          }
+        }
+*/
+function getCommonArticleType(){
+    $config_data = Db::table(TM_PREFIX.'config')->field("value")->where(['key'=>"PullDataKey"])->find();
+    if(empty($config_data)){
+       return false;
+    }
+    $getFromids = tmBaseHttp("http://www.360tianma.com/reptile/Reptile/getFromids",['key'=>$config_data['value']],'POST');
+    if(empty($getFromids)){
+        return false;
+    }
+    $getFromids = json_decode($getFromids);
+    if(!isset($getFromids->code) || 200 != $getFromids->code){
+        return false;
+    }
+    return (array)$getFromids->data;
+}
+
+function tmBaseHttp($url, $params, $method = 'GET', $multi = false, $header = array()){
+    $opts = array(
+        CURLOPT_TIMEOUT        => 6000,
+        CURLOPT_RETURNTRANSFER => 1,
+        CURLOPT_SSL_VERIFYPEER => false,
+        CURLOPT_SSL_VERIFYHOST => false,
+        CURLOPT_HTTPHEADER     => $header,
+        CURLOPT_USERAGENT      => 'curl'
+    );
+    /* 根据请求类型设置特定参数 */
+    switch(strtoupper($method)){
+        case 'GET':
+            $opts[CURLOPT_URL] = $url . '?' . http_build_query($params);
+            break;
+        case 'POST':
+            //判断是否传输文件
+            $params = $multi ? $params : http_build_query($params);
+            $opts[CURLOPT_URL] = $url;
+            $opts[CURLOPT_POST] = 1;
+            $opts[CURLOPT_POSTFIELDS] = $params;
+            break;
+        default:
+            throw new Exception('不支持的请求方式！');
+    }
+    /* 初始化并执行curl请求 */
+    $ch = curl_init();
+    curl_setopt_array($ch, $opts);
+    $data  = curl_exec($ch);
+    $error = curl_error($ch);
+    curl_close($ch);
+    if($error) throw new Exception('请求发生错误：' . $error);
+    return  $data;
 }
 
 /*获取微信配置信息*/
@@ -344,3 +428,271 @@ function pushMessage($title,$content,$url,$android_info,$ios_info,$type = '系�
     }
     return false;
 }
+/*生成支付宝签名
+入参：
+$out_trade_no 订单号  必须
+$total_amount 商品价格 单位 ：分 币种：人民币  必须
+$notifyUrl 异步回调地址
+$subject  商品标题 必须
+
+返回值：如果签名失败返回false，签名成功返回一段签名后的字符串，可以不做任何修改客户端就能使用
+*/
+function signAlipay($out_trade_no = 0,$total_amount = 0,$notifyUrl = "",$subject = "商品标题"){
+    $alipayConfig = getAlipayConfig();
+    if(empty($alipayConfig['alipay_app_id']) || empty($alipayConfig['alipay_public_key']) || empty($alipayConfig['alipay_private_key'])){
+        return false;
+    }
+    require_once '../vendor/alipay/AopClient.php';
+    require_once '../vendor/alipay/AlipayTradeAppPayRequest.php';
+
+    try{
+        $aop = new \AopClient();
+        $aop->gatewayUrl = 'https://openapi.alipaydev.com/gateway.do';
+        $aop->appId = $alipayConfig['alipay_app_id'];
+
+        $aop->rsaPrivateKey = $alipayConfig['alipay_private_key'];
+        $aop->alipayrsaPublicKey = $alipayConfig['alipay_public_key'];
+        $aop->format = "json";
+        $aop->charset = "UTF-8";
+        $aop->signType = "RSA2";
+        $request = new \AlipayTradeAppPayRequest();
+        $array=array(
+            'out_trade_no'=>$out_trade_no,
+            'subject'=>$subject,
+            'product_code'=>'QUICK_MSECURITY_PAY',
+            'total_amount'=>$total_amount/100,
+            "timeout_express"=>"30m"
+        );
+        if(!empty($body)){
+            $array['body']  =  $body;
+        }
+        $json=json_encode($array);
+        $aop->notifyUrl=$notifyUrl;
+        $request->setBizContent($json);
+        $request->setNotifyUrl($notifyUrl);
+
+        $result = $aop->sdkExecute ( $request);
+        return $result;
+
+    } catch(Exception $e) {
+        return false;
+    }
+}
+
+/*
+ * 验证阿里支付异步回调是否正确
+ * 入参：无
+ * 返回值：验证失败返回false。验证成功返回一个数组，格式如下：
+ * [
+        "out_trade_no"=>"21231312", //订单号
+        "total_amount"=>1 //订单金额，单位分
+    ];
+ * 备注：
+ * 1该方法会直接接受支付宝异步回调返回的值，因此调用该方法之前不能将$_POST里面的值做修改
+ * 2：验证成功表示交易成功，否则失败。开发者应该在业务代码中再验证一遍订单金额是否正确
+*/
+function checkAlipayNotify(){
+    $alipayConfig = getAlipayConfig();
+    if(empty($alipayConfig['alipay_app_id']) || empty($alipayConfig['alipay_public_key']) || empty($alipayConfig['alipay_private_key'])){
+        return false;
+    }
+    include_once '../vendor/alipay/AopSdk.php';
+    include_once '../vendor/alipay/wappay/service/AlipayTradeService.php';
+    try{
+        $payset=[];
+        $payset['charset']='UTF-8';
+        $payset['sign_type']='RSA2';
+        $payset['gatewayUrl']='https://openapi.alipay.com/gateway.do';
+        $payset['app_id'] = $alipayConfig['alipay_app_id'];
+        $payset['merchant_private_key'] = $alipayConfig['alipay_private_key'];
+        $payset['alipay_public_key'] = $alipayConfig['alipay_public_key'];
+        $alipaySevice = new \AlipayTradeService($payset);
+        $verify_result = $alipaySevice->check($_POST);
+        if(!$verify_result){
+            return false;
+        }
+        if("TRADE_SUCCESS" != $_POST['trade_status']){
+            return false;
+        }
+        return [
+            "out_trade_no"=>$_POST['out_trade_no'],
+            "total_amount"=>$_POST['total_amount']*100
+        ];
+    } catch(Exception $e) {
+        return false;
+    }
+}
+
+/*生成微信签名
+入参：
+$out_trade_no 订单号  必须
+$total_amount 商品价格 单位 ：分 币种：人民币  必须
+$notifyUrl 异步回调地址
+$subject  商品标题 必须
+
+返回值：如果签名失败返回false。签名成功返回一个数组转的json，数组格式如下：
+array(7) {
+  ["appid"] => string(18) "wxf5434529e3d5f55c"
+  ["noncestr"] => string(16) "0KJQGD8Sm9AAawFn"
+  ["package"] => string(10) "Sign=WXPay"
+  ["partnerid"] => string(10) "1518233991"
+  ["prepayid"] => string(36) "wx14150211047841e41f7532623622978451"
+  ["timestamp"] => int(1542178931)
+  ["sign"] => string(32) "C0C4CB308E7EB88B01F519ECF5071764"
+}
+*/
+function signWechat($out_trade_no = 0,$total_amount = 0,$notifyUrl = "",$subject = "商品标题"){
+    $wecatpayConfig = getWecatpayConfig();
+    if(empty($wecatpayConfig['wechat_app_id']) || empty($wecatpayConfig['wechat_mch_id']) || empty($wecatpayConfig['wechat_key'])){
+        return false;
+    }
+    $payset = [
+        "appid"=>$wecatpayConfig['wechat_app_id'],
+        "mchid"=>$wecatpayConfig['wechat_mch_id'],
+        "key"=>$wecatpayConfig['wechat_key']
+    ];
+    $payset['notify_url']=$notifyUrl;
+    include_once '../vendor/Wxpay/WxPay.Api.php';
+    include_once '../vendor/Wxpay/WxPay.Data.php';
+    try{
+        $unifiedOrder = new \WxPayUnifiedOrder();
+        $unifiedOrder->SetBody($subject); //商品或支付单简要描述
+        $unifiedOrder->SetOut_trade_no($out_trade_no);
+        $unifiedOrder->SetTotal_fee($total_amount);
+        $unifiedOrder->SetTrade_type("APP");
+        $unifiedOrder->SetNotify_url($notifyUrl);
+        $result = \WxPayApi::unifiedOrder($unifiedOrder,6,$payset);
+        return json_encode($result);
+    } catch(Exception $e) {
+        return false;
+    }
+
+}
+
+/*
+ * 验证微信支付异步回调是否正确
+ * 入参：无
+ * 返回值：验证失败返回false。验证成功返回一个数组，格式如下：
+ * [
+        "out_trade_no"=>"21231312", //订单号
+        "total_amount"=>1 //订单金额，单位分
+    ];
+ * 备注：
+ * 1：验证成功表示交易成功，否则失败。开发者应该在业务代码中再验证一遍订单金额是否正确
+*/
+function checkWechatNotify(){
+
+    $wecatpayConfig = getWecatpayConfig();
+    if(empty($wecatpayConfig['wechat_app_id']) || empty($wecatpayConfig['wechat_mch_id']) || empty($wecatpayConfig['wechat_key'])){
+        return false;
+    }
+    $postXml =  file_get_contents('php://input');
+    $arr = json_decode(json_encode(simplexml_load_string($postXml, 'SimpleXMLElement', LIBXML_NOCDATA)), true);
+    if(empty($arr) || !is_array($arr)){
+        return false;
+    }
+    ksort($arr);
+    $buff = '';
+    foreach ($arr as $k => $v){
+        if($k != 'sign'){
+            $buff .= $k . '=' . $v . '&';
+        }
+    }
+    $stringSignTemp = $buff . 'key='.$wecatpayConfig['wechat_key'];
+    $sign = strtoupper(md5($stringSignTemp));
+  //判断算出的签名和通知信息的签名是否一致
+    if($sign != $arr['sign']){
+        return false;
+    }
+    if("SUCCESS" != $arr['result_code']){
+        return false;
+    }
+    return [
+        "out_trade_no"=>$arr['out_trade_no'],
+        "total_amount"=>$arr['total_fee']
+    ];
+}
+
+/*
+ * 生成支付签名。
+ * 该方法是支付宝，微信支付签名的集合，将来如果新增其它支付方式，也会增加到里面
+     * 入参：
+    $type 支付类型 1支付宝，2微信   必须
+    $out_trade_no 订单号  必须
+    $total_amount 商品价格 单位 ：分 币种：人民币  必须
+    $notifyUrl 异步回调地址  必须
+    $subject  商品标题 必须
+
+    返回值：如果签名失败返回false。如果签名成功返回对应支付类型的签名结果：
+    $type=1(支付宝)返回一段签名后的字符串，可以不做任何修改客户端就能使用：
+    $type=2(微信)返回一个数组转的json，和微信官网demo返回的一样，数组格式如下：
+    array(7) {
+      ["appid"] => string(18) "wxf5434529e3d5f55c"
+      ["noncestr"] => string(16) "0KJQGD8Sm9AAawFn"
+      ["package"] => string(10) "Sign=WXPay"
+      ["partnerid"] => string(10) "1518233991"
+      ["prepayid"] => string(36) "wx14150211047841e41f7532623622978451"
+      ["timestamp"] => int(1542178931)
+      ["sign"] => string(32) "C0C4CB308E7EB88B01F519ECF5071764"
+    }
+ * */
+function paySign($type =0,$out_trade_no = 0,$total_amount = 0,$notifyUrl = "",$subject = "商品标题"){
+    if(empty($type)){
+        return false;
+    }
+    if(1==$type){
+        return signAlipay($out_trade_no,$total_amount,$notifyUrl,$subject);
+    }elseif (2==$type){
+        return signWechat($out_trade_no,$total_amount,$notifyUrl,$subject);
+    }
+}
+
+/*
+ * 验证异步回调是否正确，支付宝和微信的异步回调验证都可以用这个方法
+ * 入参：无
+ * 返回值：验证失败返回false。验证成功返回一个数组，格式如下：
+ * [
+        "out_trade_no"=>"21231312", //订单号
+        "total_amount"=>1, //订单金额，单位分
+        "type"=>1, //类型，1代表支付宝回调，2代表微信回调
+    ];
+ * 备注：
+ * 1：验证成功表示交易成功，否则失败。开发者应该在业务代码中再验证一遍订单金额是否正确
+*/
+function checkNotify(){
+    if(!empty($_POST['app_id'])){  //支付宝,只有支付宝才有这个字段
+        $checkAlipayNotify = checkAlipayNotify();
+        if(is_array($checkAlipayNotify)){
+            $checkAlipayNotify['type'] = 1;
+        }
+        return $checkAlipayNotify;
+    }else{
+        $checkWechatNotify = checkWechatNotify();  //微信
+        if(is_array($checkWechatNotify)){
+            $checkWechatNotify['type'] = 2;
+        }
+        return $checkWechatNotify;
+    }
+}
+
+/*
+ * 支付异步回调处理完成后返回第三方（支付宝，微信）的值
+ *    * 入参：
+    $type 支付类型 1支付宝，2微信
+
+    返回值：该方法会直接返回第三方需要的异步回调返回值
+ * */
+function returnNotify($type = 1){
+ if(1==$type){
+    return "success";
+ }elseif (2==$type){
+     $ret = ['return_code'=>'SUCCESS','return_msg'=>'OK'];
+     $xml = '<xml>';
+     foreach($ret as $k=>$v){
+         $xml.='<'.$k.'><![CDATA['.$v.']]></'.$k.'>';
+     }
+     $xml.='</xml>';
+     return $xml;
+ }
+}
+

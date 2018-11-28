@@ -718,7 +718,9 @@ class System extends Controller
         $params[] = 'absolute_path';
         $params[] = 'cdn';
         foreach ($params as $val){
+            if(!empty($inputData[$val])){
                 $this->ConfigModel->batchSaveConfig($val,$inputData[$val],$remarks[$val],'LOCALupload');
+            }
         }
         return reJson(200,'保存成功',[]);
     }
@@ -753,8 +755,8 @@ class System extends Controller
         //判断请求方式以及请求参数
         $inputData = Request::post();
         $method = Request::method();
-        $params = ['host','username','password','port','path','cdn'];
-        $remarks = ['host'=>'ip','username'=>'用户名','password'=>'密码','port'=>'端口号','path'=>'路径','cdn'=>'访问域名'];
+        $params = ['host','username','password','port','path'];
+        $remarks = ['host'=>'域名','username'=>'用户名','password'=>'密码','port'=>'端口号','path'=>'路径'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
             return reJson(500, $msg, []);
@@ -780,7 +782,7 @@ class System extends Controller
             return reJson(500, $msg, []);
         }
         $condition = [];
-        $condition['key'] = ['host','username','password','port','path','cdn'];
+        $condition['key'] = ['host','username','password','port','path'];
         $condition['type'] = 'FTPupload';
         $ConfigList = $this->ConfigModel->getConfigList($condition);
         if($ConfigList === false){

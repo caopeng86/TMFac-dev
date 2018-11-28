@@ -2,3 +2,5 @@
 composer.lock
 *.log
 runtime
+application/personal/
+application/tmgc_discover

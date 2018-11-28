@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>数据表格</title>
+    <link rel="stylesheet" type="text/css" href="http://dev.360tianma.com/lib/templateUI/publicStyle.css" />
+    <style type="text/css">
+        .box{
+            width: 990px;
+            margin: auto;
+            margin-top: 40px;
+        }
+        .clickTo{
+            text-align: center;
+            padding: 25px;
+            font-size: 15px;
+            font-weight: bolder;
+        }
+        a{
+            color: #3399FF;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <div class="clickTo">
+        具体JS执行方法以及数据交互请查看此文档：
+        <a href="https://www.layui.com/doc/modules/table.html">点击查看</a>
+    </div>
+    <table id="demo" lay-filter="test"></table>
+    <script type="text/html" id="toolbarDemo">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-sm publicStyle" lay-event="getCheckData">获取选中行数据</button>
+            <button class="layui-btn layui-btn-sm publicStyle" lay-event="getCheckLength">获取选中数目</button>
+            <button class="layui-btn layui-btn-sm publicStyle" lay-event="isAll">验证是否全选</button>
+        </div>
+    </script>
+    <script type="text/html" id="barDemo">
+        <a class="layui-btn layui-btn-xs public-bg1" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-xs  public-bg2" lay-event="del">删除</a>
+    </script>
+</div>
+<script src="http://dev.360tianma.com/lib/templateUI/layui/layui.all.js"></script>
+<script>
+    layui.use('table', function(){
+        var table = layui.table;
+
+        //第一个实例
+        table.render({
+            elem: '#demo'
+            ,url: '../json/tableData.json' //数据接口
+            ,page: true //开启分页
+            ,toolbar: '#toolbarDemo'
+            ,cols: [[ //表头
+                {type:'checkbox', fixed: 'left'}
+                ,{field: 'id', title: 'ID', width:80, sort: true, fixed: 'left'}
+                ,{field: 'username', title: '用户名', width:80}
+                ,{field: 'sex', title: '性别', width:80, sort: true}
+                ,{field: 'city', title: '城市', width:80}
+                ,{field: 'sign', title: '签名', width: 177}
+                ,{field: 'experience', title: '积分', width: 80, sort: true}
+                ,{field: 'score', title: '评分', width: 80, sort: true}
+                ,{field: 'classify', title: '职业', width: 80}
+                ,{field: 'wealth', title: '财富', width: 135, sort: true}
+                ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
+            ]]
+        });
+
+        //头工具栏事件
+        table.on('toolbar(test)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch(obj.event){
+                case 'getCheckData':
+                    var data = checkStatus.data;
+                    layer.alert(JSON.stringify(data));
+                    break;
+                case 'getCheckLength':
+                    var data = checkStatus.data;
+                    layer.msg('选中了：'+ data.length + ' 个');
+                    break;
+                case 'isAll':
+                    layer.msg(checkStatus.isAll ? '全选': '未全选');
+                    break;
+            };
+        });
+
+        //监听行工具事件
+        table.on('tool(test)', function(obj){
+            var data = obj.data;
+            //console.log(obj)
+            if(obj.event === 'del'){
+                layer.confirm('真的删除行么', function(index){
+                    obj.del();
+                    layer.close(index);
+                });
+            } else if(obj.event === 'edit'){
+                layer.prompt({
+                    formType: 2
+                    ,value: data.email
+                }, function(value, index){
+                    obj.update({
+                        email: value
+                    });
+                    layer.close(index);
+                });
+            }
+        });
+
+    });
+</script>
+</body>
+</html>

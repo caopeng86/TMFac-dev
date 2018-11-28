@@ -265,4 +265,120 @@ return [
 //            'cdn'=>'',
         ]
     ],
+    //token保存时间
+    'token_time'=>604800,
+    'queue' =>[
+        'connector'=>'database'
+    ],
+     //从平台拉取数据的配置
+    'PullData' => [
+        'key' => 'aaaa'
+        ],
+    'upload_info' => [
+        'size_limit' => 102400,//上传大小限制，单位kb
+        'allowed_types'=>[
+            '3gpp'=>'audio/3gpp, video/3gpp',
+            'ac3'=>'audio/ac3',
+            'asf'=>'allpication/vnd.ms-asf',
+            'au'=>'audio/basic',
+            'css'=>'text/css',
+            'csv'=>'text/csv',
+            'doc'=>'application/msword',
+            'dot'=>'application/msword',
+            'dtd'=>'application/xml-dtd',
+            'dwg'=>'image/vnd.dwg',
+            'dxf'=>'image/vnd.dxf',
+            'gif'=>'image/gif',
+            'htm'=>'text/html',
+            'html'=>'text/html',
+            'jp2'=>'image/jp2',
+            'jpe'=>'image/jpeg',
+            'jpeg'=>'image/jpeg',
+            'jpg'=>'image/jpeg',
+            'js'=>'text/javascript, application/javascript',
+            'json'=>'application/json',
+            'mp2'=>'audio/mpeg, video/mpeg',
+            'mp3'=>'audio/mpeg',
+            'mp4'=>'audio/mp4, video/mp4',
+            'mpeg'=>'video/mpeg',
+            'mpg'=>'video/mpeg',
+            'mpp'=>'application/vnd.ms-project',
+            'ogg'=>'application/ogg, audio/ogg',
+            'pdf'=>'application/pdf',
+            'png'=>'image/png',
+            'pot'=>'application/vnd.ms-powerpoint',
+            'pps'=>'application/vnd.ms-powerpoint',
+            'ppt'=>'application/vnd.ms-powerpoint',
+            'rtf'=>'application/rtf, text/rtf',
+            'svf'=>'image/vnd.svf',
+            'tif'=>'image/tiff',
+            'tiff'=>'image/tiff',
+            'txt'=>'text/plain',
+            'wdb'=>'application/vnd.ms-works',
+            'wps'=>'application/vnd.ms-works',
+            'xhtml'=>'application/xhtml+xml',
+            'xlc'=>'application/vnd.ms-excel',
+            'xlm'=>'application/vnd.ms-excel',
+            'xls'=>'application/vnd.ms-excel',
+            'xlt'=>'application/vnd.ms-excel',
+            'xlw'=>'application/vnd.ms-excel',
+            'xml'=>'text/xml, application/xml',
+            'zip'=>'aplication/zip',
+            'xlsx'=>'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'php' => 'text/html',
+            'swf' => 'application/x-shockwave-flash',
+            'flv' => 'video/x-flv',
+
+            'bmp' => 'image/bmp',
+            'ico' => 'image/vnd.microsoft.icon',
+            'svg' => 'image/svg+xml',
+            'svgz' => 'image/svg+xml',
+
+            'rar' => 'application/x-rar-compressed',
+            'exe' => 'application/x-msdownload',
+            'msi' => 'application/x-msdownload',
+            'cab' => 'application/vnd.ms-cab-compressed',
+
+            'qt' => 'video/quicktime',
+            'mov' => 'video/quicktime',
+
+            'psd' => 'image/vnd.adobe.photoshop',
+            'ai' => 'application/postscript',
+            'eps' => 'application/postscript',
+            'ps' => 'application/postscript',
+            'apk' =>'application/vnd.android.package-archive',
+
+            // open office
+            'odt' => 'application/vnd.oasis.opendocument.text',
+            'ods' => 'application/vnd.oasis.opendocument.spreadsheet',
+        ],
+        'type'=>'local',//local(本地),ftp(其他ftp存储服务器),oss(阿里云对象存储),qn(七牛对象存储)
+        'oss_param'=>[ //对应需要的参数配置
+            'accessKeyId'=>'LTAItVl4NjfG303c',
+            'accessKeySecret'=>'2x0vFnfq0y7FHaniCN2Wo3sA8k6Izu',
+            'endpoint'=>'http://oss-cn-beijing.aliyuncs.com',
+            'bucket'=>'tianma-tmfac-resource',
+            'cdn'=>'http://tianma-tmfac-resource.oss-cn-beijing.aliyuncs.com'
+        ],
+        'qn_param'=>[
+            'accessKey'=>'mOmsEmq2vOKp5AwAged65eMLWiZXbjO31XC6lXem',
+            'secretKey'=>'ZY0IpAlLwpjBSW4R04Asc4mIY-fAUALwYThQzRGz',
+            'bucket'=>'cases',
+            'upload'=>'http://upload.qiniup.com',
+            'cdn'=>'http://pdhfer5jc.bkt.clouddn.com',
+        ],
+        'ftp_param'=>[
+            'host'=>'resource.360tianma.com',
+            'username'=>'resource_360tia',
+            'password'=>'pkbBSWcDHhatP2Cp',
+            'port'=>21,
+            'path'=>'/uploads/'
+        ],
+        'local_param'=>[
+            'host'=>Env::get(SERVER_ENV.'DOMAIN'),
+            'path'=>'/uploads/',
+//            'absolute_path'=>'/mnt/resource.360tianma.com',
+//            'cdn'=>'http://resource.360tianma.com',
+        ]
+    ],
 ];
