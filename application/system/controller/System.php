@@ -922,4 +922,50 @@ class System extends Controller
         return reJson(200, '获取成功', $ConfigList);
     }
 
+    /**
+     * 设置微信公众号配置
+     */
+    public function setWechatPublicConfig(){
+        //判断请求方式以及请求参数
+        $inputData = Request::post();
+        $method = Request::method();
+        $params = ['wechat_public_app_id','wechat_public_app_secret'];
+        $remarks = ['wechat_public_app_id'=>'微信公众号appid','wechat_public_app_secret'=>'微信公众号AppSecret'];
+        $ret = checkBeforeAction($inputData, [], $method, 'POST', $msg);
+        if(!$ret){
+            return reJson(500, $msg, []);
+        }
+        foreach ($params as $val){
+            if(isset($inputData[$val])){
+                $this->ConfigModel->batchSaveConfig($val,$inputData[$val],$remarks[$val],'wechat');
+            }
+        }
+        return reJson(200,'保存成功',[]);
+    }
+
+    /**
+     * 获取微信公众号配置
+     */
+    public function getWechatPublicConfig(){
+        //判断请求方式以及请求参数
+        $inputData = Request::get();
+        $method = Request::method();
+        $params = [];
+        $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
+        if(!$ret){
+            return reJson(500, $msg, []);
+        }
+        $condition = [];
+        $condition['key'] = ['wechat_public_app_id','wechat_public_app_secret'];
+        $condition['type'] = 'wechat';
+        $ConfigList = $this->ConfigModel->getConfigList($condition);
+        if($ConfigList === false){
+            return reJson(500, '获取失败', []);
+        }
+        $ConfigList = $this->ConfigModel->ArrayToKey($ConfigList);
+        $ConfigList['wechat_public_app_id'] = empty($ConfigList['wechat_public_app_id'])?"":$ConfigList['wechat_public_app_id'];
+        $ConfigList['wechat_public_app_secret'] = empty($ConfigList['wechat_public_app_secret'])?"":$ConfigList['wechat_public_app_secret'];
+        return reJson(200, '获取成功', $ConfigList);
+    }
+
 }
