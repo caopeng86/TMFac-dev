@@ -31,7 +31,7 @@ class Memberpoint extends Base
         $params = ['key'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $Condition = ['key'=>$inputData['key'],'type'=>'point'];
         $getOneConfig = $this->ConfigModel->getOneConfig($Condition);
@@ -48,7 +48,7 @@ class Memberpoint extends Base
             }
             $result = $this->ConfigModel->addConfig($addConfigData);
             if(false === $result){
-                return reJson(500, '失败', []);
+                return reTmJsonObj(500, '失败', []);
             }
         }else{
             if(isset($inputData['remarks'])){
@@ -59,10 +59,10 @@ class Memberpoint extends Base
             }
             $result = $this->ConfigModel->saveConfig($Condition,$addConfigData);
             if(false === $result){
-                return reJson(500, '失败', []);
+                return reTmJsonObj(500, '失败', []);
             }
         }
-        return reJson(200, '成功', []);
+        return reTmJsonObj(200, '成功', []);
     }
 
     /*获取积分调整列表*/
@@ -73,12 +73,12 @@ class Memberpoint extends Base
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $condition = ['type'=>'point'];
         $List = $this->ConfigModel->getConfigList($condition,'id,key,value,remarks');
         $List = array_column($List,null,'key');
-        return reJson(200,'获取成功',['list'=>$List]);
+        return reTmJsonObj(200,'获取成功',['list'=>$List]);
     }
 
     /*编辑积分规则*/
@@ -89,22 +89,22 @@ class Memberpoint extends Base
         $params = ['content'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $Condition = ['id'=>4];
         $getOneConfig = $this->SystemArticleModel->getArticleInfo($Condition);
         if(empty($getOneConfig)){
-            return reJson(500, '失败', []);
+            return reTmJsonObj(500, '失败', []);
         }else{
             $addData = [
                 'content'=>$inputData['content'],
             ];
             $result = $this->SystemArticleModel->updateArticleInfo($Condition,$addData);
             if(false === $result){
-                return reJson(500, '失败', []);
+                return reTmJsonObj(500, '失败', []);
             }
         }
-        return reJson(200, '成功', []);
+        return reTmJsonObj(200, '成功', []);
     }
 
 
@@ -117,11 +117,11 @@ class Memberpoint extends Base
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $Condition = ['id'=>4];
         $data = $this->SystemArticleModel->getArticleInfo($Condition);
-        return reJson(200,'获取成功',$data);
+        return reTmJsonObj(200,'获取成功',$data);
     }
 
 }

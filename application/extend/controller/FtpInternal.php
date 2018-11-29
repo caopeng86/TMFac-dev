@@ -77,6 +77,7 @@ class FtpInternal
             $this->ftp=new FtpClient();
             $this->ftp->connect($this->FTP_HOST,false,$this->FTP_PORT);
             $this->ftp->login($this->FTP_USER, $this->FTP_PASS);
+            $this->ftp->pasv(true);
         }catch (FtpException $e){
             $this -> exception[$this->name] = new FtpException($e);
             return false;

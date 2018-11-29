@@ -29,13 +29,13 @@ class Memberstar extends Base
         //判断请求方式以及请求参数
         $inputData = Request::post();
         $method = Request::method();
-        $params = ['member_code','title','app_id','article_id','extend','intro','type'];
+        $params = ['member_code','title','app_id','article_id','extend','type'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 //        if(preg_match("/^(http:\/\/|https:\/\/).*$/",$inputData['url'])){
-//            return reJson(500,'url不能带域名', []);
+//            return reTmJsonObj(500,'url不能带域名', []);
 //        }
         //判断是否已收藏
         $condition = [
@@ -46,20 +46,20 @@ class Memberstar extends Base
         ];
         $list = $this->starModel->starList($condition, 'title');
         if($list === false){
-            return reJson(500, '获取收藏列表失败', []);
+            return reTmJsonObj(500, '获取收藏列表失败', []);
         }
         if(!empty($list)){
-            return reJson(500, '已被收藏', []);
+            return reTmJsonObj(500, '已被收藏', []);
         }
 
         //收藏数据
         $inputData['create_time'] = time();
         $re = $this->starModel->addStar($inputData);
         if($re === false){
-            return reJson(500, '收藏失败', []);
+            return reTmJsonObj(500, '收藏失败', []);
         }
 
-        return reJson(200, '收藏成功', ['star_id'=>$this->starModel->getLastInsID()]);
+        return reTmJsonObj(200, '收藏成功', ['star_id'=>$this->starModel->getLastInsID()]);
     }
 
     /**
@@ -72,7 +72,7 @@ class Memberstar extends Base
         $params = ['member_code','app_id','article_id'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         //判断是否已收藏
         $condition = [
@@ -82,12 +82,12 @@ class Memberstar extends Base
         ];
         $Info = $this->starModel->starFind($condition,'star_id');
         if($Info === false){
-            return reJson(500, '查询失败', []);
+            return reTmJsonObj(500, '查询失败', []);
         }
         if(!empty($Info)){
-            return reJson(200, '已被收藏', ['star_id'=>$Info['star_id']]);
+            return reTmJsonObj(200, '已被收藏', ['star_id'=>$Info['star_id']]);
         }
-        return reJson(200, '未被收藏', []);
+        return reTmJsonObj(200, '未被收藏', []);
     }
 
     /**
@@ -102,7 +102,7 @@ class Memberstar extends Base
         $params = ['member_code','app_id','article_ids'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         if(is_array($inputData['article_ids'])){
             $article_ids = $inputData['article_ids'];
@@ -116,7 +116,7 @@ class Memberstar extends Base
         ];
         $starList = $this->starModel->starList($condition,'star_id,article_id');
         if($starList === false){
-            return reJson(500, '查询失败', []);
+            return reTmJsonObj(500, '查询失败', []);
         }
         $returnData = array();
         if(!empty($starList)){
@@ -127,7 +127,7 @@ class Memberstar extends Base
                     'star_id'=>$val > 0 && isset($starList[$val])?$starList[$val]:false
                 );
             }
-            return reJson(200,'查询成功', $returnData);
+            return reTmJsonObj(200,'查询成功', $returnData);
         }else{
             foreach ($article_ids as $val){
                 $returnData[] = array(
@@ -135,7 +135,7 @@ class Memberstar extends Base
                     'star_id'=>false
                 );
             }
-            return reJson(200,'全未被收藏',$returnData);
+            return reTmJsonObj(200,'全未被收藏',$returnData);
         }
     }
 
@@ -149,16 +149,16 @@ class Memberstar extends Base
         $params = ['star_id'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         $condition['star_id'] = $inputData['star_id'];
         $re = $this->starModel->deleteStar($condition);
         if($re === false){
-            return reJson(500, '取消收藏失败', []);
+            return reTmJsonObj(500, '取消收藏失败', []);
         }
 
-        return reJson(200, '取消收藏成功', []);
+        return reTmJsonObj(200, '取消收藏成功', []);
     }
 
     /**
@@ -171,7 +171,7 @@ class Memberstar extends Base
         $params = ['index','member_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         //条件拼接
@@ -192,7 +192,7 @@ class Memberstar extends Base
         //获取列表数据
         $list = $this->starModel->starList($condition, $field, $limit, $order);
         if($list === false){
-            return reJson(500, '获取列表失败', []);
+            return reTmJsonObj(500, '获取列表失败', []);
         }
 
         $return = [
@@ -201,7 +201,7 @@ class Memberstar extends Base
             'list' => $list
         ];
 
-        return reJson(200, '获取列表成功', $return);
+        return reTmJsonObj(200, '获取列表成功', $return);
     }
 
     /**
@@ -214,7 +214,7 @@ class Memberstar extends Base
         $params = ['member_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $condition = [
             ['member_code','=',$inputData['member_code']]
@@ -224,6 +224,6 @@ class Memberstar extends Base
         $MemberfootprintModel = new MemberfootprintModel();
         $condition[] = ['create_time','>=',time() - 7*24*3600];
         $footprintNum = $MemberfootprintModel->countFootprint($condition);
-        return reJson(200,'成功',['starNum'=>$starNum,'footprintNum'=>$footprintNum]);
+        return reTmJsonObj(200,'成功',['starNum'=>$starNum,'footprintNum'=>$footprintNum]);
     }
 }

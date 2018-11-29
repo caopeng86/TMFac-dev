@@ -27,7 +27,7 @@ class Jpush extends Base
         $params = ['index'];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         $condition = [];
@@ -48,7 +48,7 @@ class Jpush extends Base
         $field = 'push_id, push_content, create_time';
         $list = $pushModel->getPushList($condition, $field, $limit);
         if($list === false){
-            return reJson(500, '获取列表失败', []);
+            return reTmJsonObj(500, '获取列表失败', []);
         }
 
         //处理数据
@@ -63,7 +63,7 @@ class Jpush extends Base
             'total' => $count
         ];
 
-        return reJson(200, '获取列表成功', $data);
+        return reTmJsonObj(200, '获取列表成功', $data);
     }
 
     /**
@@ -76,16 +76,16 @@ class Jpush extends Base
         $params = ['push_id'];
         $ret = checkBeforeAction($inputData, $params, $method, 'DELETE', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         $pushModel = new PushModel();
         $re = $pushModel->deletePush(['push_id' => $inputData['push_id']]);
         if($re === false){
-            return reJson(500, '删除失败', []);
+            return reTmJsonObj(500, '删除失败', []);
         }
 
-        return reJson(200, '删除成功', []);
+        return reTmJsonObj(200, '删除成功', []);
     }
 
     /**
@@ -98,7 +98,7 @@ class Jpush extends Base
         $params = ['title', 'content'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         Db::startTrans();
@@ -111,7 +111,7 @@ class Jpush extends Base
         $push = $pushModel->addPush($data);
         if($push === false){
             Db::rollback();
-            return reJson(500, '新增推送消息失败', []);
+            return reTmJsonObj(500, '新增推送消息失败', []);
         }
 
         //推送消息
@@ -120,11 +120,11 @@ class Jpush extends Base
         $re = $JPush::JPushAll($extras);
         if($re['http_code'] != 200){
             Db::rollback();
-            return reJson(500, '推送失败', $re);
+            return reTmJsonObj(500, '推送失败', $re);
         }
 
         Db::commit();
-        return reJson(200, '推送成功', []);
+        return reTmJsonObj(200, '推送成功', []);
     }
 
     /**
@@ -137,7 +137,7 @@ class Jpush extends Base
         $params = ['title', 'content', 'member_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         Db::startTrans();
@@ -151,7 +151,7 @@ class Jpush extends Base
         $push = $pushModel->addPush($data);
         if($push === false){
             Db::rollback();
-            return reJson(500, '新增推送消息失败', []);
+            return reTmJsonObj(500, '新增推送消息失败', []);
         }
 
         //推送消息
@@ -162,11 +162,11 @@ class Jpush extends Base
         $re = $JPush::JPushOne($extras);
         if($re['http_code'] != 200){
             Db::rollback();
-            return reJson(500, '推送失败', $re);
+            return reTmJsonObj(500, '推送失败', $re);
         }
 
         Db::commit();
-        return reJson(200, '推送成功', []);
+        return reTmJsonObj(200, '推送成功', []);
     }
 
     /**
@@ -179,7 +179,7 @@ class Jpush extends Base
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         //获取推送消息
        $pushMessageModel = new PushMessageModel();
@@ -210,7 +210,7 @@ class Jpush extends Base
                 $returnData['error']++;
             }
         }
-        return reJson(200, '推送情况',$returnData);
+        return reTmJsonObj(200, '推送情况',$returnData);
     }
 
     /**
@@ -223,7 +223,7 @@ class Jpush extends Base
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         //获取推送消息
         $pushMessageModel = new PushMessageModel();
@@ -231,7 +231,7 @@ class Jpush extends Base
         $condition[] = ['push_time','>=',time()-7*24*3600];//推送Jpush时间
         $pushList = $pushMessageModel->getList($condition,'cid',200);
         if(empty($pushList)){
-            return reJson(200,'没有推送信息',[]);
+            return reTmJsonObj(200,'没有推送信息',[]);
         }
         $pushList = array_column($pushList,'cid');
         $JPush = new \app\extend\controller\Jpush();
@@ -241,7 +241,7 @@ class Jpush extends Base
                 $pushMessageModel->updateInfo(['cid'=>$val['msg_id']],['push_situation'=>json_encode($val)]);
             }
         }
-        return reJson(200,'推送情况更新完毕',[]);
+        return reTmJsonObj(200,'推送情况更新完毕',[]);
     }
 
     /**
@@ -254,13 +254,13 @@ class Jpush extends Base
         $params = ['title','content','url','android_info','ios_info','type'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $result =  pushMessage($inputData['title'],$inputData['content'],$inputData['url'],$inputData['android_info'],$inputData['ios_info'],$inputData['type']);
         if($result){
-            return reJson(200,'成功',[]);
+            return reTmJsonObj(200,'成功',[]);
         }else{
-            return reJson(500,'失败',[]);
+            return reTmJsonObj(500,'失败',[]);
         }
     }
 

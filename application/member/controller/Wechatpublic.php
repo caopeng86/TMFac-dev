@@ -37,14 +37,14 @@ class Wechatpublic extends Controller
 
     public function getSignPackage() {
         if(empty($this->appId) || empty($this->appSecret)){
-            return reJson(500, '未配置相关功能', []);
+            return reTmJsonObj(500, '未配置相关功能', []);
         }
         $inputData = Request::post();
         $method = Request::method();
         $params = ['url'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $url = $inputData['url'];
         $jsapiTicket = $this->getJsApiTicket();
@@ -67,7 +67,7 @@ class Wechatpublic extends Controller
             "signature" => $signature,
             "rawString" => $string
         );
-        return reJson(200, '登录成功', $signPackage);
+        return reTmJsonObj(200, '登录成功', $signPackage);
     }
 
     private function createNonceStr($length = 16) {

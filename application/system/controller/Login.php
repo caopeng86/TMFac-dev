@@ -251,7 +251,7 @@ class Login extends Controller
      */
     public function getCode(){
        $code = $this->captcha->createCode();
-        return reJson(200, '成功', ['code'=>$code]);
+        return reTmJsonObj(200, '成功', ['code'=>$code]);
     }
 
     /**
@@ -259,18 +259,18 @@ class Login extends Controller
      */
     public function userLogin(){
         //判断请求方式以及请求参数
-        $inputData = Request::post();
+       // $inputData = Request::post();
+        $inputData = getEncryptPostData();
         $method = Request::method();
         $params = ['user_name', 'password', 'verify'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500,$msg,[]);
+            return reTmJsonObj(500,$msg,[]);
         }
-
 //        //验证验证码
 //        $chkVerify = $this->captcha->check($inputData['verify']);
 //        if($chkVerify === false){
-//            return reJson(500,'验证码输入错误',[]);
+//            return reTmJsonObj(500,'验证码输入错误',[]);
 //        }
 
         //验证用户名
@@ -279,12 +279,12 @@ class Login extends Controller
          mobile, branch_id, status, deleted, access_key, access_key_create_time';
         $userInfo = $this->userModel->getUserInfo($condition, $field);
         if(!$userInfo || $userInfo['status']==1 || $userInfo['deleted']==1){
-            return reJson(500,'没有该用户',[]);
+            return reTmJsonObj(500,'没有该用户',[]);
         }
 
         //验证密码
         if(md5(md5($inputData['password'])) !== $userInfo['password']){
-            return reJson(500,'密码错误',[]);
+            return reTmJsonObj(500,'密码错误',[]);
         }
         unset($userInfo['password']);
 
@@ -295,14 +295,14 @@ class Login extends Controller
         $updateData['access_key_create_time'] = time();
         $remember = $this->userModel->updateUserInfo($updateCondition, $updateData);
         if($remember === false){
-            return reJson(500, '记录登录信息失败', []);
+            return reTmJsonObj(500, '记录登录信息失败', []);
         }
 
         //校验licenses
 //        $decrypt = $this->_licenses($userInfo['user_code'], $err);
 //        if($decrypt === false){
 //            Logservice::writeArray(['user_code'=>$userInfo['user_code'], 'err'=>$err], 'licenses校验未通过', 2);
-//            return reJson($err[0], $err[1], []);
+//            return reTmJsonObj($err[0], $err[1], []);
 //        }
 
         //保存用户信息到缓存 7天
@@ -319,7 +319,7 @@ class Login extends Controller
         //获取用户部门code,name
         $branch = $this->_getBranch($userInfo['branch_id']);
         if($branch === false){
-            return reJson(500, '获取用户部门失败', []);
+            return reTmJsonObj(500, '获取用户部门失败', []);
         }
         $userInfo['branch_code'] = $branch['branch_code'];
         $userInfo['branch_name'] = $branch['branch_name'];
@@ -327,26 +327,26 @@ class Login extends Controller
         //获取用户所有角色code,name
         $role = $this->_getRole($userInfo['user_code']);
         if($role === false){
-            return reJson(500, '获取用户所有角色失败', []);
+            return reTmJsonObj(500, '获取用户所有角色失败', []);
         }
         $roleCodes = array_column($role, 'role_code');
 
         //获取用户权限code,name
         $privilege = $this->_getPrivilege($roleCodes);
         if($privilege === false){
-            return reJson(500, '获取用户权限失败', []);
+            return reTmJsonObj(500, '获取用户权限失败', []);
         }
 
         //获取用户所有站点code,name
         $site = $this->_getSite($roleCodes);
         if($site === false){
-            return reJson(500, '获取用户站点失败', []);
+            return reTmJsonObj(500, '获取用户站点失败', []);
         }
 
 //        //获取所有应用code,name,app_code
 //        $component = $this->_getComponent($roleCodes);
 //        if($component === false){
-//            return reJson(500, '获取用户站点失败', []);
+//            return reTmJsonObj(500, '获取用户站点失败', []);
 //        }
 
         $return = [
@@ -358,7 +358,8 @@ class Login extends Controller
             'privilege' => $privilege,
             'component' => ''
         ];
-        return reJson(200, '登录成功', $return);
+
+        return reEncryptJson(200, '登录成功', $return);
     }
 
     /**
@@ -371,7 +372,7 @@ class Login extends Controller
         $params = ['index'];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         //获取文件名数据
@@ -400,7 +401,7 @@ class Login extends Controller
             'list' => $file,
         ];
 
-        return reJson(200, '获取成功', $outPut);
+        return reTmJsonObj(200, '获取成功', $outPut);
     }
 
     /**
@@ -413,14 +414,14 @@ class Login extends Controller
         $params = ['licenses_key'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         //验证输入的licenses
         //检测licenses文件
         $file = Env::get('app_path')."priKey.pem";
         if(!is_file($file)){
-            return reJson(501, '请联系平台授权', []);
+            return reTmJsonObj(501, '请联系平台授权', []);
         }
         //获取并验证licenses_key
         $data = json_decode(base64_decode(file_get_contents($file)), true);
@@ -430,20 +431,20 @@ class Login extends Controller
         $licensesKey = $inputData['licenses_key'];
         $licenses = $this->_checkLicenses($licensesKey, $err);
         if($licenses === false){
-            return reJson(502, $err, []);
+            return reTmJsonObj(502, $err, []);
         }
 
         //检测公钥加密的数据是否能被本地私钥解密
         $licensesToken = $this->_checkLicensesToken($licenses, $priKey);
         if(!$licensesToken){
-            return reJson(502, '私钥错误', []);
+            return reTmJsonObj(502, '私钥错误', []);
         }
 
         //修改文本文件中licenses
         $reData = ['pri_key' => $priKey, 'licenses_key' => $inputData['licenses_key']];
         file_put_contents($file, base64_encode(json_encode($reData)));
 
-        return reJson(500, '成功', []);
+        return reTmJsonObj(500, '成功', []);
     }
 
     /**
@@ -456,7 +457,7 @@ class Login extends Controller
         $params = ['token','systemcode','siteCode','logininfo'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $token = $inputData['token'];
         $systemcode = $inputData['systemcode'];
@@ -466,20 +467,20 @@ class Login extends Controller
         $AES= new Aes($key);;
         $login_info = $AES->decrypt($login_info);
         if(!$login_info){
-            return reJson(500, '解析用户信息失败', []);
+            return reTmJsonObj(500, '解析用户信息失败', []);
         }
         $login_info_key = ['user_code','timestamp','real_name','user_name'];
         $login_info = explode('_&&_',$login_info);
         $user_info = array_combine($login_info_key,$login_info);
         if(empty($user_info['user_code']) || empty($user_info['timestamp']) || empty($user_info['real_name']) || empty($user_info['user_name'])){
-            return reJson(500, '用户信息不完整，登录失败', []);
+            return reTmJsonObj(500, '用户信息不完整，登录失败', []);
         }
         $condition = [
             ['user_code','=',$user_info['user_code'].$systemcode]
         ];
         $remember = $this->userModel->getUserInfo($condition,false);
         if($remember === false){
-            return reJson(500, '查询用户失败', []);
+            return reTmJsonObj(500, '查询用户失败', []);
         }
         if(!$remember){
             //创建用户
@@ -495,7 +496,7 @@ class Login extends Controller
             $result = $this->userModel->addUser($data);
             $remember = $this->userModel->getUserInfo($condition,false);
             if($remember === false){
-                return reJson(500, '查询用户失败', []);
+                return reTmJsonObj(500, '查询用户失败', []);
             }
             $this->roleModel->addRoleUserAll([['user_code'=>$data['user_code'],'role_code'=>1]]);
         }
@@ -505,7 +506,7 @@ class Login extends Controller
         $updateData['access_key_create_time'] = time();
         $result = $this->userModel->updateUserInfo($updateCondition, $updateData);
         if($result === false){
-            return reJson(500, '记录登录信息失败', []);
+            return reTmJsonObj(500, '记录登录信息失败', []);
         }
 
         //保存用户信息到缓存 7天
@@ -521,7 +522,7 @@ class Login extends Controller
         //获取用户部门code,name
         $branch = $this->_getBranch($remember['branch_id']);
         if($branch === false){
-            return reJson(500, '获取用户部门失败', []);
+            return reTmJsonObj(500, '获取用户部门失败', []);
         }
         $userInfo['branch_code'] = $branch['branch_code'];
         $userInfo['branch_name'] = $branch['branch_name'];
@@ -529,20 +530,20 @@ class Login extends Controller
         //获取用户所有角色code,name
         $role = $this->_getRole($remember['user_code']);
         if($role === false){
-            return reJson(500, '获取用户所有角色失败', []);
+            return reTmJsonObj(500, '获取用户所有角色失败', []);
         }
         $roleCodes = array_column($role, 'role_code');
 
         //获取用户权限code,name
         $privilege = $this->_getPrivilege($roleCodes);
         if($privilege === false){
-            return reJson(500, '获取用户权限失败', []);
+            return reTmJsonObj(500, '获取用户权限失败', []);
         }
 
         //获取用户所有站点code,name
         $site = $this->_getSite($roleCodes);
         if($site === false){
-            return reJson(500, '获取用户站点失败', []);
+            return reTmJsonObj(500, '获取用户站点失败', []);
         }
         unset($remember['password']);
         $return = [
@@ -554,7 +555,7 @@ class Login extends Controller
             'privilege' => $privilege,
             'component' => ''
         ];
-        return reJson(200, '登录成功', $return);
+        return reTmJsonObj(200, '登录成功', $return);
     }
 
 }

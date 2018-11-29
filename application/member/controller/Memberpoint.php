@@ -31,17 +31,17 @@ class Memberpoint extends Base
         $params = ['point','remarks','from_component'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $point = $this->MemberpointModel->getMemberPoint($this->memberInfo['member_id']);
         if($inputData['point'] + $point < 0){
-            return reJson(500, '用户积分不足', []);
+            return reTmJsonObj(500, '用户积分不足', []);
         }
         $result = $this->MemberpointModel->editPoint($this->memberInfo['member_id'],$inputData['point'],$inputData['remarks'],$inputData['from_component']);
         if($result === false){
-            return reJson(500, '扣除用户积分失败，请重试', []);
+            return reTmJsonObj(500, '扣除用户积分失败，请重试', []);
         }
-        return reJson(200,'修改成功',['member_id'=>$this->memberInfo['member_id']]);
+        return reTmJsonObj(200,'修改成功',['member_id'=>$this->memberInfo['member_id']]);
     }
 
 
@@ -51,7 +51,7 @@ class Memberpoint extends Base
 
     public function getPoint(){
         $point = $this->MemberpointModel->getMemberPoint($this->memberInfo['member_id']);
-        return reJson(200, '获取成功', ['point'=>$point,'member_id'=>$this->memberInfo['member_id']]);
+        return reTmJsonObj(200, '获取成功', ['point'=>$point,'member_id'=>$this->memberInfo['member_id']]);
     }
 
 
@@ -66,7 +66,7 @@ class Memberpoint extends Base
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $condition = ['member_id'=>$this->memberInfo['member_id']];
         if(!empty($inputData['from_component'])){
@@ -83,12 +83,12 @@ class Memberpoint extends Base
         $field = 'id,change_point,now_point,remark,add_time';
         $pointLogList = $this->MemberpointModel->getPointLogList($condition,$field,$start_num .','.$num,'add_time desc');
         if($pointLogList === false){
-            return reJson(500,'获取数据失败', []);
+            return reTmJsonObj(500,'获取数据失败', []);
         }
         foreach ($pointLogList as $key => $val){
             $pointLogList[$key]['add_time'] = date('Y-m-d h:i:s',$pointLogList[$key]['add_time']);
         }
-        return reJson(200,'获取成功',['total_page'=>$totalPage,'now_page'=>$start_num + 1,'list'=>$pointLogList]);
+        return reTmJsonObj(200,'获取成功',['total_page'=>$totalPage,'now_page'=>$start_num + 1,'list'=>$pointLogList]);
     }
 
 }

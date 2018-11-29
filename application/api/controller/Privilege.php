@@ -32,7 +32,7 @@ class Privilege extends Base
         $params = ['index'];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500,$msg,[]);
+            return reTmJsonObj(500,$msg,[]);
         }
 
         $condition = [];
@@ -48,7 +48,7 @@ class Privilege extends Base
         $privilegeList = $this->privilegeModel->getPrivilegeList($condition, $field, $limit, $order);
         if($privilegeList === false){
             Logservice::writeArray(['sql'=>$this->privilegeModel->getLastSql()], '获取权限列表失败', 2);
-            return reJson(500, '获取权限列表失败', []);
+            return reTmJsonObj(500, '获取权限列表失败', []);
         }
 
         //拼接返回结果
@@ -58,6 +58,6 @@ class Privilege extends Base
             "total" => $count
         ];
 
-        return reJson(200, '获取权限列表成功', $re);
+        return reTmJsonObj(200, '获取权限列表成功', $re);
     }
 }

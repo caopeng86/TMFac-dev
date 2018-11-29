@@ -49,7 +49,7 @@ class Jpush extends Controller
         );
         $JpushConfig = $ConfigModel->getConfigList($condition);
         if(!$JpushConfig){
-            return reJson(500, 'Jpush配置信息不存在', []);
+            return reTmJsonObj(500, 'Jpush配置信息不存在', []);
         }
         $JpushConfig = $ConfigModel->ArrayToKey($JpushConfig);
 //        $this::$appKye = Config::get('Jpush')['app_key'];

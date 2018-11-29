@@ -8,7 +8,23 @@
  * @param array $data
  * @return \think\response\Json
  */
-function reJson($status,$msg,$data = []){
+function reJson($status,$msg,$data = [],$version = 1){
+    if(1 !== $version){
+        if(is_array($data) && 0 == count($data)){
+            $data = json($data);
+        }
+    }
+    return json([
+        'code'=>$status,
+        'data'=>$data,
+        'msg'=>$msg,
+    ]);
+}
+/*
+ *
+ * 当data是空数组时，转成json对象
+ * */
+function reTmJsonObj($status,$msg,$data = []){
     if(is_array($data) && 0 == count($data)){
         $data = json($data);
     }
@@ -18,7 +34,27 @@ function reJson($status,$msg,$data = []){
         'msg'=>$msg,
     ]);
 }
-/** 
+
+/*获取头部参数*/
+function getAllHeader()
+{
+    $ignore = array('host','accept','content-length','content-type');
+    $headers = array();
+    foreach($_SERVER as $key=>$value){
+        if(substr($key, 0, 5)==='HTTP_'){
+            $key = substr($key, 5);
+            $key = str_replace('_', ' ', $key);
+            $key = str_replace(' ', '-', $key);
+            $key = strtolower($key);
+            if(!in_array($key, $ignore)){
+                $headers[$key] = $value;
+            }
+        }
+    }
+    return $headers;
+}
+
+/**
 *去掉bom头
 *
 */
@@ -694,5 +730,98 @@ function returnNotify($type = 1){
      $xml.='</xml>';
      return $xml;
  }
+}
+
+
+
+
+/*解密公共函数
+ 入参：待解密字符串
+ 出参：解密后的字符串
+ 注意：该解密函数只能解密天马客户端或天马web前端提供的加密函数加密的数据,并且客户端发送请求的head中必须加入客户端封装得head参数
+*/
+function tmDecrypt($data=""){
+    $head = getAllHeader();
+    if(empty($head['tmtimestamp']) || empty($head['tmrandomnum'])){
+        return false;
+    }
+    return openssl_decrypt(base64_decode($data), 'AES-128-CBC',substr(md5(base64_encode($head['tmtimestamp']).md5($head['tmrandomnum'])),0,16), OPENSSL_RAW_DATA, substr(md5(base64_encode($head['tmrandomnum']).md5($head['tmtimestamp'])),0,16));
+}
+
+/*
+ * 加密公共函数
+    入参：待加密字符串，如果想对数组加密可以先转成json字符串再传进来
+    出参：加密后的字符串
+    注意：加密后的数据可以通过天马客户端或天马web前端提供的解密方法解密,并且客户端发送请求的head中必须加入客户端封装得head参数
+*/
+function tmEncrypt($data = ""){
+    $head = getAllHeader();
+    if(empty($head['tmtimestamp']) || empty($head['tmrandomnum'])){
+        return false;
+    }else{
+        $data = openssl_encrypt($data, 'AES-128-CBC', substr(md5(base64_encode($head['tmtimestamp']).md5($head['tmtimestamp'])),0,16), OPENSSL_RAW_DATA, substr(md5($head['tmrandomnum']),0,16));
+        return base64_encode($data);
+    }
+}
+
+/*
+ * 获取加密的post参数并自动转成明文
+ * 天马自己的接口使用的
+ * */
+function getEncryptPostData()
+{
+    $data = $_POST;
+    if(count($data) == 0){
+        $data__ = file_get_contents("php://input");
+        $data = json_decode($data__, true);
+    }
+    $head = getAllHeader();
+    if(isset($head['tmencrypt']) && 1==$head['tmencrypt']){
+        $data = (array)json_decode(tmDecrypt($data['tm_encrypt_data']));
+    }
+    return $data;
+}
+
+/*
+ * 获取加密的get参数并自动转成明文
+ * 天马自己的接口使用的
+ * */
+function getEncryptGetData()
+{
+    $data = $_GET;
+    $head = getAllHeader();
+    if(isset($head['tmencrypt']) && 1==$head['tmencrypt']){
+        $data = (array)json_decode(tmDecrypt($data['tm_encrypt_data']));
+    }
+    return $data;
+}
+
+/**
+ * 接口返回加密json数据处理
+ * 天马自己的接口使用的
+ * @param $status
+ * @param $msg
+ * @param array $data
+ * @return \think\response\Json
+ */
+function reEncryptJson($status,$msg,$data = [],$version = 1){
+    if(1 !== $version){
+        if(is_array($data) && 0 == count($data)){
+            $data = json($data);
+        }
+    }
+    $head = getAllHeader();
+    if(isset($head['tmencrypt']) && 1==$head['tmencrypt']){
+        if(is_array($data)){
+            $data = tmEncrypt(json_encode($data));
+        }else{
+            $data = tmEncrypt($data);
+        }
+    }
+    return json([
+        'code'=>$status,
+        'data'=>$data,
+        'msg'=>$msg,
+    ]);
 }
 

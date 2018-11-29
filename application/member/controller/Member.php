@@ -120,12 +120,12 @@ class Member extends Base
         $params = ['mobile','state'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         //验证手机号
         if(!preg_match("/^1[34578]\d{9}$/", $inputData['mobile'])){
-            return reJson(500, '手机号错误', []);
+            return reTmJsonObj(500, '手机号错误', []);
         }
 
         //state 1: 登录 2: 密码找回 3: 修改密码 4: 原手机号验证 5: 新手机号验证
@@ -145,11 +145,11 @@ class Member extends Base
         $msgObj = new Alimsg($config);
         $re = $msgObj::sendSms();
         if($re->Message != 'OK'){
-            return reJson(500, '发送短信失败', $re);
+            return reTmJsonObj(500, '发送短信失败', $re);
         }
         //短信发送成功后将验证码保存到缓存中
         Cache::set(md5($inputData['mobile']), $config['code'], 10*60);
-        return reJson(200, '发送短信成功', []);
+        return reTmJsonObj(200, '发送短信成功', []);
     }
 
     /**
@@ -162,17 +162,17 @@ class Member extends Base
         $params = ['mobile','code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         //缓存中取出验证码,验证手机验证码
         $code = Cache::get(md5($inputData['mobile']));
         if($code != $inputData['code']){
             Logservice::writeArray(['code'=>$inputData['code'], 'cache'=>$code], '手机验证码错误', 2);
-            return reJson(500, '验证失败', []);
+            return reTmJsonObj(500, '验证失败', []);
         }
 
-        return reJson(200, '验证通过', []);
+        return reTmJsonObj(200, '验证通过', []);
     }
 
     /**
@@ -185,7 +185,7 @@ class Member extends Base
         $params = ['member_code', 'site_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         if(isset($inputData['mobile'])){
@@ -194,10 +194,10 @@ class Member extends Base
             $mobile = $this->memberModel->getMemberInfo(['mobile' => $inputData['mobile']], 'mobile');
             if($mobile === false){
                 Logservice::writeArray(['sql'=>$this->memberModel->getLastSql()], '获取会员手机号失败', 2);
-                return reJson(500, '修改失败', []);
+                return reTmJsonObj(500, '修改失败', []);
             }
             if(!empty($mobile)){
-                return reJson(500, '该手机号已绑定', []);
+                return reTmJsonObj(500, '该手机号已被其他账号绑定，请先解绑', []);
             }
         }
 
@@ -206,7 +206,7 @@ class Member extends Base
         $condition['status'] = 0;
         $getMemberInfo = $this->memberModel->getMemberInfo($condition);
         if (empty($getMemberInfo)){
-            return reJson(500, '账号异常', []);
+            return reTmJsonObj(500, '账号异常', []);
         }
         if(isset($inputData['password'])){
             $inputData['password'] = md5(md5($inputData['password']));
@@ -236,11 +236,11 @@ class Member extends Base
         }
         if($re === false || $re1 === false){
             Logservice::writeArray(['sql'=>$this->memberModel->getLastSql()], '修改会员数据失败', 2);
-            return reJson(500, '修改失败', []);
+            return reTmJsonObj(500, '修改失败', []);
         }
 
         Logservice::writeArray(['inputData'=>$inputData], '修改会员信息');
-        return reJson(200, '修改成功', []);
+        return reTmJsonObj(200, '修改成功', []);
     }
 
     public function updatePoint($getMemberInfo,$ConfigList,$condition,$memberKey,$configKey,$remark = "修改用户信息"){
@@ -278,7 +278,7 @@ class Member extends Base
         $params = ['mobile','password','site_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         $condition['mobile'] = $inputData['mobile'];
@@ -287,10 +287,10 @@ class Member extends Base
         $re = $this->memberModel->updateMember($condition, $inputData);
         if($re === false){
             Logservice::writeArray(['sql'=>$this->memberModel->getLastSql()], '修改会员密码失败', 2);
-            return reJson(500, '修改失败', []);
+            return reTmJsonObj(500, '修改失败', []);
         }
         Logservice::writeArray(['mobile'=>$inputData['mobile']], '修改密码');
-        return reJson(200, '修改成功', []);
+        return reTmJsonObj(200, '修改成功', []);
     }
 
     /**
@@ -303,19 +303,19 @@ class Member extends Base
         $params = ['member_code', 'password'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         $password = $this->memberModel->getMemberInfo(['member_code' => $inputData['member_code']], 'password')['password'];
         if(!$password){
             Logservice::writeArray(['sql'=>$this->memberModel->getLastSql()], '获取会员数据失败', 2);
-            return reJson(500, '会员数据获取失败', []);
+            return reTmJsonObj(500, '会员数据获取失败', []);
         }
         if($password != md5(md5($inputData['password']))){
-            return reJson(500, '密码错误', []);
+            return reTmJsonObj(500, '密码错误', []);
         }
 
-        return reJson(200, '验证通过', []);
+        return reTmJsonObj(200, '验证通过', []);
     }
 
     /**
@@ -328,27 +328,27 @@ class Member extends Base
         $params = ['head_pic', 'member_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         //处理图片数据
         $path = $this->_handelImg([$inputData['head_pic']], $inputData['member_code']);
         if($path === false){
-            return reJson(500, '图片数据处理失败', []);
+            return reTmJsonObj(500, '图片数据处理失败', []);
         }
 //        $path = $this->_base64ImgUpload($inputData['head_pic'], $inputData['mobile']);
 //        if($path === false){
-//            return reJson(500, '上传服务器失败', []);
+//            return reTmJsonObj(500, '上传服务器失败', []);
 //        }
         //保存路径到数据库
         $re = $this->memberModel->updateMember(['member_code' => $inputData['member_code']], ['head_pic' => $path[0]]);
         if($re === false){
             Logservice::writeArray(['sql'=>$this->memberModel->getLastSql()], '修改会员头像失败', 2);
-            return reJson(500, '保存失败', []);
+            return reTmJsonObj(500, '保存失败', []);
         }
 
         Logservice::writeArray(['path'=>$path[0], 'member_code'=>$inputData['member_code']], '修改用户头像');
-        return reJson(200, '成功', [$path[0]]);
+        return reTmJsonObj(200, '成功', [$path[0]]);
     }
 
     /**
@@ -361,14 +361,14 @@ class Member extends Base
         $params = ['member_code','mobile', 'code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         //缓存中取出验证码,验证手机验证码
         $code = Cache::get(md5($inputData['mobile']));
         if($code != $inputData['code']){
             Logservice::writeArray(['code'=>$inputData['code'], 'cache'=>$code], '手机验证码错误', 2);
-            return reJson(500, '验证失败', []);
+            return reTmJsonObj(500, '验证失败', []);
         }
 
         //验证手机号是否存在
@@ -376,10 +376,10 @@ class Member extends Base
         $mobile = $this->memberModel->getMemberInfo(['mobile' => $inputData['mobile']], 'mobile');
        if($mobile === false){     //1.没看懂为啥要加这段，注释了，矛盾啊 2.d0wop : 不矛盾啊！
             Logservice::writeArray(['sql'=>$this->memberModel->getLastSql()], '获取会员手机号失败', 2);
-            return reJson(500, '修改失败', []);
+            return reTmJsonObj(500, '修改失败', []);
         }
         if(!empty($mobile)){
-            return reJson(500, '该手机号已绑定', []);
+            return reTmJsonObj(500, '该手机号已被其他账号绑定，请先解绑', []);
         }
 
         $condition['member_code'] = $inputData['member_code'];
@@ -391,11 +391,11 @@ class Member extends Base
         $re = $this->memberModel->updateMember($condition,['mobile'=>$inputData['mobile']]);
         if($re === false){
             Logservice::writeArray(['sql'=>$this->memberModel->getLastSql()], '手机号更换失败', 2);
-            return reJson(500, '更换失败', []);
+            return reTmJsonObj(500, '更换失败', []);
         }
 
         Logservice::writeArray(['inputData'=>$inputData], '修改会员信息');
-        return reJson(200, '更换成功', []);
+        return reTmJsonObj(200, '更换成功', []);
     }
 
 
@@ -409,7 +409,7 @@ class Member extends Base
         $params = ['member_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         $condition['member_code'] = $inputData['member_code'];
@@ -420,7 +420,7 @@ class Member extends Base
         $memberInfo = $this->memberModel->getMemberInfo($condition, $field);
         if($memberInfo === false){
             Logservice::writeArray(['sql'=>$this->memberModel->getLastSql()], '获取会员详情失败', 2);
-            return reJson(500, '获取会员信息失败', []);
+            return reTmJsonObj(500, '获取会员信息失败', []);
         }
         $memberInfo['login_type'] = empty($memberInfo['login_type'])?'mobile':$memberInfo['login_type'];
         $siteModel = new SiteModel();
@@ -448,7 +448,7 @@ class Member extends Base
         $ConfigList['qq'] = empty($memberInfo['qq_edit_time'])?$ConfigList['qq']:0;
         $memberInfo['point_config'] = $ConfigList;
         $memberInfo['is_first_login'] = false;
-        return reJson(200, '获取会员信息成功', $memberInfo);
+        return reTmJsonObj(200, '获取会员信息成功', $memberInfo);
     }
 
     /*
@@ -460,7 +460,7 @@ class Member extends Base
         $params = ["member_code"];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $return = [];
 
@@ -470,7 +470,7 @@ class Member extends Base
         $memberInfo = $this->memberModel->getMemberInfo($condition);
         if($memberInfo === false || $ConfigList === false){
             Logservice::writeArray(['sql'=>$this->memberModel->getLastSql()], '获取会员详情失败', 2);
-            return reJson(500, '获取失败', []);
+            return reTmJsonObj(500, '获取失败', []);
         }
         $ConfigList = array_column($ConfigList,null,'key');
         $loop = [];
@@ -561,7 +561,7 @@ class Member extends Base
             $return['extra_point']=(int)$ConfigList['sign_extra_two']['value'];
         }
 
-        return reJson(200, '获取成功', $return);
+        return reTmJsonObj(200, '获取成功', $return);
     }
 
     /**
@@ -574,7 +574,7 @@ class Member extends Base
         $params = ['member_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         $condition['member_code'] = $inputData['member_code'];
@@ -583,7 +583,7 @@ class Member extends Base
         $memberInfo = $this->memberModel->getMemberInfo($condition);
         if($memberInfo === false || $ConfigList === false){
             Logservice::writeArray(['sql'=>$this->memberModel->getLastSql()], '获取会员详情失败', 2);
-            return reJson(500, '获取失败', []);
+            return reTmJsonObj(500, '获取失败', []);
         }
         $ConfigList = array_column($ConfigList,null,'key');
 
@@ -630,15 +630,15 @@ class Member extends Base
                 $re1 = $this->updatePoint1($memberInfo,$loop[$today_num-1],['member_id'=>$memberInfo['member_id']],"sign_time","签到");
             }
             if(false === $re1){
-                return reJson(500, '签到失败', []);
+                return reTmJsonObj(500, '签到失败', []);
             }
             if($sign_time_date >=2){
                 $this->memberModel->updateMember(['member_id'=>$memberInfo['member_id']], ['sign_num' => 1]);
             }
-            return reJson(200, '签到成功', []);
+            return reTmJsonObj(200, '签到成功', []);
 
         }
-        return reJson(500, '签到失败', []);
+        return reTmJsonObj(500, '签到失败', []);
     }
 
     /*获取积分规则*/
@@ -650,11 +650,11 @@ class Member extends Base
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $Condition = ['id'=>4];
         $data = $this->SystemArticleModel->getArticleInfo($Condition);
-        return reJson(200,'获取成功',$data);
+        return reTmJsonObj(200,'获取成功',$data);
     }
 
     public function updatePoint1($getMemberInfo,$putpoint,$condition,$memberKey,$remark = "修改用户信息"){

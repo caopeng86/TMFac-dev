@@ -29,7 +29,7 @@ class Membermessagepush extends Base
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $condition = array(
             ['status','eq',2]
@@ -45,12 +45,12 @@ class Membermessagepush extends Base
         $field = 'id,title,content,push_time,url';
         $PushMessageList = $this->PushMessageModel->getList($condition,$field,$start_num .','.$num,'push_time desc');
         if($PushMessageList === false){
-            return reJson(500,'获取数据失败', []);
+            return reTmJsonObj(500,'获取数据失败', []);
         }
         foreach ($PushMessageList as $key => $val){
             $PushMessageList[$key]['push_time'] = date('Y-m-d h:i:s',$PushMessageList[$key]['push_time']);
         }
-        return reJson(200,'获取成功',['total_page'=>$totalPage,'now_page'=>$start_num + 1,'list'=>$PushMessageList]);
+        return reTmJsonObj(200,'获取成功',['total_page'=>$totalPage,'now_page'=>$start_num + 1,'list'=>$PushMessageList]);
     }
 
     /**
@@ -63,16 +63,16 @@ class Membermessagepush extends Base
         $params = ['id'];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         if(!($inputData['id'] > 0)){
-            return reJson(500, '参数异常', []);
+            return reTmJsonObj(500, '参数异常', []);
         }
         $messageInfo = $this->PushMessageModel->getInfo(['id'=>$inputData['id']]);
         if($messageInfo === false){
-            return reJson(500,'获取数据失败', []);
+            return reTmJsonObj(500,'获取数据失败', []);
         }
-        return reJson(200,'获取成功',$messageInfo);
+        return reTmJsonObj(200,'获取成功',$messageInfo);
     }
 
     /**
@@ -85,21 +85,21 @@ class Membermessagepush extends Base
         $params = ['id','status'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $condition = array();
         if(!($inputData['id'] > 0)){
-            return reJson(500, '参数异常', []);
+            return reTmJsonObj(500, '参数异常', []);
         }
         $condition['id'] = $inputData['id'];
         if(!in_array($inputData['status'],array(0,1))){
-            return reJson(500, 'status参数异常', []);
+            return reTmJsonObj(500, 'status参数异常', []);
         }
         $result = $this->PushMessageModel->updateInfo($condition,['status'=>$inputData['status']]);
         if($result){
-            return reJson(200, '成功', []);
+            return reTmJsonObj(200, '成功', []);
         }else{
-            return reJson(500, '失败', []);
+            return reTmJsonObj(500, '失败', []);
         }
     }
 
