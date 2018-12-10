@@ -32,6 +32,7 @@ function reTmJsonObj($status,$msg,$data = []){
         'code'=>$status,
         'data'=>$data,
         'msg'=>$msg,
+        'tmcode'=>1
     ]);
 }
 
@@ -777,7 +778,11 @@ function getEncryptPostData()
     }
     $head = getAllHeader();
     if(isset($head['tmencrypt']) && 1==$head['tmencrypt']){
-        $data = (array)json_decode(tmDecrypt($data['tm_encrypt_data']));
+        $tm_data = tmDecrypt($data['tm_encrypt_data']);
+        if(!$tm_data){
+            return false;
+        }
+        $data = (array)json_decode($tm_data);
     }
     return $data;
 }
@@ -791,7 +796,12 @@ function getEncryptGetData()
     $data = $_GET;
     $head = getAllHeader();
     if(isset($head['tmencrypt']) && 1==$head['tmencrypt']){
-        $data = (array)json_decode(tmDecrypt($data['tm_encrypt_data']));
+        $data['tm_encrypt_data'] = str_replace(" ","+",$data['tm_encrypt_data']);
+        $tm_data = tmDecrypt($data['tm_encrypt_data']);
+        if(!$tm_data){
+            return false;
+        }
+        $data = (array)json_decode($tm_data);
     }
     return $data;
 }
@@ -804,24 +814,29 @@ function getEncryptGetData()
  * @param array $data
  * @return \think\response\Json
  */
-function reEncryptJson($status,$msg,$data = [],$version = 1){
-    if(1 !== $version){
-        if(is_array($data) && 0 == count($data)){
-            $data = json($data);
-        }
+function reEncryptJson($status,$msg,$data = [],$is_encrypt=true){
+    $count = true;
+    if(is_array($data) && 0 == count($data)){
+        $count = false;
+        $data = json($data);
     }
+    $arr = [
+        'code'=>$status,
+        'data'=>$data,
+        'msg'=>$msg,
+        'tmencrypt'=>0,
+        'tmcode'=>1
+    ];
     $head = getAllHeader();
-    if(isset($head['tmencrypt']) && 1==$head['tmencrypt']){
+    if(isset($head['tmencrypt']) && 1==$head['tmencrypt'] && $is_encrypt && $count){
         if(is_array($data)){
             $data = tmEncrypt(json_encode($data));
         }else{
             $data = tmEncrypt($data);
         }
+        $arr['data'] = $data;
+        $arr['tmencrypt'] = 1;
     }
-    return json([
-        'code'=>$status,
-        'data'=>$data,
-        'msg'=>$msg,
-    ]);
+    return json($arr);
 }
 

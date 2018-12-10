@@ -26,7 +26,11 @@ class Memberpoint extends Base
      */
     public function editPoint(){
         //判断请求方式以及请求参数
-        $inputData = Request::post();
+       // $inputData = Request::post();
+        $inputData = getEncryptPostData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['point','remarks','from_component'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
@@ -41,7 +45,7 @@ class Memberpoint extends Base
         if($result === false){
             return reTmJsonObj(500, '扣除用户积分失败，请重试', []);
         }
-        return reTmJsonObj(200,'修改成功',['member_id'=>$this->memberInfo['member_id']]);
+        return reEncryptJson(200,'修改成功',['member_id'=>$this->memberInfo['member_id']]);
     }
 
 
@@ -51,7 +55,7 @@ class Memberpoint extends Base
 
     public function getPoint(){
         $point = $this->MemberpointModel->getMemberPoint($this->memberInfo['member_id']);
-        return reTmJsonObj(200, '获取成功', ['point'=>$point,'member_id'=>$this->memberInfo['member_id']]);
+        return reEncryptJson(200, '获取成功', ['point'=>$point,'member_id'=>$this->memberInfo['member_id']]);
     }
 
 
@@ -61,7 +65,11 @@ class Memberpoint extends Base
 
     public function getPointLogList(){
         //判断请求方式以及请求参数
-        $inputData = Request::get();
+       // $inputData = Request::get();
+        $inputData = getEncryptGetData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
@@ -88,7 +96,7 @@ class Memberpoint extends Base
         foreach ($pointLogList as $key => $val){
             $pointLogList[$key]['add_time'] = date('Y-m-d h:i:s',$pointLogList[$key]['add_time']);
         }
-        return reTmJsonObj(200,'获取成功',['total_page'=>$totalPage,'now_page'=>$start_num + 1,'list'=>$pointLogList]);
+        return reEncryptJson(200,'获取成功',['total_page'=>$totalPage,'now_page'=>$start_num + 1,'list'=>$pointLogList]);
     }
 
 }

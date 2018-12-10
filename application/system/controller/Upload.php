@@ -29,6 +29,9 @@ class Upload extends Controller
             return reTmJsonObj(500,$msg,[]);
         }
         $file = Request::file('file');
+        if(!$file){
+            return reTmJsonObj(500,'请检查服务器磁盘空间是否不足',[]);
+        }
         $image = getimagesize($file->getInfo()['tmp_name']);
         if(!empty($inputData['width']) && $image[0] != $inputData['width']){
             return reTmJsonObj(503,'图片尺寸要求为'.$inputData['width'].'px*'.$inputData['height'].'px!',[]);

@@ -17,8 +17,9 @@ use app\member\model\MemberpointModel;
 use app\member\model\MemberBehaviorLogModel;
 use think\Db;
 use think\facade\Request;
+use think\Controller;
 
-class Member extends Base
+class Member extends Controller
 {
     protected $memberModel;
     protected $MemberpointModel;
@@ -78,7 +79,11 @@ class Member extends Base
      */
     public function updateMemberPoint(){
         //判断请求方式以及请求参数
-        $inputData = Request::post();
+       // $inputData = Request::post();
+        $inputData = getEncryptPostData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ["point"];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
@@ -89,7 +94,7 @@ class Member extends Base
         $condition = $this->_getCondition($inputData);
         $result = $this->MemberpointModel->editPoints($condition,$inputData['point']);
         if($result){
-            return reTmJsonObj(200,'更新成功',[]);
+            return reEncryptJson(200,'更新成功',[]);
         }
         return reTmJsonObj(500,'更新失败',[]);
     }
@@ -212,7 +217,11 @@ class Member extends Base
     public function getMemberList(){
 
         //判断请求方式以及请求参数
-        $inputData = Request::get();
+      //  $inputData = Request::get();
+        $inputData = getEncryptGetData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['index'];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
@@ -268,7 +277,7 @@ class Member extends Base
           //  'total' => $this->memberModel->getLastSql()
         ];
 
-        return reTmJsonObj(200, '获取会员列表成功', $return);
+        return reEncryptJson(200, '获取会员列表成功', $return);
     }
 
     /**
@@ -276,7 +285,11 @@ class Member extends Base
      */
     public function getMemberInfo(){
         //判断请求方式以及请求参数
-        $inputData = Request::get();
+       // $inputData = Request::get();
+        $inputData = getEncryptGetData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['member_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
@@ -318,14 +331,18 @@ class Member extends Base
         $memberInfo['site_name'] = $siteName;
 
 
-        return reTmJsonObj(200, '获取会员信息成功', $memberInfo);
+        return reEncryptJson(200, '获取会员信息成功', $memberInfo);
     }
 
     /*
      * 获取会员积分变动列表*/
     public function getMemberPointList(){
         //判断请求方式以及请求参数
-        $inputData = Request::get();
+       // $inputData = Request::get();
+        $inputData = getEncryptGetData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ["member_id"];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
@@ -359,7 +376,7 @@ class Member extends Base
             'total' => $count
         ];
 
-        return reTmJsonObj(200, '获取会员列表成功', $return);
+        return reEncryptJson(200, '获取会员列表成功', $return);
     }
 
 
@@ -367,7 +384,11 @@ class Member extends Base
  * 获取会员积分变动列表*/
     public function getMemberBehaviorList(){
         //判断请求方式以及请求参数
-        $inputData = Request::get();
+        //$inputData = Request::get();
+        $inputData = getEncryptGetData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ["member_id"];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
@@ -401,7 +422,7 @@ class Member extends Base
             'total' => $count
         ];
 
-        return reTmJsonObj(200, '获取会员列表成功', $return);
+        return reEncryptJson(200, '获取会员列表成功', $return);
     }
 
     /**
@@ -409,7 +430,11 @@ class Member extends Base
      */
     public function addMember(){
         //判断请求方式以及请求参数
-        $inputData = Request::post();
+       // $inputData = Request::post();
+        $inputData = getEncryptPostData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['member_name','password','site_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
@@ -427,7 +452,7 @@ class Member extends Base
             return reTmJsonObj(500, '新增会员失败', []);
         }
         Logservice::writeArray(['inputData'=>$inputData], '新增会员');
-        return reTmJsonObj(200, '新增会员成功', []);
+        return reEncryptJson(200, '新增会员成功', [],false);
     }
 
     /**
@@ -435,7 +460,11 @@ class Member extends Base
      */
     public function updateMember(){
         //判断请求方式以及请求参数
-        $inputData = Request::put();
+        //$inputData = Request::put();
+        $inputData = getEncryptPostData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['member_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'PUT', $msg);
@@ -450,7 +479,7 @@ class Member extends Base
             return reTmJsonObj(500, '编辑会员失败', []);
         }
         Logservice::writeArray(['inputData'=>$inputData], '修改会员');
-        return reTmJsonObj(200, '编辑会员成功', []);
+        return reEncryptJson(200, '编辑会员成功', [],false);
     }
 
     /**
@@ -458,7 +487,11 @@ class Member extends Base
      */
     public function changePassword(){
         //判断请求方式以及请求参数
-        $inputData = Request::put();
+        //$inputData = Request::put();
+        $inputData = getEncryptPostData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['member_code', 'old_pass', 'new_pass'];
         $ret = checkBeforeAction($inputData, $params, $method, 'PUT', $msg);
@@ -480,7 +513,7 @@ class Member extends Base
             return reTmJsonObj(500, '修改失败', []);
         }
         Logservice::writeArray([], '修改会员密码');
-        return reTmJsonObj(200, '修改成功', []);
+        return reEncryptJson(200, '修改成功', [],false);
     }
 
     /**
@@ -575,7 +608,11 @@ class Member extends Base
      */
     public function updateMemberInfo(){
         //判断请求方式以及请求参数
-        $inputData = Request::post();
+       // $inputData = Request::post();
+        $inputData = getEncryptPostData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['member_id'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
@@ -605,7 +642,7 @@ class Member extends Base
         if($result){
             $this->MemberBehaviorLogModel->addPointLog($inputData['member_id'],$MemberBehaviorLog);
             $MemberInfo = $MemberModel->getMemberInfo($condition);
-            return reTmJsonObj(200,'更新成功',$MemberInfo);
+            return reEncryptJson(200,'更新成功',$MemberInfo);
         }
         return reTmJsonObj(500,'更新失败',[]);
     }
@@ -615,7 +652,11 @@ class Member extends Base
      */
     public function forbiddenOrStartMember(){
         //判断请求方式以及请求参数
-        $inputData = Request::post();
+       // $inputData = Request::post();
+        $inputData = getEncryptPostData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['member_id'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
@@ -645,7 +686,7 @@ class Member extends Base
         }
         if($result){
             $this->MemberBehaviorLogModel->addPointLog($inputData['member_id'],$MemberBehaviorLog);
-            return reTmJsonObj(200,'成功',[]);
+            return reEncryptJson(200,'成功',[],false);
         }
         return reTmJsonObj(500,'失败',[]);
     }
@@ -655,7 +696,11 @@ class Member extends Base
      */
     public function closeMember(){
         //判断请求方式以及请求参数1
-        $inputData = Request::post();
+        //$inputData = Request::post();
+        $inputData = getEncryptPostData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['member_id','close_start_time','close_end_time','close_down_point','close_reason'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
@@ -679,7 +724,7 @@ class Member extends Base
         }else{
             $this->MemberBehaviorLogModel->addPointLog($inputData['member_id'],$MemberBehaviorLog);
             $this->MemberpointModel->addPointLog($inputData['member_id'],0-$inputData['close_down_point'],$MemberBehaviorLog,$point,'admin');
-            return reTmJsonObj(200,'成功',[]);
+            return reEncryptJson(200,'成功',[],false);
         }
     }
 
@@ -688,7 +733,11 @@ class Member extends Base
      */
     public function startMember(){
         //判断请求方式以及请求参数1
-        $inputData = Request::post();
+        //$inputData = Request::post();
+        $inputData = getEncryptPostData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['member_id'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
@@ -709,7 +758,7 @@ class Member extends Base
             return reTmJsonObj(500,'失败',[]);
         }else{
             $this->MemberBehaviorLogModel->addPointLog($inputData['member_id'],$MemberBehaviorLog);
-            return reTmJsonObj(200,'成功',[]);
+            return reEncryptJson(200,'成功',[],false);
         }
     }
 

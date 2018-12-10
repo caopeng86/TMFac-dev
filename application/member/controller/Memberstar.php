@@ -27,7 +27,11 @@ class Memberstar extends Base
      */
     public function addStar(){
         //判断请求方式以及请求参数
-        $inputData = Request::post();
+        //$inputData = Request::post();
+        $inputData = getEncryptPostData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['member_code','title','app_id','article_id','extend','type'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
@@ -59,7 +63,7 @@ class Memberstar extends Base
             return reTmJsonObj(500, '收藏失败', []);
         }
 
-        return reTmJsonObj(200, '收藏成功', ['star_id'=>$this->starModel->getLastInsID()]);
+        return reEncryptJson(200, '收藏成功', ['star_id'=>$this->starModel->getLastInsID()]);
     }
 
     /**
@@ -67,7 +71,11 @@ class Memberstar extends Base
      */
     public function checkIsStar(){
         //判断请求方式以及请求参数
-        $inputData = Request::post();
+       // $inputData = Request::post();
+        $inputData = getEncryptPostData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['member_code','app_id','article_id'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
@@ -85,9 +93,9 @@ class Memberstar extends Base
             return reTmJsonObj(500, '查询失败', []);
         }
         if(!empty($Info)){
-            return reTmJsonObj(200, '已被收藏', ['star_id'=>$Info['star_id']]);
+            return reEncryptJson(200, '已被收藏', ['star_id'=>$Info['star_id']]);
         }
-        return reTmJsonObj(200, '未被收藏', []);
+        return reEncryptJson(200, '未被收藏', []);
     }
 
     /**
@@ -97,7 +105,11 @@ class Memberstar extends Base
      */
     public function checkIsStarBatch(){
         //判断请求方式以及请求参数
-        $inputData = Request::post();
+        //$inputData = Request::post();
+        $inputData = getEncryptPostData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['member_code','app_id','article_ids'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
@@ -127,7 +139,7 @@ class Memberstar extends Base
                     'star_id'=>$val > 0 && isset($starList[$val])?$starList[$val]:false
                 );
             }
-            return reTmJsonObj(200,'查询成功', $returnData);
+            return reEncryptJson(200,'查询成功', $returnData);
         }else{
             foreach ($article_ids as $val){
                 $returnData[] = array(
@@ -135,7 +147,7 @@ class Memberstar extends Base
                     'star_id'=>false
                 );
             }
-            return reTmJsonObj(200,'全未被收藏',$returnData);
+            return reEncryptJson(200,'全未被收藏',$returnData);
         }
     }
 
@@ -144,7 +156,11 @@ class Memberstar extends Base
      */
     public function deleteStar(){
         //判断请求方式以及请求参数
-        $inputData = Request::post();
+        //$inputData = Request::post();
+        $inputData = getEncryptPostData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['star_id'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
@@ -158,7 +174,7 @@ class Memberstar extends Base
             return reTmJsonObj(500, '取消收藏失败', []);
         }
 
-        return reTmJsonObj(200, '取消收藏成功', []);
+        return reEncryptJson(200, '取消收藏成功', [],false);
     }
 
     /**
@@ -166,7 +182,11 @@ class Memberstar extends Base
      */
     public function getStarList(){
         //判断请求方式以及请求参数
-        $inputData = Request::get();
+       // $inputData = Request::get();
+        $inputData = getEncryptGetData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['index','member_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
@@ -201,7 +221,7 @@ class Memberstar extends Base
             'list' => $list
         ];
 
-        return reTmJsonObj(200, '获取列表成功', $return);
+        return reEncryptJson(200, '获取列表成功', $return);
     }
 
     /**
@@ -209,7 +229,11 @@ class Memberstar extends Base
      */
     public function countStarAndFootprint(){
         //判断请求方式以及请求参数
-        $inputData = Request::get();
+        //$inputData = Request::get();
+        $inputData = getEncryptGetData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['member_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
@@ -224,6 +248,6 @@ class Memberstar extends Base
         $MemberfootprintModel = new MemberfootprintModel();
         $condition[] = ['create_time','>=',time() - 7*24*3600];
         $footprintNum = $MemberfootprintModel->countFootprint($condition);
-        return reTmJsonObj(200,'成功',['starNum'=>$starNum,'footprintNum'=>$footprintNum]);
+        return reEncryptJson(200,'成功',['starNum'=>$starNum,'footprintNum'=>$footprintNum]);
     }
 }

@@ -24,7 +24,11 @@ class Memberfootprint extends Base
      */
     public function addFootprint(){
         //判断请求方式以及请求参数
-        $inputData = Request::post();
+        //$inputData = Request::post();
+        $inputData = getEncryptPostData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['member_code','title','app_id','article_id','extend','type'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
@@ -49,7 +53,7 @@ class Memberfootprint extends Base
             return reTmJsonObj(500, '历史记录添加失败', []);
         }
         $this->footprintModel->commit();
-        return reTmJsonObj(200, '历史记录添加成功', ['footprint_id'=>$re]);
+        return reEncryptJson(200, '历史记录添加成功', ['footprint_id'=>$re]);
     }
 
     /**
@@ -57,7 +61,11 @@ class Memberfootprint extends Base
      */
     public function deleteFootprint(){
         //判断请求方式以及请求参数
-        $inputData = Request::post();
+        //$inputData = Request::post();
+        $inputData = getEncryptPostData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['footprint_id'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
@@ -71,7 +79,7 @@ class Memberfootprint extends Base
             return reTmJsonObj(500, '删除失败', []);
         }
 
-        return reTmJsonObj(200, '删除成功', []);
+        return reEncryptJson(200, '删除成功', []);
     }
 
     /**
@@ -79,7 +87,11 @@ class Memberfootprint extends Base
      */
     public function clearFootprint(){
         //判断请求方式以及请求参数
-        $inputData = Request::post();
+        //$inputData = Request::post();
+        $inputData = getEncryptPostData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['member_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
@@ -92,7 +104,7 @@ class Memberfootprint extends Base
             return reTmJsonObj(500, '失败', []);
         }
 
-        return reTmJsonObj(200, '清空历史记录成功', []);
+        return reEncryptJson(200, '清空历史记录成功', []);
     }
 
     /**
@@ -100,7 +112,11 @@ class Memberfootprint extends Base
      */
     public function getFootprintList(){
         //判断请求方式以及请求参数
-        $inputData = Request::get();
+        //$inputData = Request::get();
+        $inputData = getEncryptGetData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['index','member_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
@@ -148,6 +164,6 @@ class Memberfootprint extends Base
         if(!empty($time_list)){
             $return['time_list'] = $time_list;
         }
-        return reTmJsonObj(200, '获取列表成功', $return);
+        return reEncryptJson(200, '获取列表成功', $return);
     }
 }

@@ -115,7 +115,11 @@ class Member extends Base
      */
     public function sendMsg(){
         //判断请求方式以及请求参数
-        $inputData = Request::post();
+        //$inputData = Request::post();
+        $inputData = getEncryptPostData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['mobile','state'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
@@ -149,7 +153,7 @@ class Member extends Base
         }
         //短信发送成功后将验证码保存到缓存中
         Cache::set(md5($inputData['mobile']), $config['code'], 10*60);
-        return reTmJsonObj(200, '发送短信成功', []);
+        return reEncryptJson(200, '发送短信成功', []);
     }
 
     /**
@@ -157,7 +161,11 @@ class Member extends Base
      */
     public function checkCode(){
         //判断请求方式以及请求参数
-        $inputData = Request::post();
+        //$inputData = Request::post();
+        $inputData = getEncryptPostData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['mobile','code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
@@ -172,7 +180,7 @@ class Member extends Base
             return reTmJsonObj(500, '验证失败', []);
         }
 
-        return reTmJsonObj(200, '验证通过', []);
+        return reEncryptJson(200, '验证通过', []);
     }
 
     /**
@@ -180,7 +188,11 @@ class Member extends Base
      */
     public function updateMember(){
         //判断请求方式以及请求参数
-        $inputData = Request::post();
+        //$inputData = Request::post();
+        $inputData = getEncryptPostData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['member_code', 'site_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
@@ -240,7 +252,7 @@ class Member extends Base
         }
 
         Logservice::writeArray(['inputData'=>$inputData], '修改会员信息');
-        return reTmJsonObj(200, '修改成功', []);
+        return reEncryptJson(200, '修改成功', []);
     }
 
     public function updatePoint($getMemberInfo,$ConfigList,$condition,$memberKey,$configKey,$remark = "修改用户信息"){
@@ -273,7 +285,11 @@ class Member extends Base
      */
     public function updatePass(){
         //判断请求方式以及请求参数
-        $inputData = Request::post();
+        //$inputData = Request::post();
+        $inputData = getEncryptPostData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['mobile','password','site_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
@@ -290,7 +306,7 @@ class Member extends Base
             return reTmJsonObj(500, '修改失败', []);
         }
         Logservice::writeArray(['mobile'=>$inputData['mobile']], '修改密码');
-        return reTmJsonObj(200, '修改成功', []);
+        return reEncryptJson(200, '修改成功', []);
     }
 
     /**
@@ -298,7 +314,11 @@ class Member extends Base
      */
     public function checkPass(){
         //判断请求方式以及请求参数
-        $inputData = Request::post();
+        //$inputData = Request::post();
+        $inputData = getEncryptPostData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['member_code', 'password'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
@@ -315,7 +335,7 @@ class Member extends Base
             return reTmJsonObj(500, '密码错误', []);
         }
 
-        return reTmJsonObj(200, '验证通过', []);
+        return reEncryptJson(200, '验证通过', []);
     }
 
     /**
@@ -323,7 +343,11 @@ class Member extends Base
      */
     public function changeHeadPic(){
         //判断请求方式以及请求参数
-        $inputData = Request::post();
+       // $inputData = Request::post();
+        $inputData = getEncryptPostData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['head_pic', 'member_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
@@ -348,7 +372,7 @@ class Member extends Base
         }
 
         Logservice::writeArray(['path'=>$path[0], 'member_code'=>$inputData['member_code']], '修改用户头像');
-        return reTmJsonObj(200, '成功', [$path[0]]);
+        return reEncryptJson(200, '成功', [$path[0]]);
     }
 
     /**
@@ -356,7 +380,11 @@ class Member extends Base
      */
     public function changeMobile(){
         //判断请求方式以及请求参数
-        $inputData = Request::post();
+       // $inputData = Request::post();
+        $inputData = getEncryptPostData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['member_code','mobile', 'code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
@@ -395,7 +423,7 @@ class Member extends Base
         }
 
         Logservice::writeArray(['inputData'=>$inputData], '修改会员信息');
-        return reTmJsonObj(200, '更换成功', []);
+        return reEncryptJson(200, '更换成功', []);
     }
 
 
@@ -404,7 +432,11 @@ class Member extends Base
      */
     public function getMemberInfo(){
         //判断请求方式以及请求参数
-        $inputData = Request::get();
+        //$inputData = Request::get();
+        $inputData = getEncryptGetData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['member_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
@@ -448,14 +480,18 @@ class Member extends Base
         $ConfigList['qq'] = empty($memberInfo['qq_edit_time'])?$ConfigList['qq']:0;
         $memberInfo['point_config'] = $ConfigList;
         $memberInfo['is_first_login'] = false;
-        return reTmJsonObj(200, '获取会员信息成功', $memberInfo);
+        return reEncryptJson(200, '获取会员信息成功', $memberInfo);
     }
 
     /*
 * 获取会员积分签到情况*/
     public function getMemberPointSign(){
         //判断请求方式以及请求参数
-        $inputData = Request::get();
+       // $inputData = Request::get();
+        $inputData = getEncryptGetData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ["member_code"];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
@@ -561,7 +597,7 @@ class Member extends Base
             $return['extra_point']=(int)$ConfigList['sign_extra_two']['value'];
         }
 
-        return reTmJsonObj(200, '获取成功', $return);
+        return reEncryptJson(200, '获取成功', $return);
     }
 
     /**
@@ -569,7 +605,11 @@ class Member extends Base
      */
     public function memberPointSign(){
         //判断请求方式以及请求参数
-        $inputData = Request::post();
+        //$inputData = Request::post();
+        $inputData = getEncryptPostData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['member_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
@@ -635,7 +675,7 @@ class Member extends Base
             if($sign_time_date >=2){
                 $this->memberModel->updateMember(['member_id'=>$memberInfo['member_id']], ['sign_num' => 1]);
             }
-            return reTmJsonObj(200, '签到成功', []);
+            return reEncryptJson(200, '签到成功', [],false);
 
         }
         return reTmJsonObj(500, '签到失败', []);
@@ -645,7 +685,11 @@ class Member extends Base
 
     public function getPointRule(){
         //判断请求方式以及请求参数
-        $inputData = Request::get();
+        //$inputData = Request::get();
+        $inputData = getEncryptGetData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
@@ -654,7 +698,7 @@ class Member extends Base
         }
         $Condition = ['id'=>4];
         $data = $this->SystemArticleModel->getArticleInfo($Condition);
-        return reTmJsonObj(200,'获取成功',$data);
+        return reEncryptJson(200,'获取成功',$data);
     }
 
     public function updatePoint1($getMemberInfo,$putpoint,$condition,$memberKey,$remark = "修改用户信息"){
@@ -690,4 +734,28 @@ class Member extends Base
         }
         return ($second1 - $second2) / 86400;
     }
+
+    /**
+     * 检查用户信息
+     */
+    public function checkMemberInfo(){
+        $condition = [
+            ['member_id','=',$this->memberInfo['member_id']],
+            ['status','=',0]
+        ];
+        $field = 'mobile,birthday,sex,wx,qq,wb';
+        $memberInfo = $this->memberModel->getMemberInfo($condition,$field);
+        if(!$memberInfo){
+            return reTmJsonObj('500'.'用户不存在',[]);
+        }
+        $data = [];
+        foreach ($memberInfo as $key => $val){ //检查是否存在
+            $data['is_exist_'.$key] = $val?1:0;
+        }
+        $data['sex'] = $memberInfo['sex'];
+        return reTmJsonObj('200','成功',$data);
+    }
+
+
+
 }

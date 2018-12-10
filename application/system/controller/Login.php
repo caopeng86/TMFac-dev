@@ -261,6 +261,9 @@ class Login extends Controller
         //判断请求方式以及请求参数
        // $inputData = Request::post();
         $inputData = getEncryptPostData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['user_name', 'password', 'verify'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
@@ -409,7 +412,11 @@ class Login extends Controller
      */
     public function reCheckLicenses(){
         //判断请求方式以及请求参数
-        $inputData = Request::post();
+        //$inputData = Request::post();
+        $inputData = getEncryptPostData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['licenses_key'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
@@ -444,7 +451,7 @@ class Login extends Controller
         $reData = ['pri_key' => $priKey, 'licenses_key' => $inputData['licenses_key']];
         file_put_contents($file, base64_encode(json_encode($reData)));
 
-        return reTmJsonObj(500, '成功', []);
+        return reEncryptJson(200, '成功', []);
     }
 
     /**
@@ -452,7 +459,11 @@ class Login extends Controller
      */
     public function mchLogin(){
         //判断请求方式以及请求参数
-        $inputData = Request::post();
+     //   $inputData = Request::post();
+        $inputData = getEncryptPostData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['token','systemcode','siteCode','logininfo'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
@@ -555,7 +566,7 @@ class Login extends Controller
             'privilege' => $privilege,
             'component' => ''
         ];
-        return reTmJsonObj(200, '登录成功', $return);
+        return reEncryptJson(200, '登录成功', $return);
     }
 
 }

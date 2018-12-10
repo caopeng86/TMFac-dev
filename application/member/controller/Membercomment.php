@@ -27,7 +27,11 @@ class Membercomment extends Base
      */
     public function addComment(){
         //判断请求方式以及请求参数
-        $inputData = Request::post();
+        //$inputData = Request::post();
+        $inputData = getEncryptPostData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['member_code','app_id','article_id','article_content','comment_content'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
@@ -42,7 +46,7 @@ class Membercomment extends Base
             return reTmJsonObj(500, '评论失败', []);
         }
 
-        return reTmJsonObj(200, '评论成功', []);
+        return reEncryptJson(200, '评论成功', []);
     }
 
     /**
@@ -72,7 +76,11 @@ class Membercomment extends Base
      */
     public function getCommentList(){
         //判断请求方式以及请求参数
-        $inputData = Request::get();
+        //$inputData = Request::get();
+        $inputData = getEncryptGetData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['index','member_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
@@ -104,6 +112,6 @@ class Membercomment extends Base
             'list' => $list
         ];
 
-        return reTmJsonObj(200, '获取列表成功', $return);
+        return reEncryptJson(200, '获取列表成功', $return);
     }
 }

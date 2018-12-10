@@ -69,7 +69,7 @@ class Branch extends Base
 
         //处理数据结构为无限极分类
         $branchList = getAttr($branchList, 0, 'parent_id', 'branch_id');
-        return reTmJsonObj(200, '获取组织机构列表成功', $branchList);
+        return reEncryptJson(200, '获取组织机构列表成功', $branchList);
     }
 
     /**
@@ -77,7 +77,11 @@ class Branch extends Base
      */
     public function updateUserBranch(){
         //判断请求方式以及请求参数
-        $inputData = Request::put();
+        //$inputData = Request::put();
+        $inputData = getEncryptPostData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['user_codes','branch_id'];
         $ret = checkBeforeAction($inputData, $params, $method, 'PUT', $msg);
@@ -100,7 +104,7 @@ class Branch extends Base
         }
         Db::commit();
         Logservice::writeArray(['inputData'=>$inputData], '批量移动部门');
-        return reTmJsonObj(200, '移动部门成功', []);
+        return reEncryptJson(200, '移动部门成功', []);
     }
 
     /**
@@ -108,7 +112,11 @@ class Branch extends Base
      */
     public function addBranch(){
         //判断请求方式以及请求参数
-        $inputData = Request::post();
+       // $inputData = Request::post();
+        $inputData = getEncryptPostData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['branch_name'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
@@ -124,7 +132,7 @@ class Branch extends Base
             return reTmJsonObj(500, '新增失败', []);
         }
         Logservice::writeArray(['inputData'=>$inputData], '新增部门');
-        return reTmJsonObj(200, '新增成功', []);
+        return reEncryptJson(200, '新增成功', []);
     }
 
     /**
@@ -132,7 +140,11 @@ class Branch extends Base
      */
     public function updateBranch(){
         //判断请求方式以及请求参数
-        $inputData = Request::put();
+        //$inputData = Request::put();
+        $inputData = getEncryptPostData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['branch_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'PUT', $msg);
@@ -148,7 +160,7 @@ class Branch extends Base
             return reTmJsonObj(500, '修改失败', []);
         }
         Logservice::writeArray(['inputData'=>$inputData], '修改部门');
-        return reTmJsonObj(200, '修改成功', []);
+        return reEncryptJson(200, '修改成功', []);
     }
 
     /**

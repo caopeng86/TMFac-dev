@@ -26,7 +26,11 @@ class Memberpoint extends Base
     /*编辑或者新建积分调整*/
     public function editPoint(){
         //判断请求方式以及请求参数
-        $inputData = Request::post();
+       // $inputData = Request::post();
+        $inputData = getEncryptPostData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['key'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
@@ -62,13 +66,17 @@ class Memberpoint extends Base
                 return reTmJsonObj(500, '失败', []);
             }
         }
-        return reTmJsonObj(200, '成功', []);
+        return reEncryptJson(200, '成功', [],false);
     }
 
     /*获取积分调整列表*/
     public function getPoints(){
         //判断请求方式以及请求参数
-        $inputData = Request::get();
+      //  $inputData = Request::get();
+        $inputData = getEncryptGetData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
@@ -78,13 +86,17 @@ class Memberpoint extends Base
         $condition = ['type'=>'point'];
         $List = $this->ConfigModel->getConfigList($condition,'id,key,value,remarks');
         $List = array_column($List,null,'key');
-        return reTmJsonObj(200,'获取成功',['list'=>$List]);
+        return reEncryptJson(200,'获取成功',['list'=>$List]);
     }
 
     /*编辑积分规则*/
     public function editPointRule(){
         //判断请求方式以及请求参数
-        $inputData = Request::post();
+        //$inputData = Request::post();
+        $inputData = getEncryptPostData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['content'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
@@ -104,7 +116,7 @@ class Memberpoint extends Base
                 return reTmJsonObj(500, '失败', []);
             }
         }
-        return reTmJsonObj(200, '成功', []);
+        return reEncryptJson(200, '成功', [],false);
     }
 
 
@@ -112,7 +124,11 @@ class Memberpoint extends Base
 
     public function getPointRule(){
         //判断请求方式以及请求参数
-        $inputData = Request::get();
+      //  $inputData = Request::get();
+        $inputData = getEncryptGetData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
@@ -121,7 +137,7 @@ class Memberpoint extends Base
         }
         $Condition = ['id'=>4];
         $data = $this->SystemArticleModel->getArticleInfo($Condition);
-        return reTmJsonObj(200,'获取成功',$data);
+        return reEncryptJson(200,'获取成功',$data);
     }
 
 }

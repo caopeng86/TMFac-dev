@@ -42,7 +42,11 @@ class Login extends Controller
      */
     public function memberLogin(){
         //判断请求方式以及请求参数
-        $inputData = Request::post();
+       // $inputData = Request::post();
+        $inputData = getEncryptPostData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['mobile','state','site_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
@@ -187,7 +191,7 @@ class Login extends Controller
             'member_info' => $memberInfo,
         ];
 
-        return reTmJsonObj(200, '登录成功', $return);
+        return reEncryptJson(200, '登录成功', $return);
     }
 
     /**
@@ -195,7 +199,11 @@ class Login extends Controller
      */
     public function anotherLogin(){
         //判断请求方式以及请求参数
-        $inputData = Request::post();
+       // $inputData = Request::post();
+        $inputData = getEncryptPostData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['uid','type','site_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
@@ -330,7 +338,7 @@ class Login extends Controller
             'token' => $token,
             'member_info' => $memberInfo,
         ];
-        return reTmJsonObj(200, '登录成功', $return);
+        return reEncryptJson(200, '登录成功', $return);
     }
 
     /**
@@ -338,7 +346,11 @@ class Login extends Controller
      */
     public function bindOtherLoginInfo(){
         //判断请求方式以及请求参数
-        $inputData = Request::post();
+       // $inputData = Request::post();
+        $inputData = getEncryptPostData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['uid','type','member_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
@@ -388,7 +400,7 @@ class Login extends Controller
         //保存第3方登陆数据
         $ThirdPartyModel = new MemberThirdPartyModel();
         $ThirdPartyModel->updateOrAddThirdParty($inputData,$memberInfo,$updateData['ip']);
-        return reTmJsonObj(200,'绑定成功',[]);
+        return reEncryptJson(200,'绑定成功',[]);
     }
 
     public function updatePoint($getMemberInfo,$ConfigList,$condition,$memberKey,$configKey,$remark = "修改用户信息"){
@@ -422,7 +434,11 @@ class Login extends Controller
      */
     public function cancelBindInfo(){
         //判断请求方式以及请求参数
-        $inputData = Request::post();
+       // $inputData = Request::post();
+        $inputData = getEncryptPostData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['type','member_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
@@ -450,7 +466,7 @@ class Login extends Controller
         }
         $result = $this->memberModel->updateMember(['member_id'=>$memberInfo['member_id']],$cancelInfo);
         if($result){
-            return reTmJsonObj(200,'取消成功',[]);
+            return reEncryptJson(200,'取消成功',[]);
         }
         return reTmJsonObj(500,'取消失败');
     }
@@ -460,7 +476,11 @@ class Login extends Controller
      */
     public function getVersion(){
         //判断请求方式以及请求参数
-        $inputData = Request::post();
+       // $inputData = Request::post();
+        $inputData = getEncryptPostData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['type'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
@@ -477,7 +497,7 @@ class Login extends Controller
             return reTmJsonObj(500, '获取失败', []);
         }
         $ConfigList = $ConfigModel->ArrayToKey($ConfigList);
-        return reTmJsonObj(200, '获取成功', $ConfigList);
+        return reEncryptJson(200, '获取成功', $ConfigList);
     }
 
     /**
@@ -587,7 +607,11 @@ class Login extends Controller
      */
     public function register(){
         //判断请求方式以及请求参数
-        $inputData = Request::post();
+      //  $inputData = Request::post();
+        $inputData = getEncryptPostData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['mobile','code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
@@ -638,7 +662,7 @@ class Login extends Controller
         }
         Logservice::writeArray(['memberInfo'=>$addData], '短信注册会员数据');
         Db::commit();
-        return reTmJsonObj(200, '注册成功',$addData);
+        return reEncryptJson(200, '注册成功',$addData);
     }
 
     /**
@@ -646,7 +670,11 @@ class Login extends Controller
      */
     public function checkMemberStatus(){
         //判断请求方式以及请求参数
-        $inputData = Request::get();
+      //  $inputData = Request::get();
+        $inputData = getEncryptGetData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['mobile'];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
@@ -659,7 +687,7 @@ class Login extends Controller
             return reTmJsonObj(500, '查询会员数据失败', []);
         }
         $memberInfo['is_activation'] = $memberInfo['status'] === 0?1:0; //1表示激活 0表示未激活
-        return reTmJsonObj(200, '获取成功',$memberInfo);
+        return reEncryptJson(200, '获取成功',$memberInfo);
     }
 
 }

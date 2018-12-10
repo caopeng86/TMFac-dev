@@ -24,7 +24,6 @@ class Serverencryptdemo extends Controller
             "password"=>"Tianma321321",
             "verify"=>11
         ];
-       // dump($encrypt->tmEncryptForServer(json_encode($todata)));die;
         $data = $encrypt->tmHttpToOwn(
             input('server.REQUEST_SCHEME') . '://' . input('server.SERVER_NAME')."/system/login/userLogin",
             ['tm_encrypt_data'=>$encrypt->tmEncryptForServer(json_encode($todata))],
@@ -33,7 +32,7 @@ class Serverencryptdemo extends Controller
             []
         );
         $data = json_decode($data);
-        if(200 == $data->code){
+        if(isset($data->code) && 200 == $data->code){
             dump((array)json_decode($encrypt->tmDecryptForServer($data->data)));
         }
     }

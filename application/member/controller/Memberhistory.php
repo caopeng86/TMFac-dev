@@ -26,7 +26,11 @@ class Memberhistory extends Base
      */
     public function addHistory(){
         //判断请求方式以及请求参数
-        $inputData = Request::post();
+       // $inputData = Request::post();
+        $inputData = getEncryptPostData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['member_code','title','app_id','article_id'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
@@ -53,7 +57,7 @@ class Memberhistory extends Base
                 return reTmJsonObj(500, '获取历史列表失败', []);
             }
 
-            return reTmJsonObj(200, '历史记录已更新', []);
+            return reEncryptJson(200, '历史记录已更新', []);
         }
 
         //新增历史数据
@@ -63,7 +67,7 @@ class Memberhistory extends Base
             return reTmJsonObj(500, '历史记录添加失败', []);
         }
 
-        return reTmJsonObj(200, '历史记录已添加', []);
+        return reEncryptJson(200, '历史记录已添加', []);
     }
 
     /**
@@ -100,7 +104,11 @@ class Memberhistory extends Base
      */
     public function getHistoryList(){
         //判断请求方式以及请求参数
-        $inputData = Request::get();
+       // $inputData = Request::get();
+        $inputData = getEncryptGetData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['index','member_code','get_time_list'];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
@@ -134,6 +142,6 @@ class Memberhistory extends Base
             'list' => $list,
         ];
 
-        return reTmJsonObj(200, '获取列表成功', $return);
+        return reEncryptJson(200, '获取列表成功', $return);
     }
 }
