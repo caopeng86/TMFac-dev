@@ -34,7 +34,7 @@ class Admin extends Controller
         $params = ['user_id'];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         $userModel = new UserModel();
@@ -43,10 +43,10 @@ class Admin extends Controller
         $info = $userModel->getUserInfo(['user_id' => $inputData['user_id']], $field);
         if($info === false){
             Logservice::writeArray(['sql'=>$userModel->getLastSql()], '获取用户详情失败', 2);
-            return reJson(500, '获取失败', []);
+            return reTmJsonObj(500, '获取失败', []);
         }
 
-        return reJson(200, '成功', $info);
+        return reTmJsonObj(200, '成功', $info);
     }
 
     /**
@@ -60,7 +60,7 @@ class Admin extends Controller
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         //获取用户列表
@@ -70,7 +70,7 @@ class Admin extends Controller
         $userList = $userModel->getUserList([], $field);
         if($userList === false){
             Logservice::writeArray(['sql'=>$userModel->getLastSql()], '获取用户列表失败', 2);
-            return reJson(500, '获取失败', []);
+            return reTmJsonObj(500, '获取失败', []);
         }
 
         //获取组织机构列表
@@ -78,7 +78,7 @@ class Admin extends Controller
         $branchList = $branchModel->getBranchList([], 'branch_id, branch_name');
         if($branchList === false){
             Logservice::writeArray(['sql'=>$branchModel->getLastSql()], '获取组织机构列表失败', 2);
-            return reJson(500, '获取失败', []);
+            return reTmJsonObj(500, '获取失败', []);
         }
 
         //拼接数据
@@ -91,7 +91,7 @@ class Admin extends Controller
             $userList[$key] = $value;
         }
 
-        return reJson(200, '成功', $userList);
+        return reTmJsonObj(200, '成功', $userList);
     }
 
     /**
@@ -105,7 +105,7 @@ class Admin extends Controller
         $params = ['department_id'];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         $branchModel = new BranchModel();
@@ -113,10 +113,10 @@ class Admin extends Controller
         $info = $branchModel->getBranchInfo(['branch_id' => $inputData['department_id']], $field);
         if($info === false){
             Logservice::writeArray(['sql'=>$branchModel->getLastSql()], '获取组织机构详情失败', 2);
-            return reJson(500, '获取失败', []);
+            return reTmJsonObj(500, '获取失败', []);
         }
 
-        return reJson(200, '成功', $info);
+        return reTmJsonObj(200, '成功', $info);
     }
 
     /**
@@ -130,7 +130,7 @@ class Admin extends Controller
         $params = ['member_id'];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         $memberModel = new MemberModel();
@@ -139,10 +139,10 @@ class Admin extends Controller
         $info = $memberModel->getMemberInfo(['member_id' => $inputData['member_id']], $field);
         if($info === false){
             Logservice::writeArray(['sql'=>$memberModel->getLastSql()], '获取会员详情失败', 2);
-            return reJson(500, '获取失败', []);
+            return reTmJsonObj(500, '获取失败', []);
         }
 
-        return reJson(200, '成功', $info);
+        return reTmJsonObj(200, '成功', $info);
     }
 
     /**
@@ -156,7 +156,7 @@ class Admin extends Controller
         $params = ['mobile'];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         $memberModel = new MemberModel();
@@ -165,10 +165,10 @@ class Admin extends Controller
         $info = $memberModel->getMemberInfo(['mobile' => $inputData['mobile']], $field);
         if($info === false){
             Logservice::writeArray(['sql'=>$memberModel->getLastSql()], '获取会员详情失败', 2);
-            return reJson(500, '获取失败', []);
+            return reTmJsonObj(500, '获取失败', []);
         }
 
-        return reJson(200, '成功', $info);
+        return reTmJsonObj(200, '成功', $info);
     }
 
     /**
@@ -182,17 +182,17 @@ class Admin extends Controller
         $params = ['user_id', 'extend'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         $userModel = new UserModel();
         $re = $userModel->updateUserInfo(['user_id' => $inputData['user_id']], ['extend' => $inputData['extend']]);
         if($re === false){
             Logservice::writeArray(['sql'=>$userModel->getLastSql()], '修改用户扩展字段失败', 2);
-            return reJson(500, '修改失败', []);
+            return reTmJsonObj(500, '修改失败', []);
         }
 
-        return reJson(200, '成功', []);
+        return reTmJsonObj(200, '成功', []);
     }
 
     /**
@@ -205,17 +205,17 @@ class Admin extends Controller
         $params = ['title', 'content'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $extras = $inputData;
         $JPush = new \app\extend\controller\Jpush();
         $re = $JPush::JPushAll($extras);
         if($re['http_code'] != 200){
             Logservice::writeArray(['err'=>$re], '推送失败', 2);
-            return reJson(500, '推送失败', $re);
+            return reTmJsonObj(500, '推送失败', $re);
         }
 
-        return reJson(200, '推送成功', []);
+        return reTmJsonObj(200, '推送成功', []);
     }
 
     /**
@@ -228,7 +228,7 @@ class Admin extends Controller
         $params = ['title', 'content', 'member_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $extras = $inputData;
         $extras['alias'] = $inputData['member_code'];
@@ -237,9 +237,9 @@ class Admin extends Controller
         $re = $JPush::JPushOne($extras);
         if($re['http_code'] != 200){
             Logservice::writeArray(['err'=>$re], '推送失败', 2);
-            return reJson(500, '推送失败', $re);
+            return reTmJsonObj(500, '推送失败', $re);
         }
 
-        return reJson(200, '推送成功', []);
+        return reTmJsonObj(200, '推送成功', []);
     }
 }

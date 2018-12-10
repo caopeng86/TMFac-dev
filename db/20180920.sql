@@ -168,11 +168,6 @@ CREATE TABLE `tm_component` (
 -- Dumping data for table `tm_component`
 --
 
-INSERT INTO `tm_component` (`component_id`, `component_code`, `component_name`, `component_key`, `developer_code`, `access_key`, `secret_key`, `index_url`, `index_version`, `admin_url`, `admin_version`, `app_code`, `create_time`, `company_name`, `address`, `tel`, `description`, `linkman`, `note`, `component_pic`) VALUES
-(4, 'B2433C8761B4671553FE6A45C9DCC4CB', '会员管理', 'system', '0002670C1999235DE324746FF8AF2971', '', 'Video', NULL, '', '/#/Site/Member', '', 'member', 1545432123, '', '', NULL, NULL, '', NULL, '/uploads/icon/22.png');
-
--- --------------------------------------------------------
-
 --
 -- Table structure for table `tm_fix_item`
 --
@@ -1187,3 +1182,5 @@ ALTER TABLE `tm_user`
 --
 ALTER TABLE `tm_user_log`
   MODIFY `log_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '日志ID', AUTO_INCREMENT=8966;
+
+update tm_portal set portal_value ='[{"key":"0","title":"资讯视频","children":[]},{"key":"1","title":"互动娱乐","category":"1","url":"","children":[],"thunmb":"/uploads/default.png"},{"key":"2","title":"管理","category":"2","url":"","children":[{"key":"2-0","title":"会员管理","type":"url","app_code":"","admin_url":"","index_url":"","category":"2","url":"","thumb":"/uploads/default/20180601/6b270aae57882c48982acae1e597db92.png","webUrl":"/application/member_info/html/index.html","site_code":"00000000000000000000000000000000"}],"thunmb":"/uploads/default.png"}]';

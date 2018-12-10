@@ -42,17 +42,21 @@ class Login extends Controller
      */
     public function memberLogin(){
         //判断请求方式以及请求参数
-        $inputData = Request::post();
+       // $inputData = Request::post();
+        $inputData = getEncryptPostData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['mobile','state','site_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         //验证手机号
         if(!preg_match("/^1[34578]\d{9}$/", $inputData['mobile'])){
-            return reJson(500, '手机号错误', []);
+            return reTmJsonObj(500, '手机号错误', []);
         }
 
         //根据手机号取出会员数据
@@ -65,10 +69,10 @@ class Login extends Controller
         $memberInfo = $this->memberModel->getMemberInfo($condition, $field);
         if(!empty($memberInfo)){
             if($memberInfo['status'] == 1 || $memberInfo['deleted'] == 1){
-                return reJson(500, '很遗憾，该账户已被列入企业黑名单', []);
+                return reTmJsonObj(500, '很遗憾，该账户已被列入企业黑名单', []);
             }
             if(time()>$memberInfo['close_start_time'] && time()<$memberInfo['close_end_time']){
-                return reJson(500, '很遗憾，该账户已被封号，封号时间'.date('Y-m-d H:i:s', $memberInfo['close_start_time']).'到'.date('Y-m-d H:i:s', $memberInfo['close_end_time']), []);
+                return reTmJsonObj(500, '很遗憾，该账户已被封号，封号时间'.date('Y-m-d H:i:s', $memberInfo['close_start_time']).'到'.date('Y-m-d H:i:s', $memberInfo['close_end_time']), []);
             }
         }
         $is_first_login = false;
@@ -76,13 +80,13 @@ class Login extends Controller
         if($inputData['state'] == 1){
 //            //选择验证码登录
 //            if(!isset($inputData['code'])){
-//                return reJson(500, '验证码参数错误', []);
+//                return reTmJsonObj(500, '验证码参数错误', []);
 //            }
 //            //缓存中取出验证码,验证手机验证码
 //            $code = Cache::get(md5($inputData['mobile']));
 //            if($code != $inputData['code']){
 //                Logservice::writeArray(['code'=>$inputData['code'], 'cache'=>$code], '手机验证码错误', 2);
-//                return reJson(500, '验证失败', []);
+//                return reTmJsonObj(500, '验证失败', []);
 //            }
             if(empty($memberInfo)){
                 $is_first_login = true;
@@ -101,28 +105,28 @@ class Login extends Controller
                 if(!$add){
                     Logservice::writeArray(['sql'=>$this->memberModel->getLastSql()], '新增会员数据失败', 2);
                     Db::rollback();
-                    return reJson(500, '新增会员失败', []);
+                    return reTmJsonObj(500, '新增会员失败', []);
                 }
                 $addData['member_id'] = $add;
                 unset($addData['password']);
                 $memberInfo = $this->memberModel->getMemberInfo(['member_id' => $addData['member_id']], $field);
                 if($memberInfo === false){
                     Logservice::writeArray(['sql'=>$this->memberModel->getLastSql()], '获取会员数据失败', 2);
-                    return reJson(500, '获取会员数据失败', []);
+                    return reTmJsonObj(500, '获取会员数据失败', []);
                 }
                 Logservice::writeArray(['memberInfo'=>$addData], '短信注册会员数据');
             }
         }else{
             //选择密码登录
             if(!isset($inputData['password'])){
-                return reJson(500, '密码参数错误', []);
+                return reTmJsonObj(500, '密码参数错误', []);
             }
             if(empty($memberInfo)){
-                return reJson(500, '没有该会员', []);
+                return reTmJsonObj(500, '没有该会员', []);
             }else {
                 //验证密码
                 if (md5(md5($inputData['password'])) !== $memberInfo['password']) {
-                    return reJson(500, '密码错误', []);
+                    return reTmJsonObj(500, '密码错误', []);
                 }
                 unset($memberInfo['password']);
             }
@@ -141,7 +145,7 @@ class Login extends Controller
         if($remember === false){
             Logservice::writeArray(['sql'=>$this->memberModel->getLastSql()], '记录登录信息失败', 2);
             Db::rollback();
-            return reJson(500,'记录登录信息失败',[]);
+            return reTmJsonObj(500,'记录登录信息失败',[]);
         }
         Db::commit();
 
@@ -187,7 +191,7 @@ class Login extends Controller
             'member_info' => $memberInfo,
         ];
 
-        return reJson(200, '登录成功', $return);
+        return reEncryptJson(200, '登录成功', $return);
     }
 
     /**
@@ -195,12 +199,16 @@ class Login extends Controller
      */
     public function anotherLogin(){
         //判断请求方式以及请求参数
-        $inputData = Request::post();
+       // $inputData = Request::post();
+        $inputData = getEncryptPostData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['uid','type','site_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $login_type = "qq";
         //根据uid取出会员数据
@@ -225,10 +233,10 @@ class Login extends Controller
         $memberInfo = $this->memberModel->getMemberInfo($condition, $field);
         if(!empty($memberInfo)){
             if($memberInfo['status'] == 1 || $memberInfo['deleted'] == 1){
-                return reJson(500, '很遗憾，该账户已被列入企业黑名单', []);
+                return reTmJsonObj(500, '很遗憾，该账户已被列入企业黑名单', []);
             }
             if(time()>$memberInfo['close_start_time'] && time()<$memberInfo['close_end_time']){
-                return reJson(500, '很遗憾，该账户已被封号，封号时间'.date('Y-m-d H:i:s', $memberInfo['close_start_time']).'到'.date('Y-m-d H:i:s', $memberInfo['close_end_time']), []);
+                return reTmJsonObj(500, '很遗憾，该账户已被封号，封号时间'.date('Y-m-d H:i:s', $memberInfo['close_start_time']).'到'.date('Y-m-d H:i:s', $memberInfo['close_end_time']), []);
             }
         }
         $is_first_login = false;
@@ -251,14 +259,14 @@ class Login extends Controller
             if(!$add){
                 Logservice::writeArray(['sql'=>$this->memberModel->getLastSql()], '新增会员数据失败', 2);
                 Db::rollback();
-                return reJson(500, '新增会员失败', []);
+                return reTmJsonObj(500, '新增会员失败', []);
             }
             $addData['member_id'] = $add;
             unset($addData['password']);
             $memberInfo = $this->memberModel->getMemberInfo(['member_id' => $addData['member_id']], $field);
             if($memberInfo === false){
                 Logservice::writeArray(['sql'=>$this->memberModel->getLastSql()], '获取会员数据失败', 2);
-                return reJson(500, '获取会员数据失败', []);
+                return reTmJsonObj(500, '获取会员数据失败', []);
             }
             Logservice::writeArray(['memberInfo'=>$addData], '第三方登录新增会员数据');
 
@@ -290,7 +298,7 @@ class Login extends Controller
         if($remember === false || $re1 === false){
             Logservice::writeArray(['sql'=>$this->memberModel->getLastSql()], '记录登录信息失败', 2);
             Db::rollback();
-            return reJson(500,'记录登录信息失败',[]);
+            return reTmJsonObj(500,'记录登录信息失败',[]);
         }
         Db::commit();
 
@@ -330,7 +338,7 @@ class Login extends Controller
             'token' => $token,
             'member_info' => $memberInfo,
         ];
-        return reJson(200, '登录成功', $return);
+        return reEncryptJson(200, '登录成功', $return);
     }
 
     /**
@@ -338,16 +346,20 @@ class Login extends Controller
      */
     public function bindOtherLoginInfo(){
         //判断请求方式以及请求参数
-        $inputData = Request::post();
+       // $inputData = Request::post();
+        $inputData = getEncryptPostData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['uid','type','member_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $memberInfo = $this->memberModel->getMemberInfo(['member_code'=>$inputData['member_code']]);
         if(!$memberInfo){
-            return reJson(500,'用户不存在',[]);
+            return reTmJsonObj(500,'用户不存在',[]);
         }
         $bindData = [];
         //根据uid取出会员数据
@@ -361,7 +373,7 @@ class Login extends Controller
         //验证第3方登录账户是否绑定了其他用户
         $otherMember = $this->memberModel->getMemberInfo($bindData);
         if($otherMember){
-            return reJson(500,'该账号已绑定',[]);
+            return reTmJsonObj(500,'该账号已绑定',[]);
         }
         if(empty($memberInfo['member_nickname'])){
             $bindData['member_nickname'] = $memberInfo['member_nickname'] = $inputData['member_nickname'];
@@ -382,13 +394,13 @@ class Login extends Controller
             $re1 = $this->updatePoint($memberInfo,$ConfigList,['member_id'=>$memberInfo['member_id']],"wb_edit_time","wb","绑定微博");
         }
         if(!$result ||  $re1 === false){
-            return reJson(500,'用户信息保存失败',[]);
+            return reTmJsonObj(500,'用户信息保存失败',[]);
         }
         $updateData['ip'] = Request::ip();
         //保存第3方登陆数据
         $ThirdPartyModel = new MemberThirdPartyModel();
         $ThirdPartyModel->updateOrAddThirdParty($inputData,$memberInfo,$updateData['ip']);
-        return reJson(200,'绑定成功',[]);
+        return reEncryptJson(200,'绑定成功',[]);
     }
 
     public function updatePoint($getMemberInfo,$ConfigList,$condition,$memberKey,$configKey,$remark = "修改用户信息"){
@@ -422,17 +434,21 @@ class Login extends Controller
      */
     public function cancelBindInfo(){
         //判断请求方式以及请求参数
-        $inputData = Request::post();
+       // $inputData = Request::post();
+        $inputData = getEncryptPostData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['type','member_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         //判断是否能够取消
         $memberInfo = $this->memberModel->getMemberInfo(['member_code'=>$inputData['member_code']]);
         if(!$memberInfo){
-            return reJson(500,'用户不存在',[]);
+            return reTmJsonObj(500,'用户不存在',[]);
         }
         $cancelInfo = array();
         if($inputData['type'] == 1){
@@ -446,13 +462,13 @@ class Login extends Controller
             $cancelInfo['wb'] = '';
         }
         if(!$memberInfo['mobile'] && !$memberInfo['qq'] && !$memberInfo['wx'] && !$memberInfo['wb']){
-            return reJson(500,'不能取消绑定', []);
+            return reTmJsonObj(500,'不能取消绑定', []);
         }
         $result = $this->memberModel->updateMember(['member_id'=>$memberInfo['member_id']],$cancelInfo);
         if($result){
-            return reJson(200,'取消成功',[]);
+            return reEncryptJson(200,'取消成功',[]);
         }
-        return reJson(500,'取消失败');
+        return reTmJsonObj(500,'取消失败');
     }
 
     /**
@@ -460,24 +476,28 @@ class Login extends Controller
      */
     public function getVersion(){
         //判断请求方式以及请求参数
-        $inputData = Request::post();
+       // $inputData = Request::post();
+        $inputData = getEncryptPostData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['type'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
-        if(!in_array($inputData['type'],['ios_version','android_version']))return reJson(500,'type参数异常');
+        if(!in_array($inputData['type'],['ios_version','android_version']))return reTmJsonObj(500,'type参数异常');
         $ConfigModel = new ConfigModel();
         $condition = [];
         $condition['key'] = ['version','must_update'];
         $condition['type'] = $inputData['type'];
         $ConfigList = $ConfigModel->getConfigList($condition);
         if($ConfigList === false){
-            return reJson(500, '获取失败', []);
+            return reTmJsonObj(500, '获取失败', []);
         }
         $ConfigList = $ConfigModel->ArrayToKey($ConfigList);
-        return reJson(200, '获取成功', $ConfigList);
+        return reEncryptJson(200, '获取成功', $ConfigList);
     }
 
     /**
@@ -490,7 +510,7 @@ class Login extends Controller
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $StartAdvModel = new StartadvModel();
         $condition = [];
@@ -499,7 +519,7 @@ class Login extends Controller
         $ConfigModel = new ConfigModel();
         $Config = $ConfigModel->getOneConfig($condition);
         if($Config === false){
-            return reJson(500, '获取失败', []);
+            return reTmJsonObj(500, '获取失败', []);
         }
         $field = 'id,app_start_image,app_start_image_m,app_start_image_s,url,show_duration';
         $condition  = [
@@ -511,7 +531,7 @@ class Login extends Controller
         ];
         $startAdvList = $StartAdvModel->advList($condition,$field,false,'sort desc');
         if($startAdvList === false){
-            return reJson(500, '获取失败', []);
+            return reTmJsonObj(500, '获取失败', []);
         }
         if(!(count($startAdvList) > 0)){ //如果没有启动图则获取配置项中的启动图
             $condition = [];
@@ -520,12 +540,12 @@ class Login extends Controller
             $ConfigModel = new ConfigModel();
             $ConfigList = $ConfigModel->getConfigList($condition);
             if($ConfigList === false){
-                return reJson(500, '获取失败', []);
+                return reTmJsonObj(500, '获取失败', []);
             }
             $ConfigList = $ConfigModel->ArrayToKey($ConfigList);
             $ConfigList['id']    = 0;
             $ConfigList['start_id'] = 0;
-            return reJson(200, '获取成功',$ConfigList);
+            return reTmJsonObj(200, '获取成功',$ConfigList);
         }
         if($Config['value'] == 1){ //随机
             $startAdvInfo = $startAdvList[rand(0,count($startAdvList) - 1)];
@@ -551,11 +571,11 @@ class Login extends Controller
         $condition['type'] = 'base';
         $ConfigSiteName = $ConfigModel->getOneConfig($condition);
         if($ConfigSiteName === false){
-            return reJson(500, '获取失败', []);
+            return reTmJsonObj(500, '获取失败', []);
         }
         $startAdvInfo['app_start_title'] = $ConfigSiteName['value'];
         $startAdvInfo['start_id'] = $startAdvInfo['id'];
-        return reJson(200, '获取成功', $startAdvInfo);
+        return reTmJsonObj(200, '获取成功', $startAdvInfo);
     }
 
     /**
@@ -587,27 +607,31 @@ class Login extends Controller
      */
     public function register(){
         //判断请求方式以及请求参数
-        $inputData = Request::post();
+      //  $inputData = Request::post();
+        $inputData = getEncryptPostData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['mobile','code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         Db::startTrans();
 //        //选择验证码登录
         if(!isset($inputData['code'])){
-            return reJson(500, '验证码参数错误', []);
+            return reTmJsonObj(500, '验证码参数错误', []);
         }
 //        缓存中取出验证码,验证手机验证码
         $code = Cache::get(md5($inputData['mobile']));
         if($code != $inputData['code']){
             Logservice::writeArray(['code'=>$inputData['code'], 'cache'=>$code], '手机验证码错误', 2);
-            return reJson(500, '验证失败', []);
+            return reTmJsonObj(500, '验证失败', []);
         }
         $memberInfo = $this->memberModel->getMemberInfo(['mobile'=>$inputData['mobile']]);
         if($memberInfo){
-            return reJson(500,'此手机号已被注册',[]);
+            return reTmJsonObj(500,'此手机号已被注册',[]);
         }
         $field = 'member_id,member_code, member_name, member_nickname, member_real_name,site_code,email,deleted,sex_edit_time,birthday_edit_time,mobile_edit_time,wb_edit_time,wx_edit_time,qq_edit_time,
          mobile, head_pic, create_time, status, wx, qq, zfb, wb,birthday,sex,ip,point,access_key_create_time,close_start_time,close_end_time,password,receive_notice,wifi_show_image,list_auto_play,login_type,member_sn,register_source';
@@ -627,18 +651,18 @@ class Login extends Controller
         if(!$add){
             Logservice::writeArray(['sql'=>$this->memberModel->getLastSql()], '新增会员数据失败', 2);
             Db::rollback();
-            return reJson(500, '新增会员失败', []);
+            return reTmJsonObj(500, '新增会员失败', []);
         }
         $addData['member_id'] = $add;
         unset($addData['password']);
         $memberInfo = $this->memberModel->getMemberInfo(['member_id' => $addData['member_id']], $field);
         if($memberInfo === false){
             Logservice::writeArray(['sql'=>$this->memberModel->getLastSql()], '获取会员数据失败', 2);
-            return reJson(500, '获取会员数据失败', []);
+            return reTmJsonObj(500, '获取会员数据失败', []);
         }
         Logservice::writeArray(['memberInfo'=>$addData], '短信注册会员数据');
         Db::commit();
-        return reJson(200, '注册成功',$addData);
+        return reEncryptJson(200, '注册成功',$addData);
     }
 
     /**
@@ -646,20 +670,24 @@ class Login extends Controller
      */
     public function checkMemberStatus(){
         //判断请求方式以及请求参数
-        $inputData = Request::get();
+      //  $inputData = Request::get();
+        $inputData = getEncryptGetData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['mobile'];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $field = 'member_id,mobile,status';
         $memberInfo = $this->memberModel->getMemberInfo(['mobile' => $inputData['mobile']],$field);
         if($memberInfo === false){
-            return reJson(500, '查询会员数据失败', []);
+            return reTmJsonObj(500, '查询会员数据失败', []);
         }
         $memberInfo['is_activation'] = $memberInfo['status'] === 0?1:0; //1表示激活 0表示未激活
-        return reJson(200, '获取成功',$memberInfo);
+        return reEncryptJson(200, '获取成功',$memberInfo);
     }
 
 }

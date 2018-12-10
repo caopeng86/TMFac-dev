@@ -30,7 +30,7 @@ class Managecommonarticle extends Base
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         //获取搜索条件
         $condition = [];
@@ -55,7 +55,7 @@ class Managecommonarticle extends Base
         //获取会员列表数据
         $List = $this->CommonArticleModel->getList($condition, $field, $limit, $order);
         if($List === false){
-            return reJson(500, '获取失败', []);
+            return reTmJsonObj(500, '获取失败', []);
         }
         foreach ($List as $k => &$v){
             unset($v['content']);
@@ -66,7 +66,7 @@ class Managecommonarticle extends Base
             'total' => $count
         ];
 
-        return reJson(200, '获取列表成功', $return);
+        return reTmJsonObj(200, '获取列表成功', $return);
     }
 
 
@@ -80,17 +80,17 @@ class Managecommonarticle extends Base
         $params = ['aid'];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         $condition['aid'] = $inputData['aid'];
         $field = '*';
         $memberInfo = $this->CommonArticleModel->getInfo($condition, $field);
         if(empty($memberInfo)){
-            return reJson(500, '获取信息失败', []);
+            return reTmJsonObj(500, '获取信息失败', []);
         }
 
-        return reJson(200, '获取信息成功', $memberInfo);
+        return reTmJsonObj(200, '获取信息成功', $memberInfo);
     }
 
     /**
@@ -103,7 +103,7 @@ class Managecommonarticle extends Base
         $params = ["aid"];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $condition['aid'] = $inputData['aid'];
         $resultKey = ["website_name","title","content","keyword","abstract","from_source",
@@ -117,9 +117,9 @@ class Managecommonarticle extends Base
         }
         $result = $this->CommonArticleModel->updateInfo($condition,$updateData);
         if($result){
-            return reJson(200,'更新成功',[]);
+            return reTmJsonObj(200,'更新成功',[]);
         }
-        return reJson(500,'更新失败',[]);
+        return reTmJsonObj(500,'更新失败',[]);
     }
 
     /**
@@ -132,7 +132,7 @@ class Managecommonarticle extends Base
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $resultKey = ["website_name","title","content","keyword","abstract","from_source",
             "from_source_url","url","author","organization","column","publish_time","comment_num",
@@ -145,9 +145,9 @@ class Managecommonarticle extends Base
         }
         $result = $this->CommonArticleModel->addInfo($updateData);
         if($result){
-            return reJson(200,'成功',[]);
+            return reTmJsonObj(200,'成功',[]);
         }
-        return reJson(500,'失败',[]);
+        return reTmJsonObj(500,'失败',[]);
     }
 
     /**
@@ -160,14 +160,14 @@ class Managecommonarticle extends Base
         $params = ["aid"];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $condition['aid'] = $inputData['aid'];
         $result = $this->CommonArticleModel->deleteInfo($condition);
         if($result){
-            return reJson(200,'成功',[]);
+            return reTmJsonObj(200,'成功',[]);
         }
-        return reJson(500,'失败',[]);
+        return reTmJsonObj(500,'失败',[]);
     }
 
 

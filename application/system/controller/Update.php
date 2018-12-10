@@ -23,16 +23,16 @@ class Update extends \think\Controller {
         $db       = \think\Db::connect($dbconfig);
         $now_sql_version = create_tables_multi($db,$file_path,$now_sql_version);
         if($now_sql_version == $version){
-            return reJson(200,'更新成功');
+            return reTmJsonObj(200,'更新成功');
         }
         $env = file_get_contents(Env::get('root_path') . '.env');
         $env = str_replace("SQL_VERSION=".$version, "SQL_VERSION=".$now_sql_version, $env);
         //写入应用配置文件
         if (file_put_contents(Env::get('root_path') . '.env', $env)) {
             Cache::set('site_info',null);//清除备注缓存
-            return reJson(200,'更新成功');
+            return reTmJsonObj(200,'更新成功');
         }else{
-            return reJson(500,'写入SQL版本失败');
+            return reTmJsonObj(500,'写入SQL版本失败');
         }
     }
 

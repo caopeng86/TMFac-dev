@@ -48,7 +48,7 @@ class User extends Base
         $params = ['user_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'PUT', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         //修改基本信息
@@ -56,10 +56,10 @@ class User extends Base
         $re = $this->userModel->updateUserInfo($condition, $inputData);
         if($re === false){
             Logservice::writeArray(['sql'=>$this->userModel->getLastSql()], '修改用户数据失败', 2);
-            return reJson(500, '修改失败', []);
+            return reTmJsonObj(500, '修改失败', []);
         }
         Logservice::writeArray(['inputData'=>$inputData], '修改用户基本信息');
-        return reJson(200, '修改成功', []);
+        return reTmJsonObj(200, '修改成功', []);
     }
 
     /**
@@ -72,24 +72,24 @@ class User extends Base
         $params = ['user_code', 'old_pass', 'new_pass'];
         $ret = checkBeforeAction($inputData, $params, $method, 'PUT', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         $condition = ['user_code' => $inputData['user_code']];
         //比对旧密码
         $userInfo = $this->userModel->getUserInfo($condition, 'password');
         if($userInfo['password'] !== md5(md5($inputData['old_pass']))){
-            return reJson(500, '原密码输入错误', []);
+            return reTmJsonObj(500, '原密码输入错误', []);
         }
 
         //更改密码
         $re = $this->userModel->updateUserInfo($condition, ['password' => md5(md5($inputData['new_pass']))]);
         if($re === false){
             Logservice::writeArray(['sql'=>$this->userModel->getLastSql()], '修改用户密码失败', 2);
-            return reJson(500, '修改失败', []);
+            return reTmJsonObj(500, '修改失败', []);
         }
         Logservice::writeArray([], '修改用户密码');
-        return reJson(200, '修改成功', []);
+        return reTmJsonObj(200, '修改成功', []);
     }
 
     /**
@@ -102,7 +102,7 @@ class User extends Base
         $params = ['user_name', 'password', 'branch_id'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $inputData['create_time'] = time();
         $inputData['user_code'] = createCode();
@@ -111,17 +111,17 @@ class User extends Base
         //判断用户名是否重复
         $name = $this->_checkUserName($inputData['user_name']);
         if(!$name){
-            return reJson(500, '用户名重复', []);
+            return reTmJsonObj(500, '用户名重复', []);
         }
 
         //新增角色数据
         $re = $this->userModel->addUser($inputData);
         if(!$re){
             Logservice::writeArray(['sql'=>$this->userModel->getLastSql()], '新增用户数据失败', 2);
-            return reJson(500, '新增用户失败', []);
+            return reTmJsonObj(500, '新增用户失败', []);
         }
         Logservice::writeArray(['inputData'=>$inputData], '新增用户');
-        return reJson(200, '新增用户成功', []);
+        return reTmJsonObj(200, '新增用户成功', []);
     }
 
     /**
@@ -134,7 +134,7 @@ class User extends Base
         $params = ['user_codes'];
         $ret = checkBeforeAction($inputData, $params, $method, 'DELETE', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         //支持批量删除
@@ -147,12 +147,12 @@ class User extends Base
             if($re === false){
                 Logservice::writeArray(['sql'=>$this->userModel->getLastSql(), 'condition'=>$condition], '删除用户数据失败', 2);
                 Db::rollback();
-                return reJson(500, '删除用户失败', []);
+                return reTmJsonObj(500, '删除用户失败', []);
             }
         }
         Db::commit();
         Logservice::writeArray(['inputData'=>$inputData], '删除用户');
-        return reJson(200, '删除用户成功', []);
+        return reTmJsonObj(200, '删除用户成功', []);
     }
 
     /**
@@ -165,7 +165,7 @@ class User extends Base
         $params = ['user_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         $condition = ['user_code' => $inputData['user_code']];
@@ -173,10 +173,10 @@ class User extends Base
         $re = $this->userModel->updateUserInfo($condition, ['password' => md5(md5(123456))]);
         if($re === false){
             Logservice::writeArray(['sql'=>$this->userModel->getLastSql()], '重置用户密码失败', 2);
-            return reJson(500, '重置失败', []);
+            return reTmJsonObj(500, '重置失败', []);
         }
         Logservice::writeArray([], '重置用户密码');
-        return reJson(200, '重置成功', []);
+        return reTmJsonObj(200, '重置成功', []);
     }
 
 }

@@ -11,9 +11,24 @@
 
 // [ 应用入口文件 ]
 namespace think;
+/*签名验证*/
+require __DIR__ . '/../thinkphp/Tminit.php';
+$tminit = new Tminit();
+$inithead = $tminit->initExecute();
+if(!$inithead){
+    echo json_encode([
+        'code'=>551,
+        'data'=>[],
+        'msg'=>"签名验证失败",
+        'tmcode'=>1
+    ]);
+    die;
+}
 
 // 加载基础文件
 require __DIR__ . '/../thinkphp/base.php';
+
+
 
 // 支持事先使用静态方法设置Request对象和Config对象
 

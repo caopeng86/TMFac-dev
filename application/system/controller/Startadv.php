@@ -31,19 +31,19 @@ class Startadv extends Base
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $condition = array();
         $advList = $this->StartAdvModel->advList($condition,false,'','sort desc');
         if($advList === false){
-            return reJson(500,'获取数据失败', []);
+            return reTmJsonObj(500,'获取数据失败', []);
         }
         foreach ($advList as $key => $val){
             $advList[$key]['start_time'] = date('Y-m-d H:i:s',$val['start_time']);
             $advList[$key]['update_time'] = date('Y-m-d H:i:s',$val['update_time']);
             $advList[$key]['add_time'] = date('Y-m-d H:i:s',$val['add_time']);
         }
-        return reJson(200,'获取数据成功',$advList);
+        return reTmJsonObj(200,'获取数据成功',$advList);
     }
 
     /**
@@ -56,7 +56,7 @@ class Startadv extends Base
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         if(!empty($inputData['start_time'])){ //转时间戳
             $inputData['start_time'] = strtotime($inputData['start_time']);
@@ -70,7 +70,7 @@ class Startadv extends Base
         }else{ //否则添加数据
             //判断广告个数 start
             $num = $this->StartAdvModel->countAdv([]);
-            if($num > 5)return reJson(500,'最多支持5张图');
+            if($num > 5)return reTmJsonObj(500,'最多支持5张图');
             $inputData['add_time'] = time();
             $inputData['update_time'] = time();
             //end
@@ -82,9 +82,9 @@ class Startadv extends Base
             $advInfo['start_time'] = date('Y-m-d H:i:s',$advInfo['start_time']);
             $advInfo['update_time'] = date('Y-m-d H:i:s',$advInfo['update_time']);
             $advInfo['add_time'] = date('Y-m-d H:i:s',$advInfo['add_time']);
-            return reJson(200,'操作成功',$advInfo);
+            return reTmJsonObj(200,'操作成功',$advInfo);
         }else{
-            return reJson(500,'操作失败');
+            return reTmJsonObj(500,'操作失败');
         }
     }
 
@@ -98,24 +98,24 @@ class Startadv extends Base
         $params = ['id'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         if(!($inputData['id'] > 0)){
-            return reJson(500,'id丢失');
+            return reTmJsonObj(500,'id丢失');
         }
         //判断广告个数A
         $num = $this->StartAdvModel->countAdv([]);
         if($num <= 1){
-            return reJson(500,'至少上传一张图');
+            return reTmJsonObj(500,'至少上传一张图');
         }
         $condition = [
             ['id','=',$inputData['id']]
         ];
         $result = $this->StartAdvModel->deleteAdv($condition);
         if($result){
-            return reJson(200,'操作成功');
+            return reTmJsonObj(200,'操作成功');
         }else{
-            return reJson(500,'操作失败');
+            return reTmJsonObj(500,'操作失败');
         }
     }
 
@@ -129,10 +129,10 @@ class Startadv extends Base
         $params = ['id'];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         if(!($inputData['id'] > 0)){
-            return reJson(500,'id丢失');
+            return reTmJsonObj(500,'id丢失');
         }
         $condition = [
             ['id','=',$inputData['id']]
@@ -142,9 +142,9 @@ class Startadv extends Base
             $advInfo['start_time'] = date('Y-m-d H:i:s',$advInfo['start_time']);
             $advInfo['update_time'] = date('Y-m-d H:i:s',$advInfo['update_time']);
             $advInfo['add_time'] = date('Y-m-d H:i:s',$advInfo['add_time']);
-            return reJson(200,'操作成功',$advInfo);
+            return reTmJsonObj(200,'操作成功',$advInfo);
         }else{
-            return reJson(500,'获取失败');
+            return reTmJsonObj(500,'获取失败');
         }
     }
 

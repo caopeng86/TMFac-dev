@@ -55,7 +55,7 @@ class Component extends Base
         $params = ['index'];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         $condition = [];
@@ -71,7 +71,7 @@ class Component extends Base
         $componentList = $this->componentModel->getComponentList($condition, $field, $limit, $order);
         if(!$componentList){
             Logservice::writeArray(['sql'=>$this->componentModel->getLastSql()], '获取应用列表失败', 2);
-            return reJson(500, '获取应用列表失败', []);
+            return reTmJsonObj(500, '获取应用列表失败', []);
         }
         //获取该开发者所有应用版本数据
         $componentCodes = array_column($componentList,'component_code');
@@ -108,7 +108,7 @@ class Component extends Base
             "total" => $count
         ];
 
-        return reJson(200, '获取应用列表成功', $re);
+        return reTmJsonObj(200, '获取应用列表成功', $re);
     }
 
     /**
@@ -121,7 +121,7 @@ class Component extends Base
         $params = ['component_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         //获取详情数据
@@ -132,7 +132,7 @@ class Component extends Base
         $info = $this->componentModel->getComponentInfo($condition, $field);
         if($info === false){
             Logservice::writeArray(['sql'=>$this->componentModel->getLastSql()], '获取应用详情失败', 2);
-            return reJson(500, '获取应用详情失败', []);
+            return reTmJsonObj(500, '获取应用详情失败', []);
         }
 
         //处理数据
@@ -162,6 +162,6 @@ class Component extends Base
         }
 
 
-        return reJson(200, '获取应用详情成功', $info);
+        return reTmJsonObj(200, '获取应用详情成功', $info);
     }
 }

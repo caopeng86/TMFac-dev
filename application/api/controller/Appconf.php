@@ -26,7 +26,7 @@ class Appconf extends Controller
         $params = ['file_name'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         $path = Env::get('root_path').'appconf/'.$inputData['file_name'];

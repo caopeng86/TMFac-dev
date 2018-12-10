@@ -31,7 +31,7 @@ class Memberopinion extends Base
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $condition = array();
         $OpinionTotal = $this->OpinionModel->getCount($condition); //获取总数
@@ -44,12 +44,12 @@ class Memberopinion extends Base
         }
         $OpinionList = $this->OpinionModel->getOpinionList($condition,'',$start_num .','.$num,'add_time desc');
         if($OpinionList === false){
-            return reJson(500,'获取数据失败', []);
+            return reTmJsonObj(500,'获取数据失败', []);
         }
         foreach ($OpinionList as $key => $val){
             $OpinionList[$key]['add_time'] = date('Y-m-d h:i:s',$OpinionList[$key]['add_time']);
         }
-        return reJson(200,'获取成功',['total_page'=>$totalPage,'now_page'=>$start_num + 1,'list'=>$OpinionList]);
+        return reTmJsonObj(200,'获取成功',['total_page'=>$totalPage,'now_page'=>$start_num + 1,'list'=>$OpinionList]);
     }
 
     /**
@@ -62,21 +62,21 @@ class Memberopinion extends Base
         $params = ['id','status'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $condition = array();
         if(!($inputData['id'] > 0)){
-            return reJson(500, '参数异常', []);
+            return reTmJsonObj(500, '参数异常', []);
         }
         $condition['id'] = $inputData['id'];
         if(!in_array($inputData['status'],array(0,1))){
-            return reJson(500, 'status参数异常', []);
+            return reTmJsonObj(500, 'status参数异常', []);
         }
         $result = $this->OpinionModel->updateOpinion($condition,['status'=>$inputData['status']]);
         if($result){
-            return reJson(200, '成功', []);
+            return reTmJsonObj(200, '成功', []);
         }else{
-            return reJson(500, '失败', []);
+            return reTmJsonObj(500, '失败', []);
         }
     }
 
@@ -89,24 +89,24 @@ class Memberopinion extends Base
         $token = Request::header('token');
         $member_info = Cache::get($token);
         if(Cache::get($token.'addOpinionInfo') == 1){
-            return reJson(500,'已提交过意见，请在3分钟后再提交');
+            return reTmJsonObj(500,'已提交过意见，请在3分钟后再提交');
         }
         $params = ['message'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         if(empty($member_info['member_code'])){
-            return reJson(500, 'token异常', []);
+            return reTmJsonObj(500, 'token异常', []);
         }
         $memberModel = new MemberModel();
         $member = $memberModel->getMemberInfo(['member_code'=>$member_info['member_code']],'member_id');
         if($member === false){
-            return reJson(500,'获取用户信息失败');
+            return reTmJsonObj(500,'获取用户信息失败');
         }
         $member_info['member_id'] = $member['member_id'];
         if(strlen($inputData['message']) > 500){
-            return reJson(500, '字符数超过500', []);
+            return reTmJsonObj(500, '字符数超过500', []);
         }
         $data['member_id'] = $member_info['member_id'];
         $data['message'] = $inputData['message'];
@@ -115,9 +115,9 @@ class Memberopinion extends Base
         $result = $this->OpinionModel->addOpinion($data);
         if($result){
             Cache::set($token.'addOpinionInfo',1,180);
-            return reJson(200, '成功', []);
+            return reTmJsonObj(200, '成功', []);
         }else{
-            return reJson(500, '失败', []);
+            return reTmJsonObj(500, '失败', []);
         }
     }
 }

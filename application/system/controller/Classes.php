@@ -33,7 +33,7 @@ class Classes extends Base
         $params = ['site_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500,$msg,[]);
+            return reTmJsonObj(500,$msg,[]);
         }
 
         $condition['site_code'] = $inputData['site_code'];
@@ -42,15 +42,15 @@ class Classes extends Base
         $classesList = $this->classModel->getClassesList($condition, $field, $order);
         if($classesList === false){
             Logservice::writeArray(['sql'=>$this->classModel->getLastSql()], '获取分类列表失败', 2);
-            return reJson(500, '获取列表失败', []);
+            return reTmJsonObj(500, '获取列表失败', []);
         }
         if(empty($classesList)){
-            return reJson(200, '查询成功,列表为空', []);
+            return reTmJsonObj(200, '查询成功,列表为空', []);
         }
         //无限极分类处理列表
         $reList = getAttr($classesList, 0, 'parent_classes_id', 'classes_id');
 
-        return reJson(200, '获取列表成功', $reList);
+        return reTmJsonObj(200, '获取列表成功', $reList);
     }
 
     /**
@@ -63,7 +63,7 @@ class Classes extends Base
         $params = ['classes_name', 'site_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500,$msg,[]);
+            return reTmJsonObj(500,$msg,[]);
         }
         $inputData['classes_code'] = createCode();
 
@@ -73,19 +73,19 @@ class Classes extends Base
         if(!$id){
             Logservice::writeArray(['sql'=>$this->classModel->getLastSql()], '新增分类列表失败', 2);
             Db::rollback();
-            return reJson(500, '新增失败', []);
+            return reTmJsonObj(500, '新增失败', []);
         }
         //保存排序字段
         $re = $this->classModel->updateClasses(['classes_id' => $id], ['sort' => $id]);
         if(!$re){
             Logservice::writeArray(['sql'=>$this->classModel->getLastSql()], '保存排序字段失败', 2);
             Db::rollback();
-            return reJson(500, '新增排序失败', []);
+            return reTmJsonObj(500, '新增排序失败', []);
         }
 
         Db::commit();
         Logservice::writeArray(['inputData'=>$inputData], '新增分类');
-        return reJson(200, '新增成功', []);
+        return reTmJsonObj(200, '新增成功', []);
     }
 
     /**
@@ -98,7 +98,7 @@ class Classes extends Base
         $params = ['classes_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'PUT', $msg);
         if(!$ret){
-            return reJson(500,$msg,[]);
+            return reTmJsonObj(500,$msg,[]);
         }
 
         $condition['classes_code'] = $inputData['classes_code'];
@@ -106,10 +106,10 @@ class Classes extends Base
         $re = $this->classModel->updateClasses($condition, $inputData);
         if($re === false){
             Logservice::writeArray(['sql'=>$this->classModel->getLastSql()], '保存分类数据失败', 2);
-            return reJson(500, '修改失败', []);
+            return reTmJsonObj(500, '修改失败', []);
         }
         Logservice::writeArray(['inputData'=>$inputData], '修改分类');
-        return reJson(200, '修改成功', []);
+        return reTmJsonObj(200, '修改成功', []);
     }
 
     /**
@@ -122,13 +122,13 @@ class Classes extends Base
         $params = ['classes_id'];
         $ret = checkBeforeAction($inputData, $params, $method, 'DELETE', $msg);
         if(!$ret){
-            return reJson(500,$msg,[]);
+            return reTmJsonObj(500,$msg,[]);
         }
 
         //判断该分类下是否有子分类
         $son = $this->classModel->getClassesInfo(['parent_classes_id' => $inputData['classes_id']], 'classes_id');
         if($son){
-            return reJson(500, '该分类下有子分类,不能删除', []);
+            return reTmJsonObj(500, '该分类下有子分类,不能删除', []);
         }
 
         $condition['classes_id'] = $inputData['classes_id'];
@@ -136,10 +136,10 @@ class Classes extends Base
         $re = $this->classModel->deleteClasses($condition);
         if($re === false){
             Logservice::writeArray(['sql'=>$this->classModel->getLastSql()], '删除分类数据失败', 2);
-            return reJson(500, '删除失败', []);
+            return reTmJsonObj(500, '删除失败', []);
         }
         Logservice::writeArray(['inputData'=>$inputData], '删除分类');
-        return reJson(200, '删除成功', []);
+        return reTmJsonObj(200, '删除成功', []);
     }
 
     /**
@@ -152,20 +152,20 @@ class Classes extends Base
         $params = ['sort_top_code','sort_bottom_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'PUT', $msg);
         if(!$ret){
-            return reJson(500,$msg,[]);
+            return reTmJsonObj(500,$msg,[]);
         }
 
         //获取排序值
         $sortTop = $this->classModel->getClassesInfo(['classes_code' => $inputData['sort_top_code']], 'sort')['sort'];
         if(!$sortTop){
             Logservice::writeArray(['sql'=>$this->classModel->getLastSql()], '获取排序值失败', 2);
-            return reJson(500, '获取排序失败', []);
+            return reTmJsonObj(500, '获取排序失败', []);
         }
 
         $sortBottom = $this->classModel->getClassesInfo(['classes_code' => $inputData['sort_bottom_code']], 'sort')['sort'];
         if(!$sortBottom){
             Logservice::writeArray(['sql'=>$this->classModel->getLastSql()], '获取排序值失败', 2);
-            return reJson(500, '获取排序失败', []);
+            return reTmJsonObj(500, '获取排序失败', []);
         }
 
         //修改排序,交换上下的排序值
@@ -174,17 +174,17 @@ class Classes extends Base
         if(!$reTop){
             Db::rollback();
             Logservice::writeArray(['sql'=>$this->classModel->getLastSql()], '修改排序值失败', 2);
-            return reJson(500, '修改排序失败', []);
+            return reTmJsonObj(500, '修改排序失败', []);
         }
         $reBottom = $this->classModel->updateClasses(['classes_code' => $inputData['sort_bottom_code']], ['sort' => $sortTop]);
         if(!$reBottom){
             Db::rollback();
             Logservice::writeArray(['sql'=>$this->classModel->getLastSql()], '修改排序值失败', 2);
-            return reJson(500, '修改排序失败', []);
+            return reTmJsonObj(500, '修改排序失败', []);
         }
 
         Db::commit();
         Logservice::writeArray(['inputData'=>$inputData], '改变分类排序');
-        return reJson(200, '修改排序成功', []);
+        return reTmJsonObj(200, '修改排序成功', []);
     }
 }
