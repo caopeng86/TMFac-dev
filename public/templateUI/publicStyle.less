@@ -14,8 +14,8 @@
 .public-bg2:hover{
   color: @publicColor;
 }
-.layui-form-checked span,.layui-form-checked[lay-skin=primary] i,.layui-form-onswitch,.layui-form-checked:hover span , .layui-form-select dl dd.layui-this,.layui-laypage .layui-laypage-curr .layui-laypage-em{
-  background-color: @publicColor;
+.layui-form-checked span,.layui-form-checked[lay-skin=primary] i,.layui-form-onswitch,.layui-form-checked:hover span , .layui-form-select dl dd.layui-this,.layui-laypage .layui-laypage-curr .layui-laypage-em,.layui-laydate .layui-laydate-content .layui-this{
+  background-color: @publicColor!important;
 }
 .layui-form-checked i, .layui-form-checked:hover i,.layui-form-radio>i:hover, .layui-form-radioed>i{
   color: @publicColor;
@@ -74,4 +74,7 @@
 }
 .layui-nav-child dd a{
   text-indent: 1em;
+}  
+.ui-tooltip.ui-widget.ui-corner-all.ui-widget-content{
+  display: none!important;
 }

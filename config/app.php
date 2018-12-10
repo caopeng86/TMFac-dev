@@ -218,7 +218,7 @@ return [
             'xlt'=>'application/vnd.ms-excel',
             'xlw'=>'application/vnd.ms-excel',
             'xml'=>'text/xml, application/xml',
-            'zip'=>'aplication/zip',
+            'zip'=>'application/zip',
             'xlsx'=>'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
             'php' => 'text/html',
             'swf' => 'application/x-shockwave-flash',
@@ -267,7 +267,8 @@ return [
             'username'=>'resource_360tia',
             'password'=>'pkbBSWcDHhatP2Cp',
             'port'=>21,
-            'path'=>'/uploads/'
+            'path'=>'/uploads/',
+            'cdn'=>'resource.360tianma.com'
         ],
         'local_param'=>[
             'host'=>Env::get(SERVER_ENV.'DOMAIN'),
