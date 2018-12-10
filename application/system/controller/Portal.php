@@ -37,7 +37,7 @@ class Portal extends Base
         $params = ['portal_key'];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500,$msg,[]);
+            return reTmJsonObj(500,$msg,[]);
         }
         $inputData['portal_key'] = $this->portal_key; //默认
         $portal = $this->portalModel->getPortal(['portal_key'=>$inputData['portal_key']]);
@@ -48,7 +48,7 @@ class Portal extends Base
             $roleCodes = $roleObj->getRoleUserList(['user_code' => $inputData['portal_key']], 'role_code');
             if($roleCodes === false){
                 Logservice::writeArray(['sql'=>$roleObj->getLastSql()], '获取角色失败', 2);
-                return reJson(500, '获取角色信息失败', []);
+                return reTmJsonObj(500, '获取角色信息失败', []);
             }
             $roleCodes = array_column($roleCodes, 'role_code');
 
@@ -56,7 +56,7 @@ class Portal extends Base
             $componentCodes = $roleObj->getRoleComponentList([['role_code', 'in', $roleCodes]], 'component_code');
             if($componentCodes === false){
                 Logservice::writeArray(['sql'=>$roleObj->getLastSql()], '获取应用失败', 2);
-                return reJson(500, '获取角色应用信息失败', []);
+                return reTmJsonObj(500, '获取角色应用信息失败', []);
             }
             $componentCodes = array_column($componentCodes, 'component_code');
 
@@ -68,7 +68,7 @@ class Portal extends Base
             $list = $componentObj->getComponentList([['component_code', 'in', $componentCodes]], $field);
             if($list === false){
                 Logservice::writeArray(['sql'=>$componentObj->getLastSql()], '获取应用详情失败', 2);
-                return reJson(500, '获取应用列表失败', []);
+                return reTmJsonObj(500, '获取应用列表失败', []);
             }
 
             //查询站点第一条数据
@@ -76,16 +76,16 @@ class Portal extends Base
             $siteCode = $siteModel->getSiteInfo([], 'site_code');
             if($siteCode === false){
                 Logservice::writeArray(['sql'=>$siteModel->getLastSql()], '查询站点第一条数据失败', 2);
-                return reJson(500, '获取站点code失败', []);
+                return reTmJsonObj(500, '获取站点code失败', []);
             }
             //加入每个应用
             foreach ($list as $k => $v){
                 $v['site_code'] = $siteCode['site_code'];
                 $list[$k] = $v;
             }
-            return reJson(200,'获取应用列表成功',['list' => $list,'status' => 0]);
+            return reTmJsonObj(200,'获取应用列表成功',['list' => $list,'status' => 0]);
         }else{
-            return reJson(200,'获取应用列表成功',['list' => $portal['portal_value'],'status' => 1]);
+            return reTmJsonObj(200,'获取应用列表成功',['list' => $portal['portal_value'],'status' => 1]);
         }
     }
 
@@ -100,7 +100,7 @@ class Portal extends Base
         $params = ['portal_key'];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500,$msg,[]);
+            return reTmJsonObj(500,$msg,[]);
         }
         $inputData['portal_key'] = $this->portal_key; //默认
         //获取应用列表
@@ -111,11 +111,11 @@ class Portal extends Base
         $user_info = Cache::get($token);
         $role_code = $roleModel->getRoleUserList(['user_code'=>$user_info['user_code']],'role_code');
         if(!is_array($role_code)){
-            return reJson(500,'没有找到角色',[]);
+            return reTmJsonObj(500,'没有找到角色',[]);
         }
         $role_code = array_column($role_code,'role_code');
         //管理员直接返回数据
-        if(in_array(1,$role_code))return reJson(200,'获取应用列表成功',['list' => $portal['portal_value'],'status' => 1]);
+        if(in_array(1,$role_code))return reTmJsonObj(200,'获取应用列表成功',['list' => $portal['portal_value'],'status' => 1]);
         $RolePortal = $roleModel->getRolePortalList([['role_code','in',$role_code]],'key');
         $RolePortal = array_column($RolePortal,'key');
         $portal['portal_value'] = json_decode($portal['portal_value'],true);
@@ -133,7 +133,7 @@ class Portal extends Base
             }
         }
         $portal['portal_value'] = json_encode($portal['portal_value'],256);
-        return reJson(200,'获取应用列表成功',['list' => $portal['portal_value'],'status' => 1]);
+        return reTmJsonObj(200,'获取应用列表成功',['list' => $portal['portal_value'],'status' => 1]);
     }
 
     /**
@@ -146,7 +146,7 @@ class Portal extends Base
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500,$msg,[]);
+            return reTmJsonObj(500,$msg,[]);
         }
         $inputData['portal_key'] = $this->portal_key; //默认
         $portal = $this->portalModel->getPortal(['portal_key'=>$inputData['portal_key']]);
@@ -156,7 +156,7 @@ class Portal extends Base
            $data = array_merge($data,$val['children']);
         }
         $data = json_encode($data);
-        return reJson(200,'获取应用列表成功',['list' => $data,'status' => 1]);
+        return reTmJsonObj(200,'获取应用列表成功',['list' => $data,'status' => 1]);
     }
 
     /**
@@ -169,7 +169,7 @@ class Portal extends Base
         $params = ['portal_key', 'portal_value'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500,$msg,[]);
+            return reTmJsonObj(500,$msg,[]);
         }
         $inputData['portal_key'] = $this->portal_key; //默认
         if(!empty($inputData['add_key'])){
@@ -196,9 +196,9 @@ class Portal extends Base
         }
         if($re === false){
             Logservice::writeArray(['sql'=>$this->portalModel->getLastSql()], '保存应用列表失败', 2);
-            return reJson(500,'保存应用列表失败',[]);
+            return reTmJsonObj(500,'保存应用列表失败',[]);
         }
         Logservice::writeArray(['inputData'=>$inputData], '保存应用列表');
-        return reJson(200,'保存应用列表成功',[]);
+        return reTmJsonObj(200,'保存应用列表成功',[]);
     }
 }

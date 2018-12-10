@@ -30,7 +30,7 @@ class Memberopinion extends Base
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $condition = array();
         $OpinionTotal = $this->OpinionModel->getCount($condition); //获取总数
@@ -43,12 +43,12 @@ class Memberopinion extends Base
         }
         $OpinionList = $this->OpinionModel->getOpinionList($condition,'',$start_num .','.$num,'add_time desc');
         if($OpinionList === false){
-            return reJson(500,'获取数据失败', []);
+            return reTmJsonObj(500,'获取数据失败', []);
         }
         foreach ($OpinionList as $key => $val){
             $OpinionList[$key]['add_time'] = date('Y-m-d h:i:s',$OpinionList[$key]['add_time']);
         }
-        return reJson(200,'获取成功',['total_page'=>$totalPage,'now_page'=>$start_num + 1,'list'=>$OpinionList]);
+        return reTmJsonObj(200,'获取成功',['total_page'=>$totalPage,'now_page'=>$start_num + 1,'list'=>$OpinionList]);
     }
 
     /**
@@ -61,21 +61,21 @@ class Memberopinion extends Base
         $params = ['id','status'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $condition = array();
         if(!($inputData['id'] > 0)){
-            return reJson(500, '参数异常', []);
+            return reTmJsonObj(500, '参数异常', []);
         }
         $condition['id'] = $inputData['id'];
         if(!in_array($inputData['status'],array(0,1,2))){
-            return reJson(500, 'status参数异常', []);
+            return reTmJsonObj(500, 'status参数异常', []);
         }
         $result = $this->OpinionModel->updateOpinion($condition,['status'=>$inputData['status']]);
         if($result){
-            return reJson(200, '成功', []);
+            return reTmJsonObj(200, '成功', []);
         }else{
-            return reJson(500, '失败', []);
+            return reTmJsonObj(500, '失败', []);
         }
     }
 }

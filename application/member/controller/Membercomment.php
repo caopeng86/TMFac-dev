@@ -27,22 +27,26 @@ class Membercomment extends Base
      */
     public function addComment(){
         //判断请求方式以及请求参数
-        $inputData = Request::post();
+        //$inputData = Request::post();
+        $inputData = getEncryptPostData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['member_code','app_id','article_id','article_content','comment_content'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         //评论
         $inputData['create_time'] = time();
         $re = $this->commentModel->addComment($inputData);
         if($re === false){
-            return reJson(500, '评论失败', []);
+            return reTmJsonObj(500, '评论失败', []);
         }
 
-        return reJson(200, '评论成功', []);
+        return reEncryptJson(200, '评论成功', []);
     }
 
     /**
@@ -55,16 +59,16 @@ class Membercomment extends Base
         $params = ['comment_id'];
         $ret = checkBeforeAction($inputData, $params, $method, 'DELETE', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         $condition['comment_id'] = $inputData['comment_id'];
         $re = $this->commentModel->deleteComment($condition);
         if($re === false){
-            return reJson(500, '删除评论失败', []);
+            return reTmJsonObj(500, '删除评论失败', []);
         }
 
-        return reJson(200, '删除评论成功', []);
+        return reTmJsonObj(200, '删除评论成功', []);
     }
 
     /**
@@ -72,12 +76,16 @@ class Membercomment extends Base
      */
     public function getCommentList(){
         //判断请求方式以及请求参数
-        $inputData = Request::get();
+        //$inputData = Request::get();
+        $inputData = getEncryptGetData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['index','member_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         //条件拼接
@@ -95,7 +103,7 @@ class Membercomment extends Base
         //获取列表数据
         $list = $this->commentModel->commentList($condition, $field, $limit, $order);
         if($list === false){
-            return reJson(500, '获取列表失败', []);
+            return reTmJsonObj(500, '获取列表失败', []);
         }
 
         $return = [
@@ -104,6 +112,6 @@ class Membercomment extends Base
             'list' => $list
         ];
 
-        return reJson(200, '获取列表成功', $return);
+        return reEncryptJson(200, '获取列表成功', $return);
     }
 }

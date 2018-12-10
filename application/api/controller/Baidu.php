@@ -107,7 +107,7 @@ class Baidu extends Controller
         $Analysis = new BaiduAnalysis($this->API_Key,$this->Secret_Key);
         $session_token = $this->getSessionToken($Analysis);
         if(empty($session_token->access_token)){
-            return reJson(502,'token失效');
+            return reTmJsonObj(502,'token失效');
         }
         $data['method'] = 'newuser/a';
         $data['metrics'] = 'user_count,new_user_count,old_user_count';
@@ -118,7 +118,7 @@ class Baidu extends Controller
         $android = json_decode($android);
         if(empty($android->result)){
             $this->clearToken();
-            return reJson(500,'账号没有访问权限');
+            return reTmJsonObj(500,'账号没有访问权限');
         }
         $info['metrics'] = $data['metrics'];
         $info['date'] =  $android->result->items[0];
@@ -127,12 +127,12 @@ class Baidu extends Controller
         $iOS  = json_decode($iOS);
         if(empty($iOS->result)){
             $this->clearToken();
-            return reJson(500,'账号没有访问权限');
+            return reTmJsonObj(500,'账号没有访问权限');
         }
         if($iOS->result->items[1]){
             $info['iOS'] =  $iOS->result->items[1];
         }
-        return reJson(200,'获取成功',$info);
+        return reTmJsonObj(200,'获取成功',$info);
     }
 
     /**
@@ -142,7 +142,7 @@ class Baidu extends Controller
         $Analysis = new BaiduAnalysis($this->API_Key,$this->Secret_Key);
         $session_token = $this->getSessionToken($Analysis);
         if(empty($session_token->access_token)){
-            return reJson(502,'token失效');
+            return reTmJsonObj(502,'token失效');
         }
         $data['method'] = 'newuser/a';
         $data['metrics'] = 'new_user_count';
@@ -155,7 +155,7 @@ class Baidu extends Controller
         $android = json_decode($android);
         if(empty($android->result)){
             $this->clearToken();
-            return reJson(500,'账号没有访问权限');
+            return reTmJsonObj(500,'账号没有访问权限');
         }
         $info['date'] =  array_reverse($android->result->items[0]);
         $info['android'] =  array_reverse($android->result->items[1]);
@@ -163,12 +163,12 @@ class Baidu extends Controller
         $iOS  = json_decode($iOS);
         if(empty($iOS->result)){
             $this->clearToken();
-            return reJson(500,'账号没有访问权限');
+            return reTmJsonObj(500,'账号没有访问权限');
         }
         if($iOS->result->items[1]){
             $info['iOS'] =  array_reverse($iOS->result->items[1]);
         }
-        return reJson(200,'获取成功',$info);
+        return reTmJsonObj(200,'获取成功',$info);
     }
 
     /**
@@ -178,7 +178,7 @@ class Baidu extends Controller
         $Analysis = new BaiduAnalysis($this->API_Key,$this->Secret_Key);
         $session_token = $this->getSessionToken($Analysis);
         if(empty($session_token->access_token)){
-            return reJson(502,'token失效');
+            return reTmJsonObj(502,'token失效');
         }
         $data['method'] = 'activitydegree/a';
         $data['metrics'] = 'user_count';
@@ -191,7 +191,7 @@ class Baidu extends Controller
         $android = json_decode($android);
         if(empty($android->result)){
             $this->clearToken();
-            return reJson(500,'账号没有访问权限');
+            return reTmJsonObj(500,'账号没有访问权限');
         }
         $info['date'] =  array_reverse($android->result->items[0]);
         $info['android'] =  array_reverse($android->result->items[1]);
@@ -199,12 +199,12 @@ class Baidu extends Controller
         $iOS  = json_decode($iOS);
         if(empty($iOS->result)){
             $this->clearToken();
-            return reJson(500,'账号没有访问权限');
+            return reTmJsonObj(500,'账号没有访问权限');
         }
         if($iOS->result->items[1]){
             $info['iOS'] =  array_reverse($iOS->result->items[1]);
         }
-        return reJson(200,'获取成功',$info);
+        return reTmJsonObj(200,'获取成功',$info);
     }
 
 }

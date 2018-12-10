@@ -16,17 +16,16 @@ class Tmpaydemo extends Controller
 {
   /*生成签名，支付宝、微信兼容*/
   public function paySign(){
-
       //判断请求方式以及请求参数
       $inputData = Request::get();
       $method = Request::method();
       $params = ["type"];
       $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
       if(!$ret){
-          return reJson(500, $msg, []);
+          return reTmJsonObj(500, $msg, []);
       }
       if(!in_array((int)$inputData['type'],[1,2])){   //type值1表示支付宝，2表示微信，暂时只支持支付宝、微信
-          return reJson(500, "type值不对", []);
+          return reTmJsonObj(500, "type值不对", []);
       }
       /*这一步是生成签名，只需要调用paySign()方法，不需要添加其他配置
         * 入参：
@@ -39,9 +38,9 @@ class Tmpaydemo extends Controller
      $ret = paySign((int)$inputData['type'],time(),1, input('server.REQUEST_SCHEME') . '://' . input('server.SERVER_NAME')."/api/tmpaydemo/notify","商品标题");
      /*签名失败返回false,签名成功就返回签名信息*/
      if(!$ret){
-         return reJson(500, "签名失败", []);
+         return reTmJsonObj(500, "签名失败", []);
      }
-      return reJson(500, "签名成功", $ret);
+      return reTmJsonObj(500, "签名成功", $ret);
   }
 
     /*支付异步回调，支付宝、微信兼容*/

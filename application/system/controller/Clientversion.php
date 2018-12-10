@@ -32,7 +32,7 @@ class Clientversion extends Base
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         if(!empty($inputData['id']) && $inputData['id'] > 0){ //如果存在id则更新
             $condition = [
@@ -46,9 +46,9 @@ class Clientversion extends Base
         }
         if($result){
             $ClientInfo = $this->ClientVersionModel->getVersionInfo(['id'=>$inputData['id']]);
-            return reJson(200,'操作成功', $ClientInfo );
+            return reTmJsonObj(200,'操作成功', $ClientInfo );
         }else{
-            return reJson(500,'操作失败');
+            return reTmJsonObj(500,'操作失败');
         }
     }
 
@@ -62,10 +62,10 @@ class Clientversion extends Base
         $params = ['id'];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         if(!($inputData['id'] > 0)){
-            return reJson(500,'id丢失');
+            return reTmJsonObj(500,'id丢失');
         }
         $condition = [
             ['id','=',$inputData['id']]
@@ -79,9 +79,9 @@ class Clientversion extends Base
                $ClientInfo['real_name'] = $userInfo['real_name'];
                unset($ClientInfo['user_id']);
             }
-            return reJson(200,'操作成功',$ClientInfo);
+            return reTmJsonObj(200,'操作成功',$ClientInfo);
         }else{
-            return reJson(500,'获取失败');
+            return reTmJsonObj(500,'获取失败');
         }
     }
 
@@ -95,7 +95,7 @@ class Clientversion extends Base
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $condition = array();
         empty($inputData['page_size']) ? $pageSize = 20 : $pageSize = $inputData['page_size'];
@@ -110,7 +110,7 @@ class Clientversion extends Base
         $limit = $firstRow . ',' . $pageSize;
         $ClientList = $this->ClientVersionModel->versionList($condition,false,$limit,'add_time desc');
         if($ClientList === false){
-            return reJson(500,'获取数据失败', []);
+            return reTmJsonObj(500,'获取数据失败', []);
         }
         foreach ($ClientList as $key => $val){
             $ClientList[$key]['add_time'] = date('Y-m-d h:i:s',$val['add_time']);
@@ -121,7 +121,7 @@ class Clientversion extends Base
                 unset($ClientList[$key]['user_id']);
             }
         }
-        return reJson(200,'获取数据成功',['total_page'=>$totalPage,'now_page'=>$inputData['now_page'],'list'=>$ClientList]);
+        return reTmJsonObj(200,'获取数据成功',['total_page'=>$totalPage,'now_page'=>$inputData['now_page'],'list'=>$ClientList]);
     }
 
     /**
@@ -134,16 +134,16 @@ class Clientversion extends Base
         $params = ['id'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         if(!($inputData['id'] > 0)){
-            return reJson(500,'传入id格式无效');
+            return reTmJsonObj(500,'传入id格式无效');
         }
         $result = $this->ClientVersionModel->deleteVersion(['id'=>$inputData['id']]);
         if($result){
-            return reJson(200,'操作成功');
+            return reTmJsonObj(200,'操作成功');
         }else{
-            return reJson(500,'操作失败');
+            return reTmJsonObj(500,'操作失败');
         }
     }
 
@@ -157,7 +157,7 @@ class Clientversion extends Base
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $condition = [
             'client_type'=>'iOS',
@@ -187,7 +187,7 @@ class Clientversion extends Base
                 'display_version'=>$Android['display_version']
             ];
         }
-        return reJson(200,'获取成功',$data);
+        return reTmJsonObj(200,'获取成功',$data);
     }
 
 }

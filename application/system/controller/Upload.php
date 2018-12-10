@@ -26,21 +26,24 @@ class Upload extends Controller
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500,$msg,[]);
+            return reTmJsonObj(500,$msg,[]);
         }
         $file = Request::file('file');
+        if(!$file){
+            return reTmJsonObj(500,'请检查服务器磁盘空间是否不足',[]);
+        }
         $image = getimagesize($file->getInfo()['tmp_name']);
         if(!empty($inputData['width']) && $image[0] != $inputData['width']){
-            return reJson(503,'图片尺寸要求为'.$inputData['width'].'px*'.$inputData['height'].'px!',[]);
+            return reTmJsonObj(503,'图片尺寸要求为'.$inputData['width'].'px*'.$inputData['height'].'px!',[]);
         }
         if(!empty($inputData['height']) && $image[1] != $inputData['height']){
-            return reJson(503,'图片尺寸要求为'.$inputData['width'].'px*'.$inputData['height'].'px!',[]);
+            return reTmJsonObj(503,'图片尺寸要求为'.$inputData['width'].'px*'.$inputData['height'].'px!',[]);
         }
         $upload = new TmUpload($file->getInfo());
         $re = $upload->uploadFile();
-        if ($re==false)return reJson(500,$upload->getErrorMessage(),[]);
+        if ($re==false)return reTmJsonObj(500,$upload->getErrorMessage(),[]);
         $data = TmUpload::getUrl($re['type']) . $re['path'];
-        return reJson(200, '图片上传成功',$data);
+        return reTmJsonObj(200, '图片上传成功',$data);
     }
 
     /**
@@ -53,17 +56,17 @@ class Upload extends Controller
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500,$msg,[]);
+            return reTmJsonObj(500,$msg,[]);
         }
         $file = Request::file('file');
         if(!$file){
-            return reJson(500, '上传失败');
+            return reTmJsonObj(500, '上传失败');
         }
         $upload = new TmUpload($file->getInfo());
         $re = $upload->uploadFile();
-        if ($re==false)return reJson(500,$upload->getErrorMessage(),[]);
+        if ($re==false)return reTmJsonObj(500,$upload->getErrorMessage(),[]);
         $data = TmUpload::getUrl($re['type']) . $re['path'];
-        return reJson(200, '上传成功',$data);
+        return reTmJsonObj(200, '上传成功',$data);
     }
 
     /**
@@ -76,19 +79,19 @@ class Upload extends Controller
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500,$msg,[]);
+            return reTmJsonObj(500,$msg,[]);
         }
         $file = Request::file('file');
         $re = \app\extend\controller\Upload::uploadFile($file);
         if(!$re){
-            return reJson(500,'上传失败',[]);
+            return reTmJsonObj(500,'上传失败',[]);
         }
         $image = getimagesize(Env::get('root_path').$re['path']);
         if(!empty($inputData['width']) && $image[0] != $inputData['width']){
-            return reJson(503,'图片尺寸要求为'.$inputData['width'].'px*'.$inputData['height'].'px!',[]);
+            return reTmJsonObj(503,'图片尺寸要求为'.$inputData['width'].'px*'.$inputData['height'].'px!',[]);
         }
         if(!empty($inputData['height']) && $image[1] != $inputData['height']){
-            return reJson(503,'图片尺寸要求为'.$inputData['width'].'px*'.$inputData['height'].'px!',[]);
+            return reTmJsonObj(503,'图片尺寸要求为'.$inputData['width'].'px*'.$inputData['height'].'px!',[]);
         }
         $http_type = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')) ? 'https://' : 'http://';
         $http = $http_type.$_SERVER['SERVER_NAME'];
@@ -96,7 +99,7 @@ class Upload extends Controller
             $http = $http . ':'.$_SERVER["SERVER_PORT"];
         }
         $re = $http.$re;
-       return reJson(200, '图片上传成功', $re);
+       return reTmJsonObj(200, '图片上传成功', $re);
     }
 
     /**
@@ -109,14 +112,14 @@ class Upload extends Controller
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500,$msg,[]);
+            return reTmJsonObj(500,$msg,[]);
         }
         $file = Request::file('file');
         $data = \app\extend\controller\Upload::uploadFile($file);
         if($data){
-            return reJson(200, '上传成功',$data);
+            return reTmJsonObj(200, '上传成功',$data);
         }else{
-            return reJson(500, '上传失败');
+            return reTmJsonObj(500, '上传失败');
         }
 
     }
@@ -131,13 +134,13 @@ class Upload extends Controller
         $params = ['path','type'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500,$msg,[]);
+            return reTmJsonObj(500,$msg,[]);
         }
         $data = \app\extend\controller\Upload::getUrl($inputData['path'],'',$inputData['type']);
         if($data){
-            return reJson(200,'成功',$data);
+            return reTmJsonObj(200,'成功',$data);
         }else{
-            return reJson(500,'失败');
+            return reTmJsonObj(500,'失败');
         }
 
     }

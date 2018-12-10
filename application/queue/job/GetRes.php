@@ -60,7 +60,7 @@
           $condition[] = ['push_time','>=',time()-7*24*3600];//推送Jpush时间
           $pushList = $pushMessageModel->getList($condition,'cid',200);
           if(empty($pushList)){
-              return reJson(200,'没有推送信息',[]);
+              return reTmJsonObj(200,'没有推送信息',[]);
           }
           $pushList = array_column($pushList,'cid');
           $JPush = new \app\extend\controller\Jpush();

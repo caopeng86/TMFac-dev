@@ -32,7 +32,7 @@ class Classes extends Base
         $params = ['site_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500,$msg,[]);
+            return reTmJsonObj(500,$msg,[]);
         }
 
         $condition['site_code'] = $inputData['site_code'];
@@ -41,14 +41,14 @@ class Classes extends Base
         $classesList = $this->classModel->getClassesList($condition, $field, $order);
         if($classesList === false){
             Logservice::writeArray(['sql'=>$this->classModel->getLastSql()], '获取分类列表失败', 2);
-            return reJson(500, '获取列表失败', []);
+            return reTmJsonObj(500, '获取列表失败', []);
         }
         if(empty($classesList)){
-            return reJson(200, '查询成功,列表为空', []);
+            return reTmJsonObj(200, '查询成功,列表为空', []);
         }
         //无限极分类处理列表
         $reList = getAttr($classesList, 0, 'parent_classes_id', 'classes_id');
 
-        return reJson(200, '获取列表成功', $reList);
+        return reTmJsonObj(200, '获取列表成功', $reList);
     }
 }

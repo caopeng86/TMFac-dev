@@ -23,7 +23,7 @@ class Mch extends Controller
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500,$msg,[]);
+            return reTmJsonObj(500,$msg,[]);
         }
 
         $data = json_decode($inputData,true);
@@ -39,6 +39,6 @@ class Mch extends Controller
 
         Logservice::writeArray($data, 'Mch接收数据测试');
 
-        return reJson(200, '接收数据成功', $inputData);
+        return reTmJsonObj(200, '接收数据成功', $inputData);
     }
 }
