@@ -3,9 +3,12 @@
 namespace Yansongda\Pay\Exceptions;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 class InvalidArgumentException extends \InvalidArgumentException
 {
 =======
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
 class InvalidArgumentException extends Exception
 {
     /**
@@ -21,5 +24,8 @@ class InvalidArgumentException extends Exception
     {
         parent::__construct($message, $raw, $code);
     }
+<<<<<<< HEAD
 >>>>>>> dev
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
 }

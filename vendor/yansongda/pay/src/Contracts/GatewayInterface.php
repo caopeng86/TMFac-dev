@@ -6,6 +6,7 @@ interface GatewayInterface
 {
     /**
 <<<<<<< HEAD
+<<<<<<< HEAD
      * pay a order.
      *
      * @author yansongda <me@yansongda.cn>
@@ -62,6 +63,8 @@ interface GatewayInterface
      */
     public function verify($data, $sign = null, $sync = false);
 =======
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
      * Pay an order.
      *
      * @author yansongda <me@yansongda.cn>
@@ -72,5 +75,8 @@ interface GatewayInterface
      * @return \Yansongda\Supports\Collection|\Symfony\Component\HttpFoundation\Response
      */
     public function pay($endpoint, array $payload);
+<<<<<<< HEAD
 >>>>>>> dev
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
 }

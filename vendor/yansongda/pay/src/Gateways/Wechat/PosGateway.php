@@ -3,6 +3,7 @@
 namespace Yansongda\Pay\Gateways\Wechat;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 use Yansongda\Pay\Exceptions\InvalidArgumentException;
 
 class PosGateway extends Wechat
@@ -44,6 +45,8 @@ class PosGateway extends Wechat
 
         return $this->preOrder($config_biz);
 =======
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
 use Yansongda\Pay\Log;
 use Yansongda\Supports\Collection;
 
@@ -84,6 +87,9 @@ class PosGateway extends Gateway
     protected function getTradeType(): string
     {
         return 'MICROPAY';
+<<<<<<< HEAD
 >>>>>>> dev
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
     }
 }

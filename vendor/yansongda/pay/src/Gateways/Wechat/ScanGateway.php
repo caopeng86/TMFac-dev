@@ -3,6 +3,7 @@
 namespace Yansongda\Pay\Gateways\Wechat;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 use Yansongda\Pay\Exceptions\InvalidArgumentException;
 
 class ScanGateway extends Wechat
@@ -36,6 +37,8 @@ class ScanGateway extends Wechat
 
         return $this->preOrder($config_biz)['code_url'];
 =======
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
 use Symfony\Component\HttpFoundation\Request;
 use Yansongda\Pay\Log;
 use Yansongda\Supports\Collection;
@@ -76,6 +79,9 @@ class ScanGateway extends Gateway
     protected function getTradeType(): string
     {
         return 'NATIVE';
+<<<<<<< HEAD
 >>>>>>> dev
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
     }
 }

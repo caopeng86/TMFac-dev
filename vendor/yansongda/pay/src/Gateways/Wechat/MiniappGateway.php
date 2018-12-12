@@ -3,6 +3,7 @@
 namespace Yansongda\Pay\Gateways\Wechat;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 use Yansongda\Pay\Exceptions\InvalidArgumentException;
 
 class MiniappGateway extends Wechat
@@ -47,6 +48,8 @@ class MiniappGateway extends Wechat
 
         return $payRequest;
 =======
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
 use Yansongda\Pay\Gateways\Wechat;
 use Yansongda\Supports\Collection;
 
@@ -75,6 +78,9 @@ class MiniappGateway extends MpGateway
         }
 
         return parent::pay($endpoint, $payload);
+<<<<<<< HEAD
 >>>>>>> dev
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
     }
 }

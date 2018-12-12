@@ -11,6 +11,7 @@
 </p>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 **！注意：v1.x 版本将不做新功能开发，只进行 bug 维护！请大家尽快迁移到 v2 版本！**
 
 开发了多次支付宝与微信支付后，很自然产生一种反感，惰性又来了，想在网上找相关的轮子，可是一直没有找到一款自己觉得逞心如意的，要么使用起来太难理解，要么文件结构太杂乱，只有自己撸起袖子干了。
@@ -21,6 +22,8 @@
 
 laravel 扩展包请 [https://github.com/yansongda/laravel-pay](https://github.com/yansongda/laravel-pay)
 =======
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
 该文档为 v2.x 版本，如果您想找 v1.x 版本文档，请点击[https://github.com/yansongda/pay/tree/v1.x](https://github.com/yansongda/pay/tree/v1.x)
 
 **注意：v1.x 与 v2.x 版本不兼容**
@@ -35,7 +38,10 @@ laravel 扩展包请 [https://github.com/yansongda/laravel-pay](https://github.c
 laravel 扩展包请 [传送至这里](https://github.com/yansongda/laravel-pay)
 
 QQ交流群：690027516
+<<<<<<< HEAD
 >>>>>>> dev
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
 
 ## 特点
 - 命名不那么乱七八糟
@@ -48,6 +54,7 @@ QQ交流群：690027516
 
 
 ## 运行环境
+<<<<<<< HEAD
 <<<<<<< HEAD
 - PHP 5.6+
 - composer
@@ -68,6 +75,8 @@ QQ交流群：690027516
 ### 1、支付宝
 
 =======
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
 - PHP 7.0+
 - composer
 
@@ -76,12 +85,16 @@ QQ交流群：690027516
 
 ## 支持的支付方法
 ### 1、支付宝
+<<<<<<< HEAD
 >>>>>>> dev
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
 - 电脑支付
 - 手机网站支付
 - APP 支付
 - 刷卡支付
 - 扫码支付
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 SDK 中对应的 driver 和 gateway 如下表所示：  
@@ -98,6 +111,8 @@ SDK 中对应的 driver 和 gateway 如下表所示：
 ### 2、微信
 
 =======
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
 - 账户转账
 
 |  method   |   描述       |
@@ -110,13 +125,17 @@ SDK 中对应的 driver 和 gateway 如下表所示：
 |  transfer | 帐户转账  |
 
 ### 2、微信
+<<<<<<< HEAD
 >>>>>>> dev
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
 - 公众号支付
 - 小程序支付
 - H5 支付
 - 扫码支付
 - 刷卡支付
 - APP 支付
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 SDK 中对应的 driver 和 gateway 如下表所示：
@@ -165,6 +184,8 @@ SDK 中对应的 driver 和 gateway 如下表所示：
 ```shell
 composer require "yansongda/pay:^1.0"
 =======
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
 - 企业付款
 - 普通红包
 - 分裂红包
@@ -221,16 +242,23 @@ composer require "yansongda/pay:^1.0"
 ## 安装
 ```shell
 composer require yansongda/pay -vvv
+<<<<<<< HEAD
 >>>>>>> dev
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
 ```
 
 ## 使用说明
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ### 0、一个完整的例子:
 =======
 ### 支付宝
 >>>>>>> dev
+=======
+### 支付宝
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
 ```php
 <?php
 
@@ -238,14 +266,19 @@ namespace App\Http\Controllers;
 
 use Yansongda\Pay\Pay;
 <<<<<<< HEAD
+<<<<<<< HEAD
 use Illuminate\Http\Request;
 =======
 use Yansongda\Pay\Log;
 >>>>>>> dev
+=======
+use Yansongda\Pay\Log;
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
 
 class PayController extends Controller
 {
     protected $config = [
+<<<<<<< HEAD
 <<<<<<< HEAD
         'alipay' => [
             'app_id' => '2016082000295641',
@@ -255,6 +288,8 @@ class PayController extends Controller
             'private_key' => 'MIIEpAIBAAKCAQEAs6+F2leOgOrvj9jTeDhb5q46GewOjqLBlGSs/bVL4Z3fMr3p+Q1Tux/6uogeVi/eHd84xvQdfpZ87A1SfoWnEGH5z15yorccxSOwWUI+q8gz51IWqjgZxhWKe31BxNZ+prnQpyeMBtE25fXp5nQZ/pftgePyUUvUZRcAUisswntobDQKbwx28VCXw5XB2A+lvYEvxmMv/QexYjwKK4M54j435TuC3UctZbnuynSPpOmCu45ZhEYXd4YMsGMdZE5/077ZU1aU7wx/gk07PiHImEOCDkzqsFo0Buc/knGcdOiUDvm2hn2y1XvwjyFOThsqCsQYi4JmwZdRa8kvOf57nwIDAQABAoIBAQCw5QCqln4VTrTvcW+msB1ReX57nJgsNfDLbV2dG8mLYQemBa9833DqDK6iynTLNq69y88ylose33o2TVtEccGp8Dqluv6yUAED14G6LexS43KtrXPgugAtsXE253ZDGUNwUggnN1i0MW2RcMqHdQ9ORDWvJUCeZj/AEafgPN8AyiLrZeL07jJz/uaRfAuNqkImCVIarKUX3HBCjl9TpuoMjcMhz/MsOmQ0agtCatO1eoH1sqv5Odvxb1i59c8Hvq/mGEXyRuoiDo05SE6IyXYXr84/Nf2xvVNHNQA6kTckj8shSi+HGM4mO1Y4Pbb7XcnxNkT0Inn6oJMSiy56P+CpAoGBAO1O+5FE1ZuVGuLb48cY+0lHCD+nhSBd66B5FrxgPYCkFOQWR7pWyfNDBlmO3SSooQ8TQXA25blrkDxzOAEGX57EPiipXr/hy5e+WNoukpy09rsO1TMsvC+v0FXLvZ+TIAkqfnYBgaT56ku7yZ8aFGMwdCPL7WJYAwUIcZX8wZ3dAoGBAMHWplAqhe4bfkGOEEpfs6VvEQxCqYMYVyR65K0rI1LiDZn6Ij8fdVtwMjGKFSZZTspmsqnbbuCE/VTyDzF4NpAxdm3cBtZACv1Lpu2Om+aTzhK2PI6WTDVTKAJBYegXaahBCqVbSxieR62IWtmOMjggTtAKWZ1P5LQcRwdkaB2rAoGAWnAPT318Kp7YcDx8whOzMGnxqtCc24jvk2iSUZgb2Dqv+3zCOTF6JUsV0Guxu5bISoZ8GdfSFKf5gBAo97sGFeuUBMsHYPkcLehM1FmLZk1Q+ljcx3P1A/ds3kWXLolTXCrlpvNMBSN5NwOKAyhdPK/qkvnUrfX8sJ5XK2H4J8ECgYAGIZ0HIiE0Y+g9eJnpUFelXvsCEUW9YNK4065SD/BBGedmPHRC3OLgbo8X5A9BNEf6vP7fwpIiRfKhcjqqzOuk6fueA/yvYD04v+Da2MzzoS8+hkcqF3T3pta4I4tORRdRfCUzD80zTSZlRc/h286Y2eTETd+By1onnFFe2X01mwKBgQDaxo4PBcLL2OyVT5DoXiIdTCJ8KNZL9+kV1aiBuOWxnRgkDjPngslzNa1bK+klGgJNYDbQqohKNn1HeFX3mYNfCUpuSnD2Yag53Dd/1DLO+NxzwvTu4D6DCUnMMMBVaF42ig31Bs0jI3JQZVqeeFzSET8fkoFopJf3G6UXlrIEAQ==',
         ],
 =======
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
         'app_id' => '2016082000295641',
         'notify_url' => 'http://yansongda.cn/notify.php',
         'return_url' => 'http://yansongda.cn/return.php',
@@ -273,11 +308,15 @@ class PayController extends Controller
             // 更多配置项请参考 [Guzzle](https://guzzle-cn.readthedocs.io/zh_CN/latest/request-options.html)
         ],
         'mode' => 'dev', // optional,设置此参数，将进入沙箱模式
+<<<<<<< HEAD
 >>>>>>> dev
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
     ];
 
     public function index()
     {
+<<<<<<< HEAD
 <<<<<<< HEAD
         $config_biz = [
             'out_trade_no' => time(),
@@ -321,6 +360,8 @@ class PayController extends Controller
 
 ```
 =======
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
         $order = [
             'out_trade_no' => time(),
             'total_amount' => '1',
@@ -366,7 +407,10 @@ class PayController extends Controller
 ```
 
 ### 微信
+<<<<<<< HEAD
 >>>>>>> dev
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
 ```php
 <?php
 
@@ -374,14 +418,19 @@ namespace App\Http\Controllers;
 
 use Yansongda\Pay\Pay;
 <<<<<<< HEAD
+<<<<<<< HEAD
 use Illuminate\Http\Request;
 =======
 use Yansongda\Pay\Log;
 >>>>>>> dev
+=======
+use Yansongda\Pay\Log;
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
 
 class PayController extends Controller
 {
     protected $config = [
+<<<<<<< HEAD
 <<<<<<< HEAD
         'wechat' => [
             'app_id' => 'wxb3f6xxxxxxxxxx',
@@ -392,6 +441,8 @@ class PayController extends Controller
             'cert_key' => './apiclient_key.pem',
         ],
 =======
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
         'appid' => 'wxb3fxxxxxxxxxxx', // APP APPID
         'app_id' => 'wxb3fxxxxxxxxxxx', // 公众号 APPID
         'miniapp_id' => 'wxb3fxxxxxxxxxxx', // 小程序 APPID
@@ -412,11 +463,15 @@ class PayController extends Controller
             // 更多配置项请参考 [Guzzle](https://guzzle-cn.readthedocs.io/zh_CN/latest/request-options.html)
         ],
         'mode' => 'dev', // optional, dev/hk;当为 `hk` 时，为香港 gateway。
+<<<<<<< HEAD
 >>>>>>> dev
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
     ];
 
     public function index()
     {
+<<<<<<< HEAD
 <<<<<<< HEAD
         $config_biz = [
             'out_trade_no' => 'e2',
@@ -1176,6 +1231,8 @@ $config_biz = [
 类型：array  
 说明：返回用于 支付结果 的数组。具体请 [参考这里](https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=13_4&index=3)。
 =======
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
         $order = [
             'out_trade_no' => time(),
             'total_fee' => '1', // **单位：分**
@@ -1223,7 +1280,10 @@ $config_biz = [
 * Yansongda\Pay\Exceptions\GatewayException ，表示支付宝/微信服务器返回的数据非正常结果，例如，参数错误，对账单不存在等。
 
 
+<<<<<<< HEAD
 >>>>>>> dev
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
 ## 代码贡献
 由于测试及使用环境的限制，本项目中只开发了「支付宝」和「微信支付」的相关支付网关。
 
@@ -1231,7 +1291,11 @@ $config_biz = [
 
 ## LICENSE
 <<<<<<< HEAD
+<<<<<<< HEAD
 MIT
 =======
 MIT
 >>>>>>> dev
+=======
+MIT
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74

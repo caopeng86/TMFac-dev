@@ -3,16 +3,22 @@
 namespace Yansongda\Pay\Tests;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 use Yansongda\Pay\Contracts\GatewayInterface;
 use Yansongda\Pay\Exceptions\InvalidArgumentException;
 =======
 use Yansongda\Pay\Contracts\GatewayApplicationInterface;
 use Yansongda\Pay\Exceptions\GatewayException;
 >>>>>>> dev
+=======
+use Yansongda\Pay\Contracts\GatewayApplicationInterface;
+use Yansongda\Pay\Exceptions\GatewayException;
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
 use Yansongda\Pay\Pay;
 
 class PayTest extends TestCase
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
     public function testDriverWithoutConfig()
     {
@@ -52,6 +58,8 @@ class PayTest extends TestCase
         $pay = new Pay(['alipay' => ['app_id' => '']]);
         $this->assertInstanceOf(GatewayInterface::class, $pay->driver('alipay')->gateway());
 =======
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
     public function testAlipayGateway()
     {
         $alipay = Pay::alipay(['foo' => 'bar']);
@@ -72,6 +80,9 @@ class PayTest extends TestCase
         $this->expectExceptionMessage('Gateway [foo] Not Exists');
 
         Pay::foo([]);
+<<<<<<< HEAD
 >>>>>>> dev
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
     }
 }

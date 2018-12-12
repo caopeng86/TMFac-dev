@@ -3,6 +3,7 @@
 namespace Yansongda\Pay\Gateways\Alipay;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 class AppGateway extends Alipay
 {
     /**
@@ -20,6 +21,8 @@ class AppGateway extends Alipay
     /**
      * get productCode method.
 =======
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
 use Symfony\Component\HttpFoundation\Response;
 use Yansongda\Pay\Contracts\GatewayInterface;
 use Yansongda\Pay\Log;
@@ -55,12 +58,16 @@ class AppGateway implements GatewayInterface
 
     /**
      * Get method config.
+<<<<<<< HEAD
 >>>>>>> dev
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
      *
      * @author yansongda <me@yansongda.cn>
      *
      * @return string
      */
+<<<<<<< HEAD
 <<<<<<< HEAD
     protected function getProductCode()
     {
@@ -82,6 +89,8 @@ class AppGateway implements GatewayInterface
 
         return http_build_query($this->config);
 =======
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
     protected function getMethod(): string
     {
         return 'alipay.trade.app.pay';
@@ -97,6 +106,9 @@ class AppGateway implements GatewayInterface
     protected function getProductCode(): string
     {
         return 'QUICK_MSECURITY_PAY';
+<<<<<<< HEAD
 >>>>>>> dev
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
     }
 }

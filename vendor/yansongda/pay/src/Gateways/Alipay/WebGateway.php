@@ -3,6 +3,7 @@
 namespace Yansongda\Pay\Gateways\Alipay;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 class WebGateway extends Alipay
 {
     /**
@@ -44,6 +45,8 @@ class WebGateway extends Alipay
 
         return $this->buildPayHtml();
 =======
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
 use Symfony\Component\HttpFoundation\Response;
 use Yansongda\Pay\Contracts\GatewayInterface;
 use Yansongda\Pay\Log;
@@ -122,6 +125,9 @@ class WebGateway implements GatewayInterface
     protected function getProductCode(): string
     {
         return 'FAST_INSTANT_TRADE_PAY';
+<<<<<<< HEAD
 >>>>>>> dev
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
     }
 }

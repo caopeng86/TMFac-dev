@@ -6,6 +6,7 @@ class GatewayException extends Exception
 {
     /**
 <<<<<<< HEAD
+<<<<<<< HEAD
      * error raw data.
      *
      * @var array
@@ -26,6 +27,8 @@ class GatewayException extends Exception
 
         $this->raw = $raw;
 =======
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
      * Bootstrap.
      *
      * @author yansongda <me@yansonga.cn>
@@ -37,6 +40,9 @@ class GatewayException extends Exception
     public function __construct($message, $raw = [], $code = 4)
     {
         parent::__construct($message, $raw, $code);
+<<<<<<< HEAD
 >>>>>>> dev
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
     }
 }

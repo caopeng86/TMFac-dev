@@ -3,6 +3,7 @@
 namespace Yansongda\Pay;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 use Yansongda\Pay\Exceptions\InvalidArgumentException;
 use Yansongda\Pay\Support\Config;
 
@@ -32,6 +33,8 @@ class Pay
      */
     public function __construct(array $config = [])
 =======
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
 use Yansongda\Pay\Contracts\GatewayApplicationInterface;
 use Yansongda\Pay\Exceptions\InvalidGatewayException;
 use Yansongda\Pay\Gateways\Alipay;
@@ -61,12 +64,16 @@ class Pay
      * @param array $config
      */
     public function __construct(array $config)
+<<<<<<< HEAD
 >>>>>>> dev
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
     {
         $this->config = new Config($config);
     }
 
     /**
+<<<<<<< HEAD
 <<<<<<< HEAD
      * set pay's driver.
      *
@@ -140,6 +147,8 @@ class Pay
     {
         return new $gateway($this->config->get($this->drivers));
 =======
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
      * Magic static call.
      *
      * @author yansongda <me@yansongda.cn>
@@ -223,6 +232,9 @@ class Pay
         );
 
         Log::setLogger($logger);
+<<<<<<< HEAD
 >>>>>>> dev
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
     }
 }

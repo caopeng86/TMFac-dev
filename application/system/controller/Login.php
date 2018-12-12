@@ -459,7 +459,7 @@ class Login extends Controller
      */
     public function mchLogin(){
         //判断请求方式以及请求参数
-     //   $inputData = Request::post();
+        //   $inputData = Request::post();
         $inputData = getEncryptPostData();
         if(!$inputData){
             return reTmJsonObj(552,"解密数据失败",[]);
@@ -504,6 +504,8 @@ class Login extends Controller
             $data['branch_id'] = 4; //挂在运营部门
             $data['password'] = md5(md5(123456));//默认密码为123456
             $data['create_time'] = time();
+            $data['extend'] = $site_code;
+            $data['origin'] = 'mch';
             $result = $this->userModel->addUser($data);
             $remember = $this->userModel->getUserInfo($condition,false);
             if($remember === false){

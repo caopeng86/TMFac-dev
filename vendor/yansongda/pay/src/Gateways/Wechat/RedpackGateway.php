@@ -1,6 +1,7 @@
 <?php
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /**
  * 发放普通红包
  * Class RedPackGateway
@@ -76,6 +77,8 @@ class RedpackGateway extends Wechat
     /**
      * get trade type config.
 =======
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
 namespace Yansongda\Pay\Gateways\Wechat;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -127,17 +130,24 @@ class RedpackGateway extends Gateway
 
     /**
      * Get trade type config.
+<<<<<<< HEAD
 >>>>>>> dev
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
      *
      * @author yansongda <me@yansongda.cn>
      *
      * @return string
      */
 <<<<<<< HEAD
+<<<<<<< HEAD
     protected function getTradeType()
 =======
     protected function getTradeType(): string
 >>>>>>> dev
+=======
+    protected function getTradeType(): string
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
     {
         return '';
     }

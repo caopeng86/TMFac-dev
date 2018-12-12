@@ -3,6 +3,7 @@
 namespace Yansongda\Pay\Gateways\Wechat;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 use Yansongda\Pay\Exceptions\InvalidArgumentException;
 
 class WapGateway extends Wechat
@@ -39,6 +40,8 @@ class WapGateway extends Wechat
         return is_null($this->user_config->get('return_url')) ? $data['mweb_url'] : $data['mweb_url'].
                         '&redirect_url='.urlencode($this->user_config->get('return_url'));
 =======
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Yansongda\Pay\Log;
@@ -83,6 +86,9 @@ class WapGateway extends Gateway
     protected function getTradeType(): string
     {
         return 'MWEB';
+<<<<<<< HEAD
 >>>>>>> dev
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
     }
 }

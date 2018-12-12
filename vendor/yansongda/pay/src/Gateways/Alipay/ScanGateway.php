@@ -3,6 +3,7 @@
 namespace Yansongda\Pay\Gateways\Alipay;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 class ScanGateway extends Alipay
 {
     /**
@@ -20,6 +21,8 @@ class ScanGateway extends Alipay
     /**
      * get productCode config.
 =======
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
 use Yansongda\Pay\Contracts\GatewayInterface;
 use Yansongda\Pay\Log;
 use Yansongda\Supports\Collection;
@@ -57,12 +60,16 @@ class ScanGateway implements GatewayInterface
 
     /**
      * Get method config.
+<<<<<<< HEAD
 >>>>>>> dev
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
      *
      * @author yansongda <me@yansongda.cn>
      *
      * @return string
      */
+<<<<<<< HEAD
 <<<<<<< HEAD
     protected function getProductCode()
     {
@@ -82,6 +89,8 @@ class ScanGateway implements GatewayInterface
     {
         return $this->getResult($config_biz, $this->getMethod());
 =======
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
     protected function getMethod(): string
     {
         return 'alipay.trade.precreate';
@@ -97,6 +106,9 @@ class ScanGateway implements GatewayInterface
     protected function getProductCode(): string
     {
         return '';
+<<<<<<< HEAD
 >>>>>>> dev
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
     }
 }

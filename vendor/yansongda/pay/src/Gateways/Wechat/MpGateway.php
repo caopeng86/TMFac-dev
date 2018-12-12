@@ -3,6 +3,7 @@
 namespace Yansongda\Pay\Gateways\Wechat;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 use Yansongda\Pay\Exceptions\InvalidArgumentException;
 
 class MpGateway extends Wechat
@@ -45,6 +46,8 @@ class MpGateway extends Wechat
 
         return $payRequest;
 =======
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
 use Yansongda\Pay\Log;
 use Yansongda\Supports\Collection;
 use Yansongda\Supports\Str;
@@ -94,6 +97,9 @@ class MpGateway extends Gateway
     protected function getTradeType(): string
     {
         return 'JSAPI';
+<<<<<<< HEAD
 >>>>>>> dev
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
     }
 }

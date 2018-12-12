@@ -3,6 +3,7 @@
 namespace Yansongda\Pay\Gateways\Wechat;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 use Yansongda\Pay\Exceptions\InvalidArgumentException;
 
 class AppGateway extends Wechat
@@ -48,6 +49,8 @@ class AppGateway extends Wechat
 
         return $payRequest;
 =======
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Yansongda\Pay\Gateways\Wechat;
@@ -105,6 +108,9 @@ class AppGateway extends Gateway
     protected function getTradeType(): string
     {
         return 'APP';
+<<<<<<< HEAD
 >>>>>>> dev
+=======
+>>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
     }
 }
