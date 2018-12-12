@@ -31,16 +31,16 @@ class Adv extends Base
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $condition = array(
             ['status','=',1]
         );
         $advList = $this->advModel->advList($condition,false,'','sort desc');
         if($advList === false){
-            return reJson(500,'获取数据失败', []);
+            return reTmJsonObj(500,'获取数据失败', []);
         }
-        return reJson(200,'获取数据成功',$advList);
+        return reTmJsonObj(200,'获取数据成功',$advList);
     }
 
     /**
@@ -53,7 +53,7 @@ class Adv extends Base
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         if(!empty($inputData['id']) && $inputData['id'] > 0){ //如果存在id则更新
             $condition = [
@@ -66,7 +66,7 @@ class Adv extends Base
             $num = $this->advModel->countAdv([
                 ['status','=',1]
             ]);
-            if($num > 5)return reJson(500,'最多支持5张轮播图');
+            if($num > 5)return reTmJsonObj(500,'最多支持5张轮播图');
             $inputData['add_time'] = time();
             $inputData['update_time'] = time();
             //end
@@ -75,9 +75,9 @@ class Adv extends Base
         }
         if($result){
             $advInfo = $this->advModel->getAdvInfo(['id'=>$inputData['id']]);
-            return reJson(200,'操作成功',$advInfo);
+            return reTmJsonObj(200,'操作成功',$advInfo);
         }else{
-            return reJson(500,'操作失败');
+            return reTmJsonObj(500,'操作失败');
         }
     }
 
@@ -91,26 +91,26 @@ class Adv extends Base
         $params = ['id'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         if(!($inputData['id'] > 0)){
-            return reJson(500,'id丢失');
+            return reTmJsonObj(500,'id丢失');
         }
         //判断广告个数
         $num = $this->advModel->countAdv([
             ['status','=',1]
         ]);
         if($num <= 1){
-            return reJson(500,'至少上传一张轮播图');
+            return reTmJsonObj(500,'至少上传一张轮播图');
         }
         $condition = [
             ['id','=',$inputData['id']]
         ];
         $result = $this->advModel->deleteAdv($condition);
         if($result){
-            return reJson(200,'操作成功');
+            return reTmJsonObj(200,'操作成功');
         }else{
-            return reJson(500,'操作失败');
+            return reTmJsonObj(500,'操作失败');
         }
     }
 
@@ -124,10 +124,10 @@ class Adv extends Base
         $params = ['id'];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         if(!($inputData['id'] > 0)){
-            return reJson(500,'id丢失');
+            return reTmJsonObj(500,'id丢失');
         }
         $condition = [
             ['id','=',$inputData['id']],
@@ -135,9 +135,9 @@ class Adv extends Base
         ];
         $advInfo = $this->advModel->getAdvInfo($condition);
         if($advInfo){
-            return reJson(200,'操作成功',$advInfo);
+            return reTmJsonObj(200,'操作成功',$advInfo);
         }else{
-            return reJson(500,'获取失败');
+            return reTmJsonObj(500,'获取失败');
         }
     }
 

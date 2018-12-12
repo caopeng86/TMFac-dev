@@ -32,19 +32,19 @@ class System extends Controller
         $params = ['type'];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $ConfigType = $this->ConfigModel->getConfigType();
         if(!in_array($inputData['type'],$ConfigType)){
-            return reJson(500,'参数类型不存在');
+            return reTmJsonObj(500,'参数类型不存在');
         }
         $condition = array();
         $condition['type'] = $inputData['type'];
         $ConfigList = $this->ConfigModel->getConfigList($condition,'key,value,remarks');
         if($ConfigList){
-            return reJson(200, '更新成功', $ConfigList);
+            return reTmJsonObj(200, '更新成功', $ConfigList);
         }
-        return reJson(500, '更新失败', []);
+        return reTmJsonObj(500, '更新失败', []);
     }
 
 
@@ -58,18 +58,18 @@ class System extends Controller
         $params = ['config','type'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $ConfigType = $this->ConfigModel->getConfigType();
         if(!in_array($inputData['type'],$ConfigType)){
-            return reJson(500,'参数类型不存在');
+            return reTmJsonObj(500,'参数类型不存在');
         }
         $type = $inputData['type'];
         unset($inputData['type']);
         foreach ($inputData['config'] as $val){
             $this->ConfigModel->batchSaveConfig($val['key'],$val['value'],$val['remarks'],$type);
         }
-        return reJson(200,'保存完成');
+        return reTmJsonObj(200,'保存完成');
     }
 
     /**
@@ -82,17 +82,17 @@ class System extends Controller
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $condition = [];
         $condition['key'] = ['site_name','site_logo'];
         $condition['type'] = 'base';
         $ConfigList = $this->ConfigModel->getConfigList($condition);
         if($ConfigList === false){
-            return reJson(500, '获取失败', []);
+            return reTmJsonObj(500, '获取失败', []);
         }
         $ConfigList = $this->ConfigModel->ArrayToKey($ConfigList);
-        return reJson(200, '获取成功', $ConfigList);
+        return reTmJsonObj(200, '获取成功', $ConfigList);
     }
 
     /**
@@ -106,14 +106,14 @@ class System extends Controller
         $remarks = ['site_name'=>'平台名称','site_logo'=>'平台logo'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         foreach ($params as $val){
             if(!empty($inputData[$val])){
                 $this->ConfigModel->batchSaveConfig($val,$inputData[$val],$remarks[$val],'base');
             }
         }
-        return reJson(200,'保存成功',[]);
+        return reTmJsonObj(200,'保存成功',[]);
     }
 
     /**
@@ -126,17 +126,17 @@ class System extends Controller
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $condition = [];
         $condition['key'] = ['app_start_image','app_start_image_m','app_start_image_s','app_start_url','app_start_title'];
         $condition['type'] = 'client';
         $ConfigList = $this->ConfigModel->getConfigList($condition);
         if($ConfigList === false){
-            return reJson(500, '获取失败', []);
+            return reTmJsonObj(500, '获取失败', []);
         }
         $ConfigList = $this->ConfigModel->ArrayToKey($ConfigList);
-        return reJson(200, '获取成功', $ConfigList);
+        return reTmJsonObj(200, '获取成功', $ConfigList);
     }
 
     /**
@@ -152,13 +152,13 @@ class System extends Controller
         $params[] = 'app_start_url';
         $params[] = 'app_start_title';
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         foreach ($params as $val){
             if(empty($inputData[$val]))$inputData[$val] = ''; //未定义则赋予空值
             $this->ConfigModel->batchSaveConfig($val,$inputData[$val],$remarks[$val],'client');
         }
-        return reJson(200,'保存成功',[]);
+        return reTmJsonObj(200,'保存成功',[]);
     }
 
     /**
@@ -172,14 +172,14 @@ class System extends Controller
         $remarks = ['ali_sms_key_id'=>'阿里短信服务key','ali_sign_name'=>'阿里短信签名','ali_key_secret'=>'阿里短信服务secret','ali_check_template_code'=>'阿里验证短信模板code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         foreach ($params as $val){
             if(!empty($inputData[$val])){
                 $this->ConfigModel->batchSaveConfig($val,$inputData[$val],$remarks[$val],'client');
             }
         }
-        return reJson(200,'保存成功',[]);
+        return reTmJsonObj(200,'保存成功',[]);
     }
 
     /**
@@ -192,17 +192,17 @@ class System extends Controller
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $condition = [];
         $condition['key'] = ['ali_sms_key_id','ali_sign_name','ali_key_secret','ali_check_template_code'];
         $condition['type'] = 'client';
         $ConfigList = $this->ConfigModel->getConfigList($condition);
         if($ConfigList === false){
-            return reJson(500, '获取失败', []);
+            return reTmJsonObj(500, '获取失败', []);
         }
         $ConfigList = $this->ConfigModel->ArrayToKey($ConfigList);
-        return reJson(200, '获取成功', $ConfigList);
+        return reTmJsonObj(200, '获取成功', $ConfigList);
     }
 
     /**
@@ -216,14 +216,14 @@ class System extends Controller
         $remarks = ['Jpush_key'=>'极光key','Jpush_secret'=>'极光secret'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         foreach ($params as $val){
             if(!empty($inputData[$val])){
                 $this->ConfigModel->batchSaveConfig($val,$inputData[$val],$remarks[$val],'client');
             }
         }
-        return reJson(200,'保存成功',[]);
+        return reTmJsonObj(200,'保存成功',[]);
     }
 
     /**
@@ -236,17 +236,17 @@ class System extends Controller
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $condition = [];
         $condition['key'] = ['Jpush_key','Jpush_secret'];
         $condition['type'] = 'client';
         $ConfigList = $this->ConfigModel->getConfigList($condition);
         if($ConfigList === false){
-            return reJson(500, '获取失败', []);
+            return reTmJsonObj(500, '获取失败', []);
         }
         $ConfigList = $this->ConfigModel->ArrayToKey($ConfigList);
-        return reJson(200, '获取成功', $ConfigList);
+        return reTmJsonObj(200, '获取成功', $ConfigList);
     }
     /**
      *设置版本信息
@@ -259,15 +259,15 @@ class System extends Controller
         $remarks = ['version'=>'版本号','must_update'=>'强制更新'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
-        if(!in_array($inputData['type'],['ios_version','android_version']))return reJson(500,'更新失败');
+        if(!in_array($inputData['type'],['ios_version','android_version']))return reTmJsonObj(500,'更新失败');
         foreach ($remarks as $key => $val){
             if(!empty($inputData[$key])){
                 $this->ConfigModel->batchSaveConfig($key,$inputData[$key],$val,$inputData['type']);
             }
         }
-        return reJson(200,'保存成功',[]);
+        return reTmJsonObj(200,'保存成功',[]);
     }
 
     /**
@@ -285,17 +285,17 @@ class System extends Controller
             '2'=>$root_address.'/db/V2.sql',
         );
         if(empty($update_data[$version])){
-            return reJson(500,'无更新',[]);
+            return reTmJsonObj(500,'无更新',[]);
         }
         if(!file_exists($update_data[$version])){
-            return reJson(500,'无更新',[]);
+            return reTmJsonObj(500,'无更新',[]);
         }
         $sql = file_get_contents($update_data[$version]);
         $result = Db::execute($sql);
         if($result){
             unlink($update_data[$version]);
         }
-        return reJson(200,'更新完成',[]);
+        return reTmJsonObj(200,'更新完成',[]);
     }
 
     /**
@@ -309,7 +309,7 @@ class System extends Controller
         $params = ['token'];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $condition = [
             ['access_key','=',$inputData['token']]
@@ -317,9 +317,9 @@ class System extends Controller
         $userModel = new UserModel();
         $user = $userModel->getUserCount($condition);
         if($user >= 1){
-            return reJson(200,'有效', []);
+            return reTmJsonObj(200,'有效', []);
         }
-        return reJson(500,'无效', []);
+        return reTmJsonObj(500,'无效', []);
     }
 
     /**
@@ -333,14 +333,14 @@ class System extends Controller
         $remarks = ['PullDataKey'=>'从平台拉取数据key'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         foreach ($params as $val){
             if(!empty($inputData[$val])){
                 $this->ConfigModel->batchSaveConfig($val,$inputData[$val],$remarks[$val],'client');
             }
         }
-        return reJson(200,'保存成功',[]);
+        return reTmJsonObj(200,'保存成功',[]);
     }
 
     /**
@@ -353,17 +353,17 @@ class System extends Controller
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $condition = [];
         $condition['key'] = ['PullDataKey'];
         $condition['type'] = 'client';
         $ConfigList = $this->ConfigModel->getConfigList($condition);
         if($ConfigList === false){
-            return reJson(500, '获取失败', []);
+            return reTmJsonObj(500, '获取失败', []);
         }
         $ConfigList = $this->ConfigModel->ArrayToKey($ConfigList);
-        return reJson(200, '获取成功', $ConfigList);
+        return reTmJsonObj(200, '获取成功', $ConfigList);
     }
 
     /**
@@ -377,14 +377,14 @@ class System extends Controller
         $remarks = ['alipay_app_id'=>'支付宝支付appid','alipay_public_key'=>'支付宝支付公钥','alipay_private_key'=>'支付宝支付私钥'];
         /*$ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }*/
         foreach ($params as $val){
             if(isset($inputData[$val])){
                 $this->ConfigModel->batchSaveConfig($val,$inputData[$val],$remarks[$val],'payment');
             }
         }
-        return reJson(200,'保存成功',[]);
+        return reTmJsonObj(200,'保存成功',[]);
     }
 
     /**
@@ -398,20 +398,20 @@ class System extends Controller
         $remarks = ['wechat_app_id'=>'微信appid','wechat_mch_id'=>'微信商户号','wechat_key'=>'微信PAI秘钥'];
         /*$ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }*/
        /* if(!file_exists(Env::get('root_path')."/Wechatpayfile/apiclient_cert.pem")){
-            return reJson(500, "客户端证书文件未上传", []);
+            return reTmJsonObj(500, "客户端证书文件未上传", []);
         }
         if( !file_exists(Env::get('root_path')."/Wechatpayfile/apiclient_key.pem")){
-            return reJson(500, "客户端秘钥文件未上传", []);
+            return reTmJsonObj(500, "客户端秘钥文件未上传", []);
         }*/
         foreach ($params as $val){
             if(isset($inputData[$val])){
                 $this->ConfigModel->batchSaveConfig($val,$inputData[$val],$remarks[$val],'payment');
             }
         }
-        return reJson(200,'保存成功',[]);
+        return reTmJsonObj(200,'保存成功',[]);
     }
 
     /**
@@ -424,20 +424,20 @@ class System extends Controller
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $condition = [];
         $condition['key'] = ['alipay_app_id','alipay_public_key','alipay_private_key'];
         $condition['type'] = 'payment';
         $ConfigList = $this->ConfigModel->getConfigList($condition);
         if($ConfigList === false){
-            return reJson(500, '获取失败', []);
+            return reTmJsonObj(500, '获取失败', []);
         }
         $ConfigList = $this->ConfigModel->ArrayToKey($ConfigList);
         $ConfigList['alipay_app_id'] = empty($ConfigList['alipay_app_id'])?"":$ConfigList['alipay_app_id'];
         $ConfigList['alipay_public_key'] = empty($ConfigList['alipay_public_key'])?"":$ConfigList['alipay_public_key'];
         $ConfigList['alipay_private_key'] = empty($ConfigList['alipay_private_key'])?"":$ConfigList['alipay_private_key'];
-        return reJson(200, '获取成功', $ConfigList);
+        return reTmJsonObj(200, '获取成功', $ConfigList);
     }
 
     /**
@@ -450,14 +450,14 @@ class System extends Controller
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $condition = [];
         $condition['key'] = ['wechat_app_id','wechat_mch_id','wechat_key'];
         $condition['type'] = 'payment';
         $ConfigList = $this->ConfigModel->getConfigList($condition);
         if($ConfigList === false){
-            return reJson(500, '获取失败', []);
+            return reTmJsonObj(500, '获取失败', []);
         }
         $ConfigList = $this->ConfigModel->ArrayToKey($ConfigList);
         $ConfigList['wechat_app_id'] = empty($ConfigList['wechat_app_id'])?"":$ConfigList['wechat_app_id'];
@@ -465,7 +465,7 @@ class System extends Controller
         $ConfigList['wechat_key'] = empty($ConfigList['wechat_key'])?"":$ConfigList['wechat_key'];
         $ConfigList['apiclient_cert'] = file_exists(Env::get('root_path')."Wechatpayfile/apiclient_cert.pem");
         $ConfigList['apiclient_key'] = file_exists(Env::get('root_path')."Wechatpayfile/apiclient_key.pem");
-        return reJson(200, '获取成功', $ConfigList);
+        return reTmJsonObj(200, '获取成功', $ConfigList);
     }
 
     /*上传微信支付配置文件*/
@@ -476,13 +476,13 @@ class System extends Controller
         $params = ["type"];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         if(!("apiclient_cert" == $inputData['type'] || "apiclient_key" == $inputData['type'])){
-            return reJson(500, "type值不对", []);
+            return reTmJsonObj(500, "type值不对", []);
         }
         if(!isset($_FILES["file"])){
-            return reJson(500, "请选择文件上传", []);
+            return reTmJsonObj(500, "请选择文件上传", []);
         }
         $arr = $_FILES["file"];
 
@@ -505,16 +505,16 @@ class System extends Controller
                     unlink($path."/".$intofilename);
                 }
                 if(move_uploaded_file($uploaded_file,$path."/".$intofilename)) {
-                    return reJson(200, "上传成功", []);
+                    return reTmJsonObj(200, "上传成功", []);
                 } else {
-                    return reJson(500, "保存失败，请重新上传", []);
+                    return reTmJsonObj(500, "保存失败，请重新上传", []);
                 }
             } else {
-                return reJson(500, "上传失败", []);
+                return reTmJsonObj(500, "上传失败", []);
             }
 
         }else{
-            return reJson(500, "文件格式不对", []);
+            return reTmJsonObj(500, "文件格式不对", []);
         }
     }
 
@@ -531,17 +531,17 @@ class System extends Controller
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $condition = [];
         $condition['key'] = ['BackGroupPic'];
         $condition['type'] = 'client';
         $ConfigList = $this->ConfigModel->getConfigList($condition);
         if($ConfigList === false){
-            return reJson(500, '获取失败', []);
+            return reTmJsonObj(500, '获取失败', []);
         }
         $ConfigList = $this->ConfigModel->ArrayToKey($ConfigList);
-        return reJson(200, '获取成功', $ConfigList);
+        return reTmJsonObj(200, '获取成功', $ConfigList);
     }
 
     /**
@@ -555,14 +555,14 @@ class System extends Controller
         $remarks = ['BackGroupPic'=>'个人中心背景图'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         foreach ($params as $val){
             if(!empty($inputData[$val])){
                 $this->ConfigModel->batchSaveConfig($val,$inputData[$val],$remarks[$val],'client');
             }
         }
-        return reJson(200,'保存成功',[]);
+        return reTmJsonObj(200,'保存成功',[]);
     }
 
     /**
@@ -575,17 +575,17 @@ class System extends Controller
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $condition = [];
         $condition['key'] = ['auto_location','set_default_province','set_default_city','set_default_area'];
         $condition['type'] = 'client';
         $ConfigList = $this->ConfigModel->getConfigList($condition);
         if($ConfigList === false){
-            return reJson(500, '获取失败', []);
+            return reTmJsonObj(500, '获取失败', []);
         }
         $ConfigList = $this->ConfigModel->ArrayToKey($ConfigList);
-        return reJson(200, '获取成功',$ConfigList);
+        return reTmJsonObj(200, '获取成功',$ConfigList);
     }
 
     /**
@@ -606,12 +606,12 @@ class System extends Controller
             $params[] = 'set_default_area';
         }
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         foreach ($params as $val){
             $this->ConfigModel->batchSaveConfig($val,$inputData[$val],$remarks[$val],'client');
         }
-        return reJson(200,'保存成功',[]);
+        return reTmJsonObj(200,'保存成功',[]);
     }
 
     /**
@@ -625,16 +625,16 @@ class System extends Controller
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $condition = [];
         $condition['key'] = ['start_adv_type'];
         $condition['type'] = 'app';
         $ConfigList = $this->ConfigModel->getOneConfig($condition);
         if($ConfigList === false){
-            return reJson(500, '获取失败', []);
+            return reTmJsonObj(500, '获取失败', []);
         }
-        return reJson(200, '获取成功',[$ConfigList['key']=>$ConfigList['value']]);
+        return reTmJsonObj(200, '获取成功',[$ConfigList['key']=>$ConfigList['value']]);
     }
 
     /**
@@ -648,14 +648,14 @@ class System extends Controller
         $remarks = ['start_adv_type'=>'启动页播放方式'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         foreach ($params as $val){
             if(!empty($inputData[$val])){
                 $this->ConfigModel->batchSaveConfig($val,$inputData[$val],$remarks[$val],'app');
             }
         }
-        return reJson(200,'保存成功',[]);
+        return reTmJsonObj(200,'保存成功',[]);
     }
 
     /**
@@ -670,14 +670,14 @@ class System extends Controller
         $remarks = ['type'=>'设置上传方式'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         foreach ($params as $val){
             if(!empty($inputData[$val])){
                 $this->ConfigModel->batchSaveConfig($val,$inputData[$val],$remarks[$val],'upload');
             }
         }
-        return reJson(200,'保存成功',[]);
+        return reTmJsonObj(200,'保存成功',[]);
     }
 
     /**
@@ -690,16 +690,16 @@ class System extends Controller
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $condition = [];
         $condition['key'] = ['type'];
         $condition['type'] = 'upload';
         $ConfigList = $this->ConfigModel->getOneConfig($condition);
         if($ConfigList === false){
-            return reJson(500, '获取失败', []);
+            return reTmJsonObj(500, '获取失败', []);
         }
-        return reJson(200, '获取成功',[$ConfigList['key']=>$ConfigList['value']]);
+        return reTmJsonObj(200, '获取成功',[$ConfigList['key']=>$ConfigList['value']]);
     }
 
     /**
@@ -713,16 +713,14 @@ class System extends Controller
         $remarks = ['path'=>'路径','absolute_path'=>'扩展资源盘绝对路径','cdn'=>'资源盘域名'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $params[] = 'absolute_path';
         $params[] = 'cdn';
         foreach ($params as $val){
-            if(!empty($inputData[$val])){
                 $this->ConfigModel->batchSaveConfig($val,$inputData[$val],$remarks[$val],'LOCALupload');
-            }
         }
-        return reJson(200,'保存成功',[]);
+        return reTmJsonObj(200,'保存成功',[]);
     }
 
     /**
@@ -735,17 +733,17 @@ class System extends Controller
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $condition = [];
         $condition['key'] = ['path','absolute_path','cdn'];
         $condition['type'] = 'LOCALupload';
         $ConfigList = $this->ConfigModel->getConfigList($condition);
         if($ConfigList === false){
-            return reJson(500, '获取失败', []);
+            return reTmJsonObj(500, '获取失败', []);
         }
         $ConfigList = $this->ConfigModel->ArrayToKey($ConfigList);
-        return reJson(200, '获取成功', $ConfigList);
+        return reTmJsonObj(200, '获取成功', $ConfigList);
     }
 
     /**
@@ -755,18 +753,18 @@ class System extends Controller
         //判断请求方式以及请求参数
         $inputData = Request::post();
         $method = Request::method();
-        $params = ['host','username','password','port','path'];
-        $remarks = ['host'=>'域名','username'=>'用户名','password'=>'密码','port'=>'端口号','path'=>'路径'];
+        $params = ['host','username','password','port','path','cdn'];
+        $remarks = ['host'=>'ip','username'=>'用户名','password'=>'密码','port'=>'端口号','path'=>'路径','cdn'=>'访问域名'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         foreach ($params as $val){
             if(!empty($inputData[$val])){
                 $this->ConfigModel->batchSaveConfig($val,$inputData[$val],$remarks[$val],'FTPupload');
             }
         }
-        return reJson(200,'保存成功',[]);
+        return reTmJsonObj(200,'保存成功',[]);
     }
 
     /**
@@ -779,17 +777,17 @@ class System extends Controller
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $condition = [];
-        $condition['key'] = ['host','username','password','port','path'];
+        $condition['key'] = ['host','username','password','port','path','cdn'];
         $condition['type'] = 'FTPupload';
         $ConfigList = $this->ConfigModel->getConfigList($condition);
         if($ConfigList === false){
-            return reJson(500, '获取失败', []);
+            return reTmJsonObj(500, '获取失败', []);
         }
         $ConfigList = $this->ConfigModel->ArrayToKey($ConfigList);
-        return reJson(200, '获取成功', $ConfigList);
+        return reTmJsonObj(200, '获取成功', $ConfigList);
     }
 
     /**
@@ -803,14 +801,14 @@ class System extends Controller
         $remarks = ['accessKeyId'=>'OSS的key','accessKeySecret'=>'OSS的Secret','endpoint'=>'OSS的域名','bucket'=>'OSS的空间','cdn'=>'外网访问域名'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         foreach ($params as $val){
             if(!empty($inputData[$val])){
                 $this->ConfigModel->batchSaveConfig($val,$inputData[$val],$remarks[$val],'OSSupload');
             }
         }
-        return reJson(200,'保存成功',[]);
+        return reTmJsonObj(200,'保存成功',[]);
     }
 
     /**
@@ -823,17 +821,17 @@ class System extends Controller
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $condition = [];
         $condition['key'] = ['accessKeyId','accessKeySecret','endpoint','bucket','cdn'];
         $condition['type'] = 'OSSupload';
         $ConfigList = $this->ConfigModel->getConfigList($condition);
         if($ConfigList === false){
-            return reJson(500, '获取失败', []);
+            return reTmJsonObj(500, '获取失败', []);
         }
         $ConfigList = $this->ConfigModel->ArrayToKey($ConfigList);
-        return reJson(200, '获取成功', $ConfigList);
+        return reTmJsonObj(200, '获取成功', $ConfigList);
     }
 
     /**
@@ -847,14 +845,14 @@ class System extends Controller
         $remarks = ['accessKey'=>'七牛key','secretKey'=>'七牛secret','bucket'=>'七牛空间','upload'=>'七牛上传地址','cdn'=>'七牛获取文件域名'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         foreach ($params as $val){
             if(!empty($inputData[$val])){
                 $this->ConfigModel->batchSaveConfig($val,$inputData[$val],$remarks[$val],'QNupload');
             }
         }
-        return reJson(200,'保存成功',[]);
+        return reTmJsonObj(200,'保存成功',[]);
     }
 
     /**
@@ -867,17 +865,17 @@ class System extends Controller
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $condition = [];
         $condition['key'] = ['accessKey','secretKey','bucket','upload','cdn'];
         $condition['type'] = 'QNupload';
         $ConfigList = $this->ConfigModel->getConfigList($condition);
         if($ConfigList === false){
-            return reJson(500, '获取失败', []);
+            return reTmJsonObj(500, '获取失败', []);
         }
         $ConfigList = $this->ConfigModel->ArrayToKey($ConfigList);
-        return reJson(200, '获取成功', $ConfigList);
+        return reTmJsonObj(200, '获取成功', $ConfigList);
     }
 
     /**
@@ -891,14 +889,14 @@ class System extends Controller
         $remarks = ['Baidu_Api_Key'=>'百度统计key','Baidu_Secret_Key'=>'百度统计密钥','Baidu_android_App_Key'=>'百度统计应用安卓key','Baidu_iOS_App_Key'=>'百度统计应用iOSkey'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         foreach ($params as $val){
             if(!empty($inputData[$val])){
                 $this->ConfigModel->batchSaveConfig($val,$inputData[$val],$remarks[$val],'BaiduAnalysis');
             }
         }
-        return reJson(200,'保存成功',[]);
+        return reTmJsonObj(200,'保存成功',[]);
     }
 
     /**
@@ -911,17 +909,63 @@ class System extends Controller
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $condition = [];
         $condition['key'] = ['Baidu_Api_Key','Baidu_Secret_Key','Baidu_android_App_Key','Baidu_iOS_App_Key'];
         $condition['type'] = 'BaiduAnalysis';
         $ConfigList = $this->ConfigModel->getConfigList($condition);
         if($ConfigList === false){
-            return reJson(500, '获取失败', []);
+            return reTmJsonObj(500, '获取失败', []);
         }
         $ConfigList = $this->ConfigModel->ArrayToKey($ConfigList);
-        return reJson(200, '获取成功', $ConfigList);
+        return reTmJsonObj(200, '获取成功', $ConfigList);
+    }
+
+    /**
+     * 设置微信公众号配置
+     */
+    public function setWechatPublicConfig(){
+        //判断请求方式以及请求参数
+        $inputData = Request::post();
+        $method = Request::method();
+        $params = ['wechat_public_app_id','wechat_public_app_secret'];
+        $remarks = ['wechat_public_app_id'=>'微信公众号appid','wechat_public_app_secret'=>'微信公众号AppSecret'];
+        $ret = checkBeforeAction($inputData, [], $method, 'POST', $msg);
+        if(!$ret){
+            return reTmJsonObj(500, $msg, []);
+        }
+        foreach ($params as $val){
+            if(isset($inputData[$val])){
+                $this->ConfigModel->batchSaveConfig($val,$inputData[$val],$remarks[$val],'wechat');
+            }
+        }
+        return reTmJsonObj(200,'保存成功',[]);
+    }
+
+    /**
+     * 获取微信公众号配置
+     */
+    public function getWechatPublicConfig(){
+        //判断请求方式以及请求参数
+        $inputData = Request::get();
+        $method = Request::method();
+        $params = [];
+        $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
+        if(!$ret){
+            return reTmJsonObj(500, $msg, []);
+        }
+        $condition = [];
+        $condition['key'] = ['wechat_public_app_id','wechat_public_app_secret'];
+        $condition['type'] = 'wechat';
+        $ConfigList = $this->ConfigModel->getConfigList($condition);
+        if($ConfigList === false){
+            return reTmJsonObj(500, '获取失败', []);
+        }
+        $ConfigList = $this->ConfigModel->ArrayToKey($ConfigList);
+        $ConfigList['wechat_public_app_id'] = empty($ConfigList['wechat_public_app_id'])?"":$ConfigList['wechat_public_app_id'];
+        $ConfigList['wechat_public_app_secret'] = empty($ConfigList['wechat_public_app_secret'])?"":$ConfigList['wechat_public_app_secret'];
+        return reTmJsonObj(200, '获取成功', $ConfigList);
     }
 
 }

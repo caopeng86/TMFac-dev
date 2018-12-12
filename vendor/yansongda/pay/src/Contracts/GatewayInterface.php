@@ -5,6 +5,7 @@ namespace Yansongda\Pay\Contracts;
 interface GatewayInterface
 {
     /**
+<<<<<<< HEAD
      * pay a order.
      *
      * @author yansongda <me@yansongda.cn>
@@ -60,4 +61,16 @@ interface GatewayInterface
      * @return array|bool
      */
     public function verify($data, $sign = null, $sync = false);
+=======
+     * Pay an order.
+     *
+     * @author yansongda <me@yansongda.cn>
+     *
+     * @param string $endpoint
+     * @param array  $payload
+     *
+     * @return \Yansongda\Supports\Collection|\Symfony\Component\HttpFoundation\Response
+     */
+    public function pay($endpoint, array $payload);
+>>>>>>> dev
 }

@@ -1,0 +1,237 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="lib/html5shiv.js"></script>
+    <script type="text/javascript" src="lib/respond.min.js"></script>
+
+    <![endif]-->
+    <link href="https://cdn.bootcss.com/bootstrap/4.1.1/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="lib/layui/css/layui.css" />
+    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
+    <!--[if IE 6]>
+    <script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+    <script>DD_belatedPNG.fix('*');</script>
+    <![endif]-->
+    <title>定位</title>
+    <style type="text/css">
+        .tipopen{
+            color:#bcbcbc
+        }
+        .tipclose{
+            color:#bcbcbc;
+            display: none;
+        }
+        .form-group{
+            float:left;
+            margin: 10px 20px 30px 0;
+        }
+        #target{
+            display: none;
+            margin-top: 20px;
+        }
+        .comfirm{
+            width:100%;
+            margin-top: 20px;
+            display: none;
+            clear:both
+        }
+        .layui-form-onswitch {
+            border-color: #1E9FFF;
+            background-color: #1E9FFF;
+        }
+        .breadcrumb {
+            display: block;
+        }
+        .layui-btn-normal {
+            background-color: #1E9FFF;
+            height: 30px;
+            line-height: 30px !important;
+            width: 90px;
+        }
+        .form-control{
+            font-size: 14px;
+
+        }
+    </style>
+</head>
+<body>
+
+<!--<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 配置 <span class="c-gray en">&gt;</span> 定位 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px;display: block" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>-->
+<div class="page-container">
+    <form class="layui-form" action="">
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="padding: 9px 0;text-align: left;font-size: 20px;">自动定位</label>
+            <div class="layui-input-block">
+                <input type="checkbox" class="openkey" lay-filter="openAddress" name="switch" lay-skin="switch" lay-text="开启|关闭">
+            </div>
+        </div>
+    </form>
+    <p class="tipopen">自动定位开启后，系统自动将识别用户的定位</p>
+    <p class="tipclose">自动定位关闭后，将显示默认定位</p>
+    <div id="target">
+        <div class="form-group">
+            <label class="sr-only" for="province1">Province</label>
+            <select class="form-control" id="province1"></select>
+        </div>
+        <div class="form-group">
+            <label class="sr-only" for="city1">City</label>
+            <select class="form-control" id="city1"></select>
+        </div>
+        <div class="form-group">
+            <label class="sr-only" for="district1">District</label>
+            <select class="form-control" id="district1"></select>
+        </div>
+    </div>
+    <div class="hideinputbox">
+        <input type="hidden">
+        <input type="hidden">
+        <input type="hidden">
+    </div>
+    <div class="comfirm">
+        <button class="layui-btn layui-btn-normal submit">确定</button>
+    </div>
+</div>
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script src="https://cdn.bootcss.com/bootstrap/4.1.1/js/bootstrap.js"></script>
+<script type="text/javascript" src="lib/distpicker/distpicker.data.js"></script>
+<script type="text/javascript" src="lib/distpicker/distpicker.js"></script>
+<script type="text/javascript" src="lib/layui/layui.all.js"></script>
+<script type="text/javascript" src="lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript">
+    $(".submit").click(function(){
+        setLocation(0,$('#province1').val(),$('#city1').val(),$('#district1').val());
+    });
+    // $("#target").distpicker({
+    //     autoSelect: false
+    // });
+    $('#target #province1').change(function(event) {
+        $('.hideinputbox input').eq($(this).index()).val($(this).val());
+    });
+    $('#target #city1').change(function(event) {
+        $('.hideinputbox input').eq($(this).index()).val($(this).val());
+    });
+    $('#target #district1').change(function(event) {
+        $('.hideinputbox input').eq($(this).index()).val($(this).val());
+    });
+    var openAddress=false
+    var province=""
+    var city=""
+    var district=""
+    layui.use('form', function() {
+        var form = layui.form;
+        form.on('switch(openAddress)', function (data) {
+            openAddress=this.checked;
+            if(openAddress){
+                setLocation(1,"","","");
+                //请求后端数据
+                $(".tipopen").show()
+                $(".tipclose").hide()
+                $("#target").hide()
+                $(".comfirm").hide()
+            }else{
+                $(".tipopen").hide()
+                $(".tipclose").show()
+                $("#target").show()
+                $(".comfirm").show()
+            }
+        })
+    });
+    $(window).ready(function(){
+        $.ajax({
+            type: "get",
+            url: "/system/system/getLocationConfig",
+            cache: false,  //禁用缓存
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("token", localStorage.getItem("token"));
+            },
+            dataType: "json",
+            success: function (data) {
+                if(data.code==200){
+                    province=data.data.set_default_province
+                    city=data.data.set_default_city
+                    district=data.data.set_default_area
+                    $("#target").distpicker('destroy');
+                    $("#target").distpicker({
+                        province:province,
+                        city:city,
+                        district:district,
+                        autoSelect: true,
+                        placeholder: false
+                    });
+                    if(data.data.auto_location=="1"){
+                        $(".openkey").attr('checked','true')
+                        openAddress=true
+                        layui.use('form', function() {
+                            var form = layui.form;
+                            form.render();
+                        })
+                        $(".tipopen").show()
+                        $(".tipclose").hide()
+                        $("#target").hide()
+                        $(".comfirm").hide()
+                    }else{
+                        $(".openkey").removeAttr('checked')
+                        openAddress=false
+                        layui.use('form', function() {
+                            var form = layui.form;
+                            form.render();
+                        })
+                        $(".tipopen").hide()
+                        $(".tipclose").show()
+                        $("#target").show()
+                        $(".comfirm").show()
+
+                    }
+                }else if(data.code==501){
+                    parent.parent.checkToken()
+                }else{
+                    layer.msg(data.msg)
+                }
+            },error:function(){
+                layer.msg("网络错误，请稍后再试")
+            }
+        })
+    });
+    function setLocation(auto_location,set_default_province,set_default_city,set_default_area){
+        $.ajax({
+            type: "post",
+            url: "/system/system/setLocationConfig",
+            cache: false,  //禁用缓存
+            data:{'auto_location':auto_location,'set_default_province':set_default_province,'set_default_city':set_default_city,'set_default_area':set_default_area},
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("token", localStorage.getItem("token"));
+            },
+            dataType: "json",
+            success: function (data) {
+                if(data.code==200){
+                    layer.msg("设置成功")
+                }else if(data.code==501){
+                    parent.parent.checkToken()
+                }else{
+                    layer.msg(data.msg)
+                }
+            },error:function(){
+                layer.msg("网络错误，请稍后再试")
+            }
+        })
+    }
+</script>
+</body>
+</html>

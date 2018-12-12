@@ -26,12 +26,16 @@ class Memberhistory extends Base
      */
     public function addHistory(){
         //判断请求方式以及请求参数
-        $inputData = Request::post();
+       // $inputData = Request::post();
+        $inputData = getEncryptPostData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['member_code','title','app_id','article_id'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         //判断是否已历史
@@ -43,27 +47,27 @@ class Memberhistory extends Base
         ];
         $list = $this->historyModel->historyList($condition, 'title');
         if($list === false){
-            return reJson(500, '获取历史列表失败', []);
+            return reTmJsonObj(500, '获取历史列表失败', []);
         }
 
         //修改历史记录时间
         if(!empty($list)){
             $res = $this->historyModel->updateHistory($condition, ['create_time' => time()]);
             if($res === false){
-                return reJson(500, '获取历史列表失败', []);
+                return reTmJsonObj(500, '获取历史列表失败', []);
             }
 
-            return reJson(200, '历史记录已更新', []);
+            return reEncryptJson(200, '历史记录已更新', []);
         }
 
         //新增历史数据
         $inputData['create_time'] = time();
         $re = $this->historyModel->addHistory($inputData);
         if($re === false){
-            return reJson(500, '历史记录添加失败', []);
+            return reTmJsonObj(500, '历史记录添加失败', []);
         }
 
-        return reJson(200, '历史记录已添加', []);
+        return reEncryptJson(200, '历史记录已添加', []);
     }
 
     /**
@@ -76,7 +80,7 @@ class Memberhistory extends Base
         $params = ['history_id','type','member_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'DELETE', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         //拼接条件
@@ -89,10 +93,10 @@ class Memberhistory extends Base
         //删除历史记录
         $re = $this->historyModel->deleteHistory($condition);
         if($re === false){
-            return reJson(500, '删除历史失败', []);
+            return reTmJsonObj(500, '删除历史失败', []);
         }
 
-        return reJson(200, '删除历史成功', []);
+        return reTmJsonObj(200, '删除历史成功', []);
     }
 
     /**
@@ -100,12 +104,16 @@ class Memberhistory extends Base
      */
     public function getHistoryList(){
         //判断请求方式以及请求参数
-        $inputData = Request::get();
+       // $inputData = Request::get();
+        $inputData = getEncryptGetData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
         $method = Request::method();
         $params = ['index','member_code','get_time_list'];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         //条件拼接
@@ -125,7 +133,7 @@ class Memberhistory extends Base
         //获取列表数据
         $list = $this->historyModel->historyList($condition, $field, $limit, $order);
         if($list === false){
-            return reJson(500, '获取列表失败', []);
+            return reTmJsonObj(500, '获取列表失败', []);
         }
 
         $return = [
@@ -134,6 +142,6 @@ class Memberhistory extends Base
             'list' => $list,
         ];
 
-        return reJson(200, '获取列表成功', $return);
+        return reEncryptJson(200, '获取列表成功', $return);
     }
 }

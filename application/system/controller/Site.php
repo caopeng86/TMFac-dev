@@ -40,7 +40,7 @@ class Site extends Base
         $params = ['site_name'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $inputData['site_code'] = createCode();
         $inputData['add_user'] = Cache::get(Request::header('token'))['user_name'];
@@ -52,7 +52,7 @@ class Site extends Base
         if($re === false){
             Logservice::writeArray(['sql'=>$this->siteModel->getLastSql()], '新增站点数据失败', 2);
             Db::rollback();
-            return reJson(500, '站点信息保存失败', []);
+            return reTmJsonObj(500, '站点信息保存失败', []);
         }
 
         //将新增的站点与超级管理员关联
@@ -60,11 +60,11 @@ class Site extends Base
         if($role === false){
             Logservice::writeArray(['sql'=>$this->siteModel->getLastSql()], '新增站点角色失败', 2);
             Db::rollback();
-            return reJson(500, '站点关联信息保存失败', []);
+            return reTmJsonObj(500, '站点关联信息保存失败', []);
         }
         Db::commit();
         Logservice::writeArray(['inputData'=>$inputData], '新增站点');
-        return reJson(200, '站点信息保存成功', []);
+        return reTmJsonObj(200, '站点信息保存成功', []);
     }
 
     /**
@@ -77,7 +77,7 @@ class Site extends Base
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500,$msg,[]);
+            return reTmJsonObj(500,$msg,[]);
         }
 
         //获取缓存中数据
@@ -101,7 +101,7 @@ class Site extends Base
             Cache::set('site_info', $info, 300);
         }
 
-        return reJson(200, '获取系统升级信息成功', $info);
+        return reTmJsonObj(200, '获取系统升级信息成功', $info);
     }
 
     /**
@@ -114,7 +114,7 @@ class Site extends Base
         $params = ['index'];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500,$msg,[]);
+            return reTmJsonObj(500,$msg,[]);
         }
 
         $condition = [];
@@ -139,7 +139,7 @@ class Site extends Base
         $siteList = $this->siteModel->getSiteList($condition, $field, $limit, $order);
         if($siteList === false){
             Logservice::writeArray(['sql'=>$this->siteModel->getLastSql()], '获取站点列表失败', 2);
-            return reJson(500, '获取站点列表失败', []);
+            return reTmJsonObj(500, '获取站点列表失败', []);
         }
         //转换时间戳
         foreach ($siteList as $key => $value){
@@ -154,7 +154,7 @@ class Site extends Base
             "total" => $count
         ];
 
-        return reJson(200, '获取站点列表成功', $re);
+        return reTmJsonObj(200, '获取站点列表成功', $re);
     }
 
     /**
@@ -167,7 +167,7 @@ class Site extends Base
         $params = ['site_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500,$msg,[]);
+            return reTmJsonObj(500,$msg,[]);
         }
 
         $condition['site_code'] = $inputData['site_code'];
@@ -177,7 +177,7 @@ class Site extends Base
             reJson(500, '获取站点信息失败', []);
         }
 
-        return reJson(200, '获取站点信息成功', $site_info);
+        return reTmJsonObj(200, '获取站点信息成功', $site_info);
     }
 
     /**
@@ -190,7 +190,7 @@ class Site extends Base
         $params = ['site_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'PUT', $msg);
         if(!$ret){
-            return reJson(500,$msg,[]);
+            return reTmJsonObj(500,$msg,[]);
         }
         $inputData['modify_user'] = Cache::get(Request::header('token'))['user_name'];
         $inputData['modify_time'] = time();
@@ -202,7 +202,7 @@ class Site extends Base
             reJson(500, '修改站点信息失败', []);
         }
         Logservice::writeArray(['inputData'=>$inputData], '修改站点信息');
-        return reJson(200, '修改站点信息成功', []);
+        return reTmJsonObj(200, '修改站点信息成功', []);
     }
 
     /**
@@ -215,7 +215,7 @@ class Site extends Base
         $params = ['site_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'DELETE', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         $condition = ['site_code' => $inputData['site_code']];
@@ -225,7 +225,7 @@ class Site extends Base
         if($re === false){
             Logservice::writeArray(['sql'=>$this->siteModel->getLastSql()], '删除站点数据失败', 2);
             Db::rollback();
-            return reJson(500, '删除站点失败', []);
+            return reTmJsonObj(500, '删除站点失败', []);
         }
 
         //删除站点角色关联表数据
@@ -233,10 +233,10 @@ class Site extends Base
         if($role === false){
             Logservice::writeArray(['sql'=>$this->roleModel->getLastSql()], '删除站点角色数据失败', 2);
             Db::rollback();
-            return reJson(500, '删除站点关联信息失败', []);
+            return reTmJsonObj(500, '删除站点关联信息失败', []);
         }
         Db::commit();
         Logservice::writeArray(['inputData'=>$inputData], '删除站点');
-        return reJson(200, '删除站点成功', []);
+        return reTmJsonObj(200, '删除站点成功', []);
     }
 }

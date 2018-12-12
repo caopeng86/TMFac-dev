@@ -8,9 +8,11 @@
  * @param array $data
  * @return \think\response\Json
  */
-function reJson($status,$msg,$data = []){
-    if(is_array($data) && 0 == count($data)){
-        $data = json($data);
+function reJson($status,$msg,$data = [],$version = 1){
+    if(1 !== $version){
+        if(is_array($data) && 0 == count($data)){
+            $data = json($data);
+        }
     }
     return json([
         'code'=>$status,
@@ -18,7 +20,42 @@ function reJson($status,$msg,$data = []){
         'msg'=>$msg,
     ]);
 }
-/** 
+/*
+ *
+ * 当data是空数组时，转成json对象
+ * */
+function reTmJsonObj($status,$msg,$data = []){
+    if(is_array($data) && 0 == count($data)){
+        $data = json($data);
+    }
+    return json([
+        'code'=>$status,
+        'data'=>$data,
+        'msg'=>$msg,
+        'tmcode'=>1
+    ]);
+}
+
+/*获取头部参数*/
+function getAllHeader()
+{
+    $ignore = array('host','accept','content-length','content-type');
+    $headers = array();
+    foreach($_SERVER as $key=>$value){
+        if(substr($key, 0, 5)==='HTTP_'){
+            $key = substr($key, 5);
+            $key = str_replace('_', ' ', $key);
+            $key = str_replace(' ', '-', $key);
+            $key = strtolower($key);
+            if(!in_array($key, $ignore)){
+                $headers[$key] = $value;
+            }
+        }
+    }
+    return $headers;
+}
+
+/**
 *去掉bom头
 *
 */
@@ -262,10 +299,17 @@ function curlPost($url, $postData, $header = array()){
         from_id 对应的来源名称
        1：澎湃新闻
 */
-function getCommonArticle($index = 1,$pageSize = 20){
+function getCommonArticle($index = 1,$pageSize = 20,$from_id = 0,$column_id = 0){
+    $condition = [];
+    if(0!=$from_id){
+        $condition["from_id"] = $from_id;
+    }
+    if(0!=$column_id){
+        $condition["column_id"] = $column_id;
+    }
     $firstRow = ($index - 1) * $pageSize;
     $limit = $firstRow . ',' . $pageSize;
-    $re = Db::table(TM_PREFIX."common_article")->field("aid as 'otheraid',".TM_PREFIX."common_article.*")->limit($limit)->order("article_id desc")->group('aid')->select();
+    $re = Db::table(TM_PREFIX."common_article")->field("aid as 'otheraid',".TM_PREFIX."common_article.*")->where($condition)->limit($limit)->order("article_id desc")->group('aid')->select();
     if(empty($re)){
         return [];
     }
@@ -273,6 +317,83 @@ function getCommonArticle($index = 1,$pageSize = 20){
         unset($value['otheraid']);
     }
     return $re;
+}
+
+/*获取公共新闻来源和栏目方法
+
+     * 入参： 无
+    返回值：如果获取失败返回false。否则返回一个数组，格式如下
+        array(2) {
+          ["column_arrs"] => array(20) {   //栏目
+            [0] => object(stdClass)#42 (2) {
+              ["id"] => int(1)   //对应tm_commom_article表中的column_id字段或getCommonArticle()方法返回的column_id字段
+              ["value"] => string(12) "热点头条"
+            }
+            [1] => object(stdClass)#43 (2) {
+              ["id"] => int(2)
+              ["value"] => string(6) "科技"
+            }
+          }
+          ["from_arrs"] => array(5) {   //来源网站
+            [0] => object(stdClass)#63 (2) {
+              ["id"] => int(1)   //对应tm_commom_article表中的from_id字段或getCommonArticle()方法返回的from_id字段
+              ["value"] => string(6) "彭湃"
+            }
+            [1] => object(stdClass)#64 (2) {
+              ["id"] => int(2)
+              ["value"] => string(6) "搜狐"
+            }
+          }
+        }
+*/
+function getCommonArticleType(){
+    $config_data = Db::table(TM_PREFIX.'config')->field("value")->where(['key'=>"PullDataKey"])->find();
+    if(empty($config_data)){
+       return false;
+    }
+    $getFromids = tmBaseHttp("http://www.360tianma.com/reptile/Reptile/getFromids",['key'=>$config_data['value']],'POST');
+    if(empty($getFromids)){
+        return false;
+    }
+    $getFromids = json_decode($getFromids);
+    if(!isset($getFromids->code) || 200 != $getFromids->code){
+        return false;
+    }
+    return (array)$getFromids->data;
+}
+
+function tmBaseHttp($url, $params, $method = 'GET', $multi = false, $header = array()){
+    $opts = array(
+        CURLOPT_TIMEOUT        => 6000,
+        CURLOPT_RETURNTRANSFER => 1,
+        CURLOPT_SSL_VERIFYPEER => false,
+        CURLOPT_SSL_VERIFYHOST => false,
+        CURLOPT_HTTPHEADER     => $header,
+        CURLOPT_USERAGENT      => 'curl'
+    );
+    /* 根据请求类型设置特定参数 */
+    switch(strtoupper($method)){
+        case 'GET':
+            $opts[CURLOPT_URL] = $url . '?' . http_build_query($params);
+            break;
+        case 'POST':
+            //判断是否传输文件
+            $params = $multi ? $params : http_build_query($params);
+            $opts[CURLOPT_URL] = $url;
+            $opts[CURLOPT_POST] = 1;
+            $opts[CURLOPT_POSTFIELDS] = $params;
+            break;
+        default:
+            throw new Exception('不支持的请求方式！');
+    }
+    /* 初始化并执行curl请求 */
+    $ch = curl_init();
+    curl_setopt_array($ch, $opts);
+    $data  = curl_exec($ch);
+    $error = curl_error($ch);
+    curl_close($ch);
+    if($error) throw new Exception('请求发生错误：' . $error);
+    return  $data;
 }
 
 /*获取微信配置信息*/
@@ -611,3 +732,111 @@ function returnNotify($type = 1){
      return $xml;
  }
 }
+
+
+
+
+/*解密公共函数
+ 入参：待解密字符串
+ 出参：解密后的字符串
+ 注意：该解密函数只能解密天马客户端或天马web前端提供的加密函数加密的数据,并且客户端发送请求的head中必须加入客户端封装得head参数
+*/
+function tmDecrypt($data=""){
+    $head = getAllHeader();
+    if(empty($head['tmtimestamp']) || empty($head['tmrandomnum'])){
+        return false;
+    }
+    return openssl_decrypt(base64_decode($data), 'AES-128-CBC',substr(md5(base64_encode($head['tmtimestamp']).md5($head['tmrandomnum'])),0,16), OPENSSL_RAW_DATA, substr(md5(base64_encode($head['tmrandomnum']).md5($head['tmtimestamp'])),0,16));
+}
+
+/*
+ * 加密公共函数
+    入参：待加密字符串，如果想对数组加密可以先转成json字符串再传进来
+    出参：加密后的字符串
+    注意：加密后的数据可以通过天马客户端或天马web前端提供的解密方法解密,并且客户端发送请求的head中必须加入客户端封装得head参数
+*/
+function tmEncrypt($data = ""){
+    $head = getAllHeader();
+    if(empty($head['tmtimestamp']) || empty($head['tmrandomnum'])){
+        return false;
+    }else{
+        $data = openssl_encrypt($data, 'AES-128-CBC', substr(md5(base64_encode($head['tmtimestamp']).md5($head['tmtimestamp'])),0,16), OPENSSL_RAW_DATA, substr(md5($head['tmrandomnum']),0,16));
+        return base64_encode($data);
+    }
+}
+
+/*
+ * 获取加密的post参数并自动转成明文
+ * 天马自己的接口使用的
+ * */
+function getEncryptPostData()
+{
+    $data = $_POST;
+    if(count($data) == 0){
+        $data__ = file_get_contents("php://input");
+        $data = json_decode($data__, true);
+    }
+    $head = getAllHeader();
+    if(isset($head['tmencrypt']) && 1==$head['tmencrypt']){
+        $tm_data = tmDecrypt($data['tm_encrypt_data']);
+        if(!$tm_data){
+            return false;
+        }
+        $data = (array)json_decode($tm_data);
+    }
+    return $data;
+}
+
+/*
+ * 获取加密的get参数并自动转成明文
+ * 天马自己的接口使用的
+ * */
+function getEncryptGetData()
+{
+    $data = $_GET;
+    $head = getAllHeader();
+    if(isset($head['tmencrypt']) && 1==$head['tmencrypt']){
+        $data['tm_encrypt_data'] = str_replace(" ","+",$data['tm_encrypt_data']);
+        $tm_data = tmDecrypt($data['tm_encrypt_data']);
+        if(!$tm_data){
+            return false;
+        }
+        $data = (array)json_decode($tm_data);
+    }
+    return $data;
+}
+
+/**
+ * 接口返回加密json数据处理
+ * 天马自己的接口使用的
+ * @param $status
+ * @param $msg
+ * @param array $data
+ * @return \think\response\Json
+ */
+function reEncryptJson($status,$msg,$data = [],$is_encrypt=true){
+    $count = true;
+    if(is_array($data) && 0 == count($data)){
+        $count = false;
+        $data = json($data);
+    }
+    $arr = [
+        'code'=>$status,
+        'data'=>$data,
+        'msg'=>$msg,
+        'tmencrypt'=>0,
+        'tmcode'=>1
+    ];
+    $head = getAllHeader();
+    if(isset($head['tmencrypt']) && 1==$head['tmencrypt'] && $is_encrypt && $count){
+        if(is_array($data)){
+            $data = tmEncrypt(json_encode($data));
+        }else{
+            $data = tmEncrypt($data);
+        }
+        $arr['data'] = $data;
+        $arr['tmencrypt'] = 1;
+    }
+    return json($arr);
+}
+

@@ -2,6 +2,7 @@
 
 namespace Yansongda\Pay\Gateways\Alipay;
 
+<<<<<<< HEAD
 class WapGateway extends Alipay
 {
     /**
@@ -14,17 +15,34 @@ class WapGateway extends Alipay
      * @return string [description]
      */
     protected function getMethod()
-    {
-        return 'alipay.trade.wap.pay';
-    }
-
+=======
+class WapGateway extends WebGateway
+{
     /**
-     * get productCode config.
+     * Get method config.
      *
      * @author yansongda <me@yansongda.cn>
      *
      * @return string
      */
+    protected function getMethod(): string
+>>>>>>> dev
+    {
+        return 'alipay.trade.wap.pay';
+    }
+
+    /**
+<<<<<<< HEAD
+     * get productCode config.
+=======
+     * Get productCode config.
+>>>>>>> dev
+     *
+     * @author yansongda <me@yansongda.cn>
+     *
+     * @return string
+     */
+<<<<<<< HEAD
     protected function getProductCode()
     {
         return 'QUICK_WAP_WAY';
@@ -45,4 +63,10 @@ class WapGateway extends Alipay
 
         return $this->buildPayHtml();
     }
+=======
+    protected function getProductCode(): string
+    {
+        return 'QUICK_WAP_WAY';
+    }
+>>>>>>> dev
 }

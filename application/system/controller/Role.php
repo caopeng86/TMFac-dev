@@ -61,7 +61,7 @@ class Role extends Base
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         //联表查询角色列表数据
@@ -73,10 +73,10 @@ class Role extends Base
         $roleList = $this->roleModel->getRoleBranchList($condition, $field);
         if($roleList === false){
             Logservice::writeArray(['sql'=>$this->roleModel->getLastSql()], '获取角色带组织机构列表失败', 2);
-            return reJson(500, '获取角色列表失败', []);
+            return reTmJsonObj(500, '获取角色列表失败', []);
         }
 
-        return reJson(200, '获取角色列表成功', $roleList);
+        return reTmJsonObj(200, '获取角色列表成功', $roleList);
     }
 
     /**
@@ -89,17 +89,17 @@ class Role extends Base
         $params = ['role_name'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         $inputData['role_code'] = createCode();
         $re = $this->roleModel->addRole($inputData);
         if(!$re){
             Logservice::writeArray(['sql'=>$this->roleModel->getLastSql()], '新增角色失败', 2);
-            return reJson(500, '新增角色失败', []);
+            return reTmJsonObj(500, '新增角色失败', []);
         }
         Logservice::writeArray(['inputData'=>$inputData], '新增角色');
-        return reJson(200, '新增角色成功', []);
+        return reTmJsonObj(200, '新增角色成功', []);
     }
 
     /**
@@ -112,17 +112,17 @@ class Role extends Base
         $params = ['role_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'PUT', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         $condition['role_code'] = $inputData['role_code'];
         $re = $this->roleModel->updateRole($condition, $inputData);
         if($re === false){
             Logservice::writeArray(['sql'=>$this->roleModel->getLastSql()], '修改角色失败', 2);
-            return reJson(500, '修改角色失败', []);
+            return reTmJsonObj(500, '修改角色失败', []);
         }
         Logservice::writeArray(['inputData'=>$inputData], '修改角色');
-        return reJson(200, '修改角色成功', []);
+        return reTmJsonObj(200, '修改角色成功', []);
     }
 
     /**
@@ -135,7 +135,7 @@ class Role extends Base
         $params = ['role_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'DELETE', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         //删除角色表及其关联表数据
@@ -143,10 +143,10 @@ class Role extends Base
         $re = $this->roleModel->deleteAboutRole($condition);
         if($re === false){
             Logservice::writeArray(['sql'=>$this->roleModel->getLastSql()], '删除角色失败', 2);
-            return reJson(500, '删除角色失败', []);
+            return reTmJsonObj(500, '删除角色失败', []);
         }
         Logservice::writeArray(['inputData'=>$inputData], '删除角色');
-        return reJson(200, '删除角色成功', []);
+        return reTmJsonObj(200, '删除角色成功', []);
     }
 
     /**
@@ -159,10 +159,10 @@ class Role extends Base
         $params = ['role_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'PUT', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         if(!isset($inputData['site_code_list'])){
-            return reJson(500, 'site_code_list参数不存在', []);
+            return reTmJsonObj(500, 'site_code_list参数不存在', []);
         }
         //处理接收数据
         $siteCode = explode(',', $inputData['site_code_list']);
@@ -179,10 +179,10 @@ class Role extends Base
         $re = $this->roleModel->saveRoleSiteAll($condition, $roleSite);
         if(!$re){
             Logservice::writeArray(['sql'=>$this->roleModel->getLastSql()], '保存角色站点失败', 2);
-            return reJson(500, '关联角色站点失败', []);
+            return reTmJsonObj(500, '关联角色站点失败', []);
         }
         Logservice::writeArray(['inputData'=>$inputData], '关联角色站点');
-        return reJson(200, '关联角色站点成功', []);
+        return reTmJsonObj(200, '关联角色站点成功', []);
     }
 
     /**
@@ -195,7 +195,7 @@ class Role extends Base
         $params = ['role_code','component_code_list'];
         $ret = checkBeforeAction($inputData, $params, $method, 'PUT', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         //处理接收数据
@@ -213,10 +213,10 @@ class Role extends Base
         $re = $this->roleModel->saveRoleComponent($condition, $roleComponent);
         if(!$re){
             Logservice::writeArray(['sql'=>$this->roleModel->getLastSql()], '保存角色应用失败', 2);
-            return reJson(500, '关联角色应用失败', []);
+            return reTmJsonObj(500, '关联角色应用失败', []);
         }
         Logservice::writeArray(['inputData'=>$inputData], '关联角色应用');
-        return reJson(200, '关联角色应用成功', []);
+        return reTmJsonObj(200, '关联角色应用成功', []);
     }
 
     /**
@@ -229,7 +229,7 @@ class Role extends Base
         $params = ['role_code','privilege_code_list'];
         $ret = checkBeforeAction($inputData, $params, $method, 'PUT', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         //处理接收数据
@@ -247,10 +247,10 @@ class Role extends Base
         $re = $this->roleModel->saveRolePrivilege($condition, $rolePrivilege);
         if(!$re){
             Logservice::writeArray(['sql'=>$this->roleModel->getLastSql()], '保存角色权限失败', 2);
-            return reJson(500, '关联角色权限失败', []);
+            return reTmJsonObj(500, '关联角色权限失败', []);
         }
         Logservice::writeArray(['inputData'=>$inputData], '关联角色权限');
-        return reJson(200, '关联角色权限成功', []);
+        return reTmJsonObj(200, '关联角色权限成功', []);
     }
 
     /**
@@ -263,7 +263,7 @@ class Role extends Base
         $params = ['user_codes','role_codes'];
         $ret = checkBeforeAction($inputData, $params, $method, 'PUT', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         //处理传入数据
@@ -273,10 +273,10 @@ class Role extends Base
         //保存用户角色数据
         $re = $this->_saveRoleUser($userCode, $roleCode);
         if(!$re){
-            return reJson(500, '关联角色权限失败', []);
+            return reTmJsonObj(500, '关联角色权限失败', []);
         }
         Logservice::writeArray(['inputData'=>$inputData], '批量分配角色');
-        return reJson(200, '分配角色成功', []);
+        return reTmJsonObj(200, '分配角色成功', []);
     }
 
     /**
@@ -289,18 +289,18 @@ class Role extends Base
         $params = ['user_codes','copy_user_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'PUT', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         //查找复制者的所有角色
         $condition['user_code'] = $inputData['copy_user_code'];
         $roleCodes = $this->roleModel->getRoleUserList($condition, 'role_code');
         if(empty($roleCodes)){
-            return reJson(500, '复制的用户角色不存在', []);
+            return reTmJsonObj(500, '复制的用户角色不存在', []);
         }
         if($roleCodes === false){
             Logservice::writeArray(['sql'=>$this->roleModel->getLastSql()], '获取角色用户失败', 2);
-            return reJson(500, '复制的用户角色获取失败', []);
+            return reTmJsonObj(500, '复制的用户角色获取失败', []);
         }
 
         //处理数据
@@ -310,10 +310,10 @@ class Role extends Base
         //保存用户角色数据
         $re = $this->_saveRoleUser($userCode, $roleCode);
         if(!$re){
-            return reJson(500, '关联角色权限失败', []);
+            return reTmJsonObj(500, '关联角色权限失败', []);
         }
         Logservice::writeArray(['inputData'=>$inputData], '复制用户权限');
-        return reJson(200, '复制用户权限成功', []);
+        return reTmJsonObj(200, '复制用户权限成功', []);
     }
 
     /**
@@ -326,7 +326,7 @@ class Role extends Base
         $params = ['role_codes'];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         $roleCodes = explode(',', $inputData['role_codes']);
@@ -334,10 +334,10 @@ class Role extends Base
         $re = $this->roleModel->getRoleSiteList($condition, 'site_code');
         if($re === false){
             Logservice::writeArray(['sql'=>$this->roleModel->getLastSql()], '获取角色站点失败', 2);
-            return reJson(500, '查找站点数据失败', []);
+            return reTmJsonObj(500, '查找站点数据失败', []);
         }
 
-        return reJson(200, '查找站点数据成功', $re);
+        return reTmJsonObj(200, '查找站点数据成功', $re);
     }
 
     /**
@@ -350,7 +350,7 @@ class Role extends Base
         $params = ['role_codes'];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         $roleCodes = explode(',', $inputData['role_codes']);
@@ -358,10 +358,10 @@ class Role extends Base
         $re = $this->roleModel->getRoleComponentList($condition, 'component_code');
         if($re === false){
             Logservice::writeArray(['sql'=>$this->roleModel->getLastSql()], '获取角色应用失败', 2);
-            return reJson(500, '查找应用数据失败', []);
+            return reTmJsonObj(500, '查找应用数据失败', []);
         }
 
-        return reJson(200, '查找应用数据成功', $re);
+        return reTmJsonObj(200, '查找应用数据成功', $re);
     }
 
     /**
@@ -374,7 +374,7 @@ class Role extends Base
         $params = ['role_codes'];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         $roleCodes = explode(',', $inputData['role_codes']);
@@ -382,10 +382,10 @@ class Role extends Base
         $re = $this->roleModel->getRolePrivilegeList($condition, 'privilege_code');
         if($re === false){
             Logservice::writeArray(['sql'=>$this->roleModel->getLastSql()], '获取角色权限失败', 2);
-            return reJson(500, '查找权限数据失败', []);
+            return reTmJsonObj(500, '查找权限数据失败', []);
         }
 
-        return reJson(200, '查找权限数据成功', $re);
+        return reTmJsonObj(200, '查找权限数据成功', $re);
     }
 
     /**
@@ -398,7 +398,7 @@ class Role extends Base
         $params = ['user_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         $condition['tm_role_user.user_code'] = $inputData['user_code'];
@@ -406,10 +406,10 @@ class Role extends Base
         $re = $this->roleModel->getRoleUserListDetail($condition, $field);
         if($re === false){
             Logservice::writeArray(['sql'=>$this->roleModel->getLastSql()], '获取角色用户失败', 2);
-            return reJson(500, '查找角色数据失败', []);
+            return reTmJsonObj(500, '查找角色数据失败', []);
         }
 
-        return reJson(200, '查找角色数据成功', $re);
+        return reTmJsonObj(200, '查找角色数据成功', $re);
     }
 
     /**
@@ -422,7 +422,7 @@ class Role extends Base
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         //获取所有角色列表
@@ -434,7 +434,7 @@ class Role extends Base
         $roleList = $this->roleModel->getRoleBranchList($condition, $field);
         if($roleList === false){
             Logservice::writeArray(['sql'=>$this->roleModel->getLastSql()], '获取角色列表失败', 2);
-            return reJson(500, '获取角色列表失败', []);
+            return reTmJsonObj(500, '获取角色列表失败', []);
         }
         $roleCodes = array_column($roleList, 'role_code');
 
@@ -444,7 +444,7 @@ class Role extends Base
         $privilege = $this->roleModel->getRolePrivilegeListDetail($conditionPrivilege, $fieldPrivilege);
         if($privilege === false){
             Logservice::writeArray(['sql'=>$this->roleModel->getLastSql()], '获取所有权限失败', 2);
-            return reJson(500, '获取所有权限失败', []);
+            return reTmJsonObj(500, '获取所有权限失败', []);
         }
 
         //获取所有站点
@@ -453,7 +453,7 @@ class Role extends Base
         $site = $this->roleModel->getRoleSiteListDetail($conditionSite, $fieldSite);
         if($site === false){
             Logservice::writeArray(['sql'=>$this->roleModel->getLastSql()], '获取所有站点失败', 2);
-            return reJson(500, '获取所有站点失败', []);
+            return reTmJsonObj(500, '获取所有站点失败', []);
         }
 
         //拼接数据
@@ -471,7 +471,7 @@ class Role extends Base
             $roleList[$key] = $value;
         }
 
-        return reJson(200, '成功', $roleList);
+        return reTmJsonObj(200, '成功', $roleList);
     }
 
     /**
@@ -484,7 +484,7 @@ class Role extends Base
         $params = ['role_codes'];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
 
         $roleCodes = explode(',', $inputData['role_codes']);
@@ -492,10 +492,10 @@ class Role extends Base
         $re = $this->roleModel->getRolePortalList($condition, 'key');
         if($re === false){
             Logservice::writeArray(['sql'=>$this->roleModel->getLastSql()], '获取角色应用失败', 2);
-            return reJson(500, '查找应用数据失败', []);
+            return reTmJsonObj(500, '查找应用数据失败', []);
         }
 
-        return reJson(200, '查找应用数据成功', $re);
+        return reTmJsonObj(200, '查找应用数据成功', $re);
     }
 
     /**
@@ -508,10 +508,10 @@ class Role extends Base
         $params = ['role_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'PUT', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         if(!isset($inputData['portal_list'])){
-            return reJson(500, 'portal_list参数不存在', []);
+            return reTmJsonObj(500, 'portal_list参数不存在', []);
         }
         //处理接收数据
         $siteCode = explode(',', $inputData['portal_list']);
@@ -528,10 +528,10 @@ class Role extends Base
         $re = $this->roleModel->saveRolePortal($condition, $roleComponent);
         if(!$re){
             Logservice::writeArray(['sql'=>$this->roleModel->getLastSql()], '保存角色应用失败', 2);
-            return reJson(500, '关联角色应用失败', []);
+            return reTmJsonObj(500, '关联角色应用失败', []);
         }
         Logservice::writeArray(['inputData'=>$inputData], '关联角色应用');
-        return reJson(200, '关联角色应用成功', []);
+        return reTmJsonObj(200, '关联角色应用成功', []);
     }
 
 

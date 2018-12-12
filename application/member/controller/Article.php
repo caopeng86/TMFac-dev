@@ -29,12 +29,12 @@ class Article extends Base
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $info = $this->systemArticleModel->getArticleInfo(['id'=>1]);
         $info['add_time'] = date('Y-m-d h:i:s',$info['add_time']);
         $info['update_time'] = date('Y-m-d h:i:s',$info['update_time']);
-        return reJson(200,'获取成功',$info);
+        return reTmJsonObj(200,'获取成功',$info);
     }
 
     /**
@@ -47,12 +47,12 @@ class Article extends Base
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $info = $this->systemArticleModel->getArticleInfo(['id'=>2]);
         $info['add_time'] = date('Y-m-d h:i:s',$info['add_time']);
         $info['update_time'] = date('Y-m-d h:i:s',$info['update_time']);
-        return reJson(200,'获取成功',$info);
+        return reTmJsonObj(200,'获取成功',$info);
     }
 
     /**
@@ -65,11 +65,11 @@ class Article extends Base
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $info = $this->systemArticleModel->getArticleInfo(['id'=>3]);
         $info['add_time'] = date('Y-m-d h:i:s',$info['add_time']);
         $info['update_time'] = date('Y-m-d h:i:s',$info['update_time']);
-        return reJson(200,'获取成功',$info);
+        return reTmJsonObj(200,'获取成功',$info);
     }
 }

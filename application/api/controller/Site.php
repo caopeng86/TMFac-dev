@@ -36,7 +36,7 @@ class Site extends Base
         $params = ['index'];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500,$msg,[]);
+            return reTmJsonObj(500,$msg,[]);
         }
 
         $condition = [];
@@ -61,7 +61,7 @@ class Site extends Base
         $siteList = $this->siteModel->getSiteList($condition, $field, $limit, $order);
         if($siteList === false){
             Logservice::writeArray(['sql'=>$this->siteModel->getLastSql()], '获取站点列表失败', 2);
-            return reJson(500, '获取站点列表失败', []);
+            return reTmJsonObj(500, '获取站点列表失败', []);
         }
         //转换时间戳
         foreach ($siteList as $key => $value){
@@ -76,7 +76,7 @@ class Site extends Base
             "total" => $count
         ];
 
-        return reJson(200, '获取站点列表成功', $re);
+        return reTmJsonObj(200, '获取站点列表成功', $re);
     }
 
     /**
@@ -89,17 +89,17 @@ class Site extends Base
         $params = ['site_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500,$msg,[]);
+            return reTmJsonObj(500,$msg,[]);
         }
 
         $condition['site_code'] = $inputData['site_code'];
         $site_info = $this->siteModel->getSiteInfo($condition);
         if($site_info === false){
             Logservice::writeArray(['sql'=>$this->siteModel->getLastSql()], '获取站点信息失败', 2);
-            reJson(500, '获取站点信息失败', []);
+            return reTmJsonObj(500, '获取站点信息失败', []);
         }
 
-        return reJson(200, '获取站点信息成功', $site_info);
+        return reTmJsonObj(200, '获取站点信息成功', $site_info);
     }
 
     /**
@@ -112,9 +112,9 @@ class Site extends Base
         $params = ['id','message'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
-        return reJson(200,'投诉成功',[]);
+        return reTmJsonObj(200,'投诉成功',[]);
     }
 
 }

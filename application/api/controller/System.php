@@ -39,7 +39,7 @@ class System extends Controller
         if(!empty($alipayConfig['alipay_app_id']) && !empty($alipayConfig['alipay_public_key']) && !empty($alipayConfig['alipay_private_key'])){
             $hasAlipay = true;
         }
-        return reJson(200, '成功', ["hasWechat"=>$hasWechat,"hasAlipay"=>$hasAlipay]);
+        return reTmJsonObj(200, '成功', ["hasWechat"=>$hasWechat,"hasAlipay"=>$hasAlipay]);
     }
 
 
@@ -53,13 +53,13 @@ class System extends Controller
         $params = ['version','client_type'];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         if(!((int)$inputData['version'] > 0)){
-            return reJson(500,'版本号格式错误');
+            return reTmJsonObj(500,'版本号格式错误');
         }
         if(!in_array($inputData['client_type'],['iOS','Android'])){
-            return reJson(500,'客户端类型错误');
+            return reTmJsonObj(500,'客户端类型错误');
         }
         $condition = [
             ['client_type','=',$inputData['client_type']],
@@ -68,7 +68,7 @@ class System extends Controller
         $ClientVersionModel = new ClientVersionModel();
         $ClientList = $ClientVersionModel->versionList($condition,false,false,'version desc');
         if($ClientList === false){
-            return reJson(500,'获取失败');
+            return reTmJsonObj(500,'获取失败');
         }
         if(count($ClientList) > 0){
             $is_force = 0;
@@ -81,9 +81,9 @@ class System extends Controller
             $ClientList[0]['add_time'] = date('Y-m-d h:i:s',$ClientList[0]['add_time']);
             $ClientList[0]['is_force'] = $is_force; //将最新的版本替换成强制更新
             $ClientList[0]['version'] = (int)$ClientList[0]['version'];
-            return reJson(200,'发现最新版本',$ClientList[0]);
+            return reTmJsonObj(200,'发现最新版本',$ClientList[0]);
         }else{
-            return reJson(200,'已经是最新版本');
+            return reTmJsonObj(200,'已经是最新版本');
         }
     }
 
@@ -94,14 +94,14 @@ class System extends Controller
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $condition = [];
        // $condition['key'] = ['wechat_app_id','wechat_mch_id','wechat_key'];
         $condition['type'] = 'point';
         $ConfigList = $this->ConfigModel->getConfigList($condition);
         if(empty($ConfigList)){
-            return reJson(500, '获取失败', []);
+            return reTmJsonObj(500, '获取失败', []);
         }
         $ConfigList = $this->ConfigModel->ArrayToKey($ConfigList);
         $retList = [];
@@ -111,9 +111,6 @@ class System extends Controller
         foreach ($arr as $value){
             $retList[$value] = empty($ConfigList[$value])?0:(int)$ConfigList[$value];
         }
-        return reJson(200, '获取成功', $retList);
+        return reTmJsonObj(200, '获取成功', $retList);
     }
-
-
-
 }

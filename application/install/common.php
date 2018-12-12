@@ -171,9 +171,11 @@ function create_tables_multi($db=null, $prefix = '',$dir = 'db'){
     $dir_array = [];
     foreach ($file as $sql){  //当前sql文件处理
         if (is_file(Env::get('root_path').$dir.'/'.$sql)){
-            create_tables($db,$prefix,$dir.'/'.$sql);
-            if(is_numeric(strstr($sql,'.sql',true))){
+            if(is_numeric(strstr($sql,'.sql',true))){ //数字的sql文件才能被执行
+                create_tables($db,$prefix,$dir.'/'.$sql);
                 $sql_version = strstr($sql,'.sql',true);
+            }elseif($sql == 'config.sql'){ //配置文件sql
+                create_tables($db,$prefix,$dir.'/'.$sql);
             }
         }elseif($sql != '.' && $sql != '..' && is_dir(Env::get('root_path').$dir.'/'.$sql)){
             $dir_array[] = $sql;
@@ -182,7 +184,7 @@ function create_tables_multi($db=null, $prefix = '',$dir = 'db'){
     if(count($dir_array) > 0){  //递归文件夹处理
         foreach ($dir_array as $sql){
             $version = create_tables_multi($db,$prefix,$dir.'/'.$sql);
-            write_component($db,$sql,$version);
+            write_component($db,$sql,$version,$dir);
         }
     }
     return $sql_version;
@@ -244,7 +246,34 @@ function create_tables($db, $prefix = '',$sqlFile='db/backup/cl01kkdy_6RrqH.sql'
 /**
  * 写入组件版本
  */
-function write_component($db,$component_code,$version){
+function write_component($db,$component_code,$version,$dir = '/'){
+    //检查是否存在组件
+    $component = $db->execute('select * from tm_component where `component_code` = \''.$component_code.'\' limit 1;');
+    if(!$component){ //如果不存在
+        create_tables($db,'',$dir.'/'.$component_code.'/component.sql');
+        //生成访问路径
+        $portal = $db->query('select * from tm_portal limit 1;');
+        $portal = json_decode($portal[0]['portal_value'],true);
+        $num = count($portal[0]['children']) - 1;
+        $component = $db->query('select * from tm_component where `component_code` = \''.$component_code.'\' limit 1;');
+        if($component){
+            $data = [
+                "key"=>$portal[0]['key']."-".$num,
+                "title"=>$component[0]['component_name'],
+                "type"=>"url",
+                "app_code"=>"",
+                "admin_url"=>$component[0]['admin_url'],
+                "index_url"=>"",
+                "category"=>"0",
+                "url"=>"",
+                "thumb"=>$component[0]['component_pic'],
+                "site_code"=>"00000000000000000000000000000000",
+                "webUrl"=>$component[0]['admin_url']
+            ];
+            array_push($portal[0]['children'],$data);
+            $db->query('update tm_portal set portal_value = \''.addslashes(json_encode($portal)).'\';');
+        }
+    }
     $db->execute('update tm_component set `sql_version` = \''.$version.'\' where component_code = \''.$component_code.'\';');
 }
 

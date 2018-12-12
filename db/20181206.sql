@@ -1,0 +1,3 @@
+INSERT INTO `tm_config`(`key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ('app_start_image', '', '启动页图片', 'client', 1539677407, 1541755126);
+INSERT INTO `tm_config`(`key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ('app_start_image_m', '', '中等启动页', 'client', 1539677407, 1541755126);
+INSERT INTO `tm_config`(`key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ('app_start_image_s', '', '小启动页', 'client', 1539677407, 1541755126);

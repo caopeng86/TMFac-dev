@@ -72,7 +72,26 @@ class ConfigModel extends CommonModel
      * 调整数组为键对方式
      */
     public function ArrayToKey($data){
-       return array_column($data,'value','key');
+        if(is_array($data)){
+            return array_column($data,'value','key');
+        }elseif(is_object($data)){
+            $this->object_to_array($data);
+        };
+        return false;
+    }
+
+    private function object_to_array($obj)
+    {
+        $obj = (array)$obj;
+        foreach ($obj as $k => $v) {
+            if (gettype($v) == 'resource') {
+                return '';
+            }
+            if (gettype($v) == 'object' || gettype($v) == 'array') {
+                $obj[$k] = (array)$this->object_to_array($v);
+            }
+        }
+        return $obj;
     }
 
     /**

@@ -30,16 +30,16 @@ class Adv extends Base
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
         if(!$ret){
-            return reJson(500, $msg, []);
+            return reTmJsonObj(500, $msg, []);
         }
         $condition = array(
             ['status','=',1]
         );
         $advList = $this->advModel->advList($condition,false,'','sort desc');
         if($advList){
-            return reJson(200,'获取数据成功',$advList);
+            return reTmJsonObj(200,'获取数据成功',$advList);
         }
-        return reJson(500,'获取数据失败', []);
+        return reTmJsonObj(500,'获取数据失败', []);
     }
 
 }

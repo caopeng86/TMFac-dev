@@ -1,0 +1,3 @@
+INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'license', '', '框架的license', 'framework', 1541663812, 1541663812);
+INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'public_key', '', 'license的公钥', 'framework', 1541663812, 1541663812);
+INSERT INTO `tm_config`( `key`, `value`, `remarks`, `type`, `add_time`, `update_time`) VALUES ( 'domain', '', '域名', 'framework', 1541663812, 1541663812);
