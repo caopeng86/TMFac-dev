@@ -31,7 +31,7 @@ class Ueditor extends Controller
         $action = $_GET['action'];
         switch ($action) {
             case 'config':
-                $result =  json_encode($this->CONFIG);
+                $result =  json($this->CONFIG);
                 break;
             /* 上传图片 */
             case 'uploadimage':
@@ -74,7 +74,7 @@ class Ueditor extends Controller
                 ));
             }
         } else {
-            echo $result;
+            return $result;
         }
     }
     /*

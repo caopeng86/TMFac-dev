@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta charset="utf-8" name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <title>Title</title>
+    <style>
+        button{
+            display: block;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <button onclick="getUserInfo()">获取会员信息</button>
+    <button onclick="getBaseConfig()">获取基础配置信息</button>
+    <button onclick="openLoginInterface()">跳转到登录界面</button>
+    <button onclick="openUCMainInterface()">跳转到会员中心界面</button>
+    <button onclick="openBindingMobileInterface()">跳转到绑定手机界面</button>
+    <button onclick="shareUrl()">分享网页</button>
+    <button onclick="shareText()">分享文本</button>
+    <button onclick="showPayDialog()">弹出支付对话框</button>
+    <!--<button onclick="gotoPay()">前往支付</button>-->
+</div>
+
+
+<script type="text/javascript" src="http://injection.android/cordova.js" ></script>
+<script type="text/javascript" src="http://injection.android/tmcontroller.js"></script>
+<script type="text/javascript" src="/public/static/jquery/jquery-2.1.0.min.js"></script>
+<script>
+    function getUserInfo(){
+        TMController.getUser(onSuccess, onError);
+
+        function onSuccess(userInfo) {
+            alert(JSON.stringify(userInfo));
+        }
+
+        function onError(error) {
+            alert(JSON.stringify(error));
+        }
+    }
+    function getBaseConfig(){
+        TMController.getBaseConfig(onSuccess, onError);
+
+        function onSuccess(baseConfig) {
+            alert(JSON.stringify(baseConfig));
+        }
+
+        function onError(error) {
+            alert(JSON.stringify(error));
+        }
+    }
+    function openLoginInterface(){
+        TMController.openLoginInterface(onSuccess,onError);
+
+        function onSuccess() {
+            alert("onSuccess");
+        }
+
+        function onError(error) {
+            alert(error);
+        }
+    }
+    function openUCMainInterface(){
+        TMController.openUCMainInterface();
+    }
+    function openBindingMobileInterface(){
+        TMController.openBindingMobileInterface(onSuccess,onError);
+
+        function onSuccess() {
+            alert("onSuccess");
+        }
+
+        function onError(error) {
+            alert(error);
+        }
+    }
+    function shareUrl(){
+        var des = "描述";
+        var thumb = "/public/uploads/logo.png";
+        var title = "标题";
+        var url = window.location.href;
+        TMController.shareUrl(onSuccess,onError, des,thumb,title,url);
+
+        function onSuccess(platform) {
+            alert(platform);
+        }
+
+        function onError(error) {
+            alert(error);
+        }
+    }
+    function shareText(){
+        var des = "描述";
+        TMController.shareText(onSuccess, onError, des);
+
+        function onSuccess(platform) {
+            alert(platform);
+        }
+
+        function onError(error) {
+            alert(error);
+        }
+    }
+    function showPayDialog(){
+        var cost= "12.5";
+        TMController.showPayDialog(onSuccess, onError, cost);
+        function onSuccess(type) {
+            $.ajax({
+                type: "get",
+                url: "/api/tmpaydemo/paySign",
+                cache: false,  //禁用缓存
+                headers: {'token':localStorage.getItem("token")},
+                // beforeSend: function (xhr) {
+                //     xhr.setRequestHeader("token", localStorage.getItem("token"));
+                // },
+                data: {type:type},//传入组装的参数
+                dataType: "json",
+                success: function (data) {
+                    if (data.code == 500) {
+                        gotoPay(type,data.data)
+                    } else {
+                        alert(data.msg)
+                    }
+                }
+            })
+            // alert(JSON.stringify(type));
+        }
+
+        function onError(error) {
+            alert(error);
+        }
+    }
+    function gotoPay(type, content){
+        TMController.gotoPay(onSuccess, onError, type,content);
+
+        function onSuccess() {
+            alert('支付成功')
+        }
+
+        function onError(error) {
+            alert(error);
+        }
+    }
+</script>
+</body>
+</html>

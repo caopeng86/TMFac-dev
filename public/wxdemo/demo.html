@@ -10,6 +10,37 @@
     <title>分享出去的地址是什么</title>
 </head>
 <body>
-<div><img src="http://dev.360tianma.com/public/wxdemo/wxdemo2.jpg" alt=""></div>
+<div id="tm-upload" ></div>
+<script src="/public/static/js/jquery-3.31.min.js"></script>
+<script src="/public/breakpoint.js"></script>
+<script>
+    uploadcallback.filepart = function(info){ //每个切片上传成功的回调监听方法
+        console.log(info)
+        /*
+            返回示例
+            {
+                chunk:1,  // 当前切片序数
+                chunks:77, //总切片个数
+                data:{}, //服务器上传成功的信息
+                percent:"6%", //当前上传百分比
+                tmp_file:"7.5.2.4030.exe", //当前上传文件名
+                totalSize:"78434864",  //上传文件总大小
+            }*/
+    }
+    uploadcallback.complete = function(info){//整个文件上传成功的回调监听方法
+        console.log(info)
+        /*
+                 返回示例
+                 {
+                     chunk:77,  // 当前切片序数
+                     chunks:77, //总切片个数
+                     data:{}, //服务器上传成功的信息
+                     percent:"100%", //当前上传百分比
+                     tmp_file:"7.5.2.4030.exe", //当前上传文件名
+                     totalSize:"78434864",  //上传文件总大小
+                 }*/
+    }
+</script>
+
 </body>
 </html>

@@ -78,7 +78,6 @@ ajax({
 })
 
 function weChatShareConfig(){
-  console.log(window.location.host)
     var title=document.title==""?" ":document.title;
     var desc=" ";
     var link=window.location.href;
@@ -95,7 +94,7 @@ function weChatShareConfig(){
     }else if(arguments.length==4){
         title=arguments[0];
         desc=arguments[1];
-        link=arguments[2]
+        link=arguments[2];
         imgurl=arguments[3];
     }
     wx.ready(function(){

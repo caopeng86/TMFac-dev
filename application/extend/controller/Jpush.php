@@ -102,7 +102,7 @@ class Jpush extends Controller
 //        ];
         //可选参数
         $options = [
-            'apns_production' => false,  //true是生产环境false是开发环境
+            'apns_production' => true,  //true是生产环境false是开发环境
 //            'override_msg_id' => $extras['msg_id']
         ];
         $res = Jpush::$push->setPlatform($platform)
@@ -156,7 +156,7 @@ class Jpush extends Controller
 //        ];
         //可选参数
         $options = [
-            'apns_production' => false  //true是生产环境false是开发环境
+            'apns_production' => true  //true是生产环境false是开发环境
         ];
 
         $res = Jpush::$push->setPlatform($platform)

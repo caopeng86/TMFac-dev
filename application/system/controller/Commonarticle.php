@@ -88,9 +88,9 @@ class Commonarticle extends Controller
         }else{
             //    file_put_contents(__DIR__."/log/error.txt", $objMy, FILE_APPEND);
         }
-        sleep((int)$dataMy->aid_frequency);
-        file_get_contents(input('server.REQUEST_SCHEME')."://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
-        exit(1);
+   //     sleep((int)$dataMy->aid_frequency);
+   //     file_get_contents(input('server.REQUEST_SCHEME')."://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+     //   exit(1);
     }
 
 
@@ -153,9 +153,14 @@ class Commonarticle extends Controller
         }else{
             //    file_put_contents(__DIR__."/log/error.txt", $objMy, FILE_APPEND);
         }
-        sleep((int)$dataMy->data_frequency);
-        file_get_contents(input('server.REQUEST_SCHEME')."://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
-        exit(1);
+   //     sleep((int)$dataMy->data_frequency);
+     //   file_get_contents(input('server.REQUEST_SCHEME')."://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+    //    exit(1);
+    }
+
+    /*删除爬虫库里面数据*/
+    public function deleteArticles(){
+        Db::table(TM_PREFIX.'common_article')->where('put_time','<',date('Y-m-d H:i:s', time()-24*60*60))->delete();
     }
 
 

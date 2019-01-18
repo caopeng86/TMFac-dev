@@ -84,6 +84,7 @@ class Admin extends Controller
         //拼接数据
         foreach ($userList as $key => $value){
             foreach ($branchList as $k => $v) {
+                $value['branch_name'] = "";
                 if($value['branch_id'] == $v['branch_id']){
                     $value['branch_name'] = $v['branch_name'];
                 }
@@ -135,7 +136,7 @@ class Admin extends Controller
 
         $memberModel = new MemberModel();
         $field = 'member_id, member_code, member_name, member_nickname, member_real_name, site_code, email, mobile,
-        head_pic, birthday, sex, status, deleted, create_time';
+        head_pic, birthday, sex, status, deleted, create_time,access_key';
         $info = $memberModel->getMemberInfo(['member_id' => $inputData['member_id']], $field);
         if($info === false){
             Logservice::writeArray(['sql'=>$memberModel->getLastSql()], '获取会员详情失败', 2);

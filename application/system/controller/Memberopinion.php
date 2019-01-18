@@ -32,7 +32,9 @@ class Memberopinion extends Base
         if(!$ret){
             return reTmJsonObj(500, $msg, []);
         }
-        $condition = array();
+        $condition = array(
+            [TM_PREFIX.'member_opinion.status','IN',[1,2]]
+        );
         $OpinionTotal = $this->OpinionModel->getCount($condition); //获取总数
         $num = !empty($inputData['page_size'])?$inputData['page_size']:20; //默认获取20条数据
         $totalPage = ceil($OpinionTotal/$num); //总页数

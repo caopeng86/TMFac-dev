@@ -24,9 +24,19 @@ function create_tables($db, $prefix = '',$sqlFile='db/backup/cl01kkdy_6RrqH.sql'
             // $name = preg_replace("/^CREATE TABLE `(\w+)` .*/s", "\\1", $value);
             preg_match('|EXISTS `(.*?)`|',$value,$outValue1);
             preg_match('|TABLE `(.*?)`|',$value,$outValue2);
-            $db->execute($value);
+            try {
+                $db->execute($value);
+            } catch (Exception $e) {
+                echo json_encode(['code'=>500,'msg'=>$e->getMessage(),'sql'=>$value]);
+                exit();
+            }
         } else {
-            $db->execute($value);
+            try {
+                $db->execute($value);
+            } catch (Exception $e) {
+                echo json_encode(['code'=>500,'msg'=>$e->getMessage(),'sql'=>$value]);
+                exit();
+            }
         }
     }
 }
@@ -37,7 +47,17 @@ function create_tables($db, $prefix = '',$sqlFile='db/backup/cl01kkdy_6RrqH.sql'
  * @return string 去除注释之后的内容
  */
 function removeComment($content){
-    $reg="/(\/\*.*?\*\/.*?\n)|(-- .*?\n)|(--)/s"; //--
+    $filterArr = [
+        '/(\/\*.*?\*\/.*?\n)',
+        '(-- .*?\n)',
+        '(--)',
+//        '(SET .*?\n)',
+        '(START TRANSACTION;)',
+        '(COMMIT;)',
+        '(LOCK TABLES `.+` WRITE;\n)',
+        '(UNLOCK TABLES;\n)/s'
+    ];
+    $reg= implode('|',$filterArr); //--
 //    $content=preg_replace('/.*?TRANSACTION.*?\n/i','',$content);
 //    $content=preg_replace('/^COMMIT.*?\n/i','',$content);
     return preg_replace($reg, '', str_replace(array("\r\n", "\r"), "\n", $content));

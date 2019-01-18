@@ -1,6 +1,9 @@
 .idea
+.env
 composer.lock
 *.log
 runtime
 application/personal/
 application/tmgc_discover
+application/press/
+application/install.lock

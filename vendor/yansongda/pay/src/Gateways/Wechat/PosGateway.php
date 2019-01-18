@@ -2,51 +2,6 @@
 
 namespace Yansongda\Pay\Gateways\Wechat;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-use Yansongda\Pay\Exceptions\InvalidArgumentException;
-
-class PosGateway extends Wechat
-{
-    /**
-     * @var string
-     */
-    protected $gateway_order = 'pay/micropay';
-
-    /**
-     * get trade type config.
-     *
-     * @author yansongda <me@yansongda.cn>
-     *
-     * @return string
-     */
-    protected function getTradeType()
-    {
-        return 'MICROPAY';
-    }
-
-    /**
-     * pay a order.
-     *
-     * @author yansongda <me@yansongda.cn>
-     *
-     * @param array $config_biz
-     *
-     * @return array
-     */
-    public function pay(array $config_biz = [])
-    {
-        if (is_null($this->user_config->get('app_id'))) {
-            throw new InvalidArgumentException('Missing Config -- [app_id]');
-        }
-
-        unset($this->config['trade_type']);
-        unset($this->config['notify_url']);
-
-        return $this->preOrder($config_biz);
-=======
-=======
->>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
 use Yansongda\Pay\Log;
 use Yansongda\Supports\Collection;
 
@@ -87,9 +42,5 @@ class PosGateway extends Gateway
     protected function getTradeType(): string
     {
         return 'MICROPAY';
-<<<<<<< HEAD
->>>>>>> dev
-=======
->>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
     }
 }

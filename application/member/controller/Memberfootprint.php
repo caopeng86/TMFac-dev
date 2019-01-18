@@ -8,6 +8,7 @@
 namespace app\member\controller;
 
 use app\member\model\MemberfootprintModel;
+use think\Db;
 use think\facade\Request;
 
 class Memberfootprint extends Base
@@ -73,8 +74,9 @@ class Memberfootprint extends Base
             return reTmJsonObj(500, $msg, []);
         }
 
-        $condition['footprint_id'] = $inputData['footprint_id'];
-        $re = $this->footprintModel->deleteFootprint($condition);
+        $re = Db::table(TM_PREFIX.'member_footprint')
+            ->whereIn('footprint_id',$inputData['footprint_id'])
+            ->update(['status'=>0]);
         if($re === false){
             return reTmJsonObj(500, '删除失败', []);
         }

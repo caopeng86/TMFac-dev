@@ -2,14 +2,7 @@
     "name": "yansongda/pay",
     "description": "专注 Alipay 和 WeChat 的支付扩展包",
     "keywords": ["alipay", "wechat", "pay"],
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
     "type": "library",
->>>>>>> dev
-=======
-    "type": "library",
->>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
     "support": {
         "issues": "https://github.com/yansongda/pay/issues",
         "source": "https://github.com/yansongda/pay"
@@ -21,16 +14,6 @@
         }
     ],
     "require": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-        "php": ">=5.6",
-        "guzzlehttp/guzzle": "^6.3"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^6.2"
-=======
-=======
->>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
         "php": ">=7.0",
         "ext-openssl": "*",
         "ext-simplexml":"*",
@@ -41,10 +24,6 @@
     "require-dev": {
         "phpunit/phpunit": "^6.2",
         "mockery/mockery": "1.0.x-dev"
-<<<<<<< HEAD
->>>>>>> dev
-=======
->>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
     },
     "autoload": {
         "psr-4": {

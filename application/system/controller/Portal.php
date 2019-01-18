@@ -171,6 +171,7 @@ class Portal extends Base
         if(!$ret){
             return reTmJsonObj(500,$msg,[]);
         }
+        $portal_key = $inputData['portal_key'];
         $inputData['portal_key'] = $this->portal_key; //默认
         if(!empty($inputData['add_key'])){
             $add_key = $inputData['add_key'];
@@ -179,12 +180,14 @@ class Portal extends Base
         //查找名称是否已经存在
         $condition = ['portal_key' => $inputData['portal_key']];
         $key = $this->portalModel->getPortal($condition);
-        if($key){
-            //已存在则修改
-            $re = $this->portalModel->updatePortal($condition, ['portal_value' => $inputData['portal_value']]);
-        }else{
-            //不存在则新增
-            $re = $this->portalModel->addPortal($inputData);
+        if($portal_key == $inputData['portal_key']){
+            if($key){
+                //已存在则修改
+                $re = $this->portalModel->updatePortal($condition, ['portal_value' => $inputData['portal_value']]);
+            }else{
+                //不存在则新增
+                $re = $this->portalModel->addPortal($inputData);
+            }
         }
         if(!empty($add_key)){
             //新增后赋予访问权限

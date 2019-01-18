@@ -52,30 +52,56 @@
                     <li>
                         <img src="./temp/addpeople.png" width="30" alt="">
                         <div class="basic_data_type">
-                            <p>月新增用户</p>
-                            <p id="addNum">--</p>
+                            <div style="display: inline-block;vertical-align: top">
+                                <p>新增用戶</p>
+                                <p id="addNum">--</p>
+                            </div>
+                            <div style="display: inline-block;vertical-align: top">
+                                <p>（本月）</p>
+                            </div>
                         </div>
                     </li>
                     <li>
-                        <img src="./temp/activity.png" width="30" alt="">
+                        <img src="./temp/addregpeople.png" width="35" alt="">
                         <div class="basic_data_type">
-                            <p>月活跃用户</p>
-                            <p id="actNum">--</p>
+                            <div style="display: inline-block;vertical-align: top">
+                                <p>新增注册用户</p>
+                                <p id="addregisterNum">--</p>
+                            </div>
+                            <div style="display: inline-block;vertical-align: top">
+                                <p>（本月）</p>
+                            </div>
                         </div>
                     </li>
                     <li>
                         <img src="./temp/allpeople.png" width="30" alt="">
                         <div class="basic_data_type">
-                            <p>总用户数</p>
-                            <p id="allNum">--</p>
+                            <div style="display: inline-block;vertical-align: top">
+                                <p>总用户数</p>
+                                <p id="allNum">--</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <img src="./temp/activity.png" width="30" alt="">
+                        <div class="basic_data_type">
+                            <div style="display: inline-block;vertical-align: top">
+                                <p>总注册用户</p>
+                                <p id="registerNum">--</p>
+                            </div>
+                            <!--<div style="display: inline-block;vertical-align: top">-->
+                                <!--<p>（本月）</p>-->
+                            <!--</div>-->
                         </div>
                     </li>
                 </ul>
             </div>
 
         </div>
-        <div class="visual_box">
-            <div class="visual_list" id="main"></div><div class="visual_list" id="main1"></div><div class="visual_list" id="main2"></div><div class="visual_list" id="main3"></div>
+        <div class="visual_box" style="overflow-y: auto">
+            <div style="min-width: 1520px;width: 100%;overflow: hidden">
+                <div class="visual_list" id="main"></div><div class="visual_list" id="main1"></div><div class="visual_list" id="main2"></div><div class="visual_list" id="main3"></div>
+            </div>
         </div>
     </div>
 </div>
@@ -103,8 +129,12 @@
                 $(".visual_list").css({"width":listwidth,"display":'block',"float":'left'})
                 $(".visual_list:nth-child(2n+1)").css({"margin-right":30})
             }else{
-                $(".visual_list").css({"width":745,"margin-right":0,"float":'none',"display":'inline-block'})
-                $(".visual_box").css("text-align","center")
+                $(".visual_list").css({"width":listwidth,"display":'block',"float":'left'})
+                $(".visual_list:nth-child(2n+1)").css({"margin-right":30})
+
+                // $(".visual_list").css({"width":745,"margin-right":0,"float":'none',"display":'inline-block'})
+                // $(".visual_list").css({"width":745,"margin-right":0,"float":'left',"display":'block'})
+                // $(".visual_box").css("text-align","center")
             }
         }
         window.onresize = function(){
@@ -344,7 +374,7 @@
         //     }
         // },
         title: {
-            text: '各渠道用户统计',
+            text: '各渠道注册用户统计',
             textStyle: {
                 fontSize: 15,
                 color:"#333333"
@@ -458,7 +488,7 @@
 
     var option3 = {
         backgroundColor:"#ffffff",
-        color:["#999999","rgb(0,158,211)","rgb(255,222,82)"],
+        color:["#c9c9c9","#a3a3a3","rgb(0,158,211)","rgb(255,222,82)"],
         title: {
             text: '年龄分布以及男女比例统计',
             textStyle: {
@@ -677,17 +707,49 @@
 
 
                 addNum = info.android[0][1]+info.iOS[0][1];
-                actNum = info.android[0][0]+info.iOS[0][0];
-                allNum = info.android[0][1]+info.iOS[0][1]+info.android[0][2]+info.android[0][2];
+                // actNum = info.android[0][0]+info.iOS[0][0];
+                // allNum = info.android[0][1]+info.iOS[0][1]+info.android[0][2]+info.android[0][2];
+                // allNum = info.android[0][1]+info.iOS[0][1]+info.android[0][2]+info.android[0][2];
 
-                $("#addNum").html(addNum)
-                $("#actNum").html(actNum)
-                $("#allNum").html(allNum)
-
-
-
+                $("#addNum").html(addNum);
+                // $("#actNum").html(actNum);
+                // $("#allNum").html(allNum)
                 // console.log(info);
 
+            }else if(data.code==502){
+                window.location="/api/baidu/getCode.html"
+            }else if(data.code==501){
+                parent.parent.checkToken()
+            }else{
+                layer.msg(data.msg)
+            }
+        },error:function(){
+            layer.msg("网络错误，请稍后再试")
+        }
+    })
+
+
+    $.ajax({
+        type: "get",
+        url: "/api/baidu/getAllCount",
+        cache: false,  //禁用缓存
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader("token", localStorage.getItem("token"));
+        },
+        dataType: "json",
+        success: function (data) {
+            // console.log(data)
+            var info = data.data;
+            var allNum=0;
+            var registerNum=0;
+            var addregisterNum = 0;
+            if(data.code==200){
+                allNum = parseInt(info.android)+parseInt(info.iOS);
+                registerNum = parseInt(info.member_count);
+                addregisterNum = parseInt(info.month_count);
+                $("#allNum").html(allNum);
+                $("#registerNum").html(registerNum);
+                $("#addregisterNum").html(addregisterNum)
             }else if(data.code==502){
                 window.location="/api/baidu/getCode.html"
             }else if(data.code==501){
@@ -827,6 +889,7 @@
             var info = data.data;
             var showData=[];
             var downloadData=[];
+            // var addregisterNum=0;
             if(data.code==200){
                 // console.log(info);
                 for(var i=0;i<info.key.length;i++){
@@ -840,7 +903,10 @@
                         '登录渠道':info.key[i],
                         '新增用户数':info.value[i],
                     })
+                    // addregisterNum=addregisterNum+parseInt(info.value[i])
+                    // console.log(info)
                 }
+                // $("#addregisterNum").html(addregisterNum)
 
                 download3={
                     title:[

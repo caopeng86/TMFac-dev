@@ -2,54 +2,6 @@
 
 namespace Yansongda\Pay\Gateways\Wechat;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-use Yansongda\Pay\Exceptions\InvalidArgumentException;
-
-class MiniappGateway extends Wechat
-{
-    /**
-     * get trade type config.
-     *
-     * @author yansongda <me@yansongda.cn>
-     *
-     * @return string [description]
-     */
-    protected function getTradeType()
-    {
-        return 'JSAPI';
-    }
-
-    /**
-     * pay a order.
-     *
-     * @author yansongda <me@yansongda.cn>
-     *
-     * @param array $config_biz
-     *
-     * @return array
-     */
-    public function pay(array $config_biz = [])
-    {
-        if (is_null($this->user_config->get('miniapp_id'))) {
-            throw new InvalidArgumentException('Missing Config -- [miniapp_id]');
-        }
-
-        $this->config['appid'] = $this->user_config->get('miniapp_id');
-
-        $payRequest = [
-            'appId'     => $this->user_config->get('miniapp_id'),
-            'timeStamp' => strval(time()),
-            'nonceStr'  => $this->createNonceStr(),
-            'package'   => 'prepay_id='.$this->preOrder($config_biz)['prepay_id'],
-            'signType'  => 'MD5',
-        ];
-        $payRequest['paySign'] = $this->getSign($payRequest);
-
-        return $payRequest;
-=======
-=======
->>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
 use Yansongda\Pay\Gateways\Wechat;
 use Yansongda\Supports\Collection;
 
@@ -78,9 +30,5 @@ class MiniappGateway extends MpGateway
         }
 
         return parent::pay($endpoint, $payload);
-<<<<<<< HEAD
->>>>>>> dev
-=======
->>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
     }
 }

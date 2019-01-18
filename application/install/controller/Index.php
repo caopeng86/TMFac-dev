@@ -83,7 +83,7 @@ class Index extends \think\Controller {
 				//缓存数据库配置
 //                $DB['params'][constant('PDO::MYSQL_ATTR_USE_BUFFERED_QUERY')] = true;
 				session('db_config', $DB);
-//				var_dump($DB);
+//				var_dump($DB);die;
 
 				//创建数据库
 				$dbname = $DB['database'];

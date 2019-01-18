@@ -65,7 +65,7 @@ class Login extends Controller
         birthday, sex,password,wx,qq,wb';*/
 
         $field = 'member_id,member_code, member_name, member_nickname, member_real_name,site_code,email,deleted,sex_edit_time,birthday_edit_time,mobile_edit_time,wb_edit_time,wx_edit_time,qq_edit_time,
-         mobile, head_pic, create_time, status, wx, qq, zfb, wb,birthday,sex,ip,point,access_key_create_time,close_start_time,close_end_time,password,receive_notice,wifi_show_image,list_auto_play,login_type,member_sn';
+         mobile, head_pic, create_time, status, wx, qq, zfb, wb,birthday,sex,ip,point,access_key_create_time,close_start_time,close_end_time,password,receive_notice,wifi_show_image,list_auto_play,login_type,member_sn,channel_sources';
         $memberInfo = $this->memberModel->getMemberInfo($condition, $field);
         if(!empty($memberInfo)){
             if($memberInfo['status'] == 1 || $memberInfo['deleted'] == 1){
@@ -78,21 +78,23 @@ class Login extends Controller
         $is_first_login = false;
         Db::startTrans();
         if($inputData['state'] == 1){
-//            //选择验证码登录
-//            if(!isset($inputData['code'])){
-//                return reTmJsonObj(500, '验证码参数错误', []);
-//            }
-//            //缓存中取出验证码,验证手机验证码
-//            $code = Cache::get(md5($inputData['mobile']));
-//            if($code != $inputData['code']){
-//                Logservice::writeArray(['code'=>$inputData['code'], 'cache'=>$code], '手机验证码错误', 2);
-//                return reTmJsonObj(500, '验证失败', []);
-//            }
+            //选择验证码登录
+            if(!isset($inputData['code'])){
+                return reTmJsonObj(500, '验证码参数错误', []);
+            }
+            //缓存中取出验证码,验证手机验证码
+            $code = Cache::get(md5($inputData['mobile']));
+            if($code != $inputData['code']){
+                Logservice::writeArray(['code'=>$inputData['code'], 'cache'=>$code], '手机验证码错误', 2);
+                return reTmJsonObj(500, '验证失败', []);
+            }
             if(empty($memberInfo)){
                 $is_first_login = true;
                 //没有会员则新增该会员
+                $memberName=substr($inputData['mobile'],0,3)."****".substr($inputData['mobile'],7,4);
                 $addData = [
-                    'member_name' => substr($inputData['mobile'],0,3)."****".substr($inputData['mobile'],7,4),
+                    'member_name' => $memberName,
+                    'member_nickname' => $memberName,
                     'member_code' => createCode(),
                     'create_time' => time(),
                     'password' => md5(md5(rand(100000,999999))),
@@ -101,6 +103,8 @@ class Login extends Controller
                     'head_pic' => '/uploads/default/head.jpg',
                     'member_sn'=>$this->createMemberSn()
                 ];
+                empty($inputData['channel_sources'])?$addData['channel_sources'] = "":$addData['channel_sources'] = $inputData['channel_sources'];
+                $addData['member_nickname']=$addData['member_name'];
                 $add = $this->memberModel->addMember($addData);
                 if(!$add){
                     Logservice::writeArray(['sql'=>$this->memberModel->getLastSql()], '新增会员数据失败', 2);
@@ -229,7 +233,7 @@ class Login extends Controller
        /* $field = 'member_id, member_code, member_name,member_nickname,site_code, email, mobile, head_pic, create_time, status, deleted,
         birthday, sex,password,wx,qq,wb';*/
         $field = 'member_id,member_code, member_name,member_sn,member_nickname, member_real_name,site_code,email,deleted,sex_edit_time,birthday_edit_time,mobile_edit_time,wb_edit_time,wx_edit_time,qq_edit_time,
-         mobile, head_pic, create_time, status, wx, qq, zfb, wb,birthday,sex,ip,point,access_key_create_time,close_start_time,close_end_time,password,receive_notice,wifi_show_image,list_auto_play,login_type';
+         mobile, head_pic, create_time, status, wx, qq, zfb, wb,birthday,sex,ip,point,access_key_create_time,close_start_time,close_end_time,password,receive_notice,wifi_show_image,list_auto_play,login_type,channel_sources';
         $memberInfo = $this->memberModel->getMemberInfo($condition, $field);
         if(!empty($memberInfo)){
             if($memberInfo['status'] == 1 || $memberInfo['deleted'] == 1){
@@ -251,10 +255,11 @@ class Login extends Controller
             $addData['password'] = md5(md5(rand(100000,999999)));
             $addData['sex'] = empty($inputData['sex'])?'':$inputData['sex'];
             $addData['head_pic'] = empty($inputData['head_pic'])?'/uploads/default/head.jpg':$inputData['head_pic'];
-            $addData['member_nickname'] = empty($inputData['member_nickname'])?'':$inputData['member_nickname'];
+            $addData['member_nickname'] = empty($inputData['member_nickname'])?$addData['member_name']:$inputData['member_nickname'];
             $addData['birthday'] = empty($inputData['birthday'])?'':$inputData['birthday'];
             $addData['sex'] = empty($inputData['sex'])?0:$inputData['sex'];
             $addData['member_sn'] = $this->createMemberSn();
+            empty($inputData['channel_sources'])?$addData['channel_sources'] = "":$addData['channel_sources'] = $inputData['channel_sources'];
             $add = $this->memberModel->addMember($addData);
             if(!$add){
                 Logservice::writeArray(['sql'=>$this->memberModel->getLastSql()], '新增会员数据失败', 2);
@@ -295,13 +300,14 @@ class Login extends Controller
         }elseif ($inputData['type'] == 3){
             $re1 = $this->updatePoint($memberInfo,$ConfigList1,['member_id'=>$memberInfo['member_id']],"wb_edit_time","first_login","微博首次登陆");
         }
+        //point 更新之后跟新memberInfo
+        $memberInfo['point'] = $this->memberModel->getMemberInfo(['member_id' => $memberInfo['member_id']], 'point')['point'];
         if($remember === false || $re1 === false){
             Logservice::writeArray(['sql'=>$this->memberModel->getLastSql()], '记录登录信息失败', 2);
             Db::rollback();
             return reTmJsonObj(500,'记录登录信息失败',[]);
         }
         Db::commit();
-
         $memberInfo['close'] = 0;
         if(time()>$memberInfo['close_start_time'] && time()<$memberInfo['close_end_time']){
             $memberInfo['close'] = 1;
@@ -318,6 +324,7 @@ class Login extends Controller
         $ConfigList['qq'] = empty($memberInfo['qq_edit_time'])?$ConfigList['qq']:0;
         $memberInfo['point_config'] = $ConfigList;
         $memberInfo['is_first_login'] = $is_first_login;
+
 
         //保存会员信息到缓存 7天
         $cacheData = [

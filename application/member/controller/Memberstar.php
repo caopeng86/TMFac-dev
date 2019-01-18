@@ -11,6 +11,7 @@ namespace app\member\controller;
 
 use app\member\model\MemberfootprintModel;
 use app\member\model\MemberstarModel;
+use think\Db;
 use think\facade\Request;
 
 class Memberstar extends Base
@@ -168,8 +169,11 @@ class Memberstar extends Base
             return reTmJsonObj(500, $msg, []);
         }
 
-        $condition['star_id'] = $inputData['star_id'];
-        $re = $this->starModel->deleteStar($condition);
+//        $condition['star_id'] = $inputData['star_id'];
+//        $re = $this->starModel->deleteStar($condition);
+        $re = Db::table(TM_PREFIX.'member_star')
+            ->whereIn('star_id',$inputData['star_id'])
+            ->delete();
         if($re === false){
             return reTmJsonObj(500, '取消收藏失败', []);
         }

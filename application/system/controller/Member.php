@@ -69,8 +69,12 @@ class Member extends Controller
             $inputData['end_time'] = strtotime($inputData['end_time']);
             array_push($condition,['create_time','between',[$inputData['start_time'], $inputData['end_time']]]);
         }
+
         empty($inputData['member_id']) ? : array_push($condition,['member_id','in',explode(",",$inputData['member_id'])]);
         empty($inputData['not_member_id']) ? : array_push($condition,['member_id','not in',explode(",",$inputData['not_member_id'])]);
+        if (!empty($inputData['channel_sources'])){
+            array_push($condition,['channel_sources','=',$inputData['channel_sources']]);
+        }
         return $condition;
     }
 
@@ -231,7 +235,7 @@ class Member extends Controller
         //获取搜索条件
         $condition = $this->_getCondition($inputData);
         $field = 'member_id,member_code, member_name, member_nickname, member_real_name, email,
-         mobile, head_pic, create_time, status, wx, qq, zfb, wb,birthday,sex,ip,point,access_key_create_time,close_start_time,close_end_time,login_type,member_sn';
+         mobile, head_pic, create_time, status, wx, qq, zfb, wb,birthday,sex,ip,point,access_key_create_time,close_start_time,close_end_time,login_type,member_sn,channel_sources';
         empty($inputData['page_size']) ? $pageSize = 20 : $pageSize = $inputData['page_size'];
         //根据条件计算总会员数,计算分页总页数
         $count = $this->memberModel->getCount($condition);
@@ -267,6 +271,7 @@ class Member extends Controller
             $memberThirdPartyModel = new MemberThirdPartyModel();
             $v['other_info'] = $memberThirdPartyModel->getThirdPartyList(['member_id'=>$v['member_id']],'uid,nick_name,member_id,head_url,address,ip,type');
             $v['other_info'] = $memberThirdPartyModel->ArrayToType($v['other_info']);
+            $v['channel_sources'] = empty($v['channel_sources'])?"无":$v['channel_sources'];
             $memberList[$k] = $v;
         }
 
@@ -280,6 +285,17 @@ class Member extends Controller
         return reEncryptJson(200, '获取会员列表成功', $return);
     }
 
+    /*获取会员注册渠道来源来源*/
+    public function getChannelSourcesList(){
+        $list = $this->memberModel->getChannelSourcesList();
+        $list_arr = [];
+        foreach ($list as $value){
+            if(!empty($value['channel_sources'])){
+                $list_arr[] = $value;
+            }
+        }
+        return reTmJsonObj(200, '成功', $list_arr);
+    }
     /**
      * 获取会员信息
      */

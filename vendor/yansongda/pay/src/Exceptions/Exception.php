@@ -4,11 +4,6 @@ namespace Yansongda\Pay\Exceptions;
 
 class Exception extends \Exception
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
     /**
      * Raw error info.
      *
@@ -31,8 +26,4 @@ class Exception extends \Exception
 
         parent::__construct($message, intval($code));
     }
-<<<<<<< HEAD
->>>>>>> dev
-=======
->>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
 }

@@ -159,7 +159,17 @@ function write_config($config)
  * @return string 去除注释之后的内容
  */
 function removeComment($content){
-    $reg="/(\/\*.*?\*\/.*?\n)|(-- .*?\n)|(--)/s"; //--
+    $filterArr = [
+        '/(\/\*.*?\*\/.*?\n)',
+        '(-- .*?\n)',
+        '(--)',
+//        '(SET .*?\n)',
+        '(START TRANSACTION;)',
+        '(COMMIT;)',
+        '(LOCK TABLES `.+` WRITE;\n)',
+        '(UNLOCK TABLES;\n)/s',
+    ];
+    $reg= implode('|',$filterArr);
 //    $content=preg_replace('/.*?TRANSACTION.*?\n/i','',$content);
 //    $content=preg_replace('/^COMMIT.*?\n/i','',$content);
     return preg_replace($reg, '', str_replace(array("\r\n", "\r"), "\n", $content));
@@ -229,16 +239,26 @@ function create_tables($db, $prefix = '',$sqlFile='db/backup/cl01kkdy_6RrqH.sql'
                 $name=$outValue2[1];
             }
             $msg = "创建数据表{$name}";
-            if (false !== $db->execute($value) && $is_show_msg) {
-                show_msg($msg . '...成功');
-            } else {
-                if($is_show_msg){
-                    show_msg($msg . '...失败！', 'error');
-                    session('error', true);
+            try {
+                if (false !== $db->execute($value) && $is_show_msg) {
+                    show_msg($msg . '...成功');
+                } else {
+                    if($is_show_msg){
+                        show_msg($msg . '...失败！', 'error');
+                        session('error', true);
+                    }
                 }
+            } catch (Exception $e) {
+                show_msg($e->getMessage(), 'error');
+                exit();
             }
         } else {
-            $db->execute($value);
+            try {
+                $db->execute($value);
+            } catch (Exception $e) {
+                show_msg($e->getMessage(), 'error');
+                exit();
+            }
         }
     }
 }

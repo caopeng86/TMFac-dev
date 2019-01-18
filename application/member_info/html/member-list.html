@@ -39,10 +39,10 @@
     <script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
     <script>DD_belatedPNG.fix('*');</script>
     <![endif]-->
-    <title>会员信息</title>
+    <title>用户信息</title>
 </head>
 <body>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 会员管理 <!-- <span class="c-gray en">&gt;</span> -->  <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 用户管理 <!-- <span class="c-gray en">&gt;</span> -->  <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
     <div>
         <div class="filter_condition_box">
@@ -86,6 +86,15 @@
                         <li>
                             <div class="layui-form-item">
                                 <div class="layui-input-block">
+                                    <select name="channel_sources" id="channel_sources">
+                                        <option value=''>来源筛选</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
                                     <select name="sex">
                                         <option value="">性别</option>
                                         <option value="1">男</option>
@@ -111,7 +120,7 @@
             <script type="text/html" id="toolbarDemo">
                 <div class="layui-btn-container" style="display: flex;flex-direction: row;justify-content: space-between">
                     <div class="titleBox">
-                        <p>会员列表 <span>(共计<span class="allCount">0</span>条记录)</span>
+                        <p>用户列表 <span>(共计<span class="allCount">0</span>条记录)</span>
                             <span>已选中<span class="selected">0</span>条</span>
                             <button class="layui-btn selectBtn" style="border: 1px solid #e2e2e2;color: #333333;">全选</button>
                         </p>
@@ -160,6 +169,7 @@
             var mobile = '';
             var status = '';
             var sex = '';
+            var channel_sources = '';
             var dataLength = '';
             var isHaveInfo = false;
             var selectedNum = 0; //已选中条数
@@ -171,7 +181,7 @@
             var table = layui.table;
             var tableIns = table.render({
                 elem: '#test'
-                ,title:'会员列表'
+                ,title:'用户列表'
                 ,url:'/system/Member/getMemberList'
                 ,headers: {"token":localStorage.getItem("token")}
                 ,limit:20
@@ -196,6 +206,7 @@
                     ,{field:'status', title:'状态', width:80}
                     ,{field:'create_time', title:'注册时间', width:175,sort: true}
                     ,{field:'access_key_create_time', title:'最近登录时间', width:175,sort: true}
+                    ,{field:'channel_sources', title:'渠道来源', width:175}
                     ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width: 80}
                 ]]
                 ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
@@ -261,7 +272,7 @@
                         }else{
                             res.data.list[i].sex='未设置'
                         }
-                        if (res.data.list[i].close==1) {
+                        if (res.data.list[i].close==1||res.data.list[i].status==1) {
                             res.data.list[i].status='拉黑'
                         }else if (res.data.list[i].status==10){
                             res.data.list[i].status='封号'
@@ -484,6 +495,7 @@
              mobile = data.field.mobile;
              status = data.field.status;
              sex = data.field.sex;
+            channel_sources = data.field.channel_sources;
             tableIns.reload({
                 where: { //设定异步数据接口的额外参数，任意设
                     member_nickname: data.field.nickname,
@@ -491,6 +503,7 @@
                     mobile: data.field.mobile,
                     status: data.field.status,
                     sex: data.field.sex,
+                    channel_sources: data.field.channel_sources,
                 }
                 // ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                 //     layout: [/*'count',*/ 'prev', 'page', 'next'] //自定义分页布局
@@ -527,7 +540,26 @@
                 }
             });
         })
+
+        var getChannelSourcesList= function() {
+            $.get("/system/Member/getChannelSourcesList",function(data,status){
+                if(200 == data.code && data.data instanceof Array){
+                    var html = "";
+                    var length = data.data.length;
+
+                    for (var i =0;i<length;i++){
+                        html+='<option value='+data.data[i].channel_sources+'>'+data.data[i].channel_sources+'</option>';
+                    }
+                   $("#channel_sources").append(html);
+                    form.render('select'); //刷新select选择框渲染
+                }
+            });
+        }();
+
     })
+
+
+   // getChannelSourcesList();
 
     function downloadFile(url) {
         try{

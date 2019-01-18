@@ -19,9 +19,9 @@ return [
     // 应用地址
     'app_host'               => '',
     // 应用调试模式
-    'app_debug'              => Env::get(SERVER_ENV.'APP_DEBUG'),
+    'app_debug'              => Env::get(SERVER_ENV.'APP_DEBUG',true),
     // 应用Trace
-    'app_trace'              => Env::get(SERVER_ENV.'APP_TRACE'),
+    'app_trace'              => Env::get(SERVER_ENV.'APP_TRACE',true),
     // 应用模式状态
     'app_status'             => '',
     // 是否支持多模块
@@ -149,6 +149,17 @@ return [
     'licenses_chk' => 'http://39.107.74.188/verify/verify/verifyLicenses',//licenses验证地址
     'resource_ip' => 'http://39.107.74.188',//资源服务器ip地址
     'shop_url'=>'http://120.27.13.229/mangrove/plugin/addPlugin',//调用商城新增应用接口
+    //阿里短信配置
+    'alimsg' => [
+        'access_key_id' => 'LTAIT0JSTQtwRYUG',
+        'access_key_secret' => 'BP3VgP76RWnHrdI4IW8Hy8pF85mtlL',
+        'sign_name' => '天马工场',
+    ],
+    //极光推送配置
+    'Jpush' => [
+        'app_key' => '7375019ec90b9de9bb0cc8ed',
+        'master_secret' => '1deaf4babb47a22579d2db83',
+    ],
     //token保存时间
     'token_time'=>604800,
     'queue' =>[
@@ -184,6 +195,8 @@ return [
             'mp2'=>'audio/mpeg, video/mpeg',
             'mp3'=>'audio/mpeg',
             'mp4'=>'audio/mp4, video/mp4',
+            "video/mp4"=>"video/mp4",
+            "audio/mp4"=>"audio/mp4",
             'mpeg'=>'video/mpeg',
             'mpg'=>'video/mpeg',
             'mpp'=>'application/vnd.ms-project',

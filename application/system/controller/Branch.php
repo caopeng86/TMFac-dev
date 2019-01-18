@@ -185,7 +185,7 @@ class Branch extends Base
         $userModel = new UserModel();
         $roleModel = new RoleModel();
         //判断部门下是否有用户
-        $user = $userModel->getUserCount(['branch_id' => $inputData['branch_id']]);
+        $user = $userModel->getUserCount(['branch_id' => $inputData['branch_id'],'deleted' => 0]);
         if($user > 0){
             return reTmJsonObj(500, '该部门下有用户,不能删除', []);
         }

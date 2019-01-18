@@ -459,7 +459,7 @@ class Login extends Controller
      */
     public function mchLogin(){
         //判断请求方式以及请求参数
-        //   $inputData = Request::post();
+     //   $inputData = Request::post();
         $inputData = getEncryptPostData();
         if(!$inputData){
             return reTmJsonObj(552,"解密数据失败",[]);

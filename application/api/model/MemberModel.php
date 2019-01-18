@@ -95,4 +95,9 @@ class MemberModel extends CommonModel
         $re = $re->group($group)->field($field)->select();
         return $re;
     }
+
+    /*获取会员注册渠道来源来源*/
+    public function getChannelSourcesList(){
+       return Db::table($this->member_db)->field("channel_sources")->group("channel_sources")->select();
+    }
 }

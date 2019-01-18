@@ -2,55 +2,6 @@
 
 namespace Yansongda\Pay\Gateways\Wechat;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-use Yansongda\Pay\Exceptions\InvalidArgumentException;
-
-class AppGateway extends Wechat
-{
-    /**
-     * get trade type config.
-     *
-     * @author yansongda <me@yansongda.cn>
-     *
-     * @return string
-     */
-    protected function getTradeType()
-    {
-        return 'APP';
-    }
-
-    /**
-     * pay a order.
-     *
-     * @author yansongda <me@yansongda.cn>
-     *
-     * @param array $config_biz
-     *
-     * @return array
-     */
-    public function pay(array $config_biz = [])
-    {
-        if (is_null($this->user_config->get('appid'))) {
-            throw new InvalidArgumentException('Missing Config -- [appid]');
-        }
-
-        $this->config['appid'] = $this->user_config->get('appid');
-
-        $payRequest = [
-            'appid'     => $this->user_config->get('appid'),
-            'partnerid' => $this->user_config->get('mch_id'),
-            'prepayid'  => $this->preOrder($config_biz)['prepay_id'],
-            'timestamp' => strval(time()),
-            'noncestr'  => $this->createNonceStr(),
-            'package'   => 'Sign=WXPay',
-        ];
-        $payRequest['sign'] = $this->getSign($payRequest);
-
-        return $payRequest;
-=======
-=======
->>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Yansongda\Pay\Gateways\Wechat;
@@ -108,9 +59,5 @@ class AppGateway extends Gateway
     protected function getTradeType(): string
     {
         return 'APP';
-<<<<<<< HEAD
->>>>>>> dev
-=======
->>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
     }
 }

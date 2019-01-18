@@ -1,13 +1,4 @@
 /vendor
 composer.lock
-<<<<<<< HEAD
-<<<<<<< HEAD
-/src/.DS_Store
-.DS_Store
-=======
 *.DS_Store
->>>>>>> dev
-=======
-*.DS_Store
->>>>>>> dc81d773ef8393de8716681e5c19d1579978ea74
 .idea
