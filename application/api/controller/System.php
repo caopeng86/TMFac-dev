@@ -113,4 +113,31 @@ class System extends Controller
         }
         return reTmJsonObj(200, '获取成功', $retList);
     }
+
+    /**
+     * 获取经纬度配置
+     */
+    public function getLongitudeAndLatitudeConfig(){
+        //判断请求方式以及请求参数
+        $inputData = Request::get();
+        $method = Request::method();
+        $params = [];
+        $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
+        if(!$ret){
+            return reTmJsonObj(500, $msg, []);
+        }
+        $condition = [];
+        $condition['key'] = ['longitude','latitude','is_open_position'];
+        $condition['type'] = 'position';
+        $ConfigList = $this->ConfigModel->getConfigList($condition);
+        if($ConfigList === false){
+            return reTmJsonObj(500, '获取失败', []);
+        }
+        $ConfigList = $this->ConfigModel->ArrayToKey($ConfigList);
+        $ConfigList['longitude'] = empty($ConfigList['longitude'])?"":$ConfigList['longitude'];
+        $ConfigList['latitude'] = empty($ConfigList['latitude'])?"":$ConfigList['latitude'];
+        $ConfigList['is_open_position'] = empty($ConfigList['is_open_position'])?0:$ConfigList['is_open_position'];
+        $ConfigList['distance'] = 3; //默认三千米
+        return reTmJsonObj(200, '获取成功', $ConfigList);
+    }
 }

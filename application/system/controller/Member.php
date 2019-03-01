@@ -124,8 +124,18 @@ class Member extends Controller
         if(!empty($inputData['sort']) && in_array($inputData['sort'],['create_time','access_key_create_time']) && !empty($inputData['order']) && in_array($inputData['order'],['desc','asc'])){
             $order = $inputData['sort']." ".$inputData['order'];
         }
+        $orwhere = '1=1 ';
         //获取会员列表数据
-        $memberList = $this->memberModel->getMemberList($condition, $field, "", $order);
+        if(empty($inputData['channel_sources'])){
+            if(!empty($inputData['channel_sources_top']) || 0 == $inputData['channel_sources_top']){
+                $orwhere .= " and (cast(channel_sources as UNSIGNED INTEGER) < ".$inputData['channel_sources_top']." or cast(channel_sources as UNSIGNED INTEGER) = ".$inputData['channel_sources_top'].")";
+            }
+            if(!empty($inputData['channel_sources_low']) || 0 == $inputData['channel_sources_low']){
+                $orwhere .= " and (cast(channel_sources as UNSIGNED INTEGER) > ".$inputData['channel_sources_low']." or cast(channel_sources as UNSIGNED INTEGER) = ".$inputData['channel_sources_low'].")";
+            }
+        }
+        //获取会员列表数据
+        $memberList = $this->memberModel->getMemberList($condition, $field, "", $order,$orwhere);
         if($memberList === false){
             Logservice::writeArray(['sql'=>$this->memberModel->getLastSql()], '获取会员列表数据失败', 2);
             return reTmJsonObj(500, '获取会员列表失败', []);
@@ -234,11 +244,21 @@ class Member extends Controller
         }
         //获取搜索条件
         $condition = $this->_getCondition($inputData);
+        $orwhere = '1=1 ';
+        //获取会员列表数据
+        if(empty($inputData['channel_sources'])){
+            if(!empty($inputData['channel_sources_top'])){
+                $orwhere .= " and (cast(channel_sources as UNSIGNED INTEGER) < ".$inputData['channel_sources_top']." or cast(channel_sources as UNSIGNED INTEGER) = ".$inputData['channel_sources_top'].")";
+            }
+            if(!empty($inputData['channel_sources_low'])){
+                $orwhere .= " and (cast(channel_sources as UNSIGNED INTEGER) > ".$inputData['channel_sources_low']." or cast(channel_sources as UNSIGNED INTEGER) = ".$inputData['channel_sources_low'].")";
+            }
+        }
         $field = 'member_id,member_code, member_name, member_nickname, member_real_name, email,
          mobile, head_pic, create_time, status, wx, qq, zfb, wb,birthday,sex,ip,point,access_key_create_time,close_start_time,close_end_time,login_type,member_sn,channel_sources';
         empty($inputData['page_size']) ? $pageSize = 20 : $pageSize = $inputData['page_size'];
         //根据条件计算总会员数,计算分页总页数
-        $count = $this->memberModel->getCount($condition);
+        $count = $this->memberModel->getCount($condition,$orwhere);
         $totalPage = ceil($count / $pageSize);
         //分页处理
         $firstRow = ($inputData['index'] - 1) * $pageSize;
@@ -247,8 +267,7 @@ class Member extends Controller
         if(!empty($inputData['sort']) && in_array($inputData['sort'],['create_time','access_key_create_time']) && !empty($inputData['order']) && in_array($inputData['order'],['desc','asc'])){
             $order = $inputData['sort']." ".$inputData['order'];
         }
-        //获取会员列表数据
-        $memberList = $this->memberModel->getMemberList($condition, $field, $limit, $order);
+        $memberList = $this->memberModel->getMemberList($condition, $field, $limit, $order,$orwhere);
         if($memberList === false){
             Logservice::writeArray(['sql'=>$this->memberModel->getLastSql()], '获取会员列表数据失败', 2);
             return reTmJsonObj(500, '获取会员列表失败', []);

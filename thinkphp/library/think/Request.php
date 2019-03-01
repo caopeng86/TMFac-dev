@@ -778,7 +778,7 @@ class Request
      * @param  bool $origin  是否获取原始请求类型
      * @return string
      */
-    public function method($origin = false)
+    public function method1($origin = false)
     {
         if ($origin) {
             // 获取原始请求类型
@@ -795,6 +795,30 @@ class Request
             }
         }
 
+        return $this->method;
+    }
+
+    public function method($method = false)
+    {
+        if (true === $method) {
+            // 获取原始请求类型
+            return $this->server('REQUEST_METHOD') ?: 'GET';
+        } elseif (!$this->method) {
+            if (isset($_POST[$this->config['var_method']])) {
+                $method = strtoupper($_POST[$this->config['var_method']]);
+                if (in_array($method, ['GET', 'POST', 'DELETE', 'PUT', 'PATCH'])) {
+                    $this->method = $method;
+                    $this->{$this->method}($_POST);
+                } else {
+                    $this->method = 'POST';
+                }
+                unset($_POST[$this->config['var_method']]);
+            } elseif (isset($_SERVER['HTTP_X_HTTP_METHOD_OVERRIDE'])) {
+                $this->method = strtoupper($_SERVER['HTTP_X_HTTP_METHOD_OVERRIDE']);
+            } else {
+                $this->method = $this->server('REQUEST_METHOD') ?: 'GET';
+            }
+        }
         return $this->method;
     }
 

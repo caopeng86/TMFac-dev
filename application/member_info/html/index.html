@@ -40,7 +40,7 @@
             <dt class="tab"><a data-href="dataShow.html" data-title="首页"><i class="Hui-iconfont">&#xe72d;</i> 首页</a></dt>
             <!--<dt class="tab"><a data-href="member-list.html" data-title="会员管理"><i class="Hui-iconfont">&#xe72d;</i> 会员管理</a></dt>-->
         </dl>
-        <dl>
+        <dl id="menu-member">
             <!--<dt class="tab"><a data-href="dataShow.html" data-title="首页"><i class="Hui-iconfont">&#xe72d;</i> 首页</a></dt>-->
             <dt class="tab"><a data-href="member-list.html" data-title="用户管理"><i class="Hui-iconfont">&#xe72d;</i> 用户管理</a></dt>
         </dl>
@@ -62,7 +62,7 @@
     <div id="iframe_box" class="Hui-article" style="top:0">
         <div class="show_iframe">
             <div style="display:none" class="loading"></div>
-            <iframe class="changetab" id="ceshi" scrolling="yes" frameborder="0" src="dataShow.html"></iframe>
+            <iframe class="changetab" scrolling="yes" frameborder="0" src="dataShow.html"></iframe>
         </div>
     </div>
 </section>
@@ -86,6 +86,11 @@
     $(".tab").click(function(){
         $(".changetab").attr("src",$(this).children("a").data("href"))
     })
+    var hashArry = window.location.hash.split("#")
+    if (hashArry.length>1){
+        var user = hashArry[1].split("?")[0]
+        $("#menu-member a").attr('data-href','member-list-'+user+'.html');
+    }
     /*个人信息*/
     function myselfinfo(){
         layer.open({
@@ -131,7 +136,12 @@
         layer_show(title,url,w,h);
     }
 
-
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
 </script>
 
 </body>

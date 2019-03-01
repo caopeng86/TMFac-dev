@@ -65,6 +65,77 @@ class AlipayTradeService {
 		$this->__construct($alipay_config);
 	}
 
+    /**
+     * alipay.trade.page.pay
+     * @param $builder 业务参数，使用buildmodel中的对象生成。
+     * @param $return_url 同步跳转地址，公网可以访问
+     * @param $notify_url 异步通知地址，公网可以访问
+     * @return $response 支付宝返回的信息
+     */
+    function pagePay($builder,$return_url,$notify_url) {
+
+        $biz_content=$builder->getBizContent();
+        //打印业务参数
+        $this->writeLog($biz_content);
+
+        $request = new AlipayTradePagePayRequest();
+
+        $request->setNotifyUrl($notify_url);
+        $request->setReturnUrl($return_url);
+        $request->setBizContent ( $biz_content );
+
+        // 首先调用支付api
+        $response = $this->aopclientRequestExecute ($request,true);
+        // $response = $response->alipay_trade_wap_pay_response;
+        return $response;
+    }
+
+    function wapPay($builder,$return_url,$notify_url) {
+
+        $biz_content=$builder->getBizContent();
+        //打印业务参数
+        $this->writeLog($biz_content);
+
+        $request = new AlipayTradeWapPayRequest();
+
+        $request->setNotifyUrl($notify_url);
+        $request->setReturnUrl($return_url);
+        $request->setBizContent ( $biz_content );
+
+        // 首先调用支付api
+        $response = $this->aopclientRequestExecute ($request,true);
+        // $response = $response->alipay_trade_wap_pay_response;
+        return $response;
+    }
+
+    function aopclientRequestExecute($request,$ispage=false) {
+
+        $aop = new AopClient ();
+        $aop->gatewayUrl = $this->gateway_url;
+        $aop->appId = $this->appid;
+        $aop->rsaPrivateKey =  $this->private_key;
+        $aop->alipayrsaPublicKey = $this->alipay_public_key;
+        $aop->apiVersion ="1.0";
+        $aop->postCharset = $this->charset;
+        $aop->format= $this->format;
+        $aop->signType=$this->signtype;
+        // 开启页面信息输出
+        $aop->debugInfo=true;
+        if($ispage)
+        {
+            $result = $aop->pageExecute($request,"post");
+            echo $result;
+        }
+        else
+        {
+            $result = $aop->Execute($request);
+        }
+
+        //打开后，将报文写入log文件
+        $this->writeLog("response: ".var_export($result,true));
+        return $result;
+    }
+
 	/**
 	 * alipay.trade.query (统一收单线下交易查询)
 	 * @param $builder 业务参数，使用buildmodel中的对象生成。

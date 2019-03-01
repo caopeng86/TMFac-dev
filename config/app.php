@@ -161,7 +161,7 @@ return [
         'master_secret' => '1deaf4babb47a22579d2db83',
     ],
     //token保存时间
-    'token_time'=>604800,
+    'token_time'=>31104000,
     'queue' =>[
         'connector'=>'database'
     ],

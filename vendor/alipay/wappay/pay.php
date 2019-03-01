@@ -13,6 +13,7 @@ header("Content-type: text/html; charset=utf-8");
 
 require_once dirname ( __FILE__ ).DIRECTORY_SEPARATOR.'service/AlipayTradeService.php';
 require_once dirname ( __FILE__ ).DIRECTORY_SEPARATOR.'buildermodel/AlipayTradeWapPayContentBuilder.php';
+require_once dirname ( __FILE__ ).DIRECTORY_SEPARATOR.'buildermodel/AlipayTradePagePayContentBuilder.php';
 require dirname ( __FILE__ ).DIRECTORY_SEPARATOR.'./../config.php';
 if (!empty($_POST['WIDout_trade_no'])&& trim($_POST['WIDout_trade_no'])!=""){
     //商户订单号，商户网站订单系统中唯一订单号，必填
@@ -30,7 +31,7 @@ if (!empty($_POST['WIDout_trade_no'])&& trim($_POST['WIDout_trade_no'])!=""){
     //超时时间
     $timeout_express="1m";
 
-    $payRequestBuilder = new AlipayTradeWapPayContentBuilder();
+    $payRequestBuilder = new AlipayTradePagePayContentBuilder();
     $payRequestBuilder->setBody($body);
     $payRequestBuilder->setSubject($subject);
     $payRequestBuilder->setOutTradeNo($out_trade_no);
@@ -38,7 +39,7 @@ if (!empty($_POST['WIDout_trade_no'])&& trim($_POST['WIDout_trade_no'])!=""){
     $payRequestBuilder->setTimeExpress($timeout_express);
 
     $payResponse = new AlipayTradeService($config);
-    $result=$payResponse->wapPay($payRequestBuilder,$config['return_url'],$config['notify_url']);
+    $result=$payResponse->pagePay($payRequestBuilder,$config['return_url'],$config['notify_url']);
 
     return ;
 }

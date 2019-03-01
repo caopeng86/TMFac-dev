@@ -82,6 +82,7 @@
         }
     </style>
     <!--<link href="https://cdn.bootcss.com/layer/3.1.0/theme/default/layer.css" rel="stylesheet">-->
+    <link rel="stylesheet" href="https://cache.amap.com/lbs/static/main1119.css"/>
     <link href="./lib/css/layer-3.1.0.min.css" rel="stylesheet">
     <link href="./app.css" rel="stylesheet">
 </head>
@@ -104,13 +105,14 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.12&key=2140a027dbf14ed23b129d6481dbce36&plugin=AMap.Autocomplete,AMap.PlaceSearch"></script>
     <script type="text/javascript" src="app.js"></script>
     <script type="text/javascript" src="vendor.js"></script>
     <!--<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>-->
     <script src="./lib/js/jquery-3.3.1.min.js"></script>
     <!--<script src="https://cdn.bootcss.com/layer/3.1.0/layer.js"></script>-->
     <script src="./lib/js/layer-3.1.0.min.js"></script>
-    <script src="./public/transcode.js"></script>
+    <!--<script src="/public/transcode.js"></script>-->
     <script>
         function checkToken(){
             layer.alert('token已过期，请重新登陆', {

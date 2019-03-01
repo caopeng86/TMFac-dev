@@ -27,9 +27,13 @@ class MemberModel extends CommonModel
      * @return int|string
      * @throws
      */
-    public function getCount($condition){
+    public function getCount($condition,$orwhere = ''){
         $join_exp= $this->member_db.'.site_code = '.$this->site_db.'.site_code';
-        $re = Db::table($this->member_db)->where($condition)->join($this->site_db, $join_exp)->count('member_id');
+        if(empty($orwhere)){
+            $re = Db::table($this->member_db)->where($condition)->join($this->site_db, $join_exp)->count('member_id');
+        }else{
+            $re = Db::table($this->member_db)->where($condition)->where($orwhere)->join($this->site_db, $join_exp)->count('member_id');
+        }
         return $re;
     }
 
@@ -42,10 +46,15 @@ class MemberModel extends CommonModel
      * @return false|\PDOStatement|string|\think\Collection
      * @throws
      */
-    public function getMemberList($condition, $field='', $limit='', $order=''){
+    public function getMemberList($condition, $field='', $limit='', $order='',$orwhere = ''){
         $join_exp= $this->member_db.'.site_code = '.$this->site_db.'.site_code';
-        $re = Db::table($this->member_db)->where($condition)->join($this->site_db, $join_exp)
-            ->field($field)->limit($limit)->order($order)->select();
+        if(empty($orwhere)){
+            $re = Db::table($this->member_db)->where($condition)->join($this->site_db, $join_exp)
+                ->field($field)->limit($limit)->order($order)->select();
+        }else{
+            $re = Db::table($this->member_db)->where($condition)->where($orwhere)->join($this->site_db, $join_exp)
+                ->field($field)->limit($limit)->order($order)->select();
+        }
         return $re;
     }
 

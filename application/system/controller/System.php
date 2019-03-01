@@ -968,4 +968,101 @@ class System extends Controller
         return reTmJsonObj(200, '获取成功', $ConfigList);
     }
 
+    /**
+     * 设置经纬度配置
+     */
+    public function setLongitudeAndLatitudeConfig(){
+        //判断请求方式以及请求参数
+        $inputData = Request::post();
+        $method = Request::method();
+        $params = ['longitude','latitude','is_open_position','poi_name','poi_adcode'];
+        $remarks = ['longitude'=>'经度','latitude'=>'纬度','is_open_position'=>"是否开启定位",'poi_name'=>'定位','poi_adcode'=>'定位'];
+        /*$ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
+        if(!$ret){
+            return reTmJsonObj(500, $msg, []);
+        }*/
+        foreach ($params as $val){
+            if(isset($inputData[$val])){
+                $this->ConfigModel->batchSaveConfig($val,$inputData[$val],$remarks[$val],'position');
+            }
+        }
+        return reTmJsonObj(200,'保存成功',[]);
+    }
+
+    /**
+     * 获取经纬度配置 1
+     */
+    public function getLongitudeAndLatitudeConfig(){
+        //判断请求方式以及请求参数
+        $inputData = Request::get();
+        $method = Request::method();
+        $params = [];
+        $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
+        if(!$ret){
+            return reTmJsonObj(500, $msg, []);
+        }
+        $condition = [];
+        $condition['key'] = ['longitude','latitude','is_open_position','poi_name','poi_adcode'];
+        $condition['type'] = 'position';
+        $ConfigList = $this->ConfigModel->getConfigList($condition);
+        if($ConfigList === false){
+            return reTmJsonObj(500, '获取失败', []);
+        }
+        $ConfigList = $this->ConfigModel->ArrayToKey($ConfigList);
+        $ConfigList['longitude'] = empty($ConfigList['longitude'])?"":$ConfigList['longitude'];
+        $ConfigList['latitude'] = empty($ConfigList['latitude'])?"":$ConfigList['latitude'];
+        $ConfigList['is_open_position'] = empty($ConfigList['is_open_position'])?0:$ConfigList['is_open_position'];
+        $ConfigList['poi_name'] = empty($ConfigList['poi_name'])?"":$ConfigList['poi_name'];
+        $ConfigList['poi_adcode'] = empty($ConfigList['poi_adcode'])?"":$ConfigList['poi_adcode'];
+        return reTmJsonObj(200, '获取成功', $ConfigList);
+    }
+
+
+    /**
+     * 设置License
+     */
+    public function setLicense(){
+        //判断请求方式以及请求参数
+        $inputData = Request::post();
+        $params = ['license'];
+        $remarks = ['license'=>'license值'];
+        foreach ($params as $val){
+            if(isset($inputData[$val])){
+                $this->ConfigModel->batchSaveConfig($val,$inputData[$val],$remarks[$val],'license');
+            }
+        }
+        return reTmJsonObj(200,'保存成功',[]);
+    }
+
+    /**
+     * 获取License
+     */
+    public function getLicense(){
+        //判断请求方式以及请求参数
+        $inputData = Request::get();
+        $method = Request::method();
+        $params = [];
+        $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
+        if(!$ret){
+            return reTmJsonObj(500, $msg, []);
+        }
+        $condition = [];
+        $condition['key'] = ['license'];
+        $condition['type'] = 'license';
+        $ConfigList = $this->ConfigModel->getConfigList($condition);
+        if($ConfigList === false){
+            return reTmJsonObj(500, '获取失败', []);
+        }
+        $ConfigList = $this->ConfigModel->ArrayToKey($ConfigList);
+        if(empty($ConfigList['license'])){
+            return reTmJsonObj(500, '获取失败', []);
+        }
+        $data = tmBaseHttp("https://shop.360tianma.com/home/index/getLicense",['license'=>$ConfigList['license'],'domain'=>$_SERVER['SERVER_NAME']]);
+        $data = (array)json_decode($data);
+        if($data['status']!=1){
+            return reTmJsonObj(500, '获取失败', []);
+        }
+        return reTmJsonObj(200, '成功', $data['data']);
+    }
+
 }

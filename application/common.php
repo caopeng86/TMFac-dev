@@ -359,7 +359,9 @@ function getCommonArticleType(){
     if(!isset($getFromids->code) || 200 != $getFromids->code){
         return false;
     }
-    return (array)$getFromids->data;
+    $arr = (array)$getFromids->data;
+    $arr['from_arrs'][] = (object)["id"=>10,"value"=>"远程推送"];
+    return $arr;
 }
 
 function tmBaseHttp($url, $params, $method = 'GET', $multi = false, $header = array()){
@@ -465,7 +467,7 @@ function pushMessage($title,$content,$url,$android_info,$ios_info,$type = '系�
     }
     return false;
 }
-/*生成支付宝签名
+/*生成app支付宝签名
 入参：
 $out_trade_no 订单号  必须
 $total_amount 商品价格 单位 ：分 币种：人民币  必须
@@ -516,6 +518,78 @@ function signAlipay($out_trade_no = 0,$total_amount = 0,$notifyUrl = "",$subject
     }
 }
 
+function pagePcAlipay($out_trade_no = 0,$total_amount = 0,$notifyUrl = "",$subject = "商品标题",$return_url = ""){
+    $alipayConfig = getAlipayConfig();
+    if(empty($alipayConfig['alipay_app_id']) || empty($alipayConfig['alipay_public_key']) || empty($alipayConfig['alipay_private_key'])){
+        return false;
+    }
+    require_once '../vendor/alipay/wappay/service/AlipayTradeService.php';
+    require_once '../vendor/alipay/wappay/buildermodel/AlipayTradePagePayContentBuilder.php';
+    try{
+        $body = "";
+        $timeout_express="1m";
+        $payRequestBuilder = new AlipayTradePagePayContentBuilder();
+        $payRequestBuilder->setBody($body);
+        $payRequestBuilder->setSubject($subject);
+        $payRequestBuilder->setOutTradeNo($out_trade_no);
+        $payRequestBuilder->setTotalAmount($total_amount);
+        $payRequestBuilder->setTimeExpress($timeout_express);
+
+        $config = array (
+            'app_id' => $alipayConfig['alipay_app_id'],
+            'merchant_private_key' => $alipayConfig['alipay_private_key'],
+            'notify_url' => $notifyUrl,
+            'return_url' => $return_url,
+            'charset' => "UTF-8",
+            'sign_type'=>"RSA2",
+            'gatewayUrl' => "https://openapi.alipay.com/gateway.do",
+            'alipay_public_key' => $alipayConfig['alipay_public_key'],
+        );
+
+        $payResponse = new AlipayTradeService($config);
+        $result=$payResponse->pagePay($payRequestBuilder,$config['return_url'],$config['notify_url']);
+        return $result;
+    } catch(Exception $e) {
+        return false;
+    }
+}
+
+function webH5Alipay($out_trade_no = 0,$total_amount = 0,$notifyUrl = "",$subject = "商品标题",$return_url = ""){
+    $alipayConfig = getAlipayConfig();
+    if(empty($alipayConfig['alipay_app_id']) || empty($alipayConfig['alipay_public_key']) || empty($alipayConfig['alipay_private_key'])){
+        return false;
+    }
+    require_once '../vendor/alipay/wappay/service/AlipayTradeService.php';
+    require_once '../vendor/alipay/wappay/buildermodel/AlipayTradeWapPayContentBuilder.php';
+    try{
+        $body = "";
+        $timeout_express="1m";
+        $payRequestBuilder = new AlipayTradeWapPayContentBuilder();
+        $payRequestBuilder->setBody($body);
+        $payRequestBuilder->setSubject($subject);
+        $payRequestBuilder->setOutTradeNo($out_trade_no);
+        $payRequestBuilder->setTotalAmount($total_amount);
+        $payRequestBuilder->setTimeExpress($timeout_express);
+
+        $config = array (
+            'app_id' => $alipayConfig['alipay_app_id'],
+            'merchant_private_key' => $alipayConfig['alipay_private_key'],
+            'notify_url' => $notifyUrl,
+            'return_url' => $return_url,
+            'charset' => "UTF-8",
+            'sign_type'=>"RSA2",
+            'gatewayUrl' => "https://openapi.alipay.com/gateway.do",
+            'alipay_public_key' => $alipayConfig['alipay_public_key'],
+        );
+
+        $payResponse = new AlipayTradeService($config);
+        $result=$payResponse->wapPay($payRequestBuilder,$config['return_url'],$config['notify_url']);
+        return $result;
+    } catch(Exception $e) {
+        return false;
+    }
+}
+
 /*
  * 验证阿里支付异步回调是否正确
  * 入参：无
@@ -560,7 +634,7 @@ function checkAlipayNotify(){
     }
 }
 
-/*生成微信签名
+/*生成app微信签名
 入参：
 $out_trade_no 订单号  必须
 $total_amount 商品价格 单位 ：分 币种：人民币  必须
@@ -603,6 +677,36 @@ function signWechat($out_trade_no = 0,$total_amount = 0,$notifyUrl = "",$subject
     } catch(Exception $e) {
         return false;
     }
+
+}
+
+function signH5Wechat($out_trade_no = 0,$total_amount = 0,$notifyUrl = "",$subject = "商品标题"){
+    $wecatpayConfig = getWecatpayConfig();
+    if(empty($wecatpayConfig['wechat_app_id']) || empty($wecatpayConfig['wechat_mch_id']) || empty($wecatpayConfig['wechat_key'])){
+        return false;
+    }
+    $payset = [
+        "appid"=>$wecatpayConfig['wechat_app_id'],
+        "mchid"=>$wecatpayConfig['wechat_mch_id'],
+        "key"=>$wecatpayConfig['wechat_key']
+    ];
+    $payset['notify_url']=$notifyUrl;
+    include_once '../vendor/Wxpay/WxPay.Api.php';
+    include_once '../vendor/Wxpay/WxPay.Data.php';
+  //  try{
+        $unifiedOrder = new \WxPayUnifiedOrder();
+        $unifiedOrder->SetBody($subject); //商品或支付单简要描述
+        $unifiedOrder->SetOut_trade_no($out_trade_no);
+        $unifiedOrder->SetTotal_fee($total_amount);
+        $unifiedOrder->SetTrade_type("MWEB");
+        $unifiedOrder->SetNotify_url($notifyUrl);
+        $unifiedOrder->SetProduct_id($out_trade_no);
+        $result = \WxPayApi::unifiedOrder($unifiedOrder,6,$payset);
+      //  dump($result);
+        return json_encode($result);
+   /* } catch(Exception $e) {
+        return false;
+    }*/
 
 }
 
@@ -651,7 +755,7 @@ function checkWechatNotify(){
 }
 
 /*
- * 生成支付签名。
+ * 生成app支付签名。
  * 该方法是支付宝，微信支付签名的集合，将来如果新增其它支付方式，也会增加到里面
      * 入参：
     $type 支付类型 1支付宝，2微信   必须

@@ -74,6 +74,13 @@
                         <li>
                             <div class="layui-form-item">
                                 <div class="layui-input-block">
+                                    <input type="text" name="channel_sources" placeholder="渠道邀请码" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
                                     <select name="status">
                                         <option value="">状态筛选</option>
                                         <option value="0">正常</option>
@@ -83,15 +90,15 @@
                                 </div>
                             </div>
                         </li>
-                        <li>
-                            <div class="layui-form-item">
-                                <div class="layui-input-block">
-                                    <select name="channel_sources" id="channel_sources">
-                                        <option value=''>来源筛选</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </li>
+                        <!--<li>-->
+                            <!--<div class="layui-form-item">-->
+                                <!--<div class="layui-input-block">-->
+                                    <!--<select name="channel_sources" id="channel_sources">-->
+                                        <!--<option value=''>来源筛选</option>-->
+                                    <!--</select>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</li>-->
                         <li>
                             <div class="layui-form-item">
                                 <div class="layui-input-block">
@@ -340,7 +347,6 @@
                             layer.msg('至少选择一个用户')
                             return false
                         }
-                        console.log(123)
                         if(isExclude){
                             for(var i=0;i<ExcludeData.length;i++){
                                 if(i<ExcludeData.length-1){
@@ -541,20 +547,20 @@
             });
         })
 
-        var getChannelSourcesList= function() {
-            $.get("/system/Member/getChannelSourcesList",function(data,status){
-                if(200 == data.code && data.data instanceof Array){
-                    var html = "";
-                    var length = data.data.length;
-
-                    for (var i =0;i<length;i++){
-                        html+='<option value='+data.data[i].channel_sources+'>'+data.data[i].channel_sources+'</option>';
-                    }
-                   $("#channel_sources").append(html);
-                    form.render('select'); //刷新select选择框渲染
-                }
-            });
-        }();
+        // var getChannelSourcesList= function() {
+        //     $.get("/system/Member/getChannelSourcesList",function(data,status){
+        //         if(200 == data.code && data.data instanceof Array){
+        //             var html = "";
+        //             var length = data.data.length;
+        //
+        //             for (var i =0;i<length;i++){
+        //                 html+='<option value='+data.data[i].channel_sources+'>'+data.data[i].channel_sources+'</option>';
+        //             }
+        //            $("#channel_sources").append(html);
+        //             form.render('select'); //刷新select选择框渲染
+        //         }
+        //     });
+        // }();
 
     })
 

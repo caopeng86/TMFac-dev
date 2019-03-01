@@ -11,6 +11,7 @@ namespace app\system\controller;
 
 use think\Controller;
 use think\Db;
+use think\facade\Request;
 
 
 class Commonarticle extends Controller
@@ -162,6 +163,70 @@ class Commonarticle extends Controller
     public function deleteArticles(){
         Db::table(TM_PREFIX.'common_article')->where('put_time','<',date('Y-m-d H:i:s', time()-24*60*60))->delete();
     }
+
+    public function pushArticle(){
+        //判断请求方式以及请求参数
+        $inputData = Request::post();
+        $method = Request::method();
+        $params = ['title','content','column'];
+        $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
+        if(!$ret){
+            return reTmJsonObj(500, $msg, []);
+        }
+        $resultKey = ["title","content","keyword","abstract","author","organization","column","publish_time","comment_num",
+            "read_num", "img_url1", "img_url2","img_url3"];
+        $objk = [];
+        foreach ($resultKey as $va){
+            if(isset($inputData[$va])){
+                $objk[$va] = $inputData[$va];
+            }else{
+                $objk[$va] = "";
+            }
+        }
+        $objk['put_time'] = date('Y-m-d H:i:s', time());
+        $objk['aid'] = empty($inputData['aid'])?"push".time().rand(1000,2000):$inputData['aid'];
+        $objk['website_name'] = "远程推送";
+        $objk['collect_time'] = date("Y-m-d H:i:s",time());
+        $objk['from_id'] = 10;
+        $objk['put_time'] = date("Y-m-d H:i:s",time());
+        $objk['column_id'] = 0;
+        $column_arrs = [
+            ["id"=>1,"value"=>"热点头条"],["id"=>2,"value"=>"科技"],["id"=>3,"value"=>"娱乐"],["id"=>4,"value"=>"游戏"],["id"=>5,"value"=>"体育"],
+            ["id"=>6,"value"=>"汽车"],["id"=>7,"value"=>"财经"],["id"=>8,"value"=>"时尚"],["id"=>9,"value"=>"搞笑"],["id"=>10,"value"=>"旅游"],
+            ["id"=>11,"value"=>"育儿/母婴"],["id"=>12,"value"=>"美食"],["id"=>13,"value"=>"美文"],["id"=>14,"value"=>"历史"],["id"=>15,"value"=>"养生/健康"],
+            ["id"=>16,"value"=>"国际"],["id"=>17,"value"=>"军事"],["id"=>18,"value"=>"宠物"],["id"=>19,"value"=>"星座"],["id"=>20,"value"=>"动漫"]
+        ];
+        foreach ($column_arrs as $key=>$value){
+            if($objk['column'] == $value['value']){
+                $objk['column_id'] = $value['id'];
+            }
+        }
+        if(empty($objk['column_id'])){
+            return reTmJsonObj(500, "栏目不对", []);
+        }
+        $id = Db::table(TM_PREFIX.'common_article')->insertGetId($objk);
+        $data =  Db::table(TM_PREFIX.'common_article')->where(['article_id'=>$id])->find();
+        return reTmJsonObj(200,'保存成功',$data);
+    }
+
+    public function deleteArticle(){
+        //判断请求方式以及请求参数
+        $inputData = Request::post();
+        $method = Request::method();
+        $params = ['aid'];
+        $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
+        if(!$ret){
+            return reTmJsonObj(500, $msg, []);
+        }
+        $data =  Db::table(TM_PREFIX.'common_article')->where(['aid'=>$inputData['aid']])->find();
+        if(!$data){
+            return reTmJsonObj(500, "非法操作", []);
+        }
+        Db::table(TM_PREFIX.'common_article')->where(['aid'=>$inputData['aid']])->delete();
+        return reTmJsonObj(200,'删除成功',[]);
+    }
+
+
 
 
 

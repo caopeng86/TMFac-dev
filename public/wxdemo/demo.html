@@ -2,18 +2,66 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <!--<meta property="og:type" content="website" />-->
-    <!--<meta property="og:title" content="页面标题">-->
-    <!--<meta property="og:description" content="页面描述">-->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="分享出去的地址是什么111">
+    <meta property="og:description" content="页面描述">
     <!--<meta property="og:image" content="http://dev.360tianma.com/public/wxdemo/wxdemo2.jpg">-->
     <!--<meta property="og:url" content="http://dev.360tianma.com/">-->
     <title>分享出去的地址是什么</title>
 </head>
 <body>
+<div style="width:0px;height:0px;overflow:hidden;"><img src="http://review.360tianma.com/uploads/gamelogo.jpg"></div>
 <div id="tm-upload" ></div>
 <script src="/public/static/js/jquery-3.31.min.js"></script>
+<!--<script src="../static/js/jquery-3.31.min.js"></script>-->
 <script src="/public/breakpoint.js"></script>
+<script src="../transcode.js"></script>
 <script>
+    //请求前，先建立函数，TransCode函数中encrypt()是加密方法，decrypt()是解密方法，参数传入加解密的对象信息就行
+    var transcode = new TransCode();
+    //构造加解密函数
+    var postData={admin:'admin',password:'password'};//发送的信息
+
+    var headers = transcode.headers(1);//headers参数
+    var data='Sw0xVpTGg8FCywWzlcZRKYCrwr6lRN5AJwUCAPp16jlENcSIDw\/UFAAr7BZcwyVSvnBujk+weEQhSc8MMMpSEeBp01j6H+Dr7DDx+JA\/nugzRUdU+vqz01jHmO22qxyillC6B9UoDLvv391r7AarPzu1mq39YHMZdrwkdXKDLB47pHo+Mmke1BA2sps7KBV\/0ewRgXkHJuu7HkvIz8HL3vHspmx\/KZs2omQKyLsADO\/AO4LPPZqjG\/cPuQiex80KzEwyBkTp2kS6isY71HtlVCRSkvv24n9ChD37Q0HgdwY='
+    var tmtimestamp =1548136602279
+    var tmrandomnum = '6f4jszezjbc2pnpb';
+    console.log(transcode.decrypt(data,tmtimestamp,tmrandomnum))
+    // transcode.decrypt(a)
+    $.ajax({
+        type: "post",
+        url: "http://review.360tianma.com/cl01syxdzb_xveal/userprizelog/index",
+        cache: false,  //禁用缓存
+        sync:false,
+        headers: headers,
+        data:{data:transcode.encrypt({page:1,page_size:20})},
+        //加密后的字符串，后台定义字段接收
+        dataType: "json",
+        success: function (data) {
+            var a = data.data;
+            transcode.decrypt(a)//此方法是解密后台传过来的信息，参数为加密后的字符串
+            console.log(data)
+            console.log(transcode.decrypt(a))
+        },error:function(){
+        }
+    })
+    $.ajax({
+        type: "get",
+        url: "http://review.360tianma.com/cl01syxdzb_xveal/prize/index",
+        cache: false,  //禁用缓存
+        sync:false,
+        headers: headers,
+        // data:{data:transcode.encrypt({page:1,page_size:20})},
+        //加密后的字符串，后台定义字段接收
+        dataType: "json",
+        success: function (data) {
+            var a = data.data;
+            transcode.decrypt(a)//此方法是解密后台传过来的信息，参数为加密后的字符串
+            console.log(data)
+            console.log(transcode.decrypt(a))
+        },error:function(){
+        }
+    })
     uploadcallback.filepart = function(info){ //每个切片上传成功的回调监听方法
         console.log(info)
         /*

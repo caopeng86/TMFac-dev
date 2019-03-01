@@ -59,6 +59,9 @@ class Url extends Dispatch
             // 解析控制器
             $controller = !empty($path) ? array_shift($path) : null;
         }
+        if ($controller && !preg_match('/^[A-Za-z][\w|\.]*$/', $controller)) {
+            throw new HttpException(404, 'controller not exists:' . $controller);
+        }
 
         // 解析操作
         $action = !empty($path) ? array_shift($path) : null;
