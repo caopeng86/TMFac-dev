@@ -1057,7 +1057,7 @@ class System extends Controller
         if(empty($ConfigList['license'])){
             return reTmJsonObj(500, '获取失败', []);
         }
-        $data = tmBaseHttp("https://shop.360tianma.com/home/index/getLicense",['license'=>$ConfigList['license'],'domain'=>$_SERVER['SERVER_NAME']]);
+        $data = tmBaseHttp("https://www.360tianma.com/home/index/getLicense",['license'=>$ConfigList['license'],'domain'=>$_SERVER['SERVER_NAME']]);
         $data = (array)json_decode($data);
         if($data['status']!=1){
             return reTmJsonObj(500, '获取失败', []);
