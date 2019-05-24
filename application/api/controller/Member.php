@@ -8,16 +8,17 @@
 
 namespace app\api\controller;
 
-
-use app\api\model\MemberModel;
-use app\api\model\SiteModel;
-use app\extend\controller\Logservice;
 use app\api\model\ConfigModel;
+use app\api\model\SiteModel;
+use app\api\model\SystemArticleModel;
+use app\extend\controller\Logservice;
+use app\member\model\MemberModel;
 use app\member\model\MemberThirdPartyModel;
 use app\member\model\MemberpointModel;
 use app\member\model\MemberBehaviorLogModel;
-use app\api\model\SystemArticleModel;
 use think\facade\Request;
+use think\facade\Cache;
+use think\facade\Config;
 
 class Member extends Base
 {
@@ -112,14 +113,19 @@ class Member extends Base
         //判断请求方式以及请求参数
         $inputData = Request::get();
         $method = Request::method();
-        $params = ['member_code'];
+        $token = Request::header('token');
+		$params = ['member_code'];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
-        if(!$ret){
+        if(!$ret || !$token || strlen($token)<20){
             return reTmJsonObj(500, $msg, []);
         }
+		
+		$userId = getUserIByToken($token);
+		if(empty($userId)){
+            return reTmJsonObj(500, "token验证失效", []);
+        }
 
-        $condition['member_code'] = $inputData['member_code'];
-      //  $field = 'member_id,member_code, member_name, member_nickname, member_real_name, site_code, email, mobile, head_pic, create_time, status, wx, qq, zfb, wb,receive_notice,wifi_show_image,list_auto_play';
+		$condition['member_code'] = $inputData['member_code'];
 
         $field = 'member_id,member_code, member_name,member_sn,member_nickname, member_real_name,site_code,email,deleted,sex_edit_time,birthday_edit_time,mobile_edit_time,wb_edit_time,wx_edit_time,qq_edit_time,
          mobile, head_pic, create_time, status, wx, qq, zfb, wb,birthday,sex,ip,point,access_key_create_time,close_start_time,close_end_time,password,receive_notice,wifi_show_image,list_auto_play,login_type';
@@ -128,6 +134,7 @@ class Member extends Base
             Logservice::writeArray(['sql'=>$this->memberModel->getLastSql()], '获取会员详情失败', 2);
             return reTmJsonObj(500, '获取会员信息失败', []);
         }
+		
         $memberInfo['login_type'] = empty($memberInfo['login_type'])?'mobile':$memberInfo['login_type'];
         $siteModel = new SiteModel();
         $siteName = $siteModel->getSiteInfo(['site_code' => $memberInfo['site_code']], 'site_name')['site_name'];
@@ -144,7 +151,7 @@ class Member extends Base
         $ConfigList = array_column($ConfigList,'value','key');
         //第3方信息获取
         $memberThirdPartyModel = new MemberThirdPartyModel();
-        $memberInfo['other_info'] = $memberThirdPartyModel->getThirdPartyList(['member_id'=>$memberInfo['member_id']],'uid,nick_name,member_id,head_url,address,ip,type');
+        $memberInfo['other_info'] = $memberThirdPartyModel->getThirdPartyListById($memberInfo['member_id']);
         $memberInfo['other_info'] = $memberThirdPartyModel->ArrayToType($memberInfo['other_info']);
         $ConfigList['sex'] = empty($memberInfo['sex_edit_time'])?$ConfigList['sex']:0;
         $ConfigList['birthday'] = empty($memberInfo['birthday_edit_time'])?$ConfigList['birthday']:0;
@@ -154,11 +161,14 @@ class Member extends Base
         $ConfigList['qq'] = empty($memberInfo['qq_edit_time'])?$ConfigList['qq']:0;
         $memberInfo['point_config'] = $ConfigList;
         $memberInfo['is_first_login'] = false;
+
+		unset($memberInfo["password"]);
+
         return reTmJsonObj(200, '获取会员信息成功', $memberInfo);
     }
 
     /*
-* 获取会员积分签到情况*/
+	* 获取会员积分签到情况*/
     public function getMemberPointSign(){
         //判断请求方式以及请求参数
         $inputData = Request::get();

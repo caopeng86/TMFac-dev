@@ -181,6 +181,34 @@ class Memberstar extends Base
         return reEncryptJson(200, '取消收藏成功', [],false);
     }
 
+	/**
+     * 清空收藏
+     */
+    public function clearStar(){
+        //判断请求方式以及请求参数
+        //$inputData = Request::post();
+        $inputData = getEncryptPostData();
+        if(!$inputData){
+            return reTmJsonObj(552,"解密数据失败",[]);
+        }
+        $method = Request::method();
+		$params = ['member_code','type'];
+        $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
+        if(!$ret){
+            return reTmJsonObj(500, $msg, []);
+        }
+
+        $re = Db::table(TM_PREFIX.'member_star')
+            ->whereIn('member_code',$inputData['member_code'])
+			->whereIn('type',$inputData['type'])
+            ->delete();
+        if($re === false){
+            return reTmJsonObj(500, '清空收藏失败', []);
+        }
+
+        return reEncryptJson(200, '清空收藏成功', [],false);
+    }
+
     /**
      * 获取收藏列表
      */
@@ -250,6 +278,9 @@ class Memberstar extends Base
         //收藏条数
         $starNum = $this->starModel->countStar($condition);
         $MemberfootprintModel = new MemberfootprintModel();
+      //  $condition[] = ['create_time','>=',time() - 7*24*3600];
+        $condition[] = ['member_code','=',$inputData['member_code']];
+        $condition[] = ['status','=',1];
         $condition[] = ['create_time','>=',time() - 7*24*3600];
         $footprintNum = $MemberfootprintModel->countFootprint($condition);
         return reEncryptJson(200,'成功',['starNum'=>$starNum,'footprintNum'=>$footprintNum]);

@@ -50,7 +50,17 @@ class Article extends Base
         if(!$ret){
             return reTmJsonObj(500, $msg, []);
         }
-        $result = $this->systemArticleModel->updateArticleInfo(['id'=>1],$inputData);
+		$info = $this->systemArticleModel->getArticleInfo(['id'=>1]);
+		if(empty($info))
+		{
+			$inputData['id'] = 1;
+			$inputData['article'] = "免责申明";
+			$result = $this->systemArticleModel->addArticleInfo($inputData);
+		}
+		else
+		{
+			$result = $this->systemArticleModel->updateArticleInfo(['id'=>1],$inputData);
+		}
         if($result){
             return reTmJsonObj(200, '更新成功', []);
         }

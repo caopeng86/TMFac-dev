@@ -81,3 +81,25 @@
 //return [
 //
 //];
+
+
+
+Route::get('hello/:name', 'index/hello');
+Route::rule('hlhj_news/user_api/postComment', 'hlhj_news/Userapi/postComment');
+Route::rule('hlhj_news/user_api/getUserMenu', 'hlhj_news/Userapi/getUserMenu');
+Route::rule('hlhj_news/user_api/get_comment', 'hlhj_news/Userapi/get_comment');
+Route::rule('hlhj_news/user_api/commonarticle', 'hlhj_news/Userapi/commonarticle');
+Route::rule('hlhj_news/user_api/addforward', 'hlhj_news/Userapi/addforward');
+
+// return [
+//     '__pattern__' => [
+//         'name' => '\w+',
+//     ],
+//     '[user_api/postComment]'     => [
+//         ':id'   => ['userapi/postComment', ['method' => 'get'], ['id' => '\d+']]
+//     ],
+
+// ];
+
+
+

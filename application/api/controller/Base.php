@@ -18,17 +18,17 @@ use think\facade\Request;
 
 class Base extends Controller
 {
-    public function __construct()
+    public function __construct($notoken='')
     {
         parent::__construct();
-        $this->_checkToken();
+        $this->_checkToken($notoken);
     }
 
     /**
      * 登录令牌验证
      * @return bool
      */
-    private function _checkToken(){
+    private function _checkToken($notoken=''){
         $token = Request::header('token');
         $url = Request::module().'\\'.Request::controller().'\\'.Request::action();
         $url = strtolower($url);
@@ -36,9 +36,11 @@ class Base extends Controller
         $pass = [
             'api\jpush\pushinfo',
             'api\jpush\getres',
+            'api\jpush\pushOne',
             'api\site\savecomplain'
         ];
-        if(in_array($url, $pass)){
+        // $notoken=input('notoken');
+        if(in_array($url, $pass)||!empty($notoken)){
             return true;
         }
         //判断是否传入token

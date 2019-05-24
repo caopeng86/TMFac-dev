@@ -10,9 +10,9 @@ namespace app\api\controller;
 
 
 use app\api\model\BranchModel;
-use app\api\model\MemberModel;
 use app\api\model\UserModel;
 use app\extend\controller\Logservice;
+use app\member\model\MemberModel;
 use think\Controller;
 use think\facade\Request;
 

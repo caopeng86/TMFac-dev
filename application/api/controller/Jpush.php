@@ -17,6 +17,11 @@ use think\facade\Request;
 
 class Jpush extends Base
 {
+    public function __construct($notoken='')
+    {
+        parent::__construct($notoken);
+       
+    }
     /**
      * 获取推送列表数据
      */
@@ -31,7 +36,7 @@ class Jpush extends Base
         }
 
         $condition = [];
-//        $condition['member_code'] = '';
+       // $condition['member_code'] = '';
         $pushModel = new PushModel();
         if(!empty($inputData['member_code'])){
             $condition['member_code'] = $inputData['member_code'];
@@ -128,26 +133,46 @@ class Jpush extends Base
     }
 
     /**
-     * 推送单个
+     * 推送单个  member_code = jpush_id
      */
-    public function pushOne(){
+    public function pushOne($title='系统消息',$content='系统消息',$member_code=0){
+
         //判断请求方式以及请求参数
         $inputData = Request::post();
         $method = Request::method();
         $params = ['title', 'content', 'member_code'];
-        $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
-        if(!$ret){
-            return reTmJsonObj(500, $msg, []);
+        //如果是函数调用不是前端请求 则跳过验证
+        if(empty($title) || $title=='系统消息'){
+            $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
+            if(!$ret){
+                return reTmJsonObj(500, $msg, []);
+            }
         }
-
+        
         Db::startTrans();
         //记录消息
         $pushModel = new PushModel();
-        $data = [
-            'push_content' => json_encode($inputData),
-            'member_code' => $inputData['member_code'],
-            'create_time' => time(),
-        ];
+        if(!isset($inputData['title'])||empty($inputData['title'])
+            ||!isset($inputData['member_code'])||empty($inputData['member_code'])){
+            $data =['push_content' => $content,
+                    'member_code' => $member_code,
+                    'create_time' => time() ]; 
+            $extras = $data;
+            $extras['title'] = $title;
+            $extras['alias'] = $member_code;
+            unset($extras['member_code']);
+        }else{
+            $data =['push_content' => json_encode($inputData),
+                    'member_code' => $inputData['member_code'],
+                    'create_time' => time() ];
+            $extras = $inputData;
+            $extras['title'] = $inputData['title'];
+            $extras['alias'] = $inputData['member_code'];
+            unset($extras['member_code']);
+        }
+
+
+            
         $push = $pushModel->addPush($data);
         if($push === false){
             Db::rollback();
@@ -155,9 +180,7 @@ class Jpush extends Base
         }
 
         //推送消息
-        $extras = $inputData;
-        $extras['alias'] = $inputData['member_code'];
-        unset($extras['member_code']);
+        
         $JPush = new \app\extend\controller\Jpush();
         $re = $JPush::JPushOne($extras);
         if($re['http_code'] != 200){

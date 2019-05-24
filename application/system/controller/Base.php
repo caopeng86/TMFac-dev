@@ -21,17 +21,17 @@ class Base extends Controller
 
     public $userInfo;
 
-    public function __construct()
+    public function __construct($notoken='')
     {
         parent::__construct();
-        $this->_checkToken();
+        $this->_checkToken($notoken);
     }
 
     /**
      * 登录令牌验证
      * @return bool
      */
-    private function _checkToken(){
+    private function _checkToken($notoken=''){
         $token = Request::header('token');
         $url = Request::module().'\\'.Request::controller().'\\'.Request::action();
         $url = strtolower($url);
@@ -40,6 +40,11 @@ class Base extends Controller
             'system\site\getsitelist',
             'system\member\exportmembertoexcel',
         ];
+        //***********************************************************
+        //*Software: yhb允许内部组件字节通行
+        //***********************************************************
+        if(!empty($notoken))return true;
+
         if(in_array($url, $pass)){
             return true;
         }

@@ -19,6 +19,8 @@ class Logservice extends Controller
     private static $type = [1=>'INFO', 2=>'ERR'];
     private static $size = 1024*1024;
 
+	protected static $_timeStart = array('custom'=>array(),'random'=>array());
+
     /**
      * 检查文件大小,返回新文件名
      * @param $dir
@@ -26,31 +28,11 @@ class Logservice extends Controller
      * @return string
      */
     private static function _mkFile($dir, $file){
-        //获取该目录下文件数量 去除 ./ ../
-        $num = count(scandir($dir)) - 2;
-        //判断文件大小
-        if($num == 1){
-            if(filesize($file) > Logservice::$size){
-                //新建文件
-                $newFile = str_replace('.log', '', $file)."({$num})".".log";
-                return $newFile;
-            }else{
-                return $file;
-            }
-        }elseif($num > 1){
-            $num = $num - 1;
-            $nowFile = str_replace('.log', '', $file)."({$num})".".log";
-            if(filesize($nowFile) > Logservice::$size){
-                $num = $num + 1;
-                //新建文件
-                $newFile = str_replace('.log', '', $file)."({$num})".".log";
-                return $newFile;
-            }else{
-                return $nowFile;
-            }
-        }else{
-            return $file;
-        }
+		if(file_exists($file) && filesize($file) > Logservice::$size){
+			$num = count(scandir($dir)) - 2;
+			$newFile = str_replace('.log', '', $file)."_{$num}".".log";
+			rename($file,$newFile);
+		}
     }
 
     /**
@@ -59,35 +41,117 @@ class Logservice extends Controller
      * @param $Msg
      * @param $type
      */
-    public static function writeArray($data,$Msg,$type=1){
+    public static function writeArray($data,$Msg,$type=1,$costkey=null){
         $url = Request::module().'\\'.Request::controller().'\\'.Request::action();
         if($type != 1 && $type != 2){
             $type = 1;
         }
+
         $destination = Env::get('root_path').'runtime'.DIRECTORY_SEPARATOR.'serverlogs'.DIRECTORY_SEPARATOR.
-            Request::module().DIRECTORY_SEPARATOR.Request::controller().DIRECTORY_SEPARATOR.
+            //Request::module().DIRECTORY_SEPARATOR.Request::controller().DIRECTORY_SEPARATOR.
             Logservice::$type[$type].DIRECTORY_SEPARATOR.date('Y_m_d').DIRECTORY_SEPARATOR.date('Y_m_d').'.log';
         $dirPath = dirname($destination);
         if(!is_dir($dirPath)){
             mkdir($dirPath,0777,true);
         }
-        $destination = Logservice::_mkFile($dirPath, $destination);
+
+        Logservice::_mkFile($dirPath, $destination);
 
         $now = @date('Y-m-d H:i:s',time());
-        $message = "-----------------------------------------------------------------------------------------------------------";
-        if($cache = Cache::get(Request::header('token'))){
-            $loginInfo = json_encode($cache);
-            $message .= "\r\nloginInfo:[{$loginInfo}]";
-        }
-        $message .= "\r\nTime:[{$now}] Request:[{$url}]\r\n";
+
+		$timeUsed = self::getCostMsec($costkey);
+
+		$level = self::$type[$type];
+		$ip = self::getClientIP();
+		$message = "------Time:[{$now}] Level[{$level}] Request:[{$url}] Ip[{$ip}] Cost[{$timeUsed}] ";
+		$message .= "Log[";
         if(is_array($data)){
-            $message .= "log:";
-            $message .=json_encode($data, JSON_UNESCAPED_UNICODE);
+			$message .=json_encode($data, JSON_UNESCAPED_UNICODE);
         }else{
-            $message .= "log:";
             $message .= $data;
         }
+		$message .= "] ";
+		$message .= "Msg[{$Msg}]";
+		
         $message = rtrim($message,'&');
-        file_put_contents($destination,$message." || Msg:{$Msg}\r\n",FILE_APPEND|LOCK_EX);
+		$message .= "\r\n"; 
+        file_put_contents($destination,$message,FILE_APPEND|LOCK_EX);
+    }
+
+	public static function seedMsec($key=null)
+    {
+    	if ($key != null) 
+    	{
+    		self::$_timeStart['custom'][$key] = microtime ( true );
+    	}else{
+    		self::$_timeStart['random'][] = microtime ( true );	
+    	}
+    }
+    public static function getCostMsec($key=null)
+    {
+    	if ($key != null) 
+    	{
+    		if (is_array(self::$_timeStart['custom']) && !empty(self::$_timeStart['custom'][$key]) && self::$_timeStart['custom'][$key] > 0) 
+	    	{
+	    		$timeStart = self::$_timeStart['custom'][$key];
+		    	$timeEnd = microtime ( true );
+				$timeUsed = intval ( ($timeEnd - $timeStart) * 1000 );
+				return $timeUsed;
+	    	}else{
+	    		return 0;
+	    	}
+    	}
+    	else
+    	{
+    		if (is_array(self::$_timeStart['random']) && count(self::$_timeStart['random']) > 0) 
+	    	{
+	    		$timeStart = array_pop (self::$_timeStart['random']);
+		    	$timeEnd = microtime ( true );
+				$timeUsed = intval ( ($timeEnd - $timeStart) * 1000 );
+				return $timeUsed;
+	    	}else{
+	    		return 0;
+	    	}
+    	}
+    	return 0;
+    }
+
+	public static function getClientIP($hasTransmit = false)
+	{
+		$strIp = '';
+		if(isset($_SERVER['HTTP_CLIENTIP']))
+		{
+			$strIp = strip_tags($_SERVER['HTTP_CLIENTIP']);
+        }
+		elseif(isset($_SERVER['HTTP_X_FORWARDED_FOR']))
+		{
+            $strIp = $_SERVER['HTTP_X_FORWARDED_FOR'];
+            //获取最后一个
+            $strIp = strip_tags(trim($strIp));
+            $intPos = strrpos($strIp, ',');
+            if($intPos > 0)
+			{
+                $strIp = substr($strIp, $intPos + 1);
+            }
+        }
+		elseif(!$hasTransmit && isset($_SERVER['REMOTE_ADDR']))
+		{
+           $strIp = strip_tags($_SERVER['REMOTE_ADDR']);
+        }
+		elseif(isset($_SERVER['HTTP_CLIENT_IP']))
+		{
+            $strIp = strip_tags($_SERVER['HTTP_CLIENT_IP']);
+        }
+		elseif(isset($_SERVER['REMOTE_ADDR']))
+		{
+			$strIp = strip_tags($_SERVER['REMOTE_ADDR']);
+		}
+		$strIp = trim($strIp);
+		if(!ip2long($strIp))
+		{
+			$strIp = '127.0.0.1';
+		}
+		
+		return $strIp;
     }
 }

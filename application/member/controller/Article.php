@@ -32,8 +32,8 @@ class Article extends Base
             return reTmJsonObj(500, $msg, []);
         }
         $info = $this->systemArticleModel->getArticleInfo(['id'=>1]);
-        $info['add_time'] = date('Y-m-d h:i:s',$info['add_time']);
-        $info['update_time'] = date('Y-m-d h:i:s',$info['update_time']);
+        $info['add_time'] = date('Y-m-d h:i:s',$info['add_time']??0);
+        $info['update_time'] = date('Y-m-d h:i:s',$info['update_time']??0);
         return reTmJsonObj(200,'获取成功',$info);
     }
 

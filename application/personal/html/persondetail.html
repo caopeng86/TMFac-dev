@@ -1,0 +1,223 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="lib/html5shiv.js"></script>
+<script type="text/javascript" src="lib/respond.min.js"></script>
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" />
+<link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
+<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
+	<link  rel="stylesheet" type="text/css" href="lib/layui/css/layui.css" />
+<!--[if IE 6]>
+<script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+<title>消息列表</title>
+	<style>
+		.show{
+			display: inline-block;
+		}
+		.hide{
+			display: none;
+		}
+		.xiangqing{
+			margin: 0 5px;
+			cursor: pointer;
+		}
+	</style>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 个人资料 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+	<div>
+		<table class="table table-border table-bordered table-bg table-hover table-sort table-responsive">
+			<thead>
+				<tr class="text-c">
+					<th width="120">账号</th>
+					<th width="80">头像</th>
+					<th width="80">昵称</th>
+					<th width="80">生日</th>
+					<th width="50">性别</th>
+					<th width="100">手机号</th>
+					<th width="120">社交账号绑定</th>
+					<th width="120">注册时间</th>
+				</tr>
+			</thead>
+			<tbody class="tbody">
+			</tbody>
+		</table>
+		<div id="demo2" style="text-align: center;margin-top: 50px"></div>
+	</div>
+</div>
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script> 
+<script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script> 
+<script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="lib/layui/layui.all.js"></script>
+<script type="text/javascript" src="lib/My97DatePicker/4.8/WdatePicker.js"></script> 
+<script type="text/javascript" src="lib/datatables/1.10.0/jquery.dataTables.min.js"></script> 
+<!--<script type="text/javascript" src="lib/laypage/1.2/laypage.js"></script>-->
+<script type="text/javascript">
+    layui.use(['laypage', 'layer'], function() {
+        var laypage = layui.laypage
+            , layer = layui.layer
+    		,$ = layui.jquery;
+        $.ajax({
+            type: "GET",
+            url: "/system/Member/getMemberList",
+            cache: false,  //禁用缓存
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("token", localStorage.getItem("token"));
+            },
+            data: {"index":1,"page_size":1000},  //传入组装的参数
+            dataType: "json",
+            success: function (data) {
+                if(data.code==200){
+                    //如果版本少于8个，则隐藏翻页
+                    if(data.data.list.length<=8){
+                        $("#demo2").hide()
+                    }
+                    //分页处理
+                    layui.use(['laypage', 'layer'], function() {
+                        var laypage = layui.laypage
+                            , layer = layui.layer
+                            ,$ = layui.jquery;
+                        laypage.render({
+                            elem: 'demo2'
+                            ,count: data.data.list.length
+                            ,theme: '#1E9FFF'
+                            ,limit:10
+                            ,jump: function(obj){
+                                // 模拟渲染
+
+                                // document.getElementById('versionList').
+                                var innerHTML = function(){
+                                    var arr = []
+                                        ,thisData = data.data.list.concat().splice(obj.curr*obj.limit - obj.limit, obj.limit);
+                                    layui.each(thisData, function(index, item){
+										var member_nickname
+										var sex
+										var birthday
+										var email
+										var wx=[]
+										var wb=[]
+										var zfb=[]
+										var qq=[]
+										if(item.other_info.qq==undefined){
+                                            qq['show']="hide"
+										}else{
+                                            qq['show']="show"
+                                            qq['nick_name']=item.other_info.qq.nick_name
+                                            qq['url']=item.other_info.qq.head_url
+										}
+                                        if(item.other_info.wx==undefined){
+                                            wx['show']="hide"
+                                        }else{
+                                            wx['show']="show"
+                                            wx['nick_name']=item.other_info.wx.nick_name
+                                            wx['url']=item.other_info.wx.head_url
+                                        }
+                                        if(item.other_info.wb==undefined){
+                                            wb['show']="hide"
+                                        }else{
+                                            wb['show']="show"
+                                            wb['nick_name']=item.other_info.wb.nick_name
+                                            wb['url']=item.other_info.wb.head_url
+                                        }
+                                        if(item.other_info.zfb==undefined){
+                                            zfb['show']="hide"
+                                        }else{
+                                            zfb['show']="show"
+                                            zfb['nick_name']=item.other_info.zfb.nick_name
+                                            zfb['url']=item.other_info.zfb.head_url
+                                        }
+										if(item.member_nickname==null){
+                                            member_nickname=""
+										}else{
+                                            member_nickname=item.member_nickname
+										}
+                                        if(item.sex==null){
+                                            sex=""
+                                        }else if(item.sex==1){
+                                            sex="男"
+                                        }else{
+                                            sex="女"
+										}
+										if(item.birthday==null){
+                                            birthday=""
+										}else{
+                                            birthday=item.birthday
+										}
+										if(item.email==null){
+                                            email=""
+										}else{
+                                            email=item.email
+										}
+                                          var html="<tr class=\"text-c\">\n" +
+                                                "<td>"+item.mobile+"</td>\n" +
+                                                "<td class='img' data-url='"+item.head_pic+"'><img src='"+item.head_pic+"' style='width:30px;height:30px;border-radius: 50px;'/></td>\n" +
+                                                "<td>"+member_nickname+"</td>\n" +
+                                                "<td>"+birthday+"</td>\n" +
+                                                "<td>"+sex+"</td>\n" +
+                                                "<td>"+item.mobile+"</td>\n" +
+                                                "<td class=\"td-status\"><span data-nickname='"+qq['nick_name']+"'  data-url='"+qq['url']+"' class=\"label label-success xiangqing "+qq['show']+"\">QQ</span><span data-nickname='"+wx['nick_name']+"'  data-url='"+wx['url']+"' class=\"label label-success xiangqing "+wx['show']+"\">微信</span><span data-nickname='"+wb['nick_name']+"'  data-url='"+wb['url']+"' class=\"label label-success xiangqing "+wb['show']+"\">微博</span><span data-nickname='"+zfb['nick_name']+"'  data-url='"+zfb['url']+"' class=\"label label-success xiangqing "+zfb['show']+"\">支付宝</span></td>\n" +
+                                                "<td class=\"f-14 td-manage\" style='font-size: 12px'>"+item.create_time+"</td>\n" +
+                                                "</tr>"
+                                        arr.push(html);
+                                    });
+
+                                    return arr.join('');
+                                    console.log(arr)
+
+                                }();
+                                $(".tbody").html(innerHTML);
+                                $(".img").hover(function(){
+                                    layer.tips('<img src="'+$(this).data('url')+'" style="width:60px;height:60px;border-radius: 60px;"/>', $(this).children("img"), {
+                                        tips: [2, '#f2f2f2'],
+                                    });
+								},function(){
+                                    layer.closeAll()
+								})
+                                $(".xiangqing").click(function(e){
+                                    e.stopPropagation();
+                                    layer.tips('<span style="padding-right: 10px;border-right: 1px solid #333"><img src="'+$(this).data('url')+'" style="width:25px;height:25px;border-radius: 25px;"/></span><span style="color:#333;padding-left: 10px;">'+$(this).data('nickname')+'</span>', $(this), {
+                                        tips: [3, '#f2f2f2'],
+                                        time:3000000
+                                    });
+                                })
+                                $(document).click(function(){
+                                    layer.closeAll()
+                                });
+                            }
+
+                        });
+
+                    })
+                }else if(data.code==501){
+                    parent.parent.checkToken()
+                }else{
+                    layer.msg(data.msg)
+                }
+            },error:function(){
+                layer.msg("网络错误，请稍后再试")
+            }
+		});
+
+
+    })
+
+
+</script> 
+</body>
+</html>

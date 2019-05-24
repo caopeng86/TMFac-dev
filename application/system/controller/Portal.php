@@ -20,10 +20,10 @@ use think\facade\Request;
 class Portal extends Base
 {
     protected $portalModel;
-    protected $portal_key = '27483D4C-1A45-2865-9B8C-701EA265ED92';
-    public function __construct()
+    public $portal_key = '27483D4C-1A45-2865-9B8C-701EA265ED92';
+    public function __construct($notoken='')
     {
-        parent::__construct();
+        parent::__construct($notoken);
         $this->portalModel = new PortalModel();
     }
 
@@ -104,7 +104,7 @@ class Portal extends Base
         }
         $inputData['portal_key'] = $this->portal_key; //默认
         //获取应用列表
-        $portal = $this->portalModel->getPortal(['portal_key'=>$inputData['portal_key']]);
+        $portal = $this->portalModel->getPortal(['portal_key'=>$inputData['portal_key']]); 
         //获取能访问的应用
         $roleModel = new RoleModel();
         $token = Request::header('token');
@@ -120,9 +120,9 @@ class Portal extends Base
         $RolePortal = array_column($RolePortal,'key');
         $portal['portal_value'] = json_decode($portal['portal_value'],true);
         foreach ($portal['portal_value'] as $key => $val){
-//            if(!in_array($val['key'],$RolePortal)){
-//                unset($portal['portal_value'][$key]);
-//            }
+           // if(!in_array($val['key'],$RolePortal)){
+           //     unset($portal['portal_value'][$key]);
+           // }
             if(is_array($val['children'])){
                 foreach ($val['children'] as $k => $v){
                     if(!in_array($v['key'],$RolePortal)) {
@@ -171,7 +171,6 @@ class Portal extends Base
         if(!$ret){
             return reTmJsonObj(500,$msg,[]);
         }
-        $portal_key = $inputData['portal_key'];
         $inputData['portal_key'] = $this->portal_key; //默认
         if(!empty($inputData['add_key'])){
             $add_key = $inputData['add_key'];
@@ -180,7 +179,7 @@ class Portal extends Base
         //查找名称是否已经存在
         $condition = ['portal_key' => $inputData['portal_key']];
         $key = $this->portalModel->getPortal($condition);
-        if($portal_key == $inputData['portal_key']){
+        if($this->portal_key == $inputData['portal_key']){
             if($key){
                 //已存在则修改
                 $re = $this->portalModel->updatePortal($condition, ['portal_value' => $inputData['portal_value']]);

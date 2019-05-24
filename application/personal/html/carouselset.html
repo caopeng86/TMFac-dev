@@ -1,0 +1,216 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="lib/html5shiv.js"></script>
+    <script type="text/javascript" src="lib/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
+
+    <!--<link  rel="stylesheet" type="text/css" href="lib/layui/css/layui.css" />-->
+    <link  rel="stylesheet" type="text/css" href="/public/templateUI/publicStyle.css" />
+    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
+    <!--[if IE 6]>
+    <script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+    <script>DD_belatedPNG.fix('*');</script>
+    <![endif]-->
+    <title>消息列表</title>
+    <style>
+        body{
+            min-width: 1350px;
+        }
+        .layui-btn-normal {
+            background-color: #1E9FFF!important;
+            height: 30px;
+            line-height: 30px !important;
+            width: 90px;
+        }
+        .layui-btn.add{
+            background-color: #5eb95e;
+            height: 30px;
+            line-height: 30px !important;
+            width: 90px;
+        }
+        /*.layui-layer-dialog .layui-layer-content{*/
+        /*padding: 35px 20px 20px!important;*/
+        /*}*/
+        .table-bordered td{
+            text-align: center;
+        }
+        .yes{
+            color:#009688;
+            cursor: pointer;
+            display: none;
+        }
+        .yes i{
+            margin-right: 5px;
+        }
+        .no i{
+            margin-right: 5px;
+        }
+        .no{
+            color:#bebcbc;
+            display: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 模块列表<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+    <div style="text-align: right">
+        <button class="layui-btn add">+ 新建</button>
+    </div>
+    <div style="margin-top: 20px">
+        <table class="layui-hide" id="carousel" lay-filter="carousel"></table>
+        <script type="text/html" id="switchTpl">
+            <input type="checkbox" name="switchLogin" value="{{d.id}}" lay-skin="switch" lay-text="是|否" lay-filter="switchLogin"  {{ d.is_login_skip === 1 ? 'checked' : '' }}>
+        </script>
+        <script type="text/html" id="barDemo">
+            <a class="layui-btn layui-btn-xs public-bg1" lay-event="edit">编辑</a>
+            <a class="layui-btn layui-btn-xs  public-bg2" lay-event="del">删除</a>
+        </script>
+    </div>
+</div>
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<!--<script type="text/javascript" src="lib/layui/layui.all.js"></script>-->
+<script type="text/javascript" src="/public/templateUI/layui/layui.all.js"></script>
+<script type="text/javascript" src="lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<!--<script type="text/javascript" src="lib/laypage/1.2/laypage.js"></script>-->
+<script type="text/javascript">
+    $(".add").click(function(){
+        //iframe层
+        layer.open({
+            type: 2,
+            title: false,
+            shade: 0.8,
+            shadeClose:true,
+            area: ['700px', '95%'],
+            content: 'addcarousel.html?status=0' //iframe的url
+        });
+    })
+
+    layui.use('table', function(){
+        var table = layui.table,form = layui.form;
+
+        //第一个实例
+        table.render({
+            elem: '#carousel'
+            ,url: '/system/Adv/advList.html' //数据接口
+            ,headers: {"token":localStorage.getItem("token")}
+            ,page: false //开启分页
+            // ,toolbar: '#toolbarDemo'
+            ,request: {
+                pageName: '' //页码的参数名称，默认：page
+                ,limitName: '' //每页数据量的参数名，默认：limit
+            }
+            ,cols: [[ //表头
+                {type: 'space',hide:true}
+                ,{field: 'image', title: '图片', align:'center',style:'height:50px'
+                ,templet: function(d){
+                        return '<img src="'+d.image+'" />'
+                    }}
+                ,{field: 'url', title: '链接',align:'center'}
+                ,{field: 'sort', title: '排序',align:'center',edit:'text'}
+                ,{field: 'is_login_skip', title: '登录后才能访问',width: 150, templet: '#switchTpl', unresize: true,align:'center'}
+                ,{fixed: 'right',title:'操作', toolbar: '#barDemo'}
+            ]]
+            ,response: {
+                statusCode: 200 //重新规定成功的状态码为 200，table 组件默认为 0
+            }
+            ,parseData: function(res) { //将原始数据解析成 table 组件所规定的数据
+                return {
+                    "code": res.code, //解析接口状态
+                    "msg": res.msg, //解析提示文本
+                    // "count": res.data.total, //解析数据长度
+                    "data": res.data //解析数据列表
+                };
+            }
+        });
+
+        //监听登录后是否访问
+        form.on('switch(switchLogin)', function(obj){
+            postHttpAjax("/system/Adv/saveAdv",{id:this.value,is_login_skip:obj.elem.checked==true ? 1 : 0})
+        });
+
+        //监听单元格编辑
+        table.on('edit(carousel)', function(obj){
+            var value = obj.value //得到修改后的值
+                ,data = obj.data //得到所在行所有键值
+                ,field = obj.field; //得到字段
+            if(!isNaN(Number(value))){
+                postHttpAjax("/system/Adv/saveAdv",{id:data.id,sort:value})
+            }else{
+                layer.msg('请输入纯数字');
+            }
+        });
+
+        //监听行工具事件
+        table.on('tool(carousel)', function(obj){
+            var data = obj.data;
+            if(obj.event === 'del'){
+                layer.confirm('确定删除吗？删除后不可恢复', function(index){
+                    layer.close(index);
+                    postHttpAjax("/system/Adv/deleteAdv",{id:data.id},obj)
+                });
+            } else if(obj.event === 'edit'){
+                layer.open({
+                    type: 2,
+                    title: false,
+                    shade: 0.8,
+                    shadeClose:true,
+                    area: ['700px', '95%'],
+                    content: 'addcarousel.html?status=1&id='+ data.id//iframe的url
+                });
+            }
+        });
+
+    });
+
+
+    function postHttpAjax(url,data,deleteObj){
+        $.ajax({
+            type: "POST",
+            url: url,
+            cache: false,  //禁用缓存
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("token", localStorage.getItem("token"));
+            },
+            data: data,  //传入组装的参数
+            dataType: "json",
+            success: function (data) {
+                if (data.code == 200) {
+                    if (deleteObj!=undefined){
+                        deleteObj.del()
+                    }
+                    layer.msg(data.msg)
+                }else if(data.code==501){
+                    parent.parent.checkToken()
+                }else{
+                    layer.msg(data.msg)
+                }
+            },error:function(){
+                layer.msg("网络错误，请稍后再试")
+            }
+        })
+    }
+
+</script>
+</body>
+</html>

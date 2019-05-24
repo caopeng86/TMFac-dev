@@ -1,0 +1,5294 @@
+[33mcommit c9752b89c6a9435080609faea941dea66573c10e[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Merge: 997d263 3851744
+Author: chenqi <chenqi@360tianma.com>
+Date:   Thu Apr 11 14:39:08 2019 +0800
+
+    Merge branch 'master' of http://gitlab.360tianma.com:8099/d0wop/TM_LAB
+
+[33mcommit 997d26359d377a96203d7804315d159a9383e5e0[m
+Author: chenqi <chenqi@360tianma.com>
+Date:   Thu Apr 11 14:38:54 2019 +0800
+
+    统一会员信息接入文件
+
+[33mcommit 3851744fd11f861e2eb88d1eee7a105f1e588656[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Wed Apr 10 15:36:20 2019 +0800
+
+    优化
+
+[33mcommit b6b0c7e9bdd15e8b08b365725b2df980227f9776[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Wed Apr 10 15:18:29 2019 +0800
+
+    更新
+
+[33mcommit 9df8b78ad6e0becbbb1a17b8b6f54680d3e1c978[m
+Merge: b34230f fb813c0
+Author: wuchuncheng <872487432@qq.com>
+Date:   Wed Apr 10 13:48:50 2019 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit b34230fee4de9da52544fbb894e266ed5930154d[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Wed Apr 10 13:48:20 2019 +0800
+
+    更新
+
+[33mcommit fb813c052cee8e7557a87102718a6392dc1485ee[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Wed Apr 10 12:43:33 2019 +0800
+
+    优化缓存
+
+[33mcommit 02dd766c464549f69c069e3359a47ddf53d371aa[m
+Author: chenqi <chenqi@360tianma.com>
+Date:   Wed Apr 10 10:02:57 2019 +0800
+
+    修复免责申明bug
+
+[33mcommit 3cd8845dfff19b7f22e6a1231cb12ff228bdcfac[m
+Author: chenqi <chenqi@360tianma.com>
+Date:   Tue Apr 9 19:30:21 2019 +0800
+
+    优化免责申明
+
+[33mcommit ec56b2ac21c5354b472b69b4e223a477332ffe51[m
+Author: chenqi <chenqi@360tianma.com>
+Date:   Tue Apr 9 16:41:33 2019 +0800
+
+    修复用户信息bug
+
+[33mcommit 768b059b9799229f9c38b43a22a89d2c1677749c[m
+Author: chenqi <chenqi@360tianma.com>
+Date:   Tue Apr 9 14:39:18 2019 +0800
+
+    增加获取IP接口
+
+[33mcommit 5225694b995b9c3046a07506b274f77bba4ee1a3[m
+Author: chenqi <chenqi@360tianma.com>
+Date:   Tue Apr 9 14:34:05 2019 +0800
+
+    天气接口增加参数字段
+
+[33mcommit a92eefc7034c7d25add6c965bf3959f95ec5ef5a[m
+Author: chenqi <chenqi@360tianma.com>
+Date:   Tue Apr 9 14:24:14 2019 +0800
+
+    修复天气接口
+
+[33mcommit 4633cf690625fd57b78d5c23ef03ebaed53b5f5d[m
+Author: chenqi <chenqi@360tianma.com>
+Date:   Tue Apr 9 13:57:36 2019 +0800
+
+    增加天气和农历接口
+
+[33mcommit 62f3527b4579a07c604ffc9a9fc0ee48290ce492[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Tue Apr 9 11:48:57 2019 +0800
+
+    优化回退版本
+
+[33mcommit b08c9dcc003b030e52ed97d21aef92436944ecac[m
+Merge: 620d0e8 82639ec
+Author: wuchuncheng <872487432@qq.com>
+Date:   Tue Apr 9 11:36:57 2019 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 620d0e84709d29886ae9b14506d90fc0cc36c286[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Tue Apr 9 11:36:43 2019 +0800
+
+    更新
+
+[33mcommit 82639ec4dfb7a7e26c74184ca315414c2e2bd98b[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Tue Apr 9 09:59:27 2019 +0800
+
+    更新优化
+
+[33mcommit 60921baf228abf372223cce4a522b7f076594ee0[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Tue Apr 9 09:48:45 2019 +0800
+
+    更新
+
+[33mcommit a081dd6e4c45fe1c799a9d145267884dfcd45703[m
+Merge: 55f9f96 861d4d7
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Apr 8 19:19:34 2019 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 55f9f9621416723695cf43b7f2162a4e235c9e6d[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Apr 8 19:19:21 2019 +0800
+
+    提交优化
+
+[33mcommit 861d4d70d10a910fd95b624a9e4aca48b7ffb099[m
+Merge: b03dae3 ac9a43f
+Author: wuchuncheng <872487432@qq.com>
+Date:   Mon Apr 8 18:42:14 2019 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit b03dae3c24d29bc73fbbc3702f9169fad152b227[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Mon Apr 8 18:40:42 2019 +0800
+
+    更新
+
+[33mcommit ac9a43f012c4b2c671f15768541fa1154e8cc7e6[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Apr 4 13:36:19 2019 +0800
+
+    优化
+
+[33mcommit 8bfa4feb1dac7b89a8cbf66f4ac3c8ca3348513d[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Apr 4 12:53:53 2019 +0800
+
+    框架提示优化
+
+[33mcommit ae74085aa06d4a63882649384e6da6376f42a9c1[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Wed Apr 3 18:58:15 2019 +0800
+
+    优化
+
+[33mcommit e3c905cdbca659a88c631b8df7e0aad17b950512[m
+Merge: ca410eb 73b994a
+Author: wuchuncheng <872487432@qq.com>
+Date:   Wed Apr 3 18:07:12 2019 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit ca410eb856e175368b650fcc1b7f7bf56d6724ef[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Wed Apr 3 18:06:54 2019 +0800
+
+    更新
+
+[33mcommit 73b994a47e6759c0547689f1b2904dd0ca64a5c7[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Wed Apr 3 18:06:05 2019 +0800
+
+    优化
+
+[33mcommit d6d9b7d5ba42658c8240eb742464be3a1bd96a5e[m
+Author: yhb <1778042457@qq.com>
+Date:   Wed Apr 3 14:47:49 2019 +0800
+
+    1
+
+[33mcommit 2941f7370aad29a6053ebd0d61ec5653321aea24[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Wed Apr 3 14:33:24 2019 +0800
+
+    更新
+
+[33mcommit c6ac3458f576c43211389e63663382776eb65aef[m
+Merge: adc346d 1d1c296
+Author: wuchuncheng <872487432@qq.com>
+Date:   Wed Apr 3 14:24:03 2019 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit adc346d6e21c90b70c3d95da8a0207ea76c58e68[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Wed Apr 3 14:23:45 2019 +0800
+
+    更新
+
+[33mcommit 1d1c296c060f032be4ff606f082d4e330c7aea07[m
+Author: yhb <1778042457@qq.com>
+Date:   Tue Apr 2 16:37:19 2019 +0800
+
+    提公用方法获取用户信息
+
+[33mcommit a9c44f43ee0c507c563349be986c1790e4e19c86[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Tue Apr 2 15:52:47 2019 +0800
+
+    优化
+
+[33mcommit 479966a30172297229d2cd8ffded1bef82437af4[m
+Merge: 053d05f 4aff2b8
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Tue Apr 2 15:34:03 2019 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 053d05fac9d3bd84e13dcc97293a35dce9495f4c[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Tue Apr 2 15:33:05 2019 +0800
+
+    优化
+
+[33mcommit 4aff2b8c9ec77e201e0ab8698cccaa47defa014b[m
+Author: yhb <1778042457@qq.com>
+Date:   Tue Apr 2 10:58:50 2019 +0800
+
+    忽略版本
+
+[33mcommit b37e35d1578c215416755b22ff94753a8e9dd9ad[m
+Merge: bc1ddd4 891920e
+Author: yhb <1778042457@qq.com>
+Date:   Tue Apr 2 10:57:43 2019 +0800
+
+    Merge branch 'master' of http://gitlab.360tianma.com:8099/d0wop/TM_LAB
+    
+    # Conflicts:
+    #       .gitignore
+    #       application/system/controller/Update.php
+
+[33mcommit bc1ddd4ea03928ea19ccdca56b697586bf8ee674[m
+Author: yhb <1778042457@qq.com>
+Date:   Tue Apr 2 10:52:52 2019 +0800
+
+    1
+
+[33mcommit 3ceb63e60f154c3879c055caa9a66ff6ed565796[m
+Author: yhb <1778042457@qq.com>
+Date:   Tue Apr 2 10:51:37 2019 +0800
+
+    保存门户配置
+
+[33mcommit 891920eda998e4d287d7a1c35c22d5d7a7189ed8[m
+Merge: 30c8be9 3397521
+Author: wuchuncheng <872487432@qq.com>
+Date:   Tue Apr 2 10:12:39 2019 +0800
+
+    更新
+
+[33mcommit 30c8be96552f85a16762705e9295dd345e6cb3f0[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Tue Apr 2 10:02:43 2019 +0800
+
+    更新
+
+[33mcommit 33975215a8a3d1dbc71a01e03ec70d559a61269f[m
+Author: yhb <1778042457@qq.com>
+Date:   Mon Apr 1 19:11:33 2019 +0800
+
+    1
+
+[33mcommit 6bbc4f40f34eaf1351f023cdee85c46b8fb15be3[m
+Merge: c929905 3ffef94
+Author: yhb <1778042457@qq.com>
+Date:   Mon Apr 1 18:26:43 2019 +0800
+
+    Merge branch 'master' of http://gitlab.360tianma.com:8099/d0wop/TM_LAB
+    
+    # Conflicts:
+    #       .env
+    #       .gitignore
+    #       application/timingtask/myttimer.php
+
+[33mcommit c929905d3e8843cbe9f312642953d6d5415636b4[m
+Author: yhb <1778042457@qq.com>
+Date:   Mon Apr 1 18:22:07 2019 +0800
+
+    验证加兼容
+
+[33mcommit 3ffef9405fba9721119b90c9b3029bd4e6ea106c[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Apr 1 16:45:31 2019 +0800
+
+    自动化打包框架
+
+[33mcommit c769a62dc700225ec22ad87ec0deba3da0943366[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Mon Apr 1 11:28:26 2019 +0800
+
+    更新
+
+[33mcommit 188218b0a35aeb129d3acdad9fdc9ad811bc5173[m
+Merge: 015d82e f01b58f
+Author: wuchuncheng <872487432@qq.com>
+Date:   Fri Mar 29 17:07:22 2019 +0800
+
+    更新
+
+[33mcommit 015d82e8d0da914d08a7c8ee6b61a08d25091554[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Fri Mar 29 16:46:35 2019 +0800
+
+    ''
+
+[33mcommit f01b58fd314b881e1ea0d11808ff15fc3687cec6[m
+Author: yhb <1778042457@qq.com>
+Date:   Fri Mar 29 15:25:58 2019 +0800
+
+    1
+
+[33mcommit 129122efc0e0915cbee64b714c3c874e3df92166[m
+Merge: b694ac6 f2b12a1
+Author: wuchuncheng <872487432@qq.com>
+Date:   Fri Mar 29 10:43:08 2019 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit b694ac612bbf5d9ddd522695ff9565a7f16eaec0[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Fri Mar 29 10:39:24 2019 +0800
+
+    更新
+
+[33mcommit f2b12a109d7c65271f427ed5dd460e01b53161de[m
+Author: yhb <1778042457@qq.com>
+Date:   Fri Mar 29 09:52:54 2019 +0800
+
+    屏蔽行为记录
+
+[33mcommit 6a964d584ddb4070307fc50de508764ae70997aa[m
+Merge: d3c8feb 85ab5b1
+Author: wuchuncheng <872487432@qq.com>
+Date:   Thu Mar 28 19:43:57 2019 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit d3c8febd32cec5b0f1eee8c96f6f4f0a8cfe43bc[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Thu Mar 28 19:42:23 2019 +0800
+
+    更新
+
+[33mcommit 85ab5b113e8366cf894b41b1d39af46a552ee101[m
+Author: yhb <1778042457@qq.com>
+Date:   Thu Mar 28 17:42:28 2019 +0800
+
+    1
+
+[33mcommit 7d4d053fdf70e5673bdf1b19a8f61cdf041d6816[m
+Author: yhb <1778042457@qq.com>
+Date:   Thu Mar 28 17:16:14 2019 +0800
+
+    更改定时任务配置
+
+[33mcommit bf9f381c6a01b13e8cf0f9f2de865536b26591c3[m
+Author: chenqi <chenqi@360tianma.com>
+Date:   Thu Mar 28 11:53:33 2019 +0800
+
+    修复新增用户量接口
+
+[33mcommit e84a07de26e035e38b5dea2d0b6558a521a2c889[m
+Author: yhb <1778042457@qq.com>
+Date:   Thu Mar 28 11:19:53 2019 +0800
+
+    补推
+
+[33mcommit dbb7723015ef086eb21004568071f46217edaf33[m
+Merge: 05df7a5 5a4c1f5
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Mar 28 10:57:21 2019 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 05df7a5c2de74ea7eddd4219934a02935214e953[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Mar 28 10:54:55 2019 +0800
+
+    优化
+
+[33mcommit 5a4c1f5aef08bb938f39d63365bb76842e8290f8[m
+Author: chenqi <chenqi@360tianma.com>
+Date:   Thu Mar 28 10:06:56 2019 +0800
+
+    修复用户信息更改为及时
+
+[33mcommit 8070822c3b20608e875c537ff2379a37b24ce455[m
+Merge: f08c971 647c640
+Author: wuchuncheng <872487432@qq.com>
+Date:   Wed Mar 27 19:43:55 2019 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit f08c971a0b35c4288efe2f78261bcc55e75865a2[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Wed Mar 27 19:41:15 2019 +0800
+
+    更新
+
+[33mcommit 23cc256317e453529961ced4df3943d81888c4eb[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Wed Mar 27 19:40:34 2019 +0800
+
+    更新
+
+[33mcommit 647c640e66d5d26bbb9cbd615cc08c0a8c805dfc[m
+Author: yhb <1778042457@qq.com>
+Date:   Wed Mar 27 18:40:29 2019 +0800
+
+    定时任务添加多线程排队功能及修改定时功能
+
+[33mcommit 922ebf127683404637e439c4e9ebb169b853dae2[m
+Author: yhb <1778042457@qq.com>
+Date:   Tue Mar 26 20:50:15 2019 +0800
+
+    增加删除定时任务
+
+[33mcommit c23e9219a10835627a2b1203b30b1f9dabc4720f[m
+Author: chenqi <chenqi@360tianma.com>
+Date:   Tue Mar 26 19:02:54 2019 +0800
+
+    修复首页bug
+
+[33mcommit fd3388408c4ce55b837279942c403934de96dc50[m
+Merge: 911e408 4223b91
+Author: chenqi <chenqi@360tianma.com>
+Date:   Tue Mar 26 17:55:31 2019 +0800
+
+    Merge branch 'master' of http://gitlab.360tianma.com:8099/d0wop/TM_LAB
+
+[33mcommit 911e4083e11b8f4356de5f08770b1157f86a71b9[m
+Author: chenqi <chenqi@360tianma.com>
+Date:   Tue Mar 26 17:55:13 2019 +0800
+
+    修复登陆时间bug
+
+[33mcommit 4223b91d498ca36ba7e7efb5848572e0c2aa1dd1[m
+Author: yhb <1778042457@qq.com>
+Date:   Tue Mar 26 17:12:32 2019 +0800
+
+    增加循环任务 优化代码
+
+[33mcommit 38ae33acd27bff3a2c04e55f0140ab108997c325[m
+Merge: fa04d31 f393e4c
+Author: chenqi <chenqi@360tianma.com>
+Date:   Tue Mar 26 17:10:21 2019 +0800
+
+    Merge branch 'master' of http://gitlab.360tianma.com:8099/d0wop/TM_LAB
+
+[33mcommit fa04d31a453edcec247254eef980bd3955da4139[m
+Author: chenqi <chenqi@360tianma.com>
+Date:   Tue Mar 26 17:10:09 2019 +0800
+
+    修复登陆时间记录
+
+[33mcommit f393e4cedf5352b86747b0717cb8a38d17c05992[m
+Merge: d85d4e1 eb1dead
+Author: yhb <1778042457@qq.com>
+Date:   Tue Mar 26 14:46:58 2019 +0800
+
+    Merge branch 'master' of http://gitlab.360tianma.com:8099/d0wop/TM_LAB
+
+[33mcommit d85d4e154001de05b919911087b9e6db618a47b4[m
+Author: yhb <1778042457@qq.com>
+Date:   Tue Mar 26 14:46:29 2019 +0800
+
+    主框架添加定时任务写读
+
+[33mcommit eb1dead294bd102c6ff7df7d0bd6f4648b484477[m
+Author: chenqi <chenqi@360tianma.com>
+Date:   Tue Mar 26 10:10:10 2019 +0800
+
+    日志增加IP打印字段
+
+[33mcommit 1db256a0ce4f024b7bd355660feffa79deb3f52b[m
+Author: chenqi <chenqi@360tianma.com>
+Date:   Tue Mar 26 09:57:08 2019 +0800
+
+    日志打印格式优化
+
+[33mcommit a5a75d015720aa73907913aa19cca44b81eb9510[m
+Author: chenqi <chenqi@360tianma.com>
+Date:   Mon Mar 25 19:04:51 2019 +0800
+
+    修改token生成方式
+
+[33mcommit d3ee2d3a60b2dc25afa0f684e2427fff184bcfd3[m
+Author: chenqi <chenqi@360tianma.com>
+Date:   Mon Mar 25 18:57:38 2019 +0800
+
+    优化token参数配置
+
+[33mcommit 70f251112aa55161c607c256ec5403cd65db912e[m
+Author: chenqi <chenqi@360tianma.com>
+Date:   Fri Mar 22 22:50:32 2019 +0800
+
+    优化日志打印
+
+[33mcommit 7e4c64466e5b2e3ccd83131134376af900956ded[m
+Author: chenqi <chenqi@360tianma.com>
+Date:   Fri Mar 22 17:27:11 2019 +0800
+
+    修改日志文件命名规则
+
+[33mcommit 00cc3a530413ea4c75ecdcb5149f233d6b62d6c9[m
+Author: chenqi <chenqi@360tianma.com>
+Date:   Fri Mar 22 17:11:08 2019 +0800
+
+    增加清空收藏接口
+
+[33mcommit d4966fcbc3b549c48585e48b6036dc2ec46236d9[m
+Author: chenqi <chenqi@360tianma.com>
+Date:   Fri Mar 22 16:54:42 2019 +0800
+
+    修复积分添加问题
+
+[33mcommit d553771e73f9e7223f456ba9d6a9794dbed20661[m
+Author: chenqi <chenqi@360tianma.com>
+Date:   Fri Mar 22 16:09:24 2019 +0800
+
+    优化登录逻辑
+
+[33mcommit b8023c97e0436f155bf5bc4c4a434a03d5bf14a0[m
+Author: chenqi <chenqi@360tianma.com>
+Date:   Fri Mar 22 15:09:29 2019 +0800
+
+    修复登录用户网站问题
+
+[33mcommit 72715935ecf4fc70bb95b454d203a2de93d88e06[m
+Merge: 4d93e97 b631e35
+Author: chenqi <chenqi@360tianma.com>
+Date:   Fri Mar 22 11:02:36 2019 +0800
+
+    Merge branch 'master' of http://gitlab.360tianma.com:8099/d0wop/TM_LAB
+
+[33mcommit 4d93e97c6bee3ab36cc3d69527a6292fd9d797e9[m
+Author: chenqi <chenqi@360tianma.com>
+Date:   Fri Mar 22 11:02:19 2019 +0800
+
+    修复登录流程bug
+
+[33mcommit b631e350225291511588a0d5b9f5d1bd5b7c03d3[m
+Author: yhb <1778042457@qq.com>
+Date:   Thu Mar 21 18:29:53 2019 +0800
+
+    图标增加
+
+[33mcommit 0626789d4c0a60f0fa44dd8ac27c55e5be7a7d30[m
+Author: chenqi <chenqi@360tianma.com>
+Date:   Thu Mar 21 18:17:51 2019 +0800
+
+    修复token和缓存失效问题
+
+[33mcommit c472d272ed99cb902494f18debfb77e13b534c0c[m
+Author: chenqi <chenqi@360tianma.com>
+Date:   Thu Mar 21 15:24:24 2019 +0800
+
+    日志增加接口消耗时间cost
+
+[33mcommit daf07b8aaddd3018f16143f41efdf52ed71c2dfc[m
+Author: chenqi <chenqi@360tianma.com>
+Date:   Thu Mar 21 11:20:53 2019 +0800
+
+    优化登录接口
+
+[33mcommit 66d526403efe27265c784ef92fc2b9be1d91ce72[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Wed Mar 20 09:55:18 2019 +0800
+
+    更新
+
+[33mcommit 1525899aa5013936b599d20f81e1ad5db5946ce3[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Fri Mar 15 20:08:23 2019 +0800
+
+    更新
+
+[33mcommit 9e349c81cff04316571ca95b08961e4ead8989eb[m
+Merge: 803ef5c 503bef6
+Author: wuchuncheng <872487432@qq.com>
+Date:   Fri Mar 15 11:47:14 2019 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 803ef5c2b8b4316dad8170ac58582d288d8a0f67[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Fri Mar 15 11:44:31 2019 +0800
+
+    更新
+
+[33mcommit 503bef6902186f0a2ddabf33aaa6cc8d10cf023b[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Wed Mar 13 12:54:06 2019 +0800
+
+    优化
+
+[33mcommit 2cf45b68f5ce7d82c5f44fbdca3d9910c32ca797[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Wed Mar 13 12:46:32 2019 +0800
+
+    优化
+
+[33mcommit 065d3b59b20a3cbf6b3d7033862ee4a17363cb6a[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Wed Mar 13 12:44:42 2019 +0800
+
+    优化
+
+[33mcommit e613256135415a99365f3dd3e21f9bb1faa6250e[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Wed Mar 13 11:54:57 2019 +0800
+
+    优化
+
+[33mcommit 0f54ce41c5a4a6bfa8608de3b85be884445ed7d0[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Mon Mar 11 11:07:07 2019 +0800
+
+    更新
+
+[33mcommit cd7735016a4498b78c2155a152edcdbcf5b21fb0[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Fri Mar 8 16:07:18 2019 +0800
+
+    优化
+
+[33mcommit 59074745afbc02b0605c6e3762840d10742609b6[m
+Merge: ed7081f 5ace919
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Fri Mar 8 15:36:54 2019 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit ed7081ff176185c3943f7ab5de35d7a5cd4da336[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Fri Mar 8 15:36:38 2019 +0800
+
+    门户优化
+
+[33mcommit 5ace919d254128cf121bc9e767368a494227b840[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Thu Mar 7 19:53:04 2019 +0800
+
+    更新
+
+[33mcommit 2ac4d92e7719967ba04912f37683e1aa8e231922[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Tue Mar 5 19:00:52 2019 +0800
+
+    更新
+
+[33mcommit b0a022216a83c1a2533068c2e2f4b14bce12dc9f[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Mon Mar 4 11:45:37 2019 +0800
+
+    更新
+
+[33mcommit 48873cf979dfd93bd1c9a2a7daccddfaaf9fb306[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Mon Mar 4 11:27:17 2019 +0800
+
+    更新
+
+[33mcommit 5c33e36902804c17ea894132d92e637e2a4d5a20[m
+Merge: 74a55a2 6437429
+Author: wuchuncheng <872487432@qq.com>
+Date:   Tue Feb 26 15:31:57 2019 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 74a55a2dfec070e58ab1c36d449846fe44450593[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Tue Feb 26 15:31:48 2019 +0800
+
+    更新
+
+[33mcommit 64374296e498c88bb47aa833e9cfd5599adc7a96[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Tue Feb 26 12:29:06 2019 +0800
+
+    优化
+
+[33mcommit d9609b113c3dda34d90e47b4af3e76ee3116c609[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Tue Feb 26 11:51:13 2019 +0800
+
+    优化
+
+[33mcommit 77e494420ed746aa97065ce3348096abeae15196[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Tue Feb 26 11:47:20 2019 +0800
+
+    修改
+
+[33mcommit 0ea408497045b557eeab7ddc4499297ebe7f700b[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Tue Feb 26 11:45:13 2019 +0800
+
+    会员优化
+
+[33mcommit bcfbfcb5425bb556af538448ebc8e693fa3ea22f[m
+Merge: 231fe5f 0adcadc
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Tue Feb 26 11:38:16 2019 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 231fe5f6e09cc83b77a3dfd068021ab8a8f36a2c[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Tue Feb 26 11:38:05 2019 +0800
+
+    会员管理优化
+
+[33mcommit 0adcadcd136aa103df51eec4aeac50fdcb1d0dc4[m
+Merge: 31ce7ca 5199da0
+Author: wuchuncheng <872487432@qq.com>
+Date:   Tue Feb 26 11:37:11 2019 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 31ce7ca91f247e9c653946b64b11f1f9567c3081[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Tue Feb 26 11:37:00 2019 +0800
+
+    修改忽略文件
+
+[33mcommit 5199da040bed2ee9f9772ee6f3a9b26e97a42e0c[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Tue Feb 26 11:30:04 2019 +0800
+
+    会员中心优化
+
+[33mcommit e7f23b7b32b835ae31bb5504c5665e914cfd7394[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Tue Feb 26 11:02:10 2019 +0800
+
+    优化
+
+[33mcommit 757e7e24c36c82903aec37e2dec24fdaf2fdeb58[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Tue Feb 26 10:54:32 2019 +0800
+
+    会员管理定制
+
+[33mcommit 8bc2d908d25cd3fefc7e78044c3180630230a010[m
+Merge: e3794ca cb117e4
+Author: wuchuncheng <872487432@qq.com>
+Date:   Tue Feb 26 10:32:26 2019 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit e3794ca65f65b42394953e909dd689234c1f91cb[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Tue Feb 26 10:30:05 2019 +0800
+
+    渠道统计
+
+[33mcommit cb117e4af1bd785fba67814a2d09fc30b46d566f[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Feb 25 14:57:32 2019 +0800
+
+    检查更新屏蔽
+
+[33mcommit a20d2da93de55d80d1a4079dfcdbd752966e6a8c[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Fri Feb 22 18:33:51 2019 +0800
+
+    样式优化
+
+[33mcommit 9098fd13aaa2e16d6aca66433652727d783f9f8d[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Fri Feb 22 16:59:32 2019 +0800
+
+    license管理
+
+[33mcommit 111b5a3c62727f4bdd5cc34bc9e28b2c5354d96c[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Fri Feb 22 16:24:09 2019 +0800
+
+    修改缓存时间
+
+[33mcommit c561ede05a0b8b1bcc66c16d0b6080512ddfaf88[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Thu Feb 21 15:59:29 2019 +0800
+
+    修改审核自动化打包
+
+[33mcommit de1139bb269c3e93cbaa53c3f37c1eab0c6b2e9f[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Wed Feb 20 15:19:53 2019 +0800
+
+    修改审核自动化打包
+
+[33mcommit a3021af500279ce4ff2f615d99a188fd9c9bb0fc[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Wed Feb 20 12:27:44 2019 +0800
+
+    修改审核自动化打包
+
+[33mcommit 949808c606c3a1b2e2961e4405e5cbefdb3dce14[m
+Merge: d2d46fa ad8c79c
+Author: wuchuncheng <872487432@qq.com>
+Date:   Wed Feb 20 11:49:01 2019 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit d2d46fa7cc4018039cc6875b025d79f0489c79b2[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Wed Feb 20 11:48:43 2019 +0800
+
+    修改审核自动化打包
+
+[33mcommit ad8c79cd35fb23d0dec23b0eac0eb324d8d362e7[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Tue Feb 19 14:58:00 2019 +0800
+
+    门户配置优化
+
+[33mcommit 1de8b977247347a1396eb8868eb687efbd142ee6[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Tue Feb 19 14:51:37 2019 +0800
+
+    门户优化
+
+[33mcommit 66f4b22bc7b6fdee966bfd4ce3ff69c9555a97bd[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Tue Feb 19 14:03:57 2019 +0800
+
+    门户优化
+
+[33mcommit c7ef2fb1b3721a52add4f74917d43f46026bd53f[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Feb 14 10:55:36 2019 +0800
+
+    渠道更新
+
+[33mcommit 7a71bb01d5e2974ffe0c3815b142f4b446c4bde1[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Wed Feb 13 10:50:19 2019 +0800
+
+    修改tp框架漏洞
+
+[33mcommit 779a0581f93d31fdb96808c67825ede4cd250a94[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Thu Jan 31 14:30:46 2019 +0800
+
+    更新
+
+[33mcommit a01016db4f5ceb73b7c26eab90518a9202b06ba5[m
+Merge: 9d4e9f1 975a544
+Author: wuchuncheng <872487432@qq.com>
+Date:   Wed Jan 30 16:06:27 2019 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 9d4e9f102582ce190505f2cfa4b5459de0ee1e91[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Wed Jan 30 16:06:13 2019 +0800
+
+    增加web支付方法
+
+[33mcommit 975a544167b1dcf6b9ca7782f4af3c377c67db9a[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Wed Jan 30 14:33:20 2019 +0800
+
+    投票地图优化
+
+[33mcommit 44b4a93a948c235aef62c1ca21e6ca46104ed26a[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Wed Jan 30 09:55:56 2019 +0800
+
+    地图优化
+
+[33mcommit 8f645c8656d7955b6d727fcf37d5f709d721a3ff[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Tue Jan 29 18:37:40 2019 +0800
+
+    优化
+
+[33mcommit 25e0188cc84a9bd34bf7f391c4cc84881273a9c0[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Tue Jan 29 16:15:20 2019 +0800
+
+    接口
+
+[33mcommit 7f178906b4d2614497c0c77a38ea2f9df17ead02[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Tue Jan 29 10:42:17 2019 +0800
+
+    爬虫数据表增加推送文件接口
+
+[33mcommit 4a9150f101ccfc71c6ee2c1173972201cf3dbbb5[m
+Merge: 69a7cdf cd0f9d2
+Author: wuchuncheng <872487432@qq.com>
+Date:   Mon Jan 28 17:46:53 2019 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 69a7cdf8db2bf6e88016ca93f7b33afebdffbd35[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Mon Jan 28 17:46:39 2019 +0800
+
+    爬虫数据表增加推送文件接口
+
+[33mcommit cd0f9d2a4fb4b8cc79f55f6e4ae82e166d8fdb98[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Jan 24 20:15:13 2019 +0800
+
+    投票优化
+
+[33mcommit a4d962888ec234dc86127ec963eed992d7a5869d[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Jan 24 20:13:20 2019 +0800
+
+    投票
+
+[33mcommit f23a0ac58036e3d8c837020fb6c5ee872693fab7[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Thu Jan 24 18:32:57 2019 +0800
+
+    增加经纬度配置
+
+[33mcommit fa118abd3c2a5abea2043c6b8a7db4c0db16b87e[m
+Merge: d9a49ab 2fdb37f
+Author: wuchuncheng <872487432@qq.com>
+Date:   Thu Jan 24 18:05:16 2019 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit d9a49ab7bda6ee655b257b027fd2322d97119209[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Thu Jan 24 18:05:07 2019 +0800
+
+    增加经纬度配置
+
+[33mcommit 2fdb37fc1b1ba0a729979300ba6d0c4aeb93ac9c[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Jan 24 16:30:57 2019 +0800
+
+    地图配置
+
+[33mcommit 2238e554ef2e18fd5df72d43f5ee19e9f363ceba[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Jan 24 16:13:24 2019 +0800
+
+    地图设置
+
+[33mcommit 918c0613912711eddb6959b9e7e72814136c31b7[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Jan 24 15:43:43 2019 +0800
+
+    框架引入
+
+[33mcommit c58d9402eec067907a9cfdba560134b48483dade[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Thu Jan 24 14:52:48 2019 +0800
+
+    增加经纬度配置
+
+[33mcommit 0ff0b31c955ffb6bd84d750029956bd7b4c765e1[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Thu Jan 24 10:59:00 2019 +0800
+
+    增加经纬度配置
+
+[33mcommit 5aeaa3784308d6d336c02084892af04444cf09fd[m
+Merge: 2080639 340258d
+Author: wuchuncheng <872487432@qq.com>
+Date:   Thu Jan 24 10:37:27 2019 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 208063923d1e791394aaab72a5e685c014530bda[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Thu Jan 24 10:37:09 2019 +0800
+
+    增加经纬度配置
+
+[33mcommit 340258d3c01d84f998e6c0349ab1b31bde004585[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Jan 24 10:07:29 2019 +0800
+
+    优化
+
+[33mcommit edf8a273e4cf7ec44460f90e844c058718091284[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Jan 24 09:46:40 2019 +0800
+
+    版本更新http限制
+
+[33mcommit ddd86ae2ef9306053d7a4236142e7792531c749e[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Wed Jan 23 10:14:51 2019 +0800
+
+    微信分享验证
+
+[33mcommit ae7c72d70ec11b759a786715bc10ec965db98633[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Mon Jan 21 15:44:26 2019 +0800
+
+    增加经纬度配置
+
+[33mcommit 19fb2f7e317e57a7e3b751c8b343f3cbf2094b61[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Fri Jan 18 18:06:17 2019 +0800
+
+    增加一个修改字段大小的sql
+
+[33mcommit cc11fc9e781eab7b86104ecd75868708d887595d[m[33m ([m[1;33mtag: v1.0.3[m[33m)[m
+Merge: e1354b7 0b9716b
+Author: zxg <1043744868@qq.com>
+Date:   Fri Jan 18 09:53:37 2019 +0800
+
+    Merge remote-tracking branch 'origin/master'
+
+[33mcommit e1354b7f4a373a60a9f1fc3c221dce55706e7e71[m
+Author: zxg <1043744868@qq.com>
+Date:   Fri Jan 18 09:53:26 2019 +0800
+
+    登录手机验证bug
+
+[33mcommit 0b9716b4f0627f96bb5f249a07a72339e5cb55c0[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Jan 17 18:55:44 2019 +0800
+
+    优化
+
+[33mcommit 88465a40c48e878253cac9f07c70d90dd43a1e2c[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Jan 17 18:54:06 2019 +0800
+
+    会员管理优化
+
+[33mcommit 59a146e7ec1f0f56f38cd37b1ba52daea90149e9[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Jan 17 18:51:03 2019 +0800
+
+    优化
+
+[33mcommit d78d398ad3eacaabe7bc6572c770a98d2c9011e1[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Thu Jan 17 17:26:07 2019 +0800
+
+    注册添加渠道来源
+
+[33mcommit cb522382056466ac947c18d47f341e503b58d57d[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Thu Jan 17 16:08:36 2019 +0800
+
+    注册添加渠道来源
+
+[33mcommit f52fc62d29fcb6ede9712590104cdd0c3acc9eab[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Wed Jan 16 18:30:05 2019 +0800
+
+    添加两个积分接口
+
+[33mcommit 96a08456ee24b7247f91f5252db1a5909ad6ad74[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Wed Jan 16 10:06:53 2019 +0800
+
+    优化
+
+[33mcommit b497b2eaf05ec6c45051cfa2ee2933f19c8a27f6[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Tue Jan 15 11:10:56 2019 +0800
+
+    更新一个管理用户接口bug
+
+[33mcommit 1b0e4d758617b23c2435221d028ecddcd00f3ce2[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Jan 14 11:12:37 2019 +0800
+
+    测试断点续传
+
+[33mcommit 7876acd9c6f2e8f76127097a24c139f65eb4681d[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Jan 14 11:07:01 2019 +0800
+
+    断点上传js
+
+[33mcommit 983179c170a1b65ab314c2100502b84543787ffd[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Fri Jan 11 15:32:25 2019 +0800
+
+    微信視頻測試2
+
+[33mcommit 87c5053b45f9068be3288b1de1c8707c3dc83d2e[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Fri Jan 11 15:27:07 2019 +0800
+
+    微信視頻測試啊
+
+[33mcommit 5f2c10a42517b24faee6947b8acd7114f65fed9e[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Fri Jan 11 15:24:49 2019 +0800
+
+    微信視頻測試
+
+[33mcommit afbdeae335c02819e9c51a900ee5a5f4ea9142aa[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Fri Jan 11 15:16:23 2019 +0800
+
+    微信視頻測試
+
+[33mcommit a40331989c7e4de96977941a2f36cb93eb218b55[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Fri Jan 11 15:14:13 2019 +0800
+
+    微信測試
+
+[33mcommit 33e4ee44614330d596738c13740bb3e65ded862e[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Fri Jan 11 12:51:43 2019 +0800
+
+    微信测试
+
+[33mcommit a0e174731cc779c5aecbe0ef252e7d10ebd50304[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Jan 10 19:34:05 2019 +0800
+
+    用户优化
+
+[33mcommit 0b33443ed0561304f5d69a0b24652857a492ea23[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Jan 10 19:26:56 2019 +0800
+
+    百度统计修改
+
+[33mcommit 10fc70653d468fcf78d6b8bd2c847a7fc1d64078[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Jan 10 19:07:54 2019 +0800
+
+    百度统计修改
+
+[33mcommit 6142863d0b834d23978ed6d55dafa58eacef8c32[m
+Merge: 675692a 404c887
+Author: zxg <1043744868@qq.com>
+Date:   Thu Jan 10 14:45:06 2019 +0800
+
+    Merge branch 'dev'
+
+[33mcommit 404c88780437a394ec87cd214bafc3e7c35b54e1[m
+Author: zxg <1043744868@qq.com>
+Date:   Thu Jan 10 13:53:49 2019 +0800
+
+    会员注册总数统计过滤删除数据
+
+[33mcommit 675692a60ae6390661c19843496132d21be04e9c[m
+Merge: 1323167 7361211
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Jan 10 11:04:29 2019 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 132316705150fe4843bb44e1f6f3578d2c13cde8[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Jan 10 10:59:50 2019 +0800
+
+    注册用户优化
+
+[33mcommit 7361211091e6e49bbf1c4f4d508b885e8ffbc01a[m
+Merge: d56fa33 2a1dd3b
+Author: zxg <1043744868@qq.com>
+Date:   Thu Jan 10 10:07:02 2019 +0800
+
+    Merge branch 'dev'
+
+[33mcommit 2a1dd3b8f328b45687164140af01a16e55eaf63d[m
+Author: zxg <1043744868@qq.com>
+Date:   Thu Jan 10 10:03:03 2019 +0800
+
+    会员注册总数统计
+
+[33mcommit d56fa33a37f847d034e8aa2de33e16002f28e43b[m
+Merge: b973d6d e46fa81
+Author: wuchuncheng <872487432@qq.com>
+Date:   Wed Jan 9 19:29:58 2019 +0800
+
+    Merge branch 'breakpoint'
+
+[33mcommit e46fa810675aa22d543207089f6984520a9d9731[m[33m ([m[1;31morigin/breakpoint[m[33m)[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Wed Jan 9 19:29:39 2019 +0800
+
+    更新
+
+[33mcommit b973d6d85e9be97b19dd8d1335592e145038ed2e[m
+Merge: d5c7af0 a1f81ce
+Author: wuchuncheng <872487432@qq.com>
+Date:   Wed Jan 9 19:15:18 2019 +0800
+
+    Merge branch 'breakpoint'
+
+[33mcommit a1f81ce451f749fa5385098a18be6eb1720ed691[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Wed Jan 9 19:14:22 2019 +0800
+
+    更新
+
+[33mcommit d5c7af076074b3137b4ba1c9f81cd7f6965e8ccb[m
+Merge: 52cdfd3 2d33969
+Author: wuchuncheng <872487432@qq.com>
+Date:   Wed Jan 9 17:27:56 2019 +0800
+
+    Merge branch 'breakpoint'
+
+[33mcommit 2d339692aea125fa0e2c3fa062bcd209b088be13[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Wed Jan 9 17:27:16 2019 +0800
+
+    更新
+
+[33mcommit 52cdfd32c1c345f73ed7c8bfdc0f1d57941fa535[m
+Merge: 74c6ef5 1ccd9cd
+Author: wuchuncheng <872487432@qq.com>
+Date:   Wed Jan 9 15:11:32 2019 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 74c6ef53c20b32fc42162ede3a74654f8df03154[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Wed Jan 9 15:11:21 2019 +0800
+
+    修改除admin外其它账号可以删除组件功能
+
+[33mcommit 1ccd9cde3b5c5c5862270fcc9c766a43499c4a8c[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Wed Jan 9 14:24:15 2019 +0800
+
+    百度统计优化
+
+[33mcommit 6a33c49d41142be33f98542cde84922e1e3b0e4f[m
+Author: zxg <1043744868@qq.com>
+Date:   Wed Jan 9 14:15:55 2019 +0800
+
+    修改删除收藏记录
+
+[33mcommit cfbab707caeb3593187a052802f8c6de18fa1992[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Wed Jan 9 13:51:58 2019 +0800
+
+    用户优化
+
+[33mcommit 3e1a0bf74e0cdd133e8b683d7ea2be486557a56e[m
+Merge: 4c2d903 638a5e0
+Author: zxg <1043744868@qq.com>
+Date:   Wed Jan 9 13:47:47 2019 +0800
+
+    Merge branch 'dev'
+
+[33mcommit 638a5e04ae79ec4be08bd8f4855c166bfe7414b0[m
+Author: zxg <1043744868@qq.com>
+Date:   Wed Jan 9 11:52:49 2019 +0800
+
+    修改删除收藏记录
+
+[33mcommit 4c2d90365d378dbb0cd174e52ed9157600276fb7[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Wed Jan 9 11:18:45 2019 +0800
+
+    增加一个上传文件格式
+
+[33mcommit 5f26b58be9bb9bf4c693c9eb091f466f090bdb5f[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Wed Jan 9 10:12:15 2019 +0800
+
+    增加一个上传文件格式
+
+[33mcommit 6b04b0e7bea76634d6a3dbe09b7c4134e8a2e9fa[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Tue Jan 8 16:45:12 2019 +0800
+
+    新增断点续传接口
+
+[33mcommit 20d2c78704dc953f91486820b677d95aeb2ee9ac[m
+Merge: 9dbaaf1 715efd1
+Author: zxg <1043744868@qq.com>
+Date:   Tue Jan 8 10:59:46 2019 +0800
+
+    Merge branch 'dev'
+
+[33mcommit 9dbaaf13dfdd7abcaf648d4d1d612c16809af98f[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Tue Jan 8 10:35:08 2019 +0800
+
+    总用户数修改
+
+[33mcommit 715efd1c66479997e0dba73b43d4cb77a561e90a[m
+Author: zxg <1043744868@qq.com>
+Date:   Tue Jan 8 10:24:52 2019 +0800
+
+    百度统计总用户统计
+
+[33mcommit ba0b32e779f31f89054e6f0d906666762d6460b7[m
+Author: d0wop <791539017@qq.com>
+Date:   Mon Jan 7 15:44:54 2019 +0800
+
+    极光推送改成默认生成环境
+
+[33mcommit 253962c9e9fee68b835a5154c698b5b7bb2ce959[m
+Author: zxg <1043744868@qq.com>
+Date:   Mon Jan 7 14:27:36 2019 +0800
+
+    修改个人中心组件的删除浏览记录（批量删除）
+
+[33mcommit 2c85f8b9f48cbb5392f42ff0db4ce6dca1a89e9f[m
+Author: zxg <1043744868@qq.com>
+Date:   Thu Jan 3 11:20:41 2019 +0800
+
+    修复B端后台，删除部门时提示“该部门下有用户 不能删除”，但部门下的用户已删除
+
+[33mcommit 8836691a91ceca9807cd5a49612c0fe6ade7c74d[m[33m ([m[1;31morigin/hotfix[m[33m)[m
+Author: caopeng <caopeng@360tianma.com>
+Date:   Wed Jan 2 18:36:05 2019 +0800
+
+    修复会员三方首次登陆，积分不一致的问题
+    修复nickname为空时，将membername赋值给nickname
+
+[33mcommit 5ddaade64255c45475fd4008cdbf38f94ed2eee9[m
+Author: caopeng <caopeng@360tianma.com>
+Date:   Wed Jan 2 17:43:03 2019 +0800
+
+    修复会员三方首次登陆，积分不一致的问题
+    修复nickname为空时，将membername赋值给nickname
+
+[33mcommit 6b2526242296b806f78ba5146436faa19662c51c[m
+Author: caopeng <caopeng@360tianma.com>
+Date:   Wed Jan 2 14:11:40 2019 +0800
+
+    ignore env and install.lock
+
+[33mcommit d7845182107297e4a0ee812609430f84db333d26[m[33m ([m[1;33mtag: v1.0.2[m[33m, [m[1;31morigin/install[m[33m)[m
+Author: zxg <1043744868@qq.com>
+Date:   Thu Dec 27 14:12:43 2018 +0800
+
+    sql过滤去掉(SET .*?\n)
+
+[33mcommit 56269f9fb374e0192d5a4d88bdf0786a09150e75[m
+Author: zxg <1043744868@qq.com>
+Date:   Thu Dec 27 13:59:38 2018 +0800
+
+    删除git文件
+
+[33mcommit 7a0faf0d05db86a132e818b6edc539d30689025b[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Dec 24 15:01:49 2018 +0800
+
+    优化
+
+[33mcommit 52477115bc6063981ad0975d5616535fee360418[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Dec 24 14:59:21 2018 +0800
+
+    优化
+
+[33mcommit 5bcd778268e353a54361cbefec480d7fdeec1683[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Dec 24 11:06:30 2018 +0800
+
+    优化
+
+[33mcommit 164410a3611dea3fcc97964c6bdd7900fc0c1746[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Fri Dec 21 16:52:26 2018 +0800
+
+    优化
+
+[33mcommit 78fc6f93bd4b9262515fc4f846a6a1e68b20805c[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Fri Dec 21 16:48:20 2018 +0800
+
+    优化
+
+[33mcommit 037d806ca285921626b6ed163efc88e80c77a200[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Fri Dec 21 16:46:30 2018 +0800
+
+    测试api优化
+
+[33mcommit 1571661581878f05437c61753c565481057aa978[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Fri Dec 21 16:45:01 2018 +0800
+
+    測試api修改
+
+[33mcommit 3ed5a888d1cdb128943b1d8ddfd03216fab7e835[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Fri Dec 21 16:13:48 2018 +0800
+
+    測試api
+
+[33mcommit 84193a8e1f39577634428685b9966cd467a53a35[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Fri Dec 21 12:26:27 2018 +0800
+
+    优化
+
+[33mcommit a1234858a9e2ffbd22078358092d2ea4a41294bc[m
+Merge: 879a44e af2732e
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Fri Dec 21 11:30:12 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 879a44e2c5fbe5e6e60198d16b7f0db74493a9f0[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Fri Dec 21 11:29:54 2018 +0800
+
+    优化
+
+[33mcommit af2732e226eb105fa55f47f4d2d64f09e6e382d2[m
+Merge: 0c733d6 484cfcd
+Author: zxg <1043744868@qq.com>
+Date:   Thu Dec 20 18:19:45 2018 +0800
+
+    Merge branch 'license'
+    
+    # Conflicts:
+    #       application/install/common.php
+    #       application/system/common.php
+
+[33mcommit 484cfcd68fdbf001e46a564695d2842ddd7439c5[m[33m ([m[1;31morigin/license[m[33m)[m
+Author: zxg <1043744868@qq.com>
+Date:   Thu Dec 20 17:59:44 2018 +0800
+
+    执行sql去掉锁表操作
+    |(LOCK TABLES `.+` WRITE;\n)|(UNLOCK TABLES;\n)
+
+[33mcommit 0c733d6c4731b2b480fb51d9895faa8c414985cc[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Dec 20 16:23:56 2018 +0800
+
+    优化
+
+[33mcommit 4d764566d59c16c76b6532a4fbfb98f62a8ca1ab[m
+Merge: 03cb965 81c8551
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Dec 20 15:04:30 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 03cb9654aa43b57dd9611dc6d4fd3fe096dbf0c2[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Dec 20 15:04:12 2018 +0800
+
+    优化
+
+[33mcommit 81c85512278a653d06198d39f491af67446894b0[m
+Merge: 7754cfc 0f7f0d4
+Author: zxg <1043744868@qq.com>
+Date:   Wed Dec 19 15:46:48 2018 +0800
+
+    Merge branch 'license'
+
+[33mcommit 0f7f0d426969102b0ae124acec21043fd1d64be2[m
+Author: zxg <1043744868@qq.com>
+Date:   Wed Dec 19 15:07:36 2018 +0800
+
+    更改配置 params PDO参数配置
+
+[33mcommit 7754cfca7f600e9df1eba7f33533c04f6d0f0cd8[m
+Merge: a3582e0 bac0c5a
+Author: d0wop <791539017@qq.com>
+Date:   Wed Dec 19 14:35:59 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit a3582e037aecb2f12b124f9cec6fdee3bb202bbb[m
+Author: d0wop <791539017@qq.com>
+Date:   Wed Dec 19 14:35:41 2018 +0800
+
+    新增输出报错sql
+
+[33mcommit 580b29c2255db86833337daf9899c24d9ca9ae3c[m
+Author: zxg <1043744868@qq.com>
+Date:   Tue Dec 18 17:28:40 2018 +0800
+
+    新建license分支
+
+[33mcommit bac0c5abbaf3791e8eea74dd9d13c9491b35ca7c[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Dec 17 11:24:15 2018 +0800
+
+    优化
+
+[33mcommit 52af76f86c7afeac67edc184278d11f2f5529241[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Fri Dec 14 11:39:28 2018 +0800
+
+    测试啊
+
+[33mcommit fc4a79e9b90e5a80234845a85cffe5dfd7382304[m
+Merge: 2d8218b 013e8f2
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Fri Dec 14 11:32:47 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 2d8218b1057b093d62ee5a1e2aa088c2306365ac[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Fri Dec 14 11:32:29 2018 +0800
+
+    测试
+
+[33mcommit a38a487ec209fe400cb218ef8b5319024c1467f6[m
+Merge: 3819ce7 013e8f2
+Author: d0wop <791539017@qq.com>
+Date:   Fri Dec 14 10:12:15 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 3819ce73cd37d27c655add1210b6a6140259202b[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Dec 14 10:11:58 2018 +0800
+
+    框架更新接口与安装接口增加异常信息反馈
+
+[33mcommit 013e8f2b0d2662e1e6dfc4a75967414a4157fce9[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Thu Dec 13 17:01:39 2018 +0800
+
+    修改百度上传插件返回值
+
+[33mcommit d0693819a0d72c1075ab53c9dc424b99210300bb[m
+Author: d0wop <791539017@qq.com>
+Date:   Wed Dec 12 15:12:54 2018 +0800
+
+    新增过滤参数 set 和事务
+
+[33mcommit b3d51c98fd11d3b45b1e29345dd8a30ea28fb36b[m
+Merge: 416b9fb 0f749f6
+Author: d0wop <791539017@qq.com>
+Date:   Tue Dec 11 11:33:54 2018 +0800
+
+    Merge remote-tracking branch 'origin/master'
+
+[33mcommit 416b9fb31ff6b6d63dfea361cc1c82b90ad79ea1[m
+Author: d0wop <791539017@qq.com>
+Date:   Tue Dec 11 11:32:25 2018 +0800
+
+    修复获取配置文件时，获取的对象类型，再将对象类型转化为数组
+
+[33mcommit 0f749f668aa0c8599681060ca15b3c980e4f0d89[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Tue Dec 11 10:59:22 2018 +0800
+
+    增加加密demo备注
+
+[33mcommit 3d2cbcd2f8d1b3a3a6cfa2f59d5ddf53ccdecc4b[m
+Author: d0wop <791539017@qq.com>
+Date:   Mon Dec 10 17:52:42 2018 +0800
+
+    mch域名链接调整
+
+[33mcommit 54ab22dbbe034f1257c71eb9728b3035ce32cb71[m
+Author: d0wop <791539017@qq.com>
+Date:   Mon Dec 10 17:47:55 2018 +0800
+
+    mch相关参数调整
+
+[33mcommit 24930dab7980c80e7d14206019c1de98827dc496[m
+Author: d0wop <791539017@qq.com>
+Date:   Mon Dec 10 15:31:31 2018 +0800
+
+    会员意见更新
+
+[33mcommit 2075da140b1827cbae9fc06be9009b7ae248ecf0[m
+Author: d0wop <791539017@qq.com>
+Date:   Mon Dec 10 11:59:47 2018 +0800
+
+    检查会员信息
+
+[33mcommit a0f344ebe53bb1a276bb387d933bb326aced50e4[m
+Author: d0wop <791539017@qq.com>
+Date:   Mon Dec 10 11:47:58 2018 +0800
+
+    新增检查用户信息接口与上传图片报错信息优化
+
+[33mcommit 81cbedd0aca42430d00747171c90ce41e3c40aab[m
+Merge: 2576f40 41021f7
+Author: d0wop <791539017@qq.com>
+Date:   Fri Dec 7 18:06:46 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 2576f40ff02de4f76249d50dcf1131ed2d4577cd[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Dec 7 18:06:29 2018 +0800
+
+    修复查询数据库返回对象时 不能处理数据的问题
+
+[33mcommit 41021f70ece8c7491d89c1cf52063de3c7c965c9[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Fri Dec 7 16:03:17 2018 +0800
+
+    自己的接口返回字段增加tmcode
+
+[33mcommit 6f21eb733b2e116ffa8973d2db6179ac057017dd[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Dec 7 09:59:18 2018 +0800
+
+    调整portal部署问题
+
+[33mcommit 0e5efd353ddee1acc114385d9a2e1457443b9a24[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Dec 6 16:56:19 2018 +0800
+
+    默认启动页sql
+
+[33mcommit 0ef20c1f7014e22b23ae90a29943397ba8bf9873[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Dec 6 15:26:46 2018 +0800
+
+    自动部署 创建会员管理连接
+
+[33mcommit 347ccf33055c113ff12ad9db913e8a6004373e9b[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Thu Dec 6 11:45:17 2018 +0800
+
+    增加topthink/think-image组件
+
+[33mcommit a2e781b4923bf8be620992cfa649edc17bfd72d0[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Dec 6 10:42:48 2018 +0800
+
+    更新自动部署数据库功能
+
+[33mcommit 483c97cde605f8ec13f566d0465087844f323af4[m
+Merge: ea35078 5f2739a
+Author: wuchuncheng <872487432@qq.com>
+Date:   Wed Dec 5 19:50:23 2018 +0800
+
+    Merge remote-tracking branch 'origin/encrypt'
+
+[33mcommit 5f2739a430fb2d94cf52281acd8edcd25a049f9e[m[33m ([m[1;31morigin/encrypt[m[33m)[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Wed Dec 5 19:44:51 2018 +0800
+
+    修
+
+[33mcommit 2f0425eea8c8ea9754ed8168e08e1a06889a9160[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Wed Dec 5 19:40:55 2018 +0800
+
+    'updategitignore'
+
+[33mcommit ea35078fd8632bca96f4727febdd72ac93a99153[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Wed Dec 5 19:38:38 2018 +0800
+
+    'updat.gitignore'
+
+[33mcommit 379275fad8b7f6239de21ad79dfb364916ca1f73[m
+Merge: 9b9763f b3c77c0
+Author: wuchuncheng <872487432@qq.com>
+Date:   Tue Dec 4 16:52:36 2018 +0800
+
+    Merge remote-tracking branch 'origin/encrypt'
+
+[33mcommit b3c77c0c0d26c1e9bad953dc874a55e82082ff77[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Tue Dec 4 16:51:18 2018 +0800
+
+    'updategitignore'
+
+[33mcommit 9b9763f564de5a107af85125b5a7688558224209[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Tue Dec 4 15:30:54 2018 +0800
+
+    修改一批加密接口
+
+[33mcommit 0b0a7ed21a1e2c420070ea200e9e618cc72d2497[m
+Merge: 81aa8a0 ae9f4d1
+Author: wuchuncheng <872487432@qq.com>
+Date:   Tue Dec 4 15:09:25 2018 +0800
+
+    Merge remote-tracking branch 'origin/encrypt'
+
+[33mcommit ae9f4d132100ef045f8725f9dae56d0702a89222[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Tue Dec 4 15:08:15 2018 +0800
+
+    修改一批加密接口
+
+[33mcommit 81aa8a023932898cde9a249ec2bd46910384a227[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Tue Dec 4 14:56:26 2018 +0800
+
+    样式修改
+
+[33mcommit a4fb58d08822da219b6620b9e62cb7897b824e43[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Dec 3 18:27:13 2018 +0800
+
+    加密调试
+
+[33mcommit 53533418cfe639031264239a6f6ec1987a134871[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Dec 3 18:15:39 2018 +0800
+
+    加密调试
+
+[33mcommit ffdbc89ef1c2853733bb6e54365ccaeaedbb80d6[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Dec 3 18:15:15 2018 +0800
+
+    加密调试
+
+[33mcommit ee46002c1c91d2b802df9919a0702b88a7f57f23[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Dec 3 18:03:08 2018 +0800
+
+    加密调试
+
+[33mcommit f6a4a0add526d429592710498fd064c401a2d1ff[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Dec 3 17:58:44 2018 +0800
+
+    加密调试
+
+[33mcommit 2e9ce9f5e1366f3eb383c6c96441e7e86ff86f46[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Dec 3 17:24:46 2018 +0800
+
+    加密调试
+
+[33mcommit f1d53382f9d04715db6020afb5ffb6ab9ae17363[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Dec 3 17:15:49 2018 +0800
+
+    加密调试
+
+[33mcommit 7f21c616357e9e2489005e428ed15d45c15f7470[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Dec 3 15:59:46 2018 +0800
+
+    加密测试
+
+[33mcommit 73662f5acb7ef0f649e213db76163d85be2ffe12[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Dec 3 15:56:47 2018 +0800
+
+    加密修改
+
+[33mcommit 3ca4abc00349d7317d0ab6625058b600e10ac176[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Mon Dec 3 14:39:53 2018 +0800
+
+    增加ffmpeg
+
+[33mcommit 90f6ff6b96a1236cfb168b46c49414326e44255c[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Dec 3 11:50:01 2018 +0800
+
+    加入引入
+
+[33mcommit 9dd0ae20f946eccf2921f00cc14623d0f46ab453[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Dec 3 11:45:33 2018 +0800
+
+    加解密文件
+
+[33mcommit e69a6c92bf7ab88ecb35dfc297ba13705dce417f[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Fri Nov 30 18:05:19 2018 +0800
+
+    改一批接口成加密
+
+[33mcommit d54f63f67e152a45fb7da5a75e70fac93b91f19d[m
+Merge: 2d4bff4 41939e7
+Author: wuchuncheng <872487432@qq.com>
+Date:   Fri Nov 30 16:22:58 2018 +0800
+
+    Merge remote-tracking branch 'origin/master' into encrypt
+
+[33mcommit 2d4bff434ccc8105b578db8a7169e5d016d16b55[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Fri Nov 30 16:22:35 2018 +0800
+
+    1
+
+[33mcommit 41939e7cf264da3028bd280b52ba8d185c1ced8c[m
+Merge: f1a969c 10133a5
+Author: wuchuncheng <872487432@qq.com>
+Date:   Fri Nov 30 13:55:31 2018 +0800
+
+    Merge remote-tracking branch 'origin/encrypt'
+
+[33mcommit 10133a5ba090372e2983107c83fbadbde43a7425[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Fri Nov 30 13:53:14 2018 +0800
+
+    添加是否加密字段
+
+[33mcommit 8051b405f29995b03eeb31f5a87051fb5ba8dcc8[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Fri Nov 30 10:25:21 2018 +0800
+
+    删除调试信息
+
+[33mcommit f1a969c8536533ccbc23776117850bb37bc70e57[m[33m ([m[1;33mtag: 框架v1.0.1[m[33m, [m[1;31morigin/reTmJsonObj[m[33m)[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Thu Nov 29 18:41:52 2018 +0800
+
+    将reJson 替换成 reTmJsonObj方法
+
+[33mcommit 3662616b459de00221d4d55543c772bc43a977a1[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Thu Nov 29 18:37:06 2018 +0800
+
+    新增reTmJsonObj方法
+
+[33mcommit 7abb7bc1ed490c3ae081e235491961e21601d102[m[33m ([m[1;33mtag: 返回json[m[33m)[m
+Merge: ccf8fdb 5c5cf40
+Author: wuchuncheng <872487432@qq.com>
+Date:   Thu Nov 29 16:25:10 2018 +0800
+
+    Merge remote-tracking branch 'origin/encrypt'
+
+[33mcommit 5c5cf40be73a1fb6c92edacea784fc99161c73ac[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Thu Nov 29 16:24:23 2018 +0800
+
+    加一个php发送加密请求的demo
+
+[33mcommit ccf8fdbcb93dbd638b53e0a004f01fd199ee12d9[m
+Merge: 3b0ca86 59f84a2
+Author: wuchuncheng <872487432@qq.com>
+Date:   Thu Nov 29 15:00:08 2018 +0800
+
+    Merge remote-tracking branch 'origin/encrypt'
+
+[33mcommit 59f84a22750614ba77b88cea66b8b020df93d62c[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Thu Nov 29 14:59:25 2018 +0800
+
+    加一个php发送加密请求的demo
+
+[33mcommit a8c2f5d35db9db33d1342f8b41e73450a322c318[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Thu Nov 29 13:59:09 2018 +0800
+
+    后端登录接口改成加密的模式
+
+[33mcommit 3b0ca8630f2ca7cfe111347dd78b34e00d33d822[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Nov 29 10:56:15 2018 +0800
+
+    微信分享js
+
+[33mcommit 3ba7333598a8a9b9572498207b5db1360eaa5235[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Thu Nov 29 10:50:48 2018 +0800
+
+    修改加密
+
+[33mcommit dd089e92702d4300c4705860ef329cf79ace793d[m
+Merge: 1a857e4 a907f85
+Author: wuchuncheng <872487432@qq.com>
+Date:   Wed Nov 28 17:01:39 2018 +0800
+
+    Merge remote-tracking branch 'origin/wechatmp'
+
+[33mcommit a907f85b1423a55d540a2c99fe3cfe16a0c38f13[m[33m ([m[1;31morigin/wechatmp[m[33m)[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Wed Nov 28 17:01:20 2018 +0800
+
+    增加公众号功能
+
+[33mcommit 1a857e47d0111c4e586ea1dd394ab48b17b67606[m
+Merge: 4a328ac b7462f1
+Author: wuchuncheng <872487432@qq.com>
+Date:   Wed Nov 28 16:48:49 2018 +0800
+
+    Merge remote-tracking branch 'origin/wechatmp'
+
+[33mcommit b7462f183a42820903fc2652b70355b3bf912799[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Wed Nov 28 16:48:04 2018 +0800
+
+    增加公众号功能
+
+[33mcommit 4a328ac6eaae8f59fefa9a85ee3745efc0f65a3e[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Wed Nov 28 16:28:16 2018 +0800
+
+    增加公众号功能
+
+[33mcommit 846436266396af1d18b49384c135a6870196cc31[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Wed Nov 28 15:50:54 2018 +0800
+
+    微信公众号配置
+
+[33mcommit 996496eeace3affe1b53564d51fdb67708d40c80[m
+Merge: f568054 262bff3
+Author: wuchuncheng <872487432@qq.com>
+Date:   Wed Nov 28 15:33:43 2018 +0800
+
+    Merge branch 'wechatmp'
+
+[33mcommit 262bff357d5fa817cd19040594e7275389030cff[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Wed Nov 28 15:32:25 2018 +0800
+
+    增加公众号功能
+
+[33mcommit f568054806cbdb691a126bba86747e12961975f1[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Wed Nov 28 15:06:08 2018 +0800
+
+    框架tab 优化
+
+[33mcommit f82d5a7e65e4f16ef1036dedb3f4af206008d44f[m
+Author: d0wop <791539017@qq.com>
+Date:   Wed Nov 28 14:28:27 2018 +0800
+
+    清除无关的组件数据库文件
+
+[33mcommit b3bdb999ee2f87d39b707790f95dc6328b845442[m
+Author: d0wop <791539017@qq.com>
+Date:   Wed Nov 28 14:25:36 2018 +0800
+
+    调整框架更新方法
+
+[33mcommit cc6415062623c3e8c5a3a18561621ce1a04bc134[m
+Author: d0wop <791539017@qq.com>
+Date:   Wed Nov 28 14:16:35 2018 +0800
+
+    新增会员注册接口与会员状态检测接口
+
+[33mcommit 7ba8dc65409ca2c2bc0d007b172974e6a4f2941f[m
+Merge: ea5fc3b 8fa8d60
+Author: d0wop <791539017@qq.com>
+Date:   Wed Nov 28 09:47:48 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit ea5fc3b3063b26a50ce7b093b3eb141cdff49d29[m
+Author: d0wop <791539017@qq.com>
+Date:   Wed Nov 28 09:47:30 2018 +0800
+
+    调整添加队列任务job
+
+[33mcommit 8fa8d6029b3d9f4ac8578b7c3e48d5ddc50c2968[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Tue Nov 27 18:10:05 2018 +0800
+
+    微信测试
+
+[33mcommit 810e6ce4a83ffba0a43cb4d5ea61c5fd04104e30[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Tue Nov 27 17:55:03 2018 +0800
+
+    微信测试
+
+[33mcommit 4ba2f8cdfeb0b48e4eae006ab42b1ea179cd1871[m
+Merge: a3e3f86 b2df468
+Author: wuchuncheng <872487432@qq.com>
+Date:   Tue Nov 27 17:31:15 2018 +0800
+
+    Merge branch 'master' into encrypt
+    
+    # Conflicts:
+    #       application/common.php
+
+[33mcommit a3e3f8608b927e3c017e7d6dcb44ac00f3198aeb[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Tue Nov 27 17:28:46 2018 +0800
+
+    添加加密规则
+
+[33mcommit f570595d158c61e4705b2d062ef61f0cdb3e30ef[m
+Merge: 6e49375 7a1e1ae
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Tue Nov 27 17:20:19 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 6e49375188b9960344bbd32cda8167542c2d0cde[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Tue Nov 27 17:20:04 2018 +0800
+
+    微信测试
+
+[33mcommit 7a1e1ae6efe99202c12d453286a7c7b2c60a715c[m
+Author: d0wop <791539017@qq.com>
+Date:   Tue Nov 27 10:27:38 2018 +0800
+
+    调整ftp上传，新增一个域名配置
+
+[33mcommit c2b3b7dbea684f6e799eec78777cb77e07c8ce88[m
+Merge: 4890f16 7da31ac
+Author: d0wop <791539017@qq.com>
+Date:   Mon Nov 26 18:33:13 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 4890f16382fdca25491d6fc507f8ca3e0023e3ee[m
+Author: d0wop <791539017@qq.com>
+Date:   Mon Nov 26 18:32:56 2018 +0800
+
+    将传输方式调整为被动方式
+
+[33mcommit 7da31ac45799302986ce5ed2d5598a9079b87535[m
+Merge: 854141c b2df468
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Nov 26 17:58:57 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 854141c3080f0e1171126fe4ef9bb89b0bf0738d[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Nov 26 17:58:48 2018 +0800
+
+    刷新页面定位
+
+[33mcommit b2df468b8c59fed5e85a42b81fdac595c1b6d5a8[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Mon Nov 26 16:33:39 2018 +0800
+
+    添加一个获取公共新闻来源和栏目的方法
+
+[33mcommit ff745da2215a475e1a05303bedb1d70e23908b91[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Nov 26 16:21:04 2018 +0800
+
+    启动页优化
+
+[33mcommit 1623c96ed874cf5aed003c92a97e2aba5f9e13cf[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Nov 26 15:48:01 2018 +0800
+
+    功能修改
+
+[33mcommit 833a859d8da3533c4c03c0dc33314c2817ca2df7[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Nov 26 15:01:55 2018 +0800
+
+    定位修改
+
+[33mcommit 2f85082ebafeec2d6b252101319e703e4c3d1659[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Nov 26 14:59:52 2018 +0800
+
+    定位页面移动
+
+[33mcommit 3483b34fe7306780a451828897e13494648762a8[m
+Merge: 48b66fb 687596a
+Author: d0wop <791539017@qq.com>
+Date:   Mon Nov 26 14:45:30 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 48b66fb81a1411369e3f7b068ce8c965fe760a86[m
+Author: d0wop <791539017@qq.com>
+Date:   Mon Nov 26 14:45:06 2018 +0800
+
+    优化上传报错信息
+
+[33mcommit 687596ab7588e02163c6dc6ec680bda398f3eef6[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Nov 26 12:53:29 2018 +0800
+
+    微信测试代码
+
+[33mcommit e199f779ce44c9aeea16ad0be584ed7abcdbaf49[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Nov 26 12:52:22 2018 +0800
+
+    微信测试
+
+[33mcommit 9f6d4987e5c731e6f1b0a687c9e78d93641a6739[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Nov 26 12:48:06 2018 +0800
+
+    微信测试代码
+
+[33mcommit e3cfed8b5c7b4822edc171c0ca4704df5676e3c0[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Nov 26 11:52:04 2018 +0800
+
+    微信测试
+
+[33mcommit b6405a6d79034555ff7e0cab616388615eebd59a[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Nov 26 11:47:51 2018 +0800
+
+    测试图片
+
+[33mcommit a6bcb8f40120e87035b628cd12ba671548d7a9cf[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Nov 26 11:46:23 2018 +0800
+
+    测试
+
+[33mcommit 428682319aba38d64012144054f8516d24311fbc[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Nov 26 11:43:24 2018 +0800
+
+    测试wx
+
+[33mcommit bffef3ddb659bcd0919b74a5170562fe22102846[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Nov 23 19:36:28 2018 +0800
+
+    oss-sdk
+
+[33mcommit d249404649f4f954a74d2762e764aca0523e89d4[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Nov 23 19:25:01 2018 +0800
+
+    更新框架
+
+[33mcommit 2fa9aeef19c5c396993ba3000d203881d4bf1696[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Nov 23 18:59:59 2018 +0800
+
+    更新数据表异常调整
+
+[33mcommit b2c2fa664a0444d2366fc5785e413250d54305b1[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Nov 23 18:21:50 2018 +0800
+
+    更新框架
+
+[33mcommit 761e793df8ff71d968b89470c2ba60d80e772039[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Nov 23 17:37:58 2018 +0800
+
+    生成访问路径
+
+[33mcommit 467c474fb325ff062a0c1b6b6d43707d2ce90cd1[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Nov 23 17:17:07 2018 +0800
+
+    提交更新
+
+[33mcommit 998da427ab45d9defa38db15eede35ad05b34eab[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Nov 23 17:13:04 2018 +0800
+
+    更新框架
+
+[33mcommit d0f231991a3d5474592b5b4c9ae2504cb48cff36[m
+Merge: 774230d a72298c
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Fri Nov 23 15:26:22 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 774230dc0ee6feaf11f5458bcb6a0084c2d44420[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Fri Nov 23 15:26:09 2018 +0800
+
+    前端模版ui优化
+
+[33mcommit a72298cd40e65620eef561fca979486dbfd4674e[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Nov 23 15:23:39 2018 +0800
+
+    调整接口排序的问题
+
+[33mcommit 8d812d245760028784612a823ee4388e0b18c194[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Nov 23 15:21:03 2018 +0800
+
+    修复启动页接口
+
+[33mcommit 8588ae0128407fdddc5ae000d080c73f9d2e3c55[m
+Merge: 1ce9954 c95f889
+Author: d0wop <791539017@qq.com>
+Date:   Fri Nov 23 15:16:35 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 1ce995433e1d0b8b9120f26243bf2426a2364597[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Nov 23 15:16:19 2018 +0800
+
+    调整启动页接口
+
+[33mcommit c95f889bb735ca65e1eb1ce1640b141d4a264216[m
+Merge: 6dc7a12 0fd22aa
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Fri Nov 23 15:04:44 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 6dc7a1289cba362a9f6dd099d47c0a4621f6b763[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Fri Nov 23 15:04:29 2018 +0800
+
+    版本更新优化
+
+[33mcommit 0fd22aa66001705bd250c0eec8e1614caf84673f[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Nov 23 14:42:10 2018 +0800
+
+    更新启动页
+
+[33mcommit 4a63f79082e7bfe5bcca8209ff2d0aa7e8dfe100[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Nov 23 14:03:20 2018 +0800
+
+    新增is_upload字段
+
+[33mcommit 18179e3b79523c537a2193b8aef5786b6ec68960[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Nov 22 17:45:21 2018 +0800
+
+    框架更新接口
+
+[33mcommit 9c0d8710e2c4a24dee362756cb7a14e872636367[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Nov 22 16:31:28 2018 +0800
+
+    去掉简介必传校验
+
+[33mcommit 844ac75959aedc8f899168761ec68cbbe22b129f[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Nov 22 14:56:52 2018 +0800
+
+    更新数据库功能调整
+
+[33mcommit 88b44b76e63f4c73d8a3d245c0a425aea4d62576[m
+Merge: 3f3d9e9 cadcff5
+Author: d0wop <791539017@qq.com>
+Date:   Wed Nov 21 18:27:51 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 3f3d9e9a753e259b05f0a0e59e3db4d467e85e0b[m
+Author: d0wop <791539017@qq.com>
+Date:   Wed Nov 21 18:27:36 2018 +0800
+
+    文件上传格式被限制的问题
+
+[33mcommit cadcff53d95da078303f088b28ac00c1b912fe40[m
+Merge: 52dd2da a4a0525
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Wed Nov 21 18:27:20 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 52dd2daa8d0dce7aadbcac6b6640466f29f5dee9[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Wed Nov 21 18:27:05 2018 +0800
+
+    更新记录优化
+
+[33mcommit a4a0525c507dd7496cea898784aaec80d34b8739[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Wed Nov 21 17:33:24 2018 +0800
+
+    修改提示语 该手机号已被其他账号绑定，请先解绑
+
+[33mcommit 159a7ea5448b877dfa8958f91680d5be5b14caf4[m
+Merge: 001e385 b250333
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Wed Nov 21 16:10:38 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 001e385d9466bd45aae1c39ca03f087d07e173c9[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Wed Nov 21 16:10:26 2018 +0800
+
+    版本更新优化
+
+[33mcommit b250333403a0589e887828b6dd07bbf07534d8fa[m
+Author: d0wop <791539017@qq.com>
+Date:   Wed Nov 21 16:03:11 2018 +0800
+
+    修复配置为空的时候不保存的问题
+
+[33mcommit 6c5821d16a9b097a4fd607d37a3e9fda5d0c1f70[m
+Author: d0wop <791539017@qq.com>
+Date:   Wed Nov 21 15:33:05 2018 +0800
+
+    调整获取启动页的方法
+
+[33mcommit 64fcd54ae75a4454525cc945f88373312994f9fa[m
+Merge: a882825 700e3fd
+Author: d0wop <791539017@qq.com>
+Date:   Tue Nov 20 17:07:24 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 700e3fde2f4846c95f8a8856de935b647ad38678[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Tue Nov 20 17:06:56 2018 +0800
+
+    百度统计配置
+
+[33mcommit 8d03328cdbff883147ab4c532f8ae9ddc3a78913[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Tue Nov 20 16:39:58 2018 +0800
+
+    启动页时间选择修复
+
+[33mcommit a88282581c9dc73f2f8db5b32174e3da5ed9a647[m
+Merge: 0e42606 9518077
+Author: d0wop <791539017@qq.com>
+Date:   Tue Nov 20 16:22:53 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 0e4260681ccb1f1181d7641ca4584ba4f35f12c2[m
+Author: d0wop <791539017@qq.com>
+Date:   Tue Nov 20 16:22:33 2018 +0800
+
+    调整member_sn生成方法
+
+[33mcommit 9518077ded59df73f34201817b886bb0ceac45dc[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Tue Nov 20 10:35:26 2018 +0800
+
+    启动页修改
+
+[33mcommit dbae151ce549276ba9be29409c1402c584b92acd[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Tue Nov 20 10:13:36 2018 +0800
+
+    启动页优化
+
+[33mcommit cfd5e8be4292bb4ec248fc5207b2ed9c7972a3e7[m
+Merge: b1737c4 ac17e45
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Nov 19 16:29:55 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit b1737c41eedfe4329ebf6e3152e72b6caf94c6f6[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Nov 19 16:29:45 2018 +0800
+
+    支付宝微信配置修改
+
+[33mcommit ac17e45520a36bd9bf098c324756cb8ae922d2a5[m
+Merge: 4ad3c8f 6ad5b95
+Author: wuchuncheng <872487432@qq.com>
+Date:   Mon Nov 19 16:22:18 2018 +0800
+
+    Merge branch 'payment'
+
+[33mcommit 6ad5b9545ae25fe903df7fdb75f9fedb7c170e0c[m[33m ([m[1;31morigin/payment[m[33m)[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Mon Nov 19 16:21:03 2018 +0800
+
+    删除微信支付，支付宝支付条件判断
+
+[33mcommit 4ad3c8f38364d76ae72e33ee85040587b0676ce3[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Nov 19 15:09:12 2018 +0800
+
+    启动页优化
+
+[33mcommit 84df7c14b3f2f5ad833ed58ad6c2072ed4f5424a[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Nov 19 14:41:38 2018 +0800
+
+    启动页配置优化
+
+[33mcommit 7174aa0310897d7f8e6cd688e3e8a89aedcc0d2f[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Nov 19 12:01:11 2018 +0800
+
+    导出描述修改
+
+[33mcommit 319899f5fb521a62d7c6ae5ecd53938b4bb411df[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Nov 19 11:59:06 2018 +0800
+
+    导出优化
+
+[33mcommit a9f3bcf6387001e3d369cd7893650afc658f4907[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Nov 19 11:22:56 2018 +0800
+
+    启动页优化
+
+[33mcommit d27822ec29e39b2d97783a12de339c6150f29682[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Fri Nov 16 18:45:46 2018 +0800
+
+    资源配置上传
+
+[33mcommit 155ac20beb2da4ba86663090d04746eb6d919b1c[m
+Merge: d77f0ee 2270345
+Author: d0wop <791539017@qq.com>
+Date:   Fri Nov 16 18:23:11 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit d77f0ee289fcb3d61a500975eefabe7a651f6d3f[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Nov 16 18:22:48 2018 +0800
+
+    优化绑定手机号提示语
+
+[33mcommit 2270345aa05ba294906b6f27521e367b94dba032[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Fri Nov 16 18:15:58 2018 +0800
+
+    会员管理优化
+
+[33mcommit 2c92d03a8deaff58f8648d493788dfcaa7ae259d[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Nov 16 18:15:45 2018 +0800
+
+    调整excel导出
+
+[33mcommit e023ad90a3808b0059a52ddd3ec8899b12684320[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Nov 16 17:31:24 2018 +0800
+
+    文件大小bug修复
+
+[33mcommit 727490b4bbb76372b23aef6d169f7a8904541e4f[m[33m ([m[1;31morigin/upload[m[33m)[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Nov 16 17:08:57 2018 +0800
+
+    上传bug修复
+
+[33mcommit 34ef55f469354c3b58bf9fdf29cf572e99c807b3[m
+Merge: 6db1471 9c85497
+Author: d0wop <791539017@qq.com>
+Date:   Fri Nov 16 16:28:55 2018 +0800
+
+    Merge remote-tracking branch 'origin/master' into upload
+
+[33mcommit 9c8549728b97edb375b82056d910d9c69b2f7664[m
+Merge: 01701f5 00c99fe
+Author: d0wop <791539017@qq.com>
+Date:   Fri Nov 16 16:28:13 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 01701f51d24005005dd0fa386dfd9712c0aa9c88[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Nov 16 16:27:51 2018 +0800
+
+    新增上传配置接口
+
+[33mcommit 6db1471ae0bcf90e33b9ef36c92e8ac352da70a4[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Nov 16 14:27:04 2018 +0800
+
+    上传配置信息转数据库
+
+[33mcommit 9bb0727a09ff476f2dc938ed4bb3942299797e70[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Nov 16 13:57:12 2018 +0800
+
+    百度编辑器资源上传接口创建
+
+[33mcommit 00c99fee5e0123dc7230d5c8125bf9cb929e5071[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Fri Nov 16 13:48:21 2018 +0800
+
+    新增获取积分配置接口
+
+[33mcommit 45e7cc468e279964a3c96a848ce2dc35945c971e[m
+Merge: b55f777 c2bcd86
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Nov 15 18:34:01 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit b55f777f8bcf8cfe4f12aedd76a215ecdb78154e[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Nov 15 18:33:51 2018 +0800
+
+    版本更新优化
+
+[33mcommit c2bcd8694ab87e411d9665fc0a09b18ee6422ed7[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Nov 15 18:25:19 2018 +0800
+
+    调整文件后缀的问题
+
+[33mcommit 0e299417ffe56a01d31fcd730aab20e53da9fd6e[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Nov 15 18:16:02 2018 +0800
+
+    修复上传后缀的问题
+
+[33mcommit 114a547e760f021f34b7004843d3a8f91a343179[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Nov 15 17:39:19 2018 +0800
+
+    更新上传配置信息
+
+[33mcommit 7886d99e1a66ff2237569ef168042dbe3a090e25[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Nov 15 17:27:40 2018 +0800
+
+    版本更新
+
+[33mcommit 8dae04bcd355f664a90fa78022c11c25a6ff0e40[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Nov 15 16:51:24 2018 +0800
+
+    资源目录配置
+
+[33mcommit a5399f0c9fb470f3e7f5dff3b4a739ab017f2cb2[m
+Merge: a8984ba 5a4b6fd
+Author: d0wop <791539017@qq.com>
+Date:   Thu Nov 15 16:42:45 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit a8984bad955a63844b434ca0eb922aaef1712cdf[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Nov 15 16:42:20 2018 +0800
+
+    local上传调整
+
+[33mcommit 5a4b6fdb151c5979b113699890ba0c121a1b6078[m
+Merge: a2796cb 84e6c6c
+Author: wuchuncheng <872487432@qq.com>
+Date:   Thu Nov 15 16:21:28 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit a2796cb29a9915d3a5f7eae734fbb57ebc9bd557[m
+Merge: 322e766 035fe07
+Author: wuchuncheng <872487432@qq.com>
+Date:   Thu Nov 15 16:21:18 2018 +0800
+
+    Merge branch 'payment'
+
+[33mcommit 035fe07ee55ad92deff75dff08884560d4c650ce[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Thu Nov 15 16:20:26 2018 +0800
+
+    忽略文件
+
+[33mcommit f9d53a1a9fe00f2810ac28079012061d7cb7362a[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Thu Nov 15 16:17:56 2018 +0800
+
+    修改微信证书为不必须
+
+[33mcommit 84e6c6cf2ddd76a0e8d72d7ad314009f0f1efe46[m
+Merge: 6b02817 322e766
+Author: d0wop <791539017@qq.com>
+Date:   Thu Nov 15 16:05:06 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 6b02817df27e868ba13dc4ec58c9656231fd16e8[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Nov 15 16:04:42 2018 +0800
+
+    文件上传
+
+[33mcommit 322e766533d2fd4d2e72dee1676ac03a64f815dc[m
+Merge: d4b107a da41278
+Author: wuchuncheng <872487432@qq.com>
+Date:   Thu Nov 15 15:46:40 2018 +0800
+
+    Merge branch 'payment'
+
+[33mcommit d4b107a942359515a1e5ac854b25261fec8fd1bb[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Thu Nov 15 15:45:25 2018 +0800
+
+    genxin1
+
+[33mcommit f32fb5c67f8c48dc2c466f2a568931cc843091a3[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Thu Nov 15 15:38:02 2018 +0800
+
+    修改忽略文件
+
+[33mcommit da41278647a1cc4706e807230a8c20e62cf3ec7a[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Thu Nov 15 15:20:23 2018 +0800
+
+    支付添加异常处理
+
+[33mcommit cd464e18eef71955743ded6999be27c9e8b74b23[m
+Merge: c3d37fb a2bb1d6
+Author: wuchuncheng <872487432@qq.com>
+Date:   Thu Nov 15 15:02:48 2018 +0800
+
+    Merge remote-tracking branch 'origin/master'
+    
+    # Conflicts:
+    #       db/20181114.sql
+
+[33mcommit c3d37fbf2e532c2f5c78017a56728cceeae6b546[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Thu Nov 15 14:57:37 2018 +0800
+
+    merge支付模块
+
+[33mcommit 6d9eb5855c463fbe9156993a9c3819981035ed00[m
+Merge: 42519c4 911f16e
+Author: wuchuncheng <872487432@qq.com>
+Date:   Thu Nov 15 14:54:55 2018 +0800
+
+    Merge branch 'payment'
+
+[33mcommit 911f16e682a7ae0626bfe6da8bbc72786269506c[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Thu Nov 15 14:52:07 2018 +0800
+
+    添加支付相关公用方法
+
+[33mcommit a2bb1d675083cd7cdb76dfceb7abbcb4b5aced78[m
+Merge: 313db28 c362304
+Author: d0wop <791539017@qq.com>
+Date:   Thu Nov 15 14:47:56 2018 +0800
+
+    Merge branch 'upload'
+
+[33mcommit 313db288f89d2b0d7525320fb99179a5795dd2cf[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Nov 15 14:22:26 2018 +0800
+
+    获取最新版本信息
+
+[33mcommit c362304ccd0a4a19607464c193c595fb6f36b76d[m
+Merge: 6134cb5 8f1f70e
+Author: d0wop <791539017@qq.com>
+Date:   Thu Nov 15 11:00:18 2018 +0800
+
+    Merge branch 'master' into upload
+
+[33mcommit 8f1f70ed39f2269a185838eb2608d5b66ff9321b[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Nov 15 10:47:24 2018 +0800
+
+    更新数据库后 新增清除配置操作的功能
+
+[33mcommit 9d537709d40809439f99e484e60ab6507d3a5873[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Nov 15 10:24:08 2018 +0800
+
+    调整客户端版本更新接口
+
+[33mcommit a483e4812d7480a2a9cf490a1d91a23509d21a5c[m
+Author: d0wop <791539017@qq.com>
+Date:   Wed Nov 14 18:36:19 2018 +0800
+
+    数据库更新异常调整
+
+[33mcommit dd9f5306c46bb15cc2e7b7348bb8748cc20155b4[m
+Author: d0wop <791539017@qq.com>
+Date:   Wed Nov 14 18:23:29 2018 +0800
+
+    调整更新sql
+
+[33mcommit 45fe90abc345bf7937cfab026001897b04da7d00[m
+Author: d0wop <791539017@qq.com>
+Date:   Wed Nov 14 18:21:15 2018 +0800
+
+    调整数据库文件
+
+[33mcommit e0fc3c89cd45a71a70cf7610d699699d334d9ff6[m
+Author: d0wop <791539017@qq.com>
+Date:   Wed Nov 14 18:20:01 2018 +0800
+
+    更新客户端检查更新接口
+
+[33mcommit b06f77e7791d09f40b9d89049b6fe8a35e8aaaa5[m
+Merge: f085ee0 22aef9b
+Author: d0wop <791539017@qq.com>
+Date:   Wed Nov 14 18:11:41 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit f085ee0eb8475f689ea3fbcb53761dbe0432c98c[m
+Author: d0wop <791539017@qq.com>
+Date:   Wed Nov 14 18:11:18 2018 +0800
+
+    调整更新客户端接口
+
+[33mcommit 6134cb58c955bd189dd3d019f313db7ed7e47798[m
+Author: d0wop <791539017@qq.com>
+Date:   Wed Nov 14 18:08:03 2018 +0800
+
+    更新upload
+
+[33mcommit 22aef9b8c80a1d95e2f4d30c18414efc53d07e2e[m
+Merge: 8385151 24f59b6
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Wed Nov 14 17:41:44 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 83851513d8dbacf273d0250308c2c7815cb44c72[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Wed Nov 14 17:41:31 2018 +0800
+
+    微信配置描述修改
+
+[33mcommit dbcafee1e08a44abfe7ea7fed848cfa6184c35b9[m
+Merge: 56722c9 24f59b6
+Author: d0wop <791539017@qq.com>
+Date:   Wed Nov 14 17:39:57 2018 +0800
+
+    Merge branch 'master' into upload
+
+[33mcommit 56722c969daa1757763a971c78f324e09dec07ae[m
+Author: d0wop <791539017@qq.com>
+Date:   Wed Nov 14 17:37:43 2018 +0800
+
+    更新ftp
+
+[33mcommit ed3a06dde7bfdc06e63a546ea09c34118b3794ae[m
+Author: d0wop <791539017@qq.com>
+Date:   Wed Nov 14 17:37:12 2018 +0800
+
+    先清除
+
+[33mcommit 24f59b6a62d8358d255323bec5a7fdcf2630ccf8[m
+Author: d0wop <791539017@qq.com>
+Date:   Wed Nov 14 16:55:14 2018 +0800
+
+    调整数据表起始
+
+[33mcommit 828002f167d8e85238871c54ced3323b20a8c2a3[m
+Author: d0wop <791539017@qq.com>
+Date:   Wed Nov 14 16:43:24 2018 +0800
+
+    客户端检查更新接口
+
+[33mcommit 8961a90f22857d919f36f43021f837ceb3644786[m
+Author: d0wop <791539017@qq.com>
+Date:   Wed Nov 14 14:31:09 2018 +0800
+
+    更新itxiao6上传sdk
+
+[33mcommit 2c39e76fdab168d38e793eff64f5730ce72bd859[m
+Author: d0wop <791539017@qq.com>
+Date:   Wed Nov 14 14:30:05 2018 +0800
+
+    调整git仓库
+
+[33mcommit 18580924b5b680b48605bbb055b1439d7387a6f2[m
+Merge: 02696f9 b5a3ea9
+Author: d0wop <791539017@qq.com>
+Date:   Wed Nov 14 14:25:20 2018 +0800
+
+    Merge remote-tracking branch 'origin/upload' into upload
+
+[33mcommit b5a3ea90557f89f8aa0e81ab77cfa89483d89418[m
+Author: 黄庆 <huangqing@360tianma.com>
+Date:   Wed Nov 14 14:22:38 2018 +0800
+
+    Delete .gitignore
+
+[33mcommit 02696f9fc8ff56ac15f28d103afcc47e83033a49[m
+Merge: 3ae6c8e 42281d1
+Author: d0wop <791539017@qq.com>
+Date:   Wed Nov 14 10:24:26 2018 +0800
+
+    Merge remote-tracking branch 'origin/master' into upload
+    
+    # Conflicts:
+    #       application/extend/controller/Upload.php
+    #       composer.json
+    #       vendor/composer/autoload_files.php
+    #       vendor/composer/autoload_static.php
+
+[33mcommit 3ae6c8e2362c35c0d885496b1d1d9a0c3b609998[m[33m ([m[1;31morigin/tmupload[m[33m)[m
+Author: caopeng <dammer_66@163.com>
+Date:   Tue Nov 13 20:36:17 2018 +0800
+
+    upload 封装完成
+
+[33mcommit 42281d1017155ee61480f488352213e29d3756fe[m
+Author: d0wop <791539017@qq.com>
+Date:   Tue Nov 13 20:26:29 2018 +0800
+
+    调整短信
+
+[33mcommit d32f63d3e3a519b3e24c63c504e612cd07e2f59f[m
+Author: d0wop <791539017@qq.com>
+Date:   Tue Nov 13 20:22:46 2018 +0800
+
+    发送短信验证
+
+[33mcommit 6072b00e7660af6c6919761311044914a2430d7a[m
+Author: d0wop <791539017@qq.com>
+Date:   Tue Nov 13 20:21:00 2018 +0800
+
+    调整阿里短信接口
+
+[33mcommit 582be367115e5ede788dc25e280b8aa1e05fdb99[m
+Merge: 08d3170 42519c4
+Author: d0wop <791539017@qq.com>
+Date:   Tue Nov 13 20:12:04 2018 +0800
+
+    Merge remote-tracking branch 'origin/master'
+
+[33mcommit 08d31709bfa10a98300874972cb5704836a7c35b[m
+Author: d0wop <791539017@qq.com>
+Date:   Tue Nov 13 20:09:58 2018 +0800
+
+    解决短信配置信息获取问题
+
+[33mcommit 42519c492207c0433e67cefcd0c0f6a8666f6a5b[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Tue Nov 13 14:49:15 2018 +0800
+
+    添加一个查询时候有支付配置的接口
+
+[33mcommit 4d1064943caf7fff463a74cf5b149b4f6cecfa46[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Tue Nov 13 14:00:39 2018 +0800
+
+    1
+
+[33mcommit c1cdeff01be1a7befb564a53ef552f0a5a4d1802[m
+Merge: f0ab7cd dcfc141
+Author: wuchuncheng <872487432@qq.com>
+Date:   Tue Nov 13 13:50:27 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit dcfc1417d574d8b26be216a66106ee0575ee440d[m
+Merge: 157a23c 80763f0
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Tue Nov 13 11:32:38 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 157a23c22c45d1bac237f575e18d366dba1cb9b9[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Tue Nov 13 11:32:26 2018 +0800
+
+    系统信息优化
+
+[33mcommit 80763f036ba80ed6f78f10c4c081393237806b2e[m
+Author: d0wop <791539017@qq.com>
+Date:   Tue Nov 13 11:30:44 2018 +0800
+
+    修复部分参数传入空时，报错的问题
+
+[33mcommit f0ab7cde75450a9d5ed7a204bc2e7346aaa79aeb[m
+Merge: 5b5dcc4 66ed29d
+Author: wuchuncheng <872487432@qq.com>
+Date:   Mon Nov 12 22:00:47 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 66ed29d421854bac6c8d67a77a22b6a36e819bc0[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Nov 12 18:51:39 2018 +0800
+
+    更新版本
+
+[33mcommit 51c08e88cee5c13a394c9fe9bef3d06ca8af2ebf[m
+Author: d0wop <791539017@qq.com>
+Date:   Mon Nov 12 17:18:11 2018 +0800
+
+    修复报错信息
+
+[33mcommit 591af99698663197c7a55ba58ce0d326d6d7e6a3[m
+Author: d0wop <791539017@qq.com>
+Date:   Mon Nov 12 17:00:54 2018 +0800
+
+    图片上传，修改图片名称
+
+[33mcommit 2eac64c8dc2c4de23cb9db8b74b42bb4d6702e14[m
+Author: d0wop <791539017@qq.com>
+Date:   Mon Nov 12 15:31:37 2018 +0800
+
+    修复组件权限问题
+
+[33mcommit c1da3eb44d098cd4d428ae3ff5544c6dd211f90c[m
+Merge: 9e8a164 683bd4b
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Nov 12 15:16:17 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 9e8a164e29b4836ae33a2e88aad8c136383de1f8[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Nov 12 15:16:06 2018 +0800
+
+    添加分类优化
+
+[33mcommit 89287a59c7a38d42eb663ebeeab27c734cabbd1c[m
+Merge: edbc1ee 51bf135
+Author: caopeng <dammer_66@163.com>
+Date:   Mon Nov 12 14:10:36 2018 +0800
+
+    Merge branch 'upload' of gitlab.360tianma.com:d0wop/TM_LAB into upload
+
+[33mcommit 683bd4b0198388a4a46925953278a77cff4323dc[m
+Author: d0wop <791539017@qq.com>
+Date:   Mon Nov 12 14:09:25 2018 +0800
+
+    修复组件权限问题
+
+[33mcommit 70b4eecbced816168f1c398f33fe9ec5bcc4bc9f[m
+Merge: 716cb8a 3c8ccbd
+Author: d0wop <791539017@qq.com>
+Date:   Mon Nov 12 11:03:47 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 716cb8ab1acc0a26d11dab30554ed1e838d3a33f[m
+Author: d0wop <791539017@qq.com>
+Date:   Mon Nov 12 11:03:24 2018 +0800
+
+    检查更新数据版本接口
+
+[33mcommit 3c8ccbde410ae8489a6f126d7ec833ad3074b2ba[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Nov 12 10:32:06 2018 +0800
+
+    修改
+
+[33mcommit f38cb17f9c7f1fb16156967336b0902c755a7192[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Nov 12 10:31:19 2018 +0800
+
+    年龄颜色修改
+
+[33mcommit 5b5dcc4d738ca68ec0913277bd1a988e75eb8221[m
+Merge: e840559 7ad692b
+Author: wuchuncheng <872487432@qq.com>
+Date:   Mon Nov 12 09:53:37 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 7ad692b21ed2dd1f114aacadf97a2e81598039bb[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Nov 12 09:38:19 2018 +0800
+
+    启动页改造
+
+[33mcommit 441b5db6612e27de1cbae1fa5714c0ada67ea875[m
+Merge: f4f41ae 486f499
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Nov 12 09:35:36 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit f4f41aeb1e00bc6992953efb592cfc3f444f6703[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Nov 12 09:35:14 2018 +0800
+
+    会员中心列表优化
+
+[33mcommit 486f49924e1eef0ff0f3b1f3f14576a17401954c[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Nov 9 19:12:09 2018 +0800
+
+    调整启动图接口
+
+[33mcommit e8405590b0590463d701a118f7096da89e36dcfd[m
+Merge: 7a51be8 b04f89b
+Author: wuchuncheng <872487432@qq.com>
+Date:   Fri Nov 9 18:13:22 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 7a51be8c905008c7cac2297a497e4a0b041965c9[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Fri Nov 9 18:13:11 2018 +0800
+
+    1
+
+[33mcommit b04f89b5495ab2274812a58a653006b0ff9bbc33[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Nov 9 18:11:41 2018 +0800
+
+    新增百度配置保存接口与查询百度配置接口
+
+[33mcommit 72a01d04e92df651a008145f28ed4475f488b761[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Nov 9 17:53:05 2018 +0800
+
+    调整接口
+
+[33mcommit 33a70255e84b3446bfbb283ee8e6888ca41faf02[m
+Merge: 4dbc86c 4cbc1ff
+Author: d0wop <791539017@qq.com>
+Date:   Fri Nov 9 17:33:20 2018 +0800
+
+    Merge remote-tracking branch 'origin/install'
+
+[33mcommit 4dbc86c9e1e1a78a6e9886794bcf6a9dbd8cd939[m
+Merge: 0ae5db5 51bf135
+Author: d0wop <791539017@qq.com>
+Date:   Fri Nov 9 17:32:48 2018 +0800
+
+    Merge remote-tracking branch 'origin/upload'
+
+[33mcommit 4cbc1ff70f28831b27e10d1dbdb97d416a7665e7[m
+Merge: 335559a cd25874
+Author: d0wop <791539017@qq.com>
+Date:   Fri Nov 9 17:32:23 2018 +0800
+
+    Merge branch 'install' of gitlab.360tianma.com:d0wop/TM_LAB into install
+
+[33mcommit 335559ab8b1c76f2ec3cdf3c3a7e105c9873248b[m
+Merge: fd39050 2b06f39
+Author: d0wop <791539017@qq.com>
+Date:   Fri Nov 9 17:31:25 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB into install
+
+[33mcommit fd39050539bf4ffe2651ef7de5c590d487e8f1b9[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Nov 9 17:31:06 2018 +0800
+
+    修改文件上传配置信息
+
+[33mcommit b9083f481f11f837bb2b87ffe90a7b30a675b8ad[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Nov 9 17:19:47 2018 +0800
+
+    上传配置信息接口
+
+[33mcommit 2b06f3916add6560ec312d40a5fbf0b98bbe1a05[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Fri Nov 9 16:25:36 2018 +0800
+
+    描述修改
+
+[33mcommit cd258743d468408a867c9e772773a2392670a860[m
+Author: caopeng <dammer_66@163.com>
+Date:   Fri Nov 9 15:54:25 2018 +0800
+
+    创建 初始化数据库方法
+
+[33mcommit 0ae5db5c51873b56750b089d079b081a8eb5b5df[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Nov 9 14:42:56 2018 +0800
+
+    调整百度统计排序顺序
+
+[33mcommit 237b7dab9f53fcaf75a66f28b323336518eabbf4[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Nov 9 14:09:41 2018 +0800
+
+    更新框架sql
+
+[33mcommit 8ae686114c4a9ba06a4fc1db692186ea848661f1[m
+Merge: 2fc234d a76beb2
+Author: d0wop <791539017@qq.com>
+Date:   Fri Nov 9 13:45:26 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 2fc234d7049bfd2d74e49bb832a90d27063f22b6[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Nov 9 13:45:02 2018 +0800
+
+    修复更新会员信息bug
+
+[33mcommit a76beb200c451ccbadf24f77c3f235e5a0971f88[m
+Merge: b3bf5f0 fa7977b
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Fri Nov 9 11:41:25 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit b3bf5f097bf00802c6bb53a3d8189932ed8ec8bb[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Fri Nov 9 11:41:09 2018 +0800
+
+    会员首页
+
+[33mcommit fa7977bac24034a6a1c2afa960c8bf0577df4e2a[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Nov 8 19:15:56 2018 +0800
+
+    获取会员信息新增member_sn
+
+[33mcommit 980fb5db10e56ea68acc36e7c1f4ab20eab9d670[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Nov 8 19:13:53 2018 +0800
+
+    getMemberInfo 新增接口
+
+[33mcommit 0b6e474f53994e10bd02fa7487fac38e2087b131[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Nov 8 19:12:02 2018 +0800
+
+    3方登录新增member_sn字段
+
+[33mcommit 80787d1004b73eacb2b1fa62957c795488c79b7e[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Nov 8 19:02:59 2018 +0800
+
+    调整统计接口
+
+[33mcommit 03725236773962d459f71aae351db9e612e952e1[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Nov 8 18:51:53 2018 +0800
+
+    修复获取启动接口异常的问题
+
+[33mcommit 2023045f5408576957cf42abe3b27fea23efddf2[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Nov 8 18:02:30 2018 +0800
+
+    百度账号授权
+
+[33mcommit 094a5809ea8706a977d673b33a0a5b9333e53f18[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Nov 8 17:48:15 2018 +0800
+
+    更新授权
+
+[33mcommit 547293807b845fec090a1ffafc6367074096a1d1[m
+Merge: 975df68 1764b01
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Nov 8 17:21:17 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 975df68a4e62736d756f646174a9e4104f8141ac[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Nov 8 17:21:07 2018 +0800
+
+    会员管理首页
+
+[33mcommit 1764b017100ce739edcc0fd4a8bdf16395db3c45[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Nov 8 17:13:29 2018 +0800
+
+    调整百度统计 500 状态码修改为502
+
+[33mcommit 03fa46e7096ac08d4d6f78746160bad435edb62e[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Nov 8 17:08:24 2018 +0800
+
+    更新统计会员数据接口
+
+[33mcommit 3d022d9de73caa3710f7398d8a4d834a90682745[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Nov 8 16:07:42 2018 +0800
+
+    百度统计接口
+
+[33mcommit 6c252857e93ddebe1f562095842026a283c75f79[m
+Merge: 3600473 bbed8aa
+Author: d0wop <791539017@qq.com>
+Date:   Thu Nov 8 09:57:24 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 3600473a97b87d60559b65d89fcdd173a8156b57[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Nov 8 09:56:58 2018 +0800
+
+    清除掉master框架中的tmgc_discover文件夹
+
+[33mcommit bbed8aae53bda1b998e1e44f2212c8018cabf1f2[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Nov 8 09:53:58 2018 +0800
+
+    会员管理代码更新
+
+[33mcommit 51bf135c1eabdc70873844d19ada86622644d898[m
+Merge: 14dd20c a07d1fe
+Author: d0wop <791539017@qq.com>
+Date:   Thu Nov 8 09:50:16 2018 +0800
+
+    Merge remote-tracking branch 'origin/master' into upload
+    
+    # Conflicts:
+    #       application/tmgc_discover
+    #       db/20181025.sql
+
+[33mcommit 14dd20c1289e8b6ee0a421d1814c5bf9ac543fb3[m
+Author: d0wop <791539017@qq.com>
+Date:   Wed Nov 7 20:33:07 2018 +0800
+
+    测试
+
+[33mcommit a07d1fec26a2f2d812ef4da9627088e9e9499b59[m
+Author: d0wop <791539017@qq.com>
+Date:   Wed Nov 7 18:25:29 2018 +0800
+
+    启动页功能接口
+
+[33mcommit b07fdc790dcc03ca44fa10cf17dec699699e4a25[m
+Author: d0wop <791539017@qq.com>
+Date:   Wed Nov 7 15:52:50 2018 +0800
+
+    提交成功
+
+[33mcommit 0c3c08fb185b77da67da101faa138d3a0526d9c4[m
+Merge: c30e4ba 26414f5
+Author: d0wop <791539017@qq.com>
+Date:   Wed Nov 7 15:15:00 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit c30e4baf2a5996804b75149a0a3339fce2622ef7[m
+Author: d0wop <791539017@qq.com>
+Date:   Wed Nov 7 15:14:37 2018 +0800
+
+    消息推送
+
+[33mcommit 26414f5115f319ba810d17023a8f21eb254322db[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Wed Nov 7 14:46:05 2018 +0800
+
+    会员管理弹窗优化
+
+[33mcommit f6520e0b0ab6d8941d754ff31de0c15842f587b6[m
+Merge: 5656ffb 8f4a0e7
+Author: d0wop <791539017@qq.com>
+Date:   Wed Nov 7 14:05:47 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 5656ffb14b77d9d92f6d253e9b880f8b972d4a16[m
+Author: d0wop <791539017@qq.com>
+Date:   Wed Nov 7 14:05:23 2018 +0800
+
+    上传名称过滤空格
+
+[33mcommit 8f4a0e79b99088ff74e8acc0ff36b88db244b7c8[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Wed Nov 7 13:49:12 2018 +0800
+
+    会员管理优化
+
+[33mcommit 06907ab83d50055122766c0dd0f232a0a56bb099[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Wed Nov 7 11:16:02 2018 +0800
+
+    全选优化
+
+[33mcommit 38a1a2e6290f2ec8fa86acd8ecee0c2431ceaaa9[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Wed Nov 7 10:54:54 2018 +0800
+
+    全选优化
+
+[33mcommit ac93eff5da549a8dfcea309420f3d58311f4fd5a[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Wed Nov 7 10:41:26 2018 +0800
+
+    会员管理表格优化
+
+[33mcommit f710fc7ccd2e8f73f517d255033b68be30d184ec[m
+Author: d0wop <791539017@qq.com>
+Date:   Wed Nov 7 10:08:06 2018 +0800
+
+    增加推送时间
+
+[33mcommit 7764f71684b06f1efe96ababe44bbe7f870f695a[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Tue Nov 6 14:40:07 2018 +0800
+
+    支付宝和微信支付配置
+
+[33mcommit a879187dfacfba0fcf2dc1032e49861039f551e9[m
+Merge: a0e7181 8a43266
+Author: d0wop <791539017@qq.com>
+Date:   Tue Nov 6 12:00:50 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit a0e71817155af088df246c43407fb3796bff7296[m
+Author: d0wop <791539017@qq.com>
+Date:   Tue Nov 6 12:00:31 2018 +0800
+
+    增加时间保存接口
+
+[33mcommit edbc1ee3e5492acf8ea02a8f36ba85ed41e960e1[m
+Author: caopeng <dammer_66@163.com>
+Date:   Tue Nov 6 11:08:45 2018 +0800
+
+    add ftp upload class
+
+[33mcommit 8a43266c58b7de9e395c8aa464f7d62b9d49243e[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Tue Nov 6 10:26:07 2018 +0800
+
+    修改登录判断
+
+[33mcommit 3c36a68605ea7e5d94976fd3833ef0b7ba71c532[m
+Author: d0wop <791539017@qq.com>
+Date:   Tue Nov 6 09:30:24 2018 +0800
+
+    修复bug
+
+[33mcommit ae329d80629859c504ca26f06bc81953ff9c5494[m
+Author: d0wop <791539017@qq.com>
+Date:   Mon Nov 5 18:10:42 2018 +0800
+
+    统计历史记录接口调整
+
+[33mcommit c525d15525bcc61c92dc1636b5ab96b9443446ff[m
+Author: d0wop <791539017@qq.com>
+Date:   Mon Nov 5 17:11:24 2018 +0800
+
+    框架sql更新
+
+[33mcommit eb9a4c6444a6af00bbc5c832522956558e0560c0[m
+Merge: 1c033ba 7885355
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Nov 5 17:08:01 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 1c033ba677083f95fdbbc63fe4d8067c79cc7178[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Nov 5 17:07:49 2018 +0800
+
+    会员管理优化
+
+[33mcommit 7885355419c511aa043f0014c0e98c5d566996ca[m
+Author: d0wop <791539017@qq.com>
+Date:   Mon Nov 5 16:51:39 2018 +0800
+
+    更新广告sql
+
+[33mcommit aded157128c7aab6b7336e97326e9b2169150d52[m
+Merge: 61c5443 9a0ee47
+Author: d0wop <791539017@qq.com>
+Date:   Mon Nov 5 16:22:46 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 61c544351c8c792d8ac9ccaa304afdf241ce94a9[m
+Merge: 43fff5e 0a81a92
+Author: d0wop <791539017@qq.com>
+Date:   Mon Nov 5 16:22:08 2018 +0800
+
+    Merge remote-tracking branch 'origin/upload'
+
+[33mcommit 58e53b7aceba22d8d4c63adc25e56b761a37d516[m
+Merge: 0a81a92 43fff5e
+Author: d0wop <791539017@qq.com>
+Date:   Mon Nov 5 16:21:42 2018 +0800
+
+    Merge branch 'master' into upload
+
+[33mcommit 0a81a9275524184b3bbfb8ad4a0f42b69f91d21e[m
+Author: d0wop <791539017@qq.com>
+Date:   Mon Nov 5 16:21:19 2018 +0800
+
+    修复组件添加问题
+
+[33mcommit 9a0ee479ea4bbb7ebdecb5969c294ab70eb953d4[m
+Merge: 63cd86d 43fff5e
+Author: wuchuncheng <872487432@qq.com>
+Date:   Mon Nov 5 15:56:27 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 63cd86d7fcf56fe4e02f7c56d70757c1b4b1b116[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Mon Nov 5 15:56:19 2018 +0800
+
+    修改
+
+[33mcommit 43fff5e053b1cee1708d5916cb3da5b01fe69560[m
+Author: d0wop <791539017@qq.com>
+Date:   Mon Nov 5 13:38:39 2018 +0800
+
+    配置修改
+
+[33mcommit 7e78c3721104141ffd619615dbccba333d6ea5e2[m
+Merge: 3b3b5de 20aac83
+Author: d0wop <791539017@qq.com>
+Date:   Mon Nov 5 11:51:55 2018 +0800
+
+    Merge remote-tracking branch 'origin/upload'
+    
+    # Conflicts:
+    #       application/system/controller/Upload.php
+    #       composer.json
+    #       config/app.php
+    #       db/20181025.sql
+    #       vendor/composer/autoload_files.php
+    #       vendor/composer/autoload_static.php
+
+[33mcommit 3b3b5deb3fdc9fe5d73ca393317c7b64504c3a85[m
+Author: d0wop <791539017@qq.com>
+Date:   Mon Nov 5 11:27:00 2018 +0800
+
+    更新 定位接口
+
+[33mcommit 8b4c4327efc39fd43f575d7896cfe649a32ea0fa[m[33m ([m[1;31morigin/point[m[33m)[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Mon Nov 5 11:20:22 2018 +0800
+
+    新增解除封号接口
+
+[33mcommit 99fd7383d2818a6f0dd4091ad1a1020ea58f8fc2[m
+Merge: 22dbacf 155e729
+Author: wuchuncheng <872487432@qq.com>
+Date:   Mon Nov 5 10:58:15 2018 +0800
+
+    Merge remote-tracking branch 'origin/payment'
+
+[33mcommit 155e7295a21c7a5b217e41a63dd4f63ef56dd6b7[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Mon Nov 5 10:53:57 2018 +0800
+
+    修改微信证书路径
+
+[33mcommit 22dbacf776fc60a24ec4c2d062bfef5bdfcce557[m
+Merge: 5d7aa6e a8bfcb1
+Author: wuchuncheng <872487432@qq.com>
+Date:   Fri Nov 2 18:46:55 2018 +0800
+
+    Merge remote-tracking branch 'origin/master'
+    
+    # Conflicts:
+    #       application/api/model/CommonModel.php
+    #       application/system/controller/System.php
+    #       db/backup/v5.sql
+
+[33mcommit 5d7aa6e744240647812ebc467251e66eacfb7fc9[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Fri Nov 2 15:33:22 2018 +0800
+
+    修改提示语
+
+[33mcommit a8bfcb170ad0a4974755d2a8cd3833c8eff91298[m
+Merge: 4513a98 dc2b914
+Author: 黄庆 <huangqing@360tianma.com>
+Date:   Fri Nov 2 15:31:41 2018 +0800
+
+    Merge branch 'system' into 'master'
+    
+    新增member_sn字段
+    
+    See merge request d0wop/TM_LAB!5
+
+[33mcommit dc2b914995b8ce1a79d8a4cab1649901c1c6acf5[m[33m ([m[1;31morigin/system[m[33m)[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Nov 2 15:31:15 2018 +0800
+
+    新增member_sn字段
+
+[33mcommit 4513a9866660263f70bb8150c4e5c5cf4da7ce7b[m
+Merge: 0da6b63 a7fef5b
+Author: 黄庆 <huangqing@360tianma.com>
+Date:   Fri Nov 2 11:40:30 2018 +0800
+
+    Merge branch 'system' into 'master'
+    
+    更新数据表
+    
+    See merge request d0wop/TM_LAB!4
+
+[33mcommit 20aac83a64bf8f41defb42cb4a1397b8366c0c10[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Nov 2 11:32:24 2018 +0800
+
+    调整
+
+[33mcommit 408272f96203e7a6e4cdfc1a5f6d1bbda7bf56af[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Nov 2 10:13:15 2018 +0800
+
+    上传接口调整并测试通过
+
+[33mcommit 2296a896a319033d0a857e1edcd23178d264ee84[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Thu Nov 1 20:01:03 2018 +0800
+
+    修改提示语
+
+[33mcommit a7fef5b863a177e82f581b663c1048101508ceb5[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Nov 1 18:15:20 2018 +0800
+
+    更新数据表
+
+[33mcommit 0da6b6305734a8c7a457a0d737a2f2b37340240a[m
+Merge: 197c29a 1421722
+Author: 黄庆 <huangqing@360tianma.com>
+Date:   Thu Nov 1 16:44:48 2018 +0800
+
+    Merge branch 'system' into 'master'
+    
+    更新初始化文件与sql
+    
+    See merge request d0wop/TM_LAB!3
+
+[33mcommit 1421722322a1bc659efda635b38c1c0b79076a69[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Nov 1 16:44:33 2018 +0800
+
+    更新初始化文件与sql
+
+[33mcommit 197c29a6aa202f070d9e0564d54cc49db627ebfb[m
+Merge: d5ccb99 20aaf60
+Author: 黄庆 <huangqing@360tianma.com>
+Date:   Thu Nov 1 16:18:45 2018 +0800
+
+    Merge branch 'system' into 'master'
+    
+    System
+    
+    See merge request d0wop/TM_LAB!2
+
+[33mcommit 20aaf6025728819d080c8e519d9b12780f999bba[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Nov 1 16:17:48 2018 +0800
+
+    接口调整
+
+[33mcommit 2be4d5a897a039181011de8c3180c8f74cc33eff[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Nov 1 16:09:21 2018 +0800
+
+    轮播图接口和背景图接口
+
+[33mcommit d5ccb99704319e8c883787ebcd5cb28a8cd97f6f[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Nov 1 14:08:11 2018 +0800
+
+    会员列表修复
+
+[33mcommit 05a94c327d066572870066bd0f0656cffc858940[m
+Merge: 7cf3ef9 9fb1cfc
+Author: d0wop <791539017@qq.com>
+Date:   Thu Nov 1 13:57:25 2018 +0800
+
+    Merge branch 'upload' of gitlab.360tianma.com:d0wop/TM_LAB into upload
+
+[33mcommit 7cf3ef9d8db4d6a40d00a5511cf047ece3d76bee[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Nov 1 13:56:59 2018 +0800
+
+    文件上传功能
+
+[33mcommit 3734a3cdd32d8d62beae68fcf42380e6e7222970[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Nov 1 10:25:55 2018 +0800
+
+    调整文件
+
+[33mcommit 9fb1cfcea7403596d4cc25db41ecc6584949f34d[m
+Author: caopeng <dammer_66@163.com>
+Date:   Thu Nov 1 09:59:25 2018 +0800
+
+    upload 集成 oss，qiniu。local
+
+[33mcommit e6497785b3db6da731543ba767047f4c06f8ee67[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Wed Oct 31 18:58:13 2018 +0800
+
+    用户配置图片限制
+
+[33mcommit e6038f2255e0550523a437df83c6517be06f7dd4[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Wed Oct 31 16:00:32 2018 +0800
+
+    会员列表状态修复
+
+[33mcommit 4027b40c62bc800929ffc2e6365944da77f705de[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Wed Oct 31 15:47:52 2018 +0800
+
+    黑名单封号优化
+
+[33mcommit 84c76e442a15ad384973d2bdadf19c840ca36769[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Wed Oct 31 15:24:08 2018 +0800
+
+    b端框架定位修改
+
+[33mcommit e9a8a650e93b32f26dcb91d1a73982d4eb048845[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Wed Oct 31 14:03:28 2018 +0800
+
+    修改提示语
+
+[33mcommit ddd5bbf895a08256ed1319d99daced78300ea56d[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Tue Oct 30 17:49:50 2018 +0800
+
+    模版地址修改
+
+[33mcommit 418d003d415b2049aed2bc6bd679bfef6f62e309[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Tue Oct 30 17:41:42 2018 +0800
+
+    公共UI样式
+
+[33mcommit aa7d45437c39339a46c1d20150bd502e7af09c26[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Tue Oct 30 17:13:08 2018 +0800
+
+    上传样式
+
+[33mcommit 19d08c7d92772909b4b1d325d34e4127d301545e[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Tue Oct 30 17:08:21 2018 +0800
+
+    前端模版样式上传
+
+[33mcommit 8b03ca802211a99e32bc52987342432df4540df6[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Tue Oct 30 16:41:12 2018 +0800
+
+    前端模版上传
+
+[33mcommit 3dc92eaf55343573695d25f8a988308dd8e0cbf5[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Tue Oct 30 16:32:00 2018 +0800
+
+    模版上传
+
+[33mcommit 68eade0063b15f313c304c9e0f88cbf593fcce0b[m
+Author: d0wop <791539017@qq.com>
+Date:   Tue Oct 30 16:30:33 2018 +0800
+
+    上传文件接口
+
+[33mcommit 453ee788fe399b08996514bc00557cdc4561c4e0[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Tue Oct 30 16:29:01 2018 +0800
+
+    前端模版
+
+[33mcommit 614a72a0352930f1f64e582e4717f500dd0bcd60[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Tue Oct 30 16:11:26 2018 +0800
+
+    模版引入
+
+[33mcommit 7d7c814d2e2ec7e96bf4ad3073eb6b7626830987[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Tue Oct 30 14:15:49 2018 +0800
+
+    前端UI模版
+
+[33mcommit d962fb7657911e7ed74c700938cfbcd41b37b3c3[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Tue Oct 30 14:09:51 2018 +0800
+
+    UI模版
+
+[33mcommit b7b7ac75b43cb68916986554749c674ca101e673[m
+Merge: d40cd4c c7985e9
+Author: caopeng <dammer_66@163.com>
+Date:   Tue Oct 30 10:55:16 2018 +0800
+
+    Merge branch 'install' into dev
+
+[33mcommit 8e39650588207fd3ebfa45728fe5c4f8770d2bf7[m
+Merge: 09801fc 47642fa
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Oct 29 19:16:22 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 09801fc3074ba7efc988754a24df10267c2abafa[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Oct 29 19:16:04 2018 +0800
+
+    会员列表优化
+
+[33mcommit 47642fa03f9e8db41404c054163c6446940c2ebb[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Mon Oct 29 19:16:02 2018 +0800
+
+    修改会员总数和页数不一样
+
+[33mcommit 93322efc18ccb6f08c35286fa9c7b067501e0f2c[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Oct 29 19:06:11 2018 +0800
+
+    积分修改备注框优化
+
+[33mcommit 4243a25380bc374bfa09f7a6679f7ec70e8828cd[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Oct 29 18:42:43 2018 +0800
+
+    会员管理优化
+
+[33mcommit 5bdf608c6a63fcfd55c69b70f3cb46e1aaac6b79[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Mon Oct 29 18:03:47 2018 +0800
+
+    修改签到bug
+
+[33mcommit a2df56c83857ae5b0e39df66f4a1fe3ffc7a50d3[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Oct 29 17:57:08 2018 +0800
+
+    优化
+
+[33mcommit f1d326a0577e64af243a61058c9ec81192d42f9c[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Oct 29 17:40:51 2018 +0800
+
+    会员管理优化与修复
+
+[33mcommit 068f7ad2a694949000a652b6ac6e162d43bf0214[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Mon Oct 29 15:31:29 2018 +0800
+
+    修改签到bug
+
+[33mcommit 8cdeddcb068039f227ef854332dc386ad07a8691[m
+Merge: 289e826 f26358c
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Oct 29 15:18:10 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 289e82677ec8b410d91f623e01dbfd391d308895[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Oct 29 15:17:55 2018 +0800
+
+    调整积分bug
+
+[33mcommit c7985e98b7afaed908e368046f6243be4c84f693[m
+Author: d0wop <791539017@qq.com>
+Date:   Mon Oct 29 15:12:24 2018 +0800
+
+    新增Jpush推送接口
+
+[33mcommit abd0ac4b7a909caefd24d029df353471b16b3e9a[m
+Author: d0wop <791539017@qq.com>
+Date:   Mon Oct 29 11:12:10 2018 +0800
+
+    修复install导入数据导入失败的问题 调整过滤正则/(\/\*.*?\*\/.*?\n)|(-- .*?\n)|(--)/s
+
+[33mcommit f26358c74ffc46bd419e8088cb99ef8369046f5a[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Mon Oct 29 11:06:19 2018 +0800
+
+    修改会员积分，导出excel支持反选
+
+[33mcommit f1402b76c7f4f2e654e8ee8381a108c1c7418e22[m
+Merge: 88b640c fdd429f
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Fri Oct 26 19:00:17 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 88b640c46a07ec7cc6201aa02847b567acf6039f[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Fri Oct 26 19:00:01 2018 +0800
+
+    会员管理修复与优化
+
+[33mcommit fdd429f98556449eefe77522aeb06f04e7a5f68a[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Fri Oct 26 18:01:31 2018 +0800
+
+    b端管理系统会员列表增加一个登陆类型字段
+
+[33mcommit d40cd4cb958971f4970038dc77039acd09cfd3fe[m
+Merge: de51027 e7f3378
+Author: 黄庆 <huangqing@360tianma.com>
+Date:   Fri Oct 26 17:33:27 2018 +0800
+
+    Merge branch 'install' into 'dev'
+    
+    Install
+    
+    See merge request d0wop/TM_LAB!1
+
+[33mcommit e7f337829571d02cb4c6d2cc32ad16dcda3de0c3[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Oct 26 16:16:21 2018 +0800
+
+    自动部署sql
+
+[33mcommit 94845de25465a6339f3e468d7283bbc99fd1a2da[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Thu Oct 25 14:48:45 2018 +0800
+
+    修改B端管理系统登录缓存时间
+
+[33mcommit b9196a0caa0225dafd9d6226eea0edeb94ab693e[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Thu Oct 25 14:00:52 2018 +0800
+
+    去掉调试信息
+
+[33mcommit 841c336553e41c4c943cba9d962ff766d7cc094c[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Thu Oct 25 12:46:02 2018 +0800
+
+    去掉调试信息
+
+[33mcommit 6c132c1f7f41af7ba7b1b64f30253ee6f41d48b7[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Thu Oct 25 12:44:08 2018 +0800
+
+    爬虫注释修改
+
+[33mcommit e65af7b7dd816f9dba2f9c06761a1b2a02d163a3[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Oct 25 11:23:05 2018 +0800
+
+    b端框架加入新配置
+
+[33mcommit 7c9b91d2a9b7faf05117b44febc17e2ae75fca63[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Wed Oct 24 18:34:28 2018 +0800
+
+    添加拉取数据方法
+
+[33mcommit 7f777a87dd8d8641eee78e9ed25cd9991ad48e53[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Wed Oct 24 18:11:40 2018 +0800
+
+    添加拉取数据方法
+
+[33mcommit 34267186dca3a6add8cb71435c5389c46b0abac1[m
+Merge: ef75290 42f9497
+Author: wuchuncheng <872487432@qq.com>
+Date:   Wed Oct 24 18:09:39 2018 +0800
+
+    Merge remote-tracking branch 'origin/master'
+    
+    # Conflicts:
+    #       application/common.php
+
+[33mcommit ef752907e6fd24c515d7068d8ce1c237ba140d9a[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Wed Oct 24 18:08:11 2018 +0800
+
+    添加拉取数据方法
+
+[33mcommit 42f94973b9f1cf2071f7d2e3f3dab94b85e834f2[m
+Author: d0wop <791539017@qq.com>
+Date:   Wed Oct 24 17:34:47 2018 +0800
+
+    消息推送
+
+[33mcommit 6935c74b577e7cabb0f55eb9948f0bf64ba039e4[m
+Author: d0wop <791539017@qq.com>
+Date:   Wed Oct 24 17:33:50 2018 +0800
+
+    消息推送公共方法
+
+[33mcommit e54d09cff83ab7fa86a2e7830685fdeaa6c30d5d[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Tue Oct 23 18:35:36 2018 +0800
+
+    修改登录没有写status近缓存bug
+
+[33mcommit 44939db39b0d8af6609f520b3129efc93ccdda69[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Tue Oct 23 17:35:14 2018 +0800
+
+    修改一个签到bug
+
+[33mcommit 2b99a4f92d2dc27e2774dc8365dc5262e84f0f59[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Tue Oct 23 17:11:50 2018 +0800
+
+    修改一个签到bug
+
+[33mcommit df6e2af85d316b08128d287edfbe2b3c81dc9f8c[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Tue Oct 23 16:41:04 2018 +0800
+
+    b端框架个人中心积分配置和会员管理
+
+[33mcommit ff39febf6eb191a3858c30ae00aa256903dd7321[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Tue Oct 23 15:54:18 2018 +0800
+
+    再再次提交，没交上吗
+
+[33mcommit 51b945c7a1d058d5afb0af6d8c270cadaa80b763[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Tue Oct 23 15:22:57 2018 +0800
+
+    再次提交，没交上吗
+
+[33mcommit 40e11e4f0778db827bc3ae3b50f6a31207a8ee2a[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Mon Oct 22 19:07:11 2018 +0800
+
+    修改过去积分情况接口
+
+[33mcommit f3b3b6f84f1ce9c283397f6873a4e1e4f788a672[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Mon Oct 22 18:41:50 2018 +0800
+
+    个人信息接口加上登录类型
+
+[33mcommit d19b30a1c25c71b000cd742421884b67a534fa72[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Mon Oct 22 16:47:09 2018 +0800
+
+    新增几个B端客户端接口，关于个人信息和积分接口
+
+[33mcommit e43f8458792f90c7e8f8d5acba4df3ad59fadef0[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Fri Oct 19 10:36:26 2018 +0800
+
+    新增几个接口，B端管理系统
+
+[33mcommit 9d4b3406617b76c5b3c9e28e8e512780f06ab4b6[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Thu Oct 18 17:22:43 2018 +0800
+
+    新增修改会员积分，导出excel方法
+
+[33mcommit 7775656b0bbba61f9987d21c2e5620843e50a368[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Thu Oct 18 11:47:42 2018 +0800
+
+    会员列表接口
+
+[33mcommit a36ab44e6e58b951715d946b0b5c440e2e2cc512[m
+Merge: 57bd8da de51027
+Author: wuchuncheng <872487432@qq.com>
+Date:   Wed Oct 17 18:30:15 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 57bd8daa14c89ca9145cb08e79429dced96d3db8[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Wed Oct 17 18:30:07 2018 +0800
+
+    B端管理系统积分调整接口 改动
+
+[33mcommit de51027f4c24ec6d6df9a4488a584236361089e0[m
+Author: caopeng <dammer_66@163.com>
+Date:   Wed Oct 17 18:06:43 2018 +0800
+
+    install module released to framework
+
+[33mcommit 994706cd1b5dd118cee7e91e762c71196113cc8f[m
+Merge: c4cc486 64ed742
+Author: caopeng <dammer_66@163.com>
+Date:   Wed Oct 17 18:04:49 2018 +0800
+
+    Merge branch 'master' into dev
+
+[33mcommit 64ed742dc48c1c702acf27d3aa106dfb4449a39c[m
+Merge: 956036a 0d04ed8
+Author: d0wop <791539017@qq.com>
+Date:   Wed Oct 17 17:16:38 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 956036af000d65449a9bc4959cf7bf9726f828ef[m
+Author: d0wop <791539017@qq.com>
+Date:   Wed Oct 17 17:16:13 2018 +0800
+
+    v3表更新
+
+[33mcommit 0d04ed8264333e321c470de6b1637c35be226025[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Wed Oct 17 16:10:53 2018 +0800
+
+    app启动页上传优化
+
+[33mcommit 75210d6d7c1f441d80d818c074ad5c8a06d9b3cf[m
+Merge: 356a2ab ec7274f
+Author: d0wop <791539017@qq.com>
+Date:   Wed Oct 17 15:05:21 2018 +0800
+
+    Merge remote-tracking branch 'origin/master'
+    
+    # Conflicts:
+    #       .env
+
+[33mcommit 356a2ab01b495c52b884c4f72616d208661849b5[m
+Merge: 8343f0c 982da9a
+Author: d0wop <791539017@qq.com>
+Date:   Wed Oct 17 15:04:22 2018 +0800
+
+    Merge remote-tracking branch 'origin/dev'
+    
+    # Conflicts:
+    #       .env
+
+[33mcommit ec7274f63b539262912bc7125f98ebab600d9f37[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Wed Oct 17 14:32:25 2018 +0800
+
+    B端管理系统积分相关接口
+
+[33mcommit 8343f0c47c710868278f280f957d151ed92ef514[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Wed Oct 17 09:43:06 2018 +0800
+
+    更新引入地址
+
+[33mcommit a978d5b6964f5e7ce798d0f1222fca222765ded9[m
+Author: d0wop <791539017@qq.com>
+Date:   Tue Oct 16 17:17:36 2018 +0800
+
+    更新框架
+
+[33mcommit c6fe3954a813da32886881ea043bcb7665ec1e6d[m
+Merge: 87c3dbb 900fd76
+Author: wuchuncheng <872487432@qq.com>
+Date:   Tue Oct 16 16:46:00 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 87c3dbb2572eb2b3af8dd67754236b419bed1292[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Tue Oct 16 16:45:31 2018 +0800
+
+    提交sql文件
+
+[33mcommit 900fd764efab04323c5648abd4f01004bb192d69[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Tue Oct 16 16:40:50 2018 +0800
+
+    头部文字bug
+
+[33mcommit d31ab72155891f35b3bd36bd7b93f063c7e3ee91[m
+Merge: 0e22dfb 5a262d4
+Author: wuchuncheng <872487432@qq.com>
+Date:   Tue Oct 16 16:30:07 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 0e22dfbedb404656c55bcb7ccd5825806181885d[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Tue Oct 16 16:29:56 2018 +0800
+
+    新增对外积分接口，修改积分，获取当前积分，获取积分变动列表
+
+[33mcommit 5a262d415ba4c764f23f79eb646f15c7482a9b13[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Tue Oct 16 16:04:54 2018 +0800
+
+    更新按钮位置
+
+[33mcommit d2d7da7744f2fddabc8f2362a17c10ab841e5bc7[m
+Merge: 44d38ce 40b1b1e
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Tue Oct 16 15:47:06 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 44d38ceba6b42c2b20b24eefa9c7aa525552e407[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Tue Oct 16 15:46:20 2018 +0800
+
+    b端框架app启动配置增加链接
+
+[33mcommit 40b1b1e14779eceeb8f78886525a959b8e01d343[m
+Merge: fd58945 b2bcd33
+Author: d0wop <791539017@qq.com>
+Date:   Tue Oct 16 14:27:32 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit fd58945815de74fa34d011ddceab625c15a11c62[m
+Author: d0wop <791539017@qq.com>
+Date:   Tue Oct 16 14:27:00 2018 +0800
+
+    更新积分接口
+
+[33mcommit b2bcd33dca9d72eaccec27c10f85963070ca4c35[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Tue Oct 16 12:53:20 2018 +0800
+
+    b端框架用户管理空白页bug
+
+[33mcommit 17d0ce1a1a0184a9832c0abebd95da55a5a095e4[m
+Author: d0wop <791539017@qq.com>
+Date:   Mon Oct 15 10:34:36 2018 +0800
+
+    将cdn的js替换成服务器调用js
+
+[33mcommit 47fa664707fee26c65ae15f73b6695d520e5baae[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Oct 12 18:22:22 2018 +0800
+
+    隐私协议页面
+
+[33mcommit faee5168dc7ec4a76f46b0e6038aba112ee48888[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Oct 11 16:41:10 2018 +0800
+
+    B端框架本地引入替换cdn
+
+[33mcommit 21a0783a4918525f3ea3470906e09db698389d96[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Oct 11 16:13:20 2018 +0800
+
+    天马工场B端框架app第三方配置输入居中bug
+
+[33mcommit 3d351d4d1be5cd8b825d071b2d85342a0463ed64[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Oct 11 15:19:50 2018 +0800
+
+    推送消息时间显示问题
+
+[33mcommit 49b79718abdfff0916910c1bc899ca398902c1fb[m
+Merge: 4e279c1 1a73d54
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Oct 11 11:35:14 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 4e279c124f46e84a90a65837b4f168406d1c789c[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Oct 11 11:33:02 2018 +0800
+
+    天马工场B端框架app配置下,启动页图片显示不全bug修复
+
+[33mcommit 1a73d541d7273b4bc5187d50a02852e344f2db41[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Oct 11 10:57:17 2018 +0800
+
+    新增member_id
+
+[33mcommit e5e98d349019ed6d4bb867b9fdd38c58aaa2a6ec[m
+Merge: 0c4634c 9b8a8bb
+Author: d0wop <791539017@qq.com>
+Date:   Wed Oct 10 14:38:37 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 0c4634c4d562555b371a34479da72fe83a709de7[m
+Author: d0wop <791539017@qq.com>
+Date:   Wed Oct 10 14:37:58 2018 +0800
+
+    图片上传
+
+[33mcommit 9b8a8bb5962b1f8282d2c68c484688e3334b1f55[m
+Merge: d2f2873 ad9b305
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Oct 8 10:12:26 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit d2f28732a873b19eacf187176aba555dfb1f9f5c[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Oct 8 10:11:45 2018 +0800
+
+    提交样式修改
+
+[33mcommit ad9b305a239620627c515f7b03e3b87beeda477f[m
+Author: d0wop <791539017@qq.com>
+Date:   Sat Sep 29 19:34:47 2018 +0800
+
+    mch免登陆
+
+[33mcommit 5763b09de42cd62b6efd629d54d69f4cdc41d5e2[m
+Merge: aedd2b6 e2103be
+Author: d0wop <791539017@qq.com>
+Date:   Thu Sep 27 17:28:27 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit aedd2b645c5a123fc69f9dccbe4fb1ba82de3ae8[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Sep 27 17:27:54 2018 +0800
+
+    更新微信支付与支付宝
+
+[33mcommit e2103bef8ff5eb3f8adb95ed9ec54f10962f285a[m
+Merge: bd18d0b 493f2c8
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Wed Sep 26 11:47:21 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit bd18d0ba825977f11114e1207f0a588ac2268ef0[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Wed Sep 26 11:46:33 2018 +0800
+
+    全部添加
+
+[33mcommit 94c84ed5f2db85e66e151dcebc56cb4229b4b9c3[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Wed Sep 26 11:45:14 2018 +0800
+
+    全部添加..
+
+[33mcommit 493f2c805c7b953032f301bf5e86fd33d0edf52d[m
+Merge: cedef51 81317d2
+Author: d0wop <791539017@qq.com>
+Date:   Fri Sep 21 13:54:20 2018 +0800
+
+    Merge remote-tracking branch 'origin/master'
+
+[33mcommit cedef5133832290e0c3dc8a0ab0425ced486c0d2[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Sep 21 13:52:50 2018 +0800
+
+    调整框架 登录时间设定
+
+[33mcommit 81317d2fe0f0704919127588b17babab19b3bd47[m
+Merge: ae2df57 e6251b5
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Sep 20 17:21:09 2018 +0800
+
+    Merge remote-tracking branch 'origin/master'
+
+[33mcommit ae2df5718ac3bd8114baf04dd949a5395e6e6246[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Sep 20 17:19:41 2018 +0800
+
+    全部添加
+
+[33mcommit cecc6533a1be7781bd37ba36f00b7c7b009b16e4[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Sep 20 17:18:59 2018 +0800
+
+    全部添加
+
+[33mcommit e6251b54b5e10a8fbfd03a741dd3143c1628e099[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Sep 20 16:58:25 2018 +0800
+
+    未定义则赋予空值
+
+[33mcommit 5a9ccf77390a80b5533fb4e7b2226e78445aedb7[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Sep 20 16:14:09 2018 +0800
+
+    更新启动页设置接口
+
+[33mcommit e68235a1fd9f724297dfb155085ca6083f6d39d6[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Sep 20 16:11:40 2018 +0800
+
+    更新启动页
+
+[33mcommit d16d99d23838548ee1315e8235bb3f645eaa1c45[m
+Author: d0wop <791539017@qq.com>
+Date:   Tue Sep 18 12:00:42 2018 +0800
+
+    增加阿里短信获取的参数
+
+[33mcommit bfdea43db3e5972c17192ec12f5cc8e3d54faea2[m
+Merge: e69b99c 09d89c1
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Sep 17 16:42:12 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit e69b99c0877fdc6b30372338193d7009b81e0033[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Sep 17 16:42:02 2018 +0800
+
+    全部添加
+
+[33mcommit 09d89c1c953f262f756d590ce5347391b66c1aef[m
+Author: d0wop <791539017@qq.com>
+Date:   Mon Sep 17 14:25:43 2018 +0800
+
+    关闭验证码
+
+[33mcommit 2511cc8657a728915f8b5a4a3e2ba0beae70d43a[m
+Merge: 62aba9a 8fe6cf3
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Sep 17 14:00:43 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 62aba9a5b5e77d1e7fd98b68638977cb57f7cebd[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Sep 17 14:00:31 2018 +0800
+
+    更新框架
+
+[33mcommit 8fe6cf383121248b6923e9fc473e4984061fd21d[m
+Author: d0wop <791539017@qq.com>
+Date:   Mon Sep 17 13:57:00 2018 +0800
+
+    调整验证码生成接口
+
+[33mcommit b56ffc55a8760402b727ef332367d252bc5c78d9[m
+Merge: 4655789 8a9cfdb
+Author: d0wop <791539017@qq.com>
+Date:   Mon Sep 17 13:49:27 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 46557891a50a6e6dd51a90276e2d720860def3fa[m
+Author: d0wop <791539017@qq.com>
+Date:   Mon Sep 17 13:49:01 2018 +0800
+
+    增加框架操作方法
+
+[33mcommit 8a9cfdbbf95ce3c9934ddd254e3d8239888bf6f5[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Sep 17 13:43:27 2018 +0800
+
+    改用缓存验证
+
+[33mcommit 14c388fd8b687e9243d194a23b824adf1624de33[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Sep 17 11:57:04 2018 +0800
+
+    更新框架
+
+[33mcommit 32de76e9d33ac139d03fb24118685f86d21c0fc2[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Sep 17 11:54:58 2018 +0800
+
+    全部添加
+
+[33mcommit 7a752f35dc7283c4c43725514ad4cad35948a576[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Sep 17 11:50:45 2018 +0800
+
+    全部添加
+
+[33mcommit b678ccce417d648b1fc0ada4f96e9635138443c7[m
+Merge: 8a0a4f3 2ebd317
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Sep 17 11:45:05 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 8a0a4f3d8a859e5605156d5ebc18c740ba7c3431[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Sep 17 11:44:53 2018 +0800
+
+    和父级交互
+
+[33mcommit 2ebd3179ee1414d9710996fa2dc1502fe25df55a[m
+Author: d0wop <791539017@qq.com>
+Date:   Mon Sep 17 11:40:56 2018 +0800
+
+    验证code获取接口
+
+[33mcommit 7f4801eb0878224427e5e740e37fa7ae37359a75[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Sep 17 11:36:31 2018 +0800
+
+    全部添加
+
+[33mcommit f76075fe4e3d1c0ab45ff1a486e4c73d0956e7e8[m
+Merge: 6dacb2a 8b32820
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Sep 17 11:30:07 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 6dacb2a9b8a8d375ab09b78738b20d1e2bcfd144[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Sep 17 11:29:55 2018 +0800
+
+    验证码调试
+
+[33mcommit 8b328205cd7bbe9db1ec32fd0619167d825bc1ea[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Sep 14 18:13:06 2018 +0800
+
+    更新队列功能
+
+[33mcommit 09b47e85f1ff8e2da0ae97dc345d8169bd2fd0cf[m
+Merge: 9fcd7d8 27c70d3
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Fri Sep 14 11:48:41 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 9fcd7d8cfc0204fc00e081322be3e2423df72cbc[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Fri Sep 14 11:48:30 2018 +0800
+
+    全部添加
+
+[33mcommit 27c70d36fa8efffcc8d0873780a6266b11183ddd[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Sep 13 18:58:43 2018 +0800
+
+    更新框架
+
+[33mcommit 3cb42a1956960b3d4d7df3393efce755586e6ae3[m
+Author: d0wop <791539017@qq.com>
+Date:   Wed Sep 12 15:03:07 2018 +0800
+
+    更新框架
+
+[33mcommit 1708efce7cfb8cd1e245533f2c9dd6fa0b26c380[m
+Author: d0wop <791539017@qq.com>
+Date:   Tue Sep 11 16:23:25 2018 +0800
+
+    添加检查用户token接口
+
+[33mcommit 7f869be0c723e65c9110553565fefa3dfb70ef4a[m
+Author: d0wop <791539017@qq.com>
+Date:   Tue Sep 11 11:48:27 2018 +0800
+
+    投诉接口返回消息调整
+
+[33mcommit b2438a14733b47400a431e3120fdd34faa172d2e[m
+Merge: 90180bb ffda6e5
+Author: d0wop <791539017@qq.com>
+Date:   Tue Sep 11 11:38:47 2018 +0800
+
+    Merge remote-tracking branch 'origin/master'
+
+[33mcommit 90180bb2a0d7d2fe866655d70a9288ac30e8e487[m
+Author: d0wop <791539017@qq.com>
+Date:   Tue Sep 11 11:37:10 2018 +0800
+
+    调整验证接口
+
+[33mcommit 52684017693cce2351c25876d104ee254a4c8e66[m
+Author: d0wop <791539017@qq.com>
+Date:   Tue Sep 11 11:29:29 2018 +0800
+
+    更新投诉接口
+
+[33mcommit c4cc486033149c92f42c20aca42bd52787b91f1c[m
+Merge: ffda6e5 982da9a
+Author: caopeng <dammer_66@163.com>
+Date:   Mon Sep 10 19:09:04 2018 +0800
+
+    Merge branch 'dev' of gitlab.360tianma.com:d0wop/TM_LAB into dev
+
+[33mcommit ffda6e51c190ad57cac03b110bf7be1090532542[m
+Merge: c4790ac 1ccfdb9
+Author: caopeng <dammer_66@163.com>
+Date:   Mon Sep 10 19:01:30 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit c4790ac627818abfd657b288271bc6aa820fe64c[m
+Author: caopeng <dammer_66@163.com>
+Date:   Mon Sep 10 19:01:10 2018 +0800
+
+    install module released to framework
+
+[33mcommit 982da9a12175eeeb57bc205a360667939dfcf535[m
+Author: wuchuncheng <872487432@qq.com>
+Date:   Fri Sep 7 17:57:19 2018 +0800
+
+    加一个拉取用户的公共方法
+
+[33mcommit 1ccfdb93d768b285b5bcea01fb572ffdea70f9bd[m
+Merge: 4db8c4f 1db77c1
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Sep 6 14:42:20 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 4db8c4f33e5770f911dc9e55d40970c75ac8f506[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Sep 6 14:41:47 2018 +0800
+
+    全部添加
+
+[33mcommit 1db77c1ba1e3801c54c373da69298c7ac048c9f5[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Sep 6 14:34:16 2018 +0800
+
+    阿里key更新
+
+[33mcommit 9e9db8ba8bdc97464c5db488918596abb03378fa[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Sep 6 14:21:36 2018 +0800
+
+    新增code
+
+[33mcommit cd6f88b290c7b1b3d5a6ab43b445ec2e2f04cb15[m
+Author: caopeng <dammer_66@163.com>
+Date:   Thu Sep 6 11:10:52 2018 +0800
+
+    update thinkphp5.1.19 and update think-queue
+
+[33mcommit a2bb415e949038662cbfde0993a093489321513d[m
+Author: caopeng <dammer_66@163.com>
+Date:   Thu Sep 6 09:35:24 2018 +0800
+
+    update thinkphp5.1.12
+
+[33mcommit 13009223667dcd04a8da6e042d1aed5fc197ee0f[m
+Merge: ac5eba1 f6b61f9
+Author: caopeng <dammer_66@163.com>
+Date:   Wed Sep 5 18:50:40 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit ac5eba180cba9a0be1a931f2bdd3fdff0ad33f7a[m
+Author: caopeng <dammer_66@163.com>
+Date:   Wed Sep 5 18:45:06 2018 +0800
+
+    update thinkphp5.1
+
+[33mcommit f6b61f914190bbfc521c5345572ddfeddd487e2a[m
+Merge: 6bfea40 cc92125
+Author: d0wop <791539017@qq.com>
+Date:   Wed Sep 5 17:25:53 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit cc92125749ae5a69e275c7cb66f5f355e804be76[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Wed Sep 5 17:25:08 2018 +0800
+
+    全部添加
+
+[33mcommit 6bfea40e67f7ebe7bee63a1e8779825d6e6864e7[m
+Merge: a9402c7 8656e49
+Author: d0wop <791539017@qq.com>
+Date:   Wed Sep 5 17:24:01 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit a9402c7d86b1cbb6b19b53c8f4c4d51ccb104a5b[m
+Author: d0wop <791539017@qq.com>
+Date:   Wed Sep 5 17:23:32 2018 +0800
+
+    更新app图片
+
+[33mcommit 8656e4981e977a8c449e633221f336d88f685b1c[m
+Merge: 7aaf63f a49bc33
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Wed Sep 5 16:54:33 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 7aaf63f83484a3bc66064289c69d84d3c9f1b843[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Wed Sep 5 16:54:19 2018 +0800
+
+    改了个字
+
+[33mcommit a49bc330f356e1253910e741ec9c3b41e1ee7ec4[m
+Author: d0wop <791539017@qq.com>
+Date:   Wed Sep 5 16:43:10 2018 +0800
+
+    过滤空的字段
+
+[33mcommit cae20ae7b0985721a661aa54417dc950d3c3bf1e[m
+Merge: 6faf821 b37d841
+Author: d0wop <791539017@qq.com>
+Date:   Wed Sep 5 15:31:31 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 6faf82127a73ec0e8a1282e19e2a1fc9e89d8b6e[m
+Author: d0wop <791539017@qq.com>
+Date:   Wed Sep 5 15:31:03 2018 +0800
+
+    解开验证码只填写1的方式
+
+[33mcommit 160e29b71229edb84f9655781c3ab60ad993c8a9[m
+Author: d0wop <791539017@qq.com>
+Date:   Wed Sep 5 15:11:58 2018 +0800
+
+    阿里key配置关联
+
+[33mcommit b37d841b51ae292f964db9be6dcdbe17e7c51907[m
+Merge: f2e98e6 b536135
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Wed Sep 5 14:56:15 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit f2e98e61497fe80ee1c20042c7e65bf6bbecedf0[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Wed Sep 5 14:56:08 2018 +0800
+
+    改字
+
+[33mcommit b536135e5970ac2e7cea331608fcd634ce38a0d7[m
+Author: d0wop <791539017@qq.com>
+Date:   Wed Sep 5 10:47:29 2018 +0800
+
+    推送消息调整
+
+[33mcommit 9128511247896c3f3e81fe49643ac1d1f0b2334f[m
+Author: caopeng <dammer_66@163.com>
+Date:   Tue Sep 4 15:00:10 2018 +0800
+
+    add vendor with topthink/think-queue
+
+[33mcommit fea8ad5ca7d0b631beb27af124f6df6a5237c5c3[m
+Author: d0wop <791539017@qq.com>
+Date:   Tue Sep 4 11:26:26 2018 +0800
+
+    调整推送消息的获取条件
+
+[33mcommit b2a750baf5416823969a4d2b6a3051b7da02e416[m
+Author: d0wop <791539017@qq.com>
+Date:   Mon Sep 3 16:37:20 2018 +0800
+
+    调整数据库
+
+[33mcommit caa604c6c5bc6ad9241f184c774e6202bbcbcf80[m
+Author: d0wop <791539017@qq.com>
+Date:   Mon Sep 3 15:15:49 2018 +0800
+
+    系统消息 去掉token
+
+[33mcommit 02af9bab569adf18ab907be6a90123c6895eb80a[m
+Author: d0wop <791539017@qq.com>
+Date:   Mon Sep 3 14:31:29 2018 +0800
+
+    系统消息
+
+[33mcommit f94a2b6bd1bca1bf95a8bfe7347a4548eead92f7[m
+Author: d0wop <791539017@qq.com>
+Date:   Mon Sep 3 14:28:13 2018 +0800
+
+    关于我们取消token验证
+
+[33mcommit bfde2f22fbfe21d66df20dfa2661e3f8b187cd80[m
+Author: d0wop <791539017@qq.com>
+Date:   Mon Sep 3 11:55:15 2018 +0800
+
+    上传图片调整
+
+[33mcommit e267ad8231092531765d07fc3146d03f4b40f1a8[m
+Author: d0wop <791539017@qq.com>
+Date:   Mon Sep 3 11:49:46 2018 +0800
+
+    客户端关于我们获取接口
+
+[33mcommit d7881ef62359a139254e15fe1d475ea1733fbdf7[m
+Author: d0wop <791539017@qq.com>
+Date:   Mon Sep 3 11:47:00 2018 +0800
+
+    更新上传图片接口
+
+[33mcommit deecbd550568c698de14102d3d4b0de1c0675eef[m
+Author: d0wop <791539017@qq.com>
+Date:   Mon Sep 3 11:33:26 2018 +0800
+
+    调整文章接口
+
+[33mcommit 43b7753325a5420e26dd918b5fce461cbe249fb3[m
+Author: d0wop <791539017@qq.com>
+Date:   Mon Sep 3 11:22:07 2018 +0800
+
+    增加关于我们
+
+[33mcommit 27e8ee0968007870b9eb5757bac128b2ea890c49[m
+Author: d0wop <791539017@qq.com>
+Date:   Mon Sep 3 11:03:46 2018 +0800
+
+    重置管理员密码
+
+[33mcommit ae443f0e84fca5c3d41686ede72630f5b116f909[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Aug 31 18:44:51 2018 +0800
+
+    数据库调整
+
+[33mcommit 516fa874d7c60989f8f6d67be9373f77256629a0[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Aug 31 18:35:22 2018 +0800
+
+    取消token验证信息
+
+[33mcommit 4a625be8e2ba0067bb9025535d54527361eb8f8a[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Aug 31 18:23:41 2018 +0800
+
+    更新push post请求调整为get
+
+[33mcommit f50bc5e1cc852f01015dcbed3931398adbc46723[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Aug 30 16:48:13 2018 +0800
+
+    调整消息推送接口
+
+[33mcommit 951857c49ce39f40cd9beceaf093d0207787cb56[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Aug 30 16:11:34 2018 +0800
+
+    全部添加
+
+[33mcommit 631fe1bcdc3bf73ca8f1a8c3be98b3eb11562e7b[m
+Merge: 5d1dace a8059fd
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Aug 30 15:21:38 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 5d1daceab055583d9fd2227a46267f6571970461[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Aug 30 15:21:28 2018 +0800
+
+    全部添加
+
+[33mcommit a8059fddcc010902c1cb2bdefc15d83dc4d44e1f[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Aug 30 15:18:18 2018 +0800
+
+    修复链接显示不出的问题
+
+[33mcommit 100624e17261d6f004b41aff705ed7d1bebb81e9[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Aug 30 14:22:05 2018 +0800
+
+    调整
+
+[33mcommit 23825b1954813b4dffe7337cb8f2bf77e8af544c[m
+Merge: 94a39f2 741b203
+Author: d0wop <791539017@qq.com>
+Date:   Thu Aug 30 14:21:28 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 94a39f2fb031bb03073a6191fc8d4aaeab18658c[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Aug 30 14:21:05 2018 +0800
+
+    取消组件的验证权限
+
+[33mcommit 741b203b8865baee748131c476aada001fab8fe2[m
+Merge: add4cab 6b27241
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Aug 30 14:20:51 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit add4cabd8d220e13607f125e53092b549c29829d[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Aug 30 14:20:43 2018 +0800
+
+    全部添加
+
+[33mcommit 6b27241367f35d6b96baaf3fc56e4c51da36b0c1[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Aug 30 13:56:16 2018 +0800
+
+    数据更新
+
+[33mcommit d7e340d423c29cd1f9ea21a395211b3620f54fbc[m
+Merge: 02e8d95 83a3158
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Aug 30 13:49:54 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 02e8d95ce99fd6f892eeba34df843fe84c37a61f[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Aug 30 13:49:46 2018 +0800
+
+    全部添加
+
+[33mcommit 83a31582226ab825a4deff3af21ff4267cbf4ca1[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Aug 30 10:21:27 2018 +0800
+
+    新增获取应用接口（children）
+
+[33mcommit 327dbd641019d141a0749c6329228b67d1721ce4[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Aug 30 09:54:32 2018 +0800
+
+    调整获取分类接口
+
+[33mcommit 66f56fda0ff35009b26b3167d522f00a6df02356[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Wed Aug 29 17:37:52 2018 +0800
+
+    全部添加
+
+[33mcommit 8f39fa529b77b2f27b61ee08c2234fe9c2312259[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Wed Aug 29 14:13:56 2018 +0800
+
+    全部添加
+
+[33mcommit dac195ea5f3b3274c728ecc12db6fda7c0a46322[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Wed Aug 29 14:08:18 2018 +0800
+
+    全部添加
+
+[33mcommit b5970963dfb150390935162f30c574aa1f340ca6[m
+Merge: 16388d6 24712ac
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Wed Aug 29 13:57:39 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 16388d6ca56bf7bddda2fe9dce54cc89d35c59e4[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Wed Aug 29 13:57:09 2018 +0800
+
+    上传
+
+[33mcommit d8a75209e70b45f600d30792f99d6151f732cb5b[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Wed Aug 29 13:56:25 2018 +0800
+
+    全部添加
+
+[33mcommit 24712ac17d5738ac081f78d50d40bfe180db2e71[m
+Author: d0wop <791539017@qq.com>
+Date:   Wed Aug 29 11:31:29 2018 +0800
+
+    更新框架
+
+[33mcommit 295468535128a61ffc18eb0f369891589b8d159e[m
+Merge: 26d9715 3f48cbb
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Wed Aug 29 10:12:42 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 26d9715b943dda7d6603e79f83b3d2f026c2ef8b[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Wed Aug 29 10:12:33 2018 +0800
+
+    提交一次
+
+[33mcommit 3f48cbb1afef006063bed589fd8c2cda9659001c[m
+Author: d0wop <791539017@qq.com>
+Date:   Tue Aug 28 17:19:05 2018 +0800
+
+    新增获取配置的方法
+
+[33mcommit 5afe2dd20051801b14e7b00961ba8070f774c724[m[33m ([m[1;33mtag: 框架后台V1.0.0[m[33m)[m
+Author: d0wop <791539017@qq.com>
+Date:   Tue Aug 28 15:08:13 2018 +0800
+
+    将tag设置为不必填
+
+[33mcommit 271e9d15bb717957a76b7e42cc030db21fa3afeb[m
+Author: d0wop <791539017@qq.com>
+Date:   Tue Aug 28 10:12:08 2018 +0800
+
+    上传报错文字描述
+
+[33mcommit 0d14830896250b84813e7bee3c32a24179d44e14[m
+Author: d0wop <791539017@qq.com>
+Date:   Mon Aug 27 19:24:17 2018 +0800
+
+    图片尺寸限制
+
+[33mcommit 7ead8fbafc221ddd6353a3dc820930148f435d6a[m
+Merge: ea26b75 0d759df
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Aug 27 19:02:15 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit ea26b7536becab9920a375bc217108520746a78b[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Aug 27 19:02:07 2018 +0800
+
+    全部添加
+
+[33mcommit 0d759df9f5f0cbbe0880c6cb7adf3822d14397c9[m
+Author: d0wop <791539017@qq.com>
+Date:   Mon Aug 27 18:12:02 2018 +0800
+
+    更新历史记录
+
+[33mcommit 1a9d854904f42a2317c280ae1610aee1d130f381[m
+Author: d0wop <791539017@qq.com>
+Date:   Mon Aug 27 18:08:38 2018 +0800
+
+    修改头像接口将mobile修改成member_code
+
+[33mcommit 7e5b129f6a94bb44b8a66c4bfd936fbb5ea92f83[m
+Author: d0wop <791539017@qq.com>
+Date:   Mon Aug 27 18:04:05 2018 +0800
+
+    第3方登陆调整
+
+[33mcommit ed9bf13a60cefa049ad9a02caf4e055396b054ba[m
+Author: d0wop <791539017@qq.com>
+Date:   Mon Aug 27 17:21:17 2018 +0800
+
+    新增隐私协议
+
+[33mcommit 7475f60a372df6ff287d3ad44f96ea30a0085b33[m
+Author: d0wop <791539017@qq.com>
+Date:   Mon Aug 27 17:11:39 2018 +0800
+
+    隐私协议
+
+[33mcommit 7b8471c35fa02a839d505362c56967c6fca95369[m
+Author: d0wop <791539017@qq.com>
+Date:   Mon Aug 27 16:57:59 2018 +0800
+
+    jpush文章显示添加参数
+
+[33mcommit c6916d06e10c63da35a86c4fdc71264a9e6c2d69[m
+Merge: 6e8af31 a4cc9f3
+Author: d0wop <791539017@qq.com>
+Date:   Mon Aug 27 16:50:51 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 6e8af31071d0db8e019adb41b25ccce36f5b2658[m
+Author: d0wop <791539017@qq.com>
+Date:   Mon Aug 27 16:50:25 2018 +0800
+
+    Jpush接口
+
+[33mcommit a4cc9f322972b9b102ed43b3d006eff0a8629d5d[m
+Merge: c3354fa badeeb1
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Aug 27 16:49:40 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit c3354fa2f47b969a2b924b4641e1206c75cdbd5d[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Aug 27 16:49:19 2018 +0800
+
+    全部添加
+
+[33mcommit badeeb103b73beb9d51f994eaea6f9a63c107416[m
+Author: d0wop <791539017@qq.com>
+Date:   Mon Aug 27 14:37:04 2018 +0800
+
+    再次访问文章时将以前访问的历史记录作废
+
+[33mcommit 80060d9fdd821e26b227ef38cfa9f16dc635f96b[m
+Merge: 7d920e3 b59af13
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Aug 27 14:06:48 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 7d920e344dbcf08c0e69475066f8993d62179c40[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Aug 27 14:06:35 2018 +0800
+
+    绑定一些数据
+
+[33mcommit b59af13b542f6a15381dde83f3bf5a0a9c4eb9f3[m
+Author: d0wop <791539017@qq.com>
+Date:   Mon Aug 27 14:00:58 2018 +0800
+
+    返回的时间列表使用键对的显示方式时间对应数目
+
+[33mcommit 927c9150337a09b5a14a4e196fe7292ff011df84[m
+Merge: bc803c0 d167928
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Aug 27 13:52:36 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit bc803c044d6bb58b38fe9337455f5c9d474d50de[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Mon Aug 27 13:52:26 2018 +0800
+
+    优化判断
+
+[33mcommit d1679280c8f47354446e40a8d35fe169e3f73c48[m
+Author: d0wop <791539017@qq.com>
+Date:   Mon Aug 27 13:44:10 2018 +0800
+
+    Jpush与历史记录接口调整
+
+[33mcommit f4b8bb138aea00361849ab98e67525d948b74f1c[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Aug 24 17:15:32 2018 +0800
+
+    新增获取启动接口
+
+[33mcommit e761e608fb8eabe52d9076d995bfbcfc02304db2[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Aug 24 16:58:12 2018 +0800
+
+    修复新增用户导致获取用户表第一个的bug
+
+[33mcommit 007cff4b37875a7a090ca7a306b22ec239b2562c[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Aug 24 16:55:59 2018 +0800
+
+    更新更换手机号接口
+
+[33mcommit 2e9a8e1917e4ae148241a6820a9db2e300c64755[m
+Merge: 69c05e3 2564f14
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Fri Aug 24 16:01:42 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 69c05e30f6709616ca1c4b70bfe29041517a780f[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Fri Aug 24 16:01:34 2018 +0800
+
+    改样式
+
+[33mcommit 2564f146119a255b28f92cd7617562cbe69928fd[m
+Merge: d66ea6d 6354ead
+Author: d0wop <791539017@qq.com>
+Date:   Fri Aug 24 15:36:49 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit d66ea6d278f525ee09a03d2aeccbe70809ce3ddc[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Aug 24 15:36:23 2018 +0800
+
+    更换手机号接口
+
+[33mcommit 6354eadd4d099d7e4e524c28c7db9240508ebc8f[m
+Merge: 4bda970 a8804e7
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Fri Aug 24 15:17:43 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 4bda9706f4fd3b4f4fe95aaba09c2672e348851f[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Fri Aug 24 15:17:28 2018 +0800
+
+    打包文件替换
+
+[33mcommit a8804e78a4374914a98bdce6c8ca6df95ad28d1a[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Aug 24 15:14:59 2018 +0800
+
+    修复权限获取bug
+
+[33mcommit 48adaa2a8c5cb5262c25207bb5c1b25410fc3214[m
+Merge: 12bd37d a474c61
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Fri Aug 24 13:44:24 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+
+[33mcommit 12bd37d6199a6bc423290b52ab0b76a42dbd3271[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Fri Aug 24 13:44:15 2018 +0800
+
+    全部添加
+
+[33mcommit a474c61355d28599063f8d4e6e1532deb1cebc12[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Aug 24 11:10:21 2018 +0800
+
+    解决没有member_id的问题
+
+[33mcommit 721bb0875b91a64016a7ab72d7c50d7af5268edb[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Aug 24 11:07:24 2018 +0800
+
+    调整添加意见接口
+
+[33mcommit 7ec54c572c11a68020bc5b262f688c95e9ebc1ee[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Aug 24 10:42:00 2018 +0800
+
+    调整获取用户列表接口
+
+[33mcommit da2b6568089b3fff7ab90bafe5ed3c1cbd45436f[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Aug 24 10:30:51 2018 +0800
+
+    Model大小写问题修复
+
+[33mcommit 6a4740ecbe9e5844a75db12caf1946eccde25e8f[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Aug 24 10:29:43 2018 +0800
+
+    调整获取用户信息接口
+
+[33mcommit 8f5a7ac1aa80ee22ef2404e677d8aa293e913b6f[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Aug 24 10:26:42 2018 +0800
+
+    获取用户列表时新增3方信息
+
+[33mcommit 7ee8fa2927089455835ca15959358807ee922470[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Aug 24 10:09:46 2018 +0800
+
+    初始化平台配置项
+
+[33mcommit f7af328dac31a1be8ee4be035ed84a6b4d242ee2[m
+Author: d0wop <791539017@qq.com>
+Date:   Fri Aug 24 10:09:20 2018 +0800
+
+    第3方登陆验证是否被绑定过
+
+[33mcommit 9b56db70411700b6d06c2bdf4895c1e5982b4245[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Aug 23 17:46:16 2018 +0800
+
+    调整参数报错提示
+
+[33mcommit f96e702fe950cc3b6504798b0273247b57aaee0e[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Aug 23 17:40:44 2018 +0800
+
+    历史记录相关接口
+
+[33mcommit 1d37685144384703b7b28189eceb09914385546a[m
+Merge: 7dee8e1 ad7c79c
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Aug 23 17:28:08 2018 +0800
+
+    '0.123123132'
+
+[33mcommit ad7c79cd68bfce61d1a48609c334abb8dcb9a6ce[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Aug 23 17:20:30 2018 +0800
+
+    更新添加收藏接口
+
+[33mcommit 7dee8e1685fa0d56949e67903305af1fc7c352a8[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Aug 23 17:15:01 2018 +0800
+
+    全部添加
+
+[33mcommit 8900dd79d6f2037f40136d3b9f55f10b282f11a3[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Aug 23 17:14:03 2018 +0800
+
+    更新添加收藏
+
+[33mcommit 878942a3b7b6097debab474cc500656b18d57050[m
+Merge: 30e1a6f 160cec8
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Aug 23 17:09:16 2018 +0800
+
+    Merge branch 'master' of gitlab.360tianma.com:d0wop/TM_LAB
+    
+    # Conflicts:
+    #       application/system/controller/Base.php
+
+[33mcommit ba41470337e00eabac14ed132d29b6bc0d205936[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Aug 23 16:33:59 2018 +0800
+
+    增加获取用户信息的参数 如list_auto_play
+
+[33mcommit ae727b2ddf78f8a115795cfb9088e9abf0149474[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Aug 23 16:13:35 2018 +0800
+
+    解决token配置问题
+
+[33mcommit 30e1a6fafc8adc2b823e94c48401ed7a45f68c1b[m
+Author: 陈雨鸣 <362811405@qq.com>
+Date:   Thu Aug 23 16:09:37 2018 +0800
+
+    测试
+
+[33mcommit 160cec8cb50f88db3477b0911a4ac96c689da399[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Aug 23 11:25:40 2018 +0800
+
+    修改第3方登陆接口
+
+[33mcommit 577f34f78a4c0fa2cab19f15a030061603a5f097[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Aug 23 10:59:38 2018 +0800
+
+    去除限制
+
+[33mcommit 0dff29fe9b9a25597f6d9e58f723440ee8437e56[m
+Author: d0wop <791539017@qq.com>
+Date:   Thu Aug 23 10:08:52 2018 +0800
+
+    新增配置接口
+
+[33mcommit ed972cbce0e8069d7156291829517eb2c41fa168[m
+Author: d0wop <791539017@qq.com>
+Date:   Wed Aug 22 18:35:16 2018 +0800
+
+    接口调整
+
+[33mcommit b5eecf26b32ae1cc055827cf3144612e8c55c3d5[m
+Author: d0wop <791539017@qq.com>
+Date:   Wed Aug 22 16:38:01 2018 +0800
+
+    更新配置接口
+
+[33mcommit b4374941241004e2a01af8c796c24c1dd9e5930d[m
+Author: d0wop <791539017@qq.com>
+Date:   Wed Aug 22 11:58:15 2018 +0800
+
+    调整第3方登陆
+
+[33mcommit 2b36bc9f4c9462f292beb2dfc426e182011826f1[m
+Author: d0wop <791539017@qq.com>
+Date:   Wed Aug 22 11:43:34 2018 +0800
+
+    接口调整
+
+[33mcommit 2d9a46cf3653622311da7efbc875552b795d4741[m
+Author: d0wop <791539017@qq.com>
+Date:   Wed Aug 22 11:20:34 2018 +0800
+
+    留言字符限制
+
+[33mcommit 64c045cdb44d623e458fc58a55b18302777d7d65[m
+Author: d0wop <791539017@qq.com>
+Date:   Wed Aug 22 11:12:27 2018 +0800
+
+    调整消息推送接口
+
+[33mcommit f5c0108f08171cd0e52c7b2a74f4a3e54911651c[m
+Author: d0wop <791539017@qq.com>
+Date:   Wed Aug 22 11:07:57 2018 +0800
+
+    收藏接口调整
+
+[33mcommit 1a3dd4da582c28cc89c839b7f08c25a054e84d65[m
+Author: d0wop <791539017@qq.com>
+Date:   Wed Aug 22 10:46:47 2018 +0800
+
+    跳过免责文章的身份验证
+
+[33mcommit dd4a1a42ac78299709ddf2c14a60e6d1e4e0b35c[m
+Author: d0wop <791539017@qq.com>
+Date:   Wed Aug 22 10:44:41 2018 +0800
+
+    调整接口
+
+[33mcommit 437270baf1a8d05ec8d3681199a030f86f137859[m
+Author: d0wop <791539017@qq.com>
+Date:   Wed Aug 22 10:30:02 2018 +0800
+
+    更新推送消息
+
+[33mcommit 08890142f1d53986ec0518ec53e65be950ea547f[m
+Author: d0wop <791539017@qq.com>
+Date:   Tue Aug 21 17:54:25 2018 +0800
+
+    更新接口
+
+[33mcommit 38307bdb4a6276e480b308f2d8414f4d252dcdfa[m
+Author: d0wop <791539017@qq.com>
+Date:   Tue Aug 21 17:03:01 2018 +0800
+
+    增加默认头像
+
+[33mcommit e728faf7af648ee085064850426e6e63653b1e5a[m
+Author: d0wop <791539017@qq.com>
+Date:   Tue Aug 21 16:55:11 2018 +0800
+
+    增加参数
+
+[33mcommit 490aefd6fc5bc19b7e629bd4a6f988a29e8d7d31[m
+Author: d0wop <791539017@qq.com>
+Date:   Tue Aug 21 16:48:29 2018 +0800
+
+    获取免责文章信息
+
+[33mcommit 565981e8f9c3efdcb104a9951b60f79f5bbfd830[m
+Author: d0wop <791539017@qq.com>
+Date:   Tue Aug 21 15:44:54 2018 +0800
+
+    更新会员列表接口
+
+[33mcommit f07e3487e82415f3f93a6afbb41f24821c79ca21[m
+Author: d0wop <791539017@qq.com>
+Date:   Tue Aug 21 15:28:06 2018 +0800
+
+    调整框架接口位置
+
+[33mcommit e300a1765b283ce5bab0f58d5cf9da11aa0405e1[m
+Author: d0wop <791539017@qq.com>
+Date:   Tue Aug 21 15:05:11 2018 +0800
+
+    图片更新
+
+[33mcommit 96c258d867f9c5f67070b5ef664c87b7d9cdacc8[m
+Author: d0wop <791539017@qq.com>
+Date:   Tue Aug 21 14:42:02 2018 +0800
+
+    框架初始化
+
+[33mcommit bd1b5982d0b556352cc1d7f34ae8bcf318af9645[m
+Author: 黄庆 <huangqing@360tianma.com>
+Date:   Tue Aug 21 14:37:59 2018 +0800
+
+    Add new file

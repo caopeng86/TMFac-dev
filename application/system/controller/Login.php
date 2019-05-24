@@ -239,9 +239,9 @@ class Login extends Controller
      * 生成验证码
      */
     public function getVerify(){
-//        var_dump('hello');exit();
+       // var_dump('hello');exit();
         ob_clean();
-//        $this->captcha->codeSet = '1';
+       // $this->captcha->codeSet = '1';
         $captchaData = $this->captcha->entry();
         return $captchaData;
     }
@@ -270,11 +270,11 @@ class Login extends Controller
         if(!$ret){
             return reTmJsonObj(500,$msg,[]);
         }
-//        //验证验证码
-//        $chkVerify = $this->captcha->check($inputData['verify']);
-//        if($chkVerify === false){
-//            return reTmJsonObj(500,'验证码输入错误',[]);
-//        }
+       // //验证验证码
+       // $chkVerify = $this->captcha->check($inputData['verify']);
+       // if($chkVerify === false){
+       //     return reTmJsonObj(500,'验证码输入错误',[]);
+       // }
 
         //验证用户名
         $condition = ['user_name' => $inputData['user_name']];
@@ -302,11 +302,11 @@ class Login extends Controller
         }
 
         //校验licenses
-//        $decrypt = $this->_licenses($userInfo['user_code'], $err);
-//        if($decrypt === false){
-//            Logservice::writeArray(['user_code'=>$userInfo['user_code'], 'err'=>$err], 'licenses校验未通过', 2);
-//            return reTmJsonObj($err[0], $err[1], []);
-//        }
+       // $decrypt = $this->_licenses($userInfo['user_code'], $err);
+       // if($decrypt === false){
+       //     Logservice::writeArray(['user_code'=>$userInfo['user_code'], 'err'=>$err], 'licenses校验未通过', 2);
+       //     return reTmJsonObj($err[0], $err[1], []);
+       // }
 
         //保存用户信息到缓存 7天
         $cacheData = [
@@ -316,7 +316,7 @@ class Login extends Controller
             "access_key_create_time" => $updateData['access_key_create_time'],
             "access_key" => $updateData['access_key'],
         ];
-        Cache::set($updateData['access_key'], $cacheData, Config::get('token_time'));
+        Cache::set($updateData['access_key'], $cacheData, Config::get('token_time')); //dump($userInfo);die();
         Logservice::writeArray(['token'=>$updateData['access_key'], 'data'=>$cacheData], '记录登录缓存数据');
 
         //获取用户部门code,name
@@ -346,14 +346,14 @@ class Login extends Controller
             return reTmJsonObj(500, '获取用户站点失败', []);
         }
 
-//        //获取所有应用code,name,app_code
-//        $component = $this->_getComponent($roleCodes);
-//        if($component === false){
-//            return reTmJsonObj(500, '获取用户站点失败', []);
-//        }
+       // //获取所有应用code,name,app_code
+       // $component = $this->_getComponent($roleCodes);
+       // if($component === false){
+       //     return reTmJsonObj(500, '获取用户站点失败', []);
+       // }
 
         $return = [
-//            'type' => $decrypt['type'],
+           // 'type' => $decrypt['type'],
             'token' => $token,
             'user_info' => $userInfo,
             'role' => $role,

@@ -22,7 +22,7 @@ class Commonarticle extends Controller
     public function __construct()
     {
         parent::__construct();
-        $this->farUrl = "http://www.360tianma.com";
+        $this->farUrl = config("tm_shop_url");
       //  $this->farUrl = "http://shop.com";
     }
 

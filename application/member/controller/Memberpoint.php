@@ -27,24 +27,30 @@ class Memberpoint extends Base
         //判断请求方式以及请求参数
        // $inputData = Request::post();
         $inputData = getEncryptPostData();
+		$token = Request::header('token');
         if(!$inputData){
             return reTmJsonObj(552,"解密数据失败",[]);
         }
         $method = Request::method();
         $params = ['point','remarks','from_component'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
-        if(!$ret){
+        if(!$ret || !$token || strlen($token)<20){
             return reTmJsonObj(500, $msg, []);
         }
-        $point = $this->MemberpointModel->getMemberPoint($this->memberInfo['member_id']);
+		
+		$memberId = getUserIByToken($token);
+		if(empty($memberId)){
+            return reTmJsonObj(500, "token验证失效", []);
+        }
+        $point = $this->MemberpointModel->getMemberPoint($memberId);
         if($inputData['point'] + $point < 0){
             return reTmJsonObj(500, '用户积分不足', []);
         }
-        $result = $this->MemberpointModel->editPoint($this->memberInfo['member_id'],$inputData['point'],$inputData['remarks'],$inputData['from_component']);
+        $result = $this->MemberpointModel->editPoint($memberId,$inputData['point'],$inputData['remarks'],$inputData['from_component']);
         if($result === false){
             return reTmJsonObj(500, '扣除用户积分失败，请重试', []);
         }
-        return reEncryptJson(200,'修改成功',['member_id'=>$this->memberInfo['member_id']]);
+        return reEncryptJson(200,'修改成功',['member_id'=>$memberId]);
     }
 
     /**
@@ -54,25 +60,31 @@ class Memberpoint extends Base
         //判断请求方式以及请求参数
         // $inputData = Request::post();
         $inputData = getEncryptPostData();
+		$token = Request::header('token');
         if(!$inputData){
             return reTmJsonObj(552,"解密数据失败",[]);
         }
         $method = Request::method();
         $params = ['point','remarks','from_component'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
-        if(!$ret){
+        if(!$ret || !$token || strlen($token)<20){
             return reTmJsonObj(500, $msg, []);
         }
-        $point = $this->MemberpointModel->getMemberPoint($this->memberInfo['member_id']);
+		$memberId = getUserIByToken($token);
+		if(empty($memberId)){
+            return reTmJsonObj(500, "token验证失效", []);
+        }
+
+        $point = $this->MemberpointModel->getMemberPoint($memberId);
         if($inputData['point'] + $point < 0){
             return reTmJsonObj(500, '用户积分不足', []);
         }
-        $result = $this->MemberpointModel->editPointNew($this->memberInfo['member_id'],$inputData['point'],$inputData['remarks'],$inputData['from_component'],
+        $result = $this->MemberpointModel->editPointNew($memberId,$inputData['point'],$inputData['remarks'],$inputData['from_component'],
             empty($inputData['article_id'])?0:$inputData['article_id'],empty($inputData['extend'])?"":$inputData['extend']);
         if($result === false){
             return reTmJsonObj(500, '扣除用户积分失败，请重试', []);
         }
-        return reEncryptJson(200,'修改成功',['member_id'=>$this->memberInfo['member_id']]);
+        return reEncryptJson(200,'修改成功',['member_id'=>$memberId]);
     }
 
 
@@ -81,8 +93,18 @@ class Memberpoint extends Base
      * */
 
     public function getPoint(){
-        $point = $this->MemberpointModel->getMemberPoint($this->memberInfo['member_id']);
-        return reEncryptJson(200, '获取成功', ['point'=>$point,'member_id'=>$this->memberInfo['member_id']]);
+		$token = Request::header('token');
+        if(!$token || strlen($token)<20){
+            return reTmJsonObj(500, "token参数错误", []);
+        }
+		
+		$memberId = getUserIByToken($token);
+		if(empty($memberId)){
+            return reTmJsonObj(500, "token验证失效", []);
+        }
+
+        $point = $this->MemberpointModel->getMemberPoint($memberId);
+        return reEncryptJson(200, '获取成功', ['point'=>$point,'member_id'=>$memberId]);
     }
 
 
@@ -94,16 +116,23 @@ class Memberpoint extends Base
         //判断请求方式以及请求参数
        // $inputData = Request::get();
         $inputData = getEncryptGetData();
+		$token = Request::header('token');
         if(!$inputData){
             return reTmJsonObj(552,"解密数据失败",[]);
         }
         $method = Request::method();
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
-        if(!$ret){
+        if(!$ret || !$token || strlen($token)<20){
             return reTmJsonObj(500, $msg, []);
         }
-        $condition = ['member_id'=>$this->memberInfo['member_id']];
+
+		$memberId = getUserIByToken($token);
+		if(empty($memberId)){
+            return reTmJsonObj(500, "token验证失效", []);
+        }
+
+        $condition = ['member_id'=>$memberId];
         if(!empty($inputData['from_component'])){
             $condition['from_component'] = $inputData['from_component'];
         }
@@ -135,16 +164,22 @@ class Memberpoint extends Base
         //判断请求方式以及请求参数
         // $inputData = Request::get();
         $inputData = getEncryptGetData();
+		$token = Request::header('token');
         if(!$inputData){
          //   return reTmJsonObj(552,"解密数据失败",[]);
         }
         $method = Request::method();
         $params = [];
         $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
-        if(!$ret){
+        if(!$ret || !$token || strlen($token)<20){
             return reTmJsonObj(500, $msg, []);
         }
-        $condition = ['member_id'=>$this->memberInfo['member_id']];
+		$memberId = getUserIByToken($token);
+		if(empty($memberId)){
+            return reTmJsonObj(500, "token验证失效", []);
+        }
+
+        $condition = ['member_id'=>$memberId];
         if(!empty($inputData['from_component'])){
             $condition['from_component'] = $inputData['from_component'];
         }

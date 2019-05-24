@@ -41,6 +41,9 @@ class Appconf extends Controller
             }
         }
 
+        if(!is_file($path)){
+            return json([]);
+        }
         $file = file_get_contents($path);
         if($file === false){
             die('{"code":500,"msg":"获取文件内容失败","data":""}');

@@ -410,9 +410,7 @@
     <?php } ?>
 
     <div class="copyright">
-        <a title="官方网站" href="http://www.thinkphp.cn">ThinkPHP</a> 
-        <span>V<?php echo \think\facade\App::version(); ?></span> 
-        <span>{ 十年磨一剑-为API开发设计的高性能框架 }</span>
+        <a title="官方网站" href="http://www.360tianma.com">天马工场</a>
     </div>
     <?php if(\think\facade\App::isDebug()) { ?>
     <script>

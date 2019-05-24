@@ -42,7 +42,7 @@ class Login extends Controller
      */
     public function memberLogin(){
         //判断请求方式以及请求参数
-       // $inputData = Request::post();
+        // $inputData = Request::post();
         $inputData = getEncryptPostData();
         if(!$inputData){
             return reTmJsonObj(552,"解密数据失败",[]);
@@ -54,56 +54,66 @@ class Login extends Controller
             return reTmJsonObj(500, $msg, []);
         }
 
+		$mobile = $inputData['mobile'];
+		$site_code = $inputData['site_code'];
         //验证手机号
-        if(!preg_match("/^1[34578]\d{9}$/", $inputData['mobile'])){
+        if(!preg_match("/^1[3456789]\d{9}$/", $mobile)){
             return reTmJsonObj(500, '手机号错误', []);
         }
 
-        //根据手机号取出会员数据
-        $condition = ['mobile' => $inputData['mobile'], 'site_code' => $inputData['site_code']];
-        /*$field = 'member_id, member_code, member_name,member_nickname,site_code, email, mobile, head_pic, create_time, status, deleted,
-        birthday, sex,password,wx,qq,wb';*/
+		//选择验证码登录
+		if($inputData['state'] == 1){
+			if(!isset($inputData['code'])){
+                return reTmJsonObj(500, '验证码参数错误', []);
+            }
+            //缓存中取出验证码,验证手机验证码
+            $code = Cache::get(md5($mobile));
+            if($code != $inputData['code']){
+                Logservice::writeArray(['code'=>$inputData['code'], 'cache'=>$code], '手机验证码错误', 2);
+                return reTmJsonObj(500, '验证失败', []);// 
+            }
+		//选择密码登录
+		}else{
+            if(!isset($inputData['password']) && strlen($inputData['password']) < 6){
+                return reTmJsonObj(500, '密码参数格式错误（最低长度6位）', []);
+            }
+		}
 
-        $field = 'member_id,member_code, member_name, member_nickname, member_real_name,site_code,email,deleted,sex_edit_time,birthday_edit_time,mobile_edit_time,wb_edit_time,wx_edit_time,qq_edit_time,
-         mobile, head_pic, create_time, status, wx, qq, zfb, wb,birthday,sex,ip,point,access_key_create_time,close_start_time,close_end_time,password,receive_notice,wifi_show_image,list_auto_play,login_type,member_sn,channel_sources';
-        $memberInfo = $this->memberModel->getMemberInfo($condition, $field);
+		$ctime = time();
+ 
+        $memberInfo = $this->memberModel->getMemberInfoByMobile($mobile,$site_code);
         if(!empty($memberInfo)){
             if($memberInfo['status'] == 1 || $memberInfo['deleted'] == 1){
                 return reTmJsonObj(500, '很遗憾，该账户已被列入企业黑名单', []);
             }
-            if(time()>$memberInfo['close_start_time'] && time()<$memberInfo['close_end_time']){
+            if($ctime>$memberInfo['close_start_time'] && $ctime<$memberInfo['close_end_time']){
                 return reTmJsonObj(500, '很遗憾，该账户已被封号，封号时间'.date('Y-m-d H:i:s', $memberInfo['close_start_time']).'到'.date('Y-m-d H:i:s', $memberInfo['close_end_time']), []);
             }
         }
         $is_first_login = false;
-        Db::startTrans();
+		
+		//用户信息验证
+		Db::startTrans();
         if($inputData['state'] == 1){
-            //选择验证码登录
-            if(!isset($inputData['code'])){
-                return reTmJsonObj(500, '验证码参数错误', []);
-            }
-            //缓存中取出验证码,验证手机验证码
-            $code = Cache::get(md5($inputData['mobile']));
-            if($code != $inputData['code']){
-                Logservice::writeArray(['code'=>$inputData['code'], 'cache'=>$code], '手机验证码错误', 2);
-                return reTmJsonObj(500, '验证失败', []);
-            }
             if(empty($memberInfo)){
                 $is_first_login = true;
                 //没有会员则新增该会员
-                $memberName=substr($inputData['mobile'],0,3)."****".substr($inputData['mobile'],7,4);
+                $memberName=substr($mobile,0,3)."****".substr($mobile,7,4);
                 $addData = [
                     'member_name' => $memberName,
                     'member_nickname' => $memberName,
                     'member_code' => createCode(),
-                    'create_time' => time(),
+                    'create_time' => $ctime,
                     'password' => md5(md5(rand(100000,999999))),
                     'site_code' => $inputData['site_code'],
-                    'mobile' => $inputData['mobile'],
+                    'mobile' => $mobile,
+					'status' => 0,
+					'login_type' => "mobile",
                     'head_pic' => '/uploads/default/head.jpg',
-                    'member_sn'=>$this->createMemberSn()
+					'register_source'=> 'APP',
+                    'member_sn'=>$this->createMemberSn(),
                 ];
-                empty($inputData['channel_sources'])?$addData['channel_sources'] = "":$addData['channel_sources'] = $inputData['channel_sources'];
+                empty($inputData['channel_sources'])?$addData['channel_sources'] = "":$addData['channel_sources'] = $inputData['channel_sources'] ?? "";
                 $addData['member_nickname']=$addData['member_name'];
                 $add = $this->memberModel->addMember($addData);
                 if(!$add){
@@ -113,7 +123,7 @@ class Login extends Controller
                 }
                 $addData['member_id'] = $add;
                 unset($addData['password']);
-                $memberInfo = $this->memberModel->getMemberInfo(['member_id' => $addData['member_id']], $field);
+                $memberInfo = $this->memberModel->getMemberInfoById($addData['member_id']);
                 if($memberInfo === false){
                     Logservice::writeArray(['sql'=>$this->memberModel->getLastSql()], '获取会员数据失败', 2);
                     return reTmJsonObj(500, '获取会员数据失败', []);
@@ -121,10 +131,6 @@ class Login extends Controller
                 Logservice::writeArray(['memberInfo'=>$addData], '短信注册会员数据');
             }
         }else{
-            //选择密码登录
-            if(!isset($inputData['password'])){
-                return reTmJsonObj(500, '密码参数错误', []);
-            }
             if(empty($memberInfo)){
                 return reTmJsonObj(500, '没有该会员', []);
             }else {
@@ -135,64 +141,68 @@ class Login extends Controller
                 unset($memberInfo['password']);
             }
         }
+		Db::commit();
 
-        //记录登录信息到数据库
-        $token = createCode();
-        $updateCondition = ['mobile' => $inputData['mobile']];
-        $updateData['access_key'] = $token;
-        $updateData['access_key_create_time'] = time();
-        $updateData['login_type'] = 'mobile';
-        if($memberInfo['status'] == 2){ //如果是未登陆激活的用户，将用户进行激活处理
-           $updateData['status'] = 0;
+		$tokenInfo = array();
+		$tokenInfo['user_id'] = $memberInfo['member_id'];
+		$tokenInfo['member_id'] = $memberInfo['member_id'];
+		$tokenInfo['mobile'] = $memberInfo['mobile'];
+		$tokenInfo['ip'] = $_SERVER['REMOTE_ADDR'];
+		$token = createTokenCode($tokenInfo);
+		
+		$updateData = array();
+		if($memberInfo['status'] == 2){ //如果是未登陆激活的用户，将用户进行激活处理
+			$updateData['status'] = 0;
         }
-        $remember = $this->memberModel->updateMember($updateCondition, $updateData);
-        if($remember === false){
-            Logservice::writeArray(['sql'=>$this->memberModel->getLastSql()], '记录登录信息失败', 2);
-            Db::rollback();
-            return reTmJsonObj(500,'记录登录信息失败',[]);
-        }
-        Db::commit();
+		$updateData['login_type'] = "mobile";
+		$updateData['access_key'] = $token;
+		$updateData['access_key_create_time'] = $ctime;
+		$this->memberModel->updateMember(['member_id' => $memberInfo['member_id']], $updateData);
+		
+		$memberInfo['status'] = 0;
 
-        $Configcondition = ['type'=>'point'];
+		$Configcondition = ['type'=>'point'];
         $ConfigList = $this->ConfigModel->getConfigList($Configcondition,'key,value');
-        $ConfigList1 = array_column($ConfigList,'value','key');
+        $ConfigList1 = array_column($ConfigList,null,'key');
         $ConfigList = array_column($ConfigList,'value','key');
-        $this->updatePoint($memberInfo,$ConfigList1,['member_id'=>$memberInfo['member_id']],"mobile_edit_time","first_login","手机号码首次注册");
+		
+		//首次登陆增加积分
+		if(empty($memberInfo['mobile_edit_time'])){
+			$this->updatePoint($memberInfo,$ConfigList1,"mobile_edit_time","first_login","手机号码首次注册");
+			$memberInfo = $this->memberModel->getMemberInfoById($memberInfo['member_id'],false);
+		}
+
         $memberInfo['close'] = 0;
-        if(time()>$memberInfo['close_start_time'] && time()<$memberInfo['close_end_time']){
+        if($ctime>$memberInfo['close_start_time'] && $ctime<$memberInfo['close_end_time']){
             $memberInfo['close'] = 1;
         }
+		
         //第3方信息获取
         $memberThirdPartyModel = new MemberThirdPartyModel();
-        $memberInfo['other_info'] = $memberThirdPartyModel->getThirdPartyList(['member_id'=>$memberInfo['member_id']],'uid,nick_name,member_id,head_url,address,ip,type');
-        $memberInfo['other_info'] = $memberThirdPartyModel->ArrayToType($memberInfo['other_info']);
-        $ConfigList['sex'] = empty($memberInfo['sex_edit_time'])?$ConfigList['sex']:0;
-        $ConfigList['birthday'] = empty($memberInfo['birthday_edit_time'])?$ConfigList['birthday']:0;
-        $ConfigList['mobile'] = empty($memberInfo['mobile_edit_time'])?$ConfigList['mobile']:0;
-        $ConfigList['wb'] = empty($memberInfo['wb_edit_time'])?$ConfigList['wb']:0;
-        $ConfigList['wx'] = empty($memberInfo['wx_edit_time'])?$ConfigList['wx']:0;
-        $ConfigList['qq'] = empty($memberInfo['qq_edit_time'])?$ConfigList['qq']:0;
+        $memberInfo['other_info'] = $memberThirdPartyModel->getThirdPartyListById($memberInfo['member_id']);
+        $ConfigList['sex'] = empty($memberInfo['sex_edit_time'])?$ConfigList['sex']??0:0;
+        $ConfigList['birthday'] = empty($memberInfo['birthday_edit_time'])?$ConfigList['birthday']??0:0;
+        $ConfigList['mobile'] = empty($memberInfo['mobile_edit_time'])?$ConfigList['mobile']??0:0;
+        $ConfigList['wb'] = empty($memberInfo['wb_edit_time'])?$ConfigList['wb']??0:0;
+        $ConfigList['wx'] = empty($memberInfo['wx_edit_time'])?$ConfigList['wx']??0:0;
+        $ConfigList['qq'] = empty($memberInfo['qq_edit_time'])?$ConfigList['qq']??0:0;
         $memberInfo['point_config'] = $ConfigList;
         $memberInfo['is_first_login'] = $is_first_login;
 
-        //保存会员信息到缓存 7天
-        $cacheData = [
-            "member_id" => $memberInfo['member_id'],
-            "user_id" => $memberInfo['member_id'],
-            "member_code" => $memberInfo['member_code'],
-            "member_name" => $memberInfo['member_name'],
-            "access_key" => $updateData['access_key'],
-            "access_key_create_time" => $updateData['access_key_create_time'],
-            "status" => $memberInfo['status'],
-            "close_start_time" => $memberInfo['close_start_time'],
-            "close_end_time" => $memberInfo['close_end_time']
-        ];
-        Cache::set($token, $cacheData,Config::get('token_time'));
-        Logservice::writeArray(['token'=>$token, 'data'=>$cacheData], '会员登录信息');
+		$memberInfo['user_id'] = $memberInfo['member_id'];
+		$memberInfo['access_key'] = $token;
+        $memberInfo['access_key_create_time'] = $ctime;
+		$memberInfo['create_token_time'] = $ctime;
+
+		Cache::set($token,$memberInfo,Config::get('token_time'));
+        Logservice::writeArray(['token'=>$token, 'data'=>$memberInfo], '会员登录信息');
+
+		unset($memberInfo["password"]);	
 
         $return = [
             'token' => $token,
             'member_info' => $memberInfo,
+			'appname' => Config::get('app_name'),
         ];
 
         return reEncryptJson(200, '登录成功', $return);
@@ -214,36 +224,32 @@ class Login extends Controller
         if(!$ret){
             return reTmJsonObj(500, $msg, []);
         }
-        $login_type = "qq";
+
+		$uid = $inputData['uid'];
+		$site_code = $inputData['site_code'];
+        $register_source = "qq";
         //根据uid取出会员数据
         if($inputData['type'] == 1){
-            $login_type = "qq";
-            $addData['qq'] = $inputData['uid'];
-            $condition['qq'] = $inputData['uid'];
+            $register_source = "qq";
         }elseif ($inputData['type'] == 2){
-            $login_type = "wx";
-            $addData['wx'] = $inputData['uid'];
-            $condition['wx'] = $inputData['uid'];
+            $register_source = "wx";
         }elseif ($inputData['type'] == 3){
-            $login_type = "wb";
-            $addData['wb'] = $inputData['uid'];
-            $condition['wb'] = $inputData['uid'];
+            $register_source = "wb";
         }
-        $condition['site_code'] = $inputData['site_code'];
-       /* $field = 'member_id, member_code, member_name,member_nickname,site_code, email, mobile, head_pic, create_time, status, deleted,
-        birthday, sex,password,wx,qq,wb';*/
-        $field = 'member_id,member_code, member_name,member_sn,member_nickname, member_real_name,site_code,email,deleted,sex_edit_time,birthday_edit_time,mobile_edit_time,wb_edit_time,wx_edit_time,qq_edit_time,
-         mobile, head_pic, create_time, status, wx, qq, zfb, wb,birthday,sex,ip,point,access_key_create_time,close_start_time,close_end_time,password,receive_notice,wifi_show_image,list_auto_play,login_type,channel_sources';
-        $memberInfo = $this->memberModel->getMemberInfo($condition, $field);
+		$ctime = time();
+        
+        $memberInfo = $this->memberModel->getMemberInfoByThird($uid, $register_source, $site_code);
         if(!empty($memberInfo)){
             if($memberInfo['status'] == 1 || $memberInfo['deleted'] == 1){
                 return reTmJsonObj(500, '很遗憾，该账户已被列入企业黑名单', []);
             }
-            if(time()>$memberInfo['close_start_time'] && time()<$memberInfo['close_end_time']){
+            if($ctime>$memberInfo['close_start_time'] && $ctime<$memberInfo['close_end_time']){
                 return reTmJsonObj(500, '很遗憾，该账户已被封号，封号时间'.date('Y-m-d H:i:s', $memberInfo['close_start_time']).'到'.date('Y-m-d H:i:s', $memberInfo['close_end_time']), []);
             }
         }
+
         $is_first_login = false;
+
         //没有会员则新增该会员
         Db::startTrans();
         if(empty($memberInfo)){
@@ -251,7 +257,10 @@ class Login extends Controller
             $addData['member_name'] = empty($inputData['member_name'])?rand(100,999).'****'.rand(1000,9999):$inputData['member_name'];
             $addData['site_code'] = $inputData['site_code'];
             $addData['member_code'] = createCode();
-            $addData['create_time'] = time();
+            $addData['status'] = 0;
+			$addData['create_time'] = $ctime;
+			$addData[$register_source] = $inputData['uid'];
+			$addData['register_source'] = $register_source;
             $addData['password'] = md5(md5(rand(100000,999999)));
             $addData['sex'] = empty($inputData['sex'])?'':$inputData['sex'];
             $addData['head_pic'] = empty($inputData['head_pic'])?'/uploads/default/head.jpg':$inputData['head_pic'];
@@ -260,6 +269,7 @@ class Login extends Controller
             $addData['sex'] = empty($inputData['sex'])?0:$inputData['sex'];
             $addData['member_sn'] = $this->createMemberSn();
             empty($inputData['channel_sources'])?$addData['channel_sources'] = "":$addData['channel_sources'] = $inputData['channel_sources'];
+
             $add = $this->memberModel->addMember($addData);
             if(!$add){
                 Logservice::writeArray(['sql'=>$this->memberModel->getLastSql()], '新增会员数据失败', 2);
@@ -268,83 +278,89 @@ class Login extends Controller
             }
             $addData['member_id'] = $add;
             unset($addData['password']);
-            $memberInfo = $this->memberModel->getMemberInfo(['member_id' => $addData['member_id']], $field);
+            $memberInfo = $this->memberModel->getMemberInfoById($addData['member_id']);
             if($memberInfo === false){
                 Logservice::writeArray(['sql'=>$this->memberModel->getLastSql()], '获取会员数据失败', 2);
                 return reTmJsonObj(500, '获取会员数据失败', []);
             }
             Logservice::writeArray(['memberInfo'=>$addData], '第三方登录新增会员数据');
 
+			//保存第3方登陆数据
+			$RequestIp = Request::ip();
+			$ThirdPartyModel = new MemberThirdPartyModel();
+			$ThirdPartyModel->updateOrAddThirdParty($inputData,$memberInfo,$RequestIp);
         }
-        $updateData['ip'] = Request::ip();
-        //保存第3方登陆数据
-        $ThirdPartyModel = new MemberThirdPartyModel();
-        $ThirdPartyModel->updateOrAddThirdParty($inputData,$memberInfo,$updateData['ip']);
-        //记录登录信息到数据库
-        $token = createCode();
-        $updateCondition = ['member_code' => $memberInfo['member_code']];
-        $updateData['access_key'] = $token;
-        $updateData['access_key_create_time'] = time();
-        $updateData['login_type'] = $login_type;
-        $remember = $this->memberModel->updateMember($updateCondition, $updateData);
+		Db::commit();
+
+		$tokenInfo = array();
+		$tokenInfo['user_id'] = $memberInfo['member_id'];
+		$tokenInfo['member_id'] = $memberInfo['member_id'];
+		$tokenInfo['mobile'] = $memberInfo['mobile'];
+		$tokenInfo['ip'] = $_SERVER['REMOTE_ADDR'];
+		$token = createTokenCode($tokenInfo);
+
+		$updateData = array();
+		if($memberInfo['status'] == 2){ //如果是未登陆激活的用户，将用户进行激活处理
+			$updateData['status'] = 0;
+        }
+		$updateData['login_type'] = $register_source;
+		$updateData['access_key'] = $token;
+		$updateData['access_key_create_time'] = $ctime;
+		$this->memberModel->updateMember(['member_id' => $memberInfo['member_id']], $updateData);
+		
+		$memberInfo['status'] = 0;
 
         $Configcondition = ['type'=>'point'];
         $ConfigList = $this->ConfigModel->getConfigList($Configcondition,'key,value');
         $ConfigList1 = array_column($ConfigList,null,'key');
         $ConfigList = array_column($ConfigList,'value','key');
-        $re1 = false;
-        if($inputData['type'] == 1){
-            $re1 = $this->updatePoint($memberInfo,$ConfigList1,['member_id'=>$memberInfo['member_id']],"qq_edit_time","first_login","QQ首次登陆");
-        }elseif ($inputData['type'] == 2){
-            $re1 = $this->updatePoint($memberInfo,$ConfigList1,['member_id'=>$memberInfo['member_id']],"wx_edit_time","first_login","微信首次登陆");
-        }elseif ($inputData['type'] == 3){
-            $re1 = $this->updatePoint($memberInfo,$ConfigList1,['member_id'=>$memberInfo['member_id']],"wb_edit_time","first_login","微博首次登陆");
-        }
-        //point 更新之后跟新memberInfo
-        $memberInfo['point'] = $this->memberModel->getMemberInfo(['member_id' => $memberInfo['member_id']], 'point')['point'];
-        if($remember === false || $re1 === false){
-            Logservice::writeArray(['sql'=>$this->memberModel->getLastSql()], '记录登录信息失败', 2);
-            Db::rollback();
-            return reTmJsonObj(500,'记录登录信息失败',[]);
-        }
-        Db::commit();
+		
+		//首次登陆增加积分
+		if($inputData['type'] == 1 && empty($memberInfo['qq_edit_time'])){
+			$this->updatePoint($memberInfo,$ConfigList1,"qq_edit_time","first_login","QQ首次登陆");
+			$memberInfo = $this->memberModel->getMemberInfoById($memberInfo['member_id'], false);
+		}elseif ($inputData['type'] == 2 && empty($memberInfo['wx_edit_time'])){
+			$this->updatePoint($memberInfo,$ConfigList1,"wx_edit_time","first_login","微信首次登陆");
+			$memberInfo = $this->memberModel->getMemberInfoById($memberInfo['member_id'], false);
+		}elseif ($inputData['type'] == 3 && empty($memberInfo['wb_edit_time'])){
+			$this->updatePoint($memberInfo,$ConfigList1,"wb_edit_time","first_login","微博首次登陆");
+			$memberInfo = $this->memberModel->getMemberInfoById($memberInfo['member_id'], false);
+		}
+
         $memberInfo['close'] = 0;
         if(time()>$memberInfo['close_start_time'] && time()<$memberInfo['close_end_time']){
             $memberInfo['close'] = 1;
         }
+
         //第3方信息获取
         $memberThirdPartyModel = new MemberThirdPartyModel();
-        $memberInfo['other_info'] = $memberThirdPartyModel->getThirdPartyList(['member_id'=>$memberInfo['member_id']],'uid,nick_name,member_id,head_url,address,ip,type');
+        $memberInfo['other_info'] = $memberThirdPartyModel->getThirdPartyListById($memberInfo['member_id']);
         $memberInfo['other_info'] = $memberThirdPartyModel->ArrayToType($memberInfo['other_info']);
-        $ConfigList['sex'] = empty($memberInfo['sex_edit_time'])?$ConfigList['sex']:0;
-        $ConfigList['birthday'] = empty($memberInfo['birthday_edit_time'])?$ConfigList['birthday']:0;
-        $ConfigList['mobile'] = empty($memberInfo['mobile_edit_time'])?$ConfigList['mobile']:0;
-        $ConfigList['wb'] = empty($memberInfo['wb_edit_time'])?$ConfigList['wb']:0;
-        $ConfigList['wx'] = empty($memberInfo['wx_edit_time'])?$ConfigList['wx']:0;
-        $ConfigList['qq'] = empty($memberInfo['qq_edit_time'])?$ConfigList['qq']:0;
+        $ConfigList['sex'] = empty($memberInfo['sex_edit_time'])?$ConfigList['sex']??0:0;
+        $ConfigList['birthday'] = empty($memberInfo['birthday_edit_time'])?$ConfigList['birthday']??0:0;
+        $ConfigList['mobile'] = empty($memberInfo['mobile_edit_time'])?$ConfigList['mobile']??0:0;
+        $ConfigList['wb'] = empty($memberInfo['wb_edit_time'])?$ConfigList['wb']??0:0;
+        $ConfigList['wx'] = empty($memberInfo['wx_edit_time'])?$ConfigList['wx']??0:0;
+        $ConfigList['qq'] = empty($memberInfo['qq_edit_time'])?$ConfigList['qq']??0:0;
         $memberInfo['point_config'] = $ConfigList;
         $memberInfo['is_first_login'] = $is_first_login;
 
+		$memberInfo['user_id'] = $memberInfo['member_id'];
+		$memberInfo['access_key'] = $token;
+        $memberInfo['access_key_create_time'] = $ctime;
+		$memberInfo['create_token_time'] = $ctime;
 
-        //保存会员信息到缓存 7天
-        $cacheData = [
-            "member_id" => $memberInfo['member_id'],
-            "user_id" => $memberInfo['member_id'],
-            "member_code" => $memberInfo['member_code'],
-            "member_name" => $memberInfo['member_name'],
-            "access_key" => $updateData['access_key'],
-            "access_key_create_time" => $updateData['access_key_create_time'],
-            "status" => $memberInfo['status'],
-            "close_start_time" => $memberInfo['close_start_time'],
-            "close_end_time" => $memberInfo['close_end_time']
-        ];
-        Cache::set($token, $cacheData,Config::get('token_time'));
-        Logservice::writeArray(['token'=>$token, 'data'=>$cacheData], '会员登录信息');
+        Cache::set($token, $memberInfo,Config::get('token_time'));
+        Logservice::writeArray(['token'=>$token, 'data'=>$memberInfo], '会员登录信息');
+
+		unset($memberInfo["password"]);
 
         $return = [
             'token' => $token,
             'member_info' => $memberInfo,
+			'appname' => Config::get('app_name'),
         ];
+
         return reEncryptJson(200, '登录成功', $return);
     }
 
@@ -388,17 +404,18 @@ class Login extends Controller
         if(empty($memberInfo['head_pic'])){
             $bindData['head_pic'] = $memberInfo['head_pic'] = $inputData['head_pic'];
         }
+
         $Configcondition = ['type'=>'point'];
         $ConfigList = $this->ConfigModel->getConfigList($Configcondition,'key,value');
         $ConfigList = array_column($ConfigList,null,'key');
         $result = $this->memberModel->updateMember(['member_id'=>$memberInfo['member_id']],$bindData);
         $re1 = false;
         if($inputData['type'] == 1){
-            $re1 = $this->updatePoint($memberInfo,$ConfigList,['member_id'=>$memberInfo['member_id']],"qq_edit_time","qq","绑定QQ");
+            $re1 = $this->updatePoint($memberInfo,$ConfigList,"qq_edit_time","qq","绑定QQ");
         }elseif ($inputData['type'] == 2){
-            $re1 = $this->updatePoint($memberInfo,$ConfigList,['member_id'=>$memberInfo['member_id']],"wx_edit_time","wx","绑定微信");
+            $re1 = $this->updatePoint($memberInfo,$ConfigList,"wx_edit_time","wx","绑定微信");
         }elseif ($inputData['type'] == 3){
-            $re1 = $this->updatePoint($memberInfo,$ConfigList,['member_id'=>$memberInfo['member_id']],"wb_edit_time","wb","绑定微博");
+            $re1 = $this->updatePoint($memberInfo,$ConfigList,"wb_edit_time","wb","绑定微博");
         }
         if(!$result ||  $re1 === false){
             return reTmJsonObj(500,'用户信息保存失败',[]);
@@ -410,27 +427,30 @@ class Login extends Controller
         return reEncryptJson(200,'绑定成功',[]);
     }
 
-    public function updatePoint($getMemberInfo,$ConfigList,$condition,$memberKey,$configKey,$remark = "修改用户信息"){
-        if(empty($getMemberInfo[$memberKey])){
-            $point = $getMemberInfo['point'];
+    public function updatePoint($memberInfo,$ConfigList,$memberKey,$configKey,$remark = "修改用户信息"){
+        if(empty($memberInfo[$memberKey])){
+            $point = $memberInfo['point'];
             $pointchange = 0;
+			
             if(!empty($ConfigList['first_login_switch']['value']) && (1 == $ConfigList['first_login_switch']['value'] || '1' == $ConfigList['first_login_switch']['value'])){
-                $point = $getMemberInfo['point'] + $ConfigList[$configKey]['value'];
+                $point = $memberInfo['point'] + $ConfigList[$configKey]['value'];
                 $pointchange = $ConfigList[$configKey]['value'];
             }
+
             $updateMemberData = [
                 $memberKey=>time(),
                 "point"=>$point
             ];
-            $re = $this->memberModel->updateMember($condition, $updateMemberData);
+
+            $re = $this->memberModel->updateMember(['member_id'=>$memberInfo['member_id']], $updateMemberData);
             if(false === $re){
                 return false;
             }
-            $re = $this->MemberpointModel->addPointLog($getMemberInfo['member_id'],$pointchange,$remark,$point,'center');
+            $re = $this->MemberpointModel->addPointLog($memberInfo['member_id'],$pointchange,$remark,$point,'center');
             if(false === $re){
                 return false;
             }
-            $this->MemberBehaviorLogModel->addPointLog($getMemberInfo['member_id'],$remark);
+            $this->MemberBehaviorLogModel->addPointLog($memberInfo['member_id'],$remark);
             return true;
         }
         return true;

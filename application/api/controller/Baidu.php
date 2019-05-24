@@ -138,7 +138,9 @@ class Baidu extends Controller
             $info['iOS'] = array_sum($iOS->result->sum[0]);
         }
         //系统注册用户统计，tm_member表
+		$monthTime = date('Y-m-d', time());
         $info['member_count'] =  Db::table(TM_PREFIX.'member')->where('deleted',0)->count();
+		$info['month_count'] = Db::table(TM_PREFIX.'member')->whereBetweenTime('create_time',strtotime($monthTime),time())->count();
         return reTmJsonObj(200, '获取成功', $info);
     }
 

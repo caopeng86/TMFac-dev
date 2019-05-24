@@ -1,0 +1,162 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="lib/html5shiv.js"></script>
+<script type="text/javascript" src="lib/respond.min.js"></script>
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" />
+<link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
+<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
+<!--[if IE 6]>
+<script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+<title>基本设置</title>
+<style type="text/css">
+	.cl{
+		margin-top: 10px
+	}
+	.submit{
+		width:100px;
+	}
+	.w-e-text-container{
+		height: auto;
+    	min-height: 300px;
+	}
+	.w-e-text{
+		min-height: 300px;
+    	height: auto;
+    	overflow: hidden;
+	}
+</style>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页
+	<span class="c-gray en">&gt;</span>
+	免责声明
+	<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a>
+</nav>
+<div class="page-container">
+	<div>
+		<div id="editor"></div>
+	</div>
+	<div class="row cl">
+			<div class="col-9 col-offset-0">
+				<button class="btn btn-primary submit">提交</button>
+			</div>
+		</div>
+</div>
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script> 
+<script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script> 
+<script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
+
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="lib/wangEditor.min.js"></script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+<script type="text/javascript">
+	$(window).ready(function(){
+        $.ajax({
+            type: "get",
+            url: "/system/Article/getReliefArticle",
+            cache: false,  //禁用缓存
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("token", localStorage.getItem("token"));
+            },
+            dataType: "json",
+            success: function (data) {
+				console.log(data)
+				if(data.code==200){
+                    editor.txt.html(data.data.content)
+				}else if(data.code==501){
+                     parent.parent.checkToken()
+                }else{
+				    layer.msg(data.msg)
+				}
+            },error:function(){
+                layer.msg("网络错误，请稍后再试")
+            }
+        })
+	})
+	$(".submit").click(function(){
+	    if(editor.txt.html()=="<p><br></p>"){
+	        layer.msg("免责声明不能为空")
+		}else{
+            $.ajax({
+                type: "POST",
+                url: "/system/Article/updateReliefArticle",
+                cache: false,  //禁用缓存
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("token", localStorage.getItem("token"));
+                },
+                data: {
+                    "content":editor.txt.html()
+                },  //传入组装的参数
+                dataType: "json",
+                success: function (data) {
+                    console.log(data)
+                    if (data.code == 200) {
+                        layer.alert('保存成功', {
+                            title:'提示',
+                            icon: 1,
+                        })
+                    }else if(data.code==501){
+                        parent.parent.checkToken()
+                    }else{
+                        layer.msg(data.msg)
+					}
+                },error:function(){
+                    layer.msg("网络错误，请稍后再试")
+                }
+            })
+
+		}
+	})
+	var E = window.wangEditor
+    var editor = new E('#editor')
+    // 或者 var editor = new E( document.getElementById('#editor') )
+    editor.customConfig.uploadImgServer = '/system/Upload/imgUploadInHost'; //上传URL
+    editor.customConfig.uploadImgMaxSize = 3 * 1024 * 1024;
+    editor.customConfig.uploadImgMaxLength = 5;
+    editor.customConfig.uploadFileName = 'file';
+    editor.customConfig.pasteFilterStyle = true
+    // editor.customConfig.pasteIgnoreImgwangEditor.min.js = true
+    // editor.customConfig.onchange = function (html) {
+    //     // html 即变化之后的内容
+    //     console.log(html)
+    // }
+    editor.customConfig.fontNames = [
+        '宋体',
+        '微软雅黑',
+        'Arial',
+        'Tahoma',
+        'Verdana'
+    ]
+    editor.customConfig.uploadImgHooks = {
+        customInsert: function (insertImg, result, editor) {
+            // 图片上传并返回结果，自定义插入图片的事件（而不是编辑器自动插入图片！！！）
+            // insertImg 是插入图片的函数，editor 是编辑器对象，result 是服务器端返回的结果
+            // 举例：假如上传图片成功后，服务器端返回的是 {url:'....'} 这种格式，即可这样插入图片：
+            console.log(result)
+            if(result.code==200) {
+                insertImg(result.data);
+            }else{
+                layer.msg("上传失败")
+            }
+            // result 必须是一个 JSON 格式字符串！！！否则报错
+        }
+    }
+    editor.create();
+</script>
+</html>

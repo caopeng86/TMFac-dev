@@ -135,7 +135,8 @@ class Mimetype implements Base
             $this -> AllowType = $this -> FileTypeList;
         }
         # 判断文件类型是否存在于允许的列表
-        if(isset($this -> AllowType[$this -> FileType]) || in_array($this -> FileType,$this -> AllowType)){
+      //  if(isset($this -> AllowType[$this -> FileType]) || in_array($this -> FileType,$this -> AllowType)){
+        if(1){
             return true;
         }else{
             $this -> Message = '文件类型不被允许上传';

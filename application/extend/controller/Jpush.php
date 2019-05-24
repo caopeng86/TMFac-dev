@@ -90,27 +90,27 @@ class Jpush extends Controller
             'extras' => $iosExt
         ];
         //通知
-//        $notification = array(
-//            'alert'  => $alert,
-//            'extras' => $extras
-//        );
-        //自定义消息
-//        $message = [
-//            'msg_content' => $extras['content'],
-//            'title'  => $alert,
-//            'extras' => $extras
-//        ];
+       // $notification = array(
+       //     'alert'  => $alert,
+       //     'extras' => $extras
+       // );
+       //  自定义消息
+       // $message = [
+       //     'msg_content' => $extras['content'],
+       //     'title'  => $alert,
+       //     'extras' => $extras
+       // ];
         //可选参数
         $options = [
             'apns_production' => true,  //true是生产环境false是开发环境
-//            'override_msg_id' => $extras['msg_id']
+           // 'override_msg_id' => $extras['msg_id']
         ];
         $res = Jpush::$push->setPlatform($platform)
             ->addAllAudience()
-//            ->setNotificationAlert($alert,$notification)
+           // ->setNotificationAlert($alert,$notification)
             ->iosNotification($alert,$ios_notification)
             ->androidNotification($alert,$android_notification)
-//            ->message($alert,$message)
+           // ->message($alert,$message)
             ->options($options)
             ->send();
         return $res;
@@ -144,16 +144,16 @@ class Jpush extends Controller
             'alert'  => $alert,
             'extras' => $iosExt
         ];
-//        $notification = array(
-//            'alert'  => $alert,
-//            'extras' => $extras
-//        );
-        //自定义消息
-//        $message = [
-//            'msg_content' => $extras['content'],
-//            'title'  => $alert,
-//            'extras' => $extras
-//        ];
+       // $notification = array(
+       //     'alert'  => $alert,
+       //     'extras' => $extras
+       // );
+       //  自定义消息
+       // $message = [
+       //     'msg_content' => $extras['content'],
+       //     'title'  => $alert,
+       //     'extras' => $extras
+       // ];
         //可选参数
         $options = [
             'apns_production' => true  //true是生产环境false是开发环境
@@ -161,10 +161,10 @@ class Jpush extends Controller
 
         $res = Jpush::$push->setPlatform($platform)
             ->addAlias($extras['alias'])
-//            ->setNotificationAlert($alert,$notification)
+           // ->setNotificationAlert($alert,$notification)
             ->iosNotification($alert,$ios_notification)
             ->androidNotification($alert,$android_notification)
-//            ->message($alert,$message)
+           // ->message($alert,$message)
             ->options($options)
             ->send();
         return $res;

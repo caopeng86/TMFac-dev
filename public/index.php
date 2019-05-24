@@ -43,5 +43,10 @@ define('SERVER_ENV',strtoupper(str_replace('.','_',$_SERVER['SERVER_NAME'])).'_'
 //天马工场 model前缀
 define('TM_PREFIX','tm_');
 
+use app\extend\controller\Logservice;
+Logservice::seedMsec('index');
+
 // 执行应用并响应
 Container::get('app')->run()->send();
+
+Logservice::writeArray("================index end==============", '接口执行结束',1,"index");

@@ -1,5 +1,9 @@
 <?php
 // 应用公共文件
+use app\api\model\UserModel;
+use app\api\model\BranchModel;
+use app\api\model\RoleModel;
+use app\system\controller\Portal;
 
 /**
  * 接口返回json数据处理
@@ -65,6 +69,128 @@ function removeBOM($data) {
 	}
 	return $data;
 }
+
+/*解密公共函数
+ 入参：待解密字符串
+ 出参：解密后的字符串
+ 注意：该解密函数只能解密天马客户端或天马web前端提供的加密函数加密的数据,并且客户端发送请求的head中必须加入客户端封装得head参数
+*/
+function tmTokenDecrypt($data = ""){
+	if(empty($data)){
+		return false;
+	}
+	$strToken = "token_user";
+	$data = urldecode($data);
+
+    return openssl_decrypt(base64_decode($data), 'AES-128-CBC',substr(md5(base64_encode($strToken).md5($strToken)),0,16), OPENSSL_RAW_DATA, substr(md5(base64_encode($strToken).md5($strToken)),0,16));
+}
+
+/*
+ * 加密公共函数
+    入参：待加密字符串，如果想对数组加密可以先转成json字符串再传进来
+    出参：加密后的字符串
+    注意：加密后的数据可以通过天马客户端或天马web前端提供的解密方法解密,并且客户端发送请求的head中必须加入客户端封装得head参数
+*/
+function tmTokenEncrypt($data = ""){
+	if(empty($data)){
+		return false;
+	}
+    $strToken = "token_user";
+
+    $data = openssl_encrypt($data, 'AES-128-CBC', substr(md5(base64_encode($strToken).md5($strToken)),0,16), OPENSSL_RAW_DATA, substr(md5(base64_encode($strToken).md5($strToken)),0,16));
+
+    return urlencode(base64_encode($data));
+}
+
+/**
+ * 生成唯一code
+ * @param array $userInfo
+ * @return string
+ */
+function createTokenCode($userInfo = []) {
+	if(empty($userInfo)){
+		return false;
+	}
+
+	$userInfo['token_code'] = createCode();
+	$token = json_encode($userInfo,JSON_UNESCAPED_UNICODE);
+
+    return tmTokenEncrypt($token);
+}
+
+/**
+ * 解析唯一code
+ * @param string $data
+ * @return string
+ */
+function paraseTokenCode($data = "") {
+	if(empty($data)){
+		return false;
+	}
+	
+	$data = tmTokenDecrypt($data);
+	$data = json_decode($data,true);
+
+    return $data;
+}
+
+/**
+ * 登录令牌验证
+ * @return bool
+ */
+function getUserIByToken($token){
+    //判断是否传入token
+    if(empty($token) || strlen($token) < 20){
+        die('{"code":500,"msg":"token参数错误","data":""}');
+    }
+
+	$userInfo = Cache::get($token);
+	if(empty($userInfo) || empty($userInfo) || empty($userInfo['user_id'])){
+		die('{"code":501,"msg":"token失效","data":""}');
+	}
+
+	$ctime = time();
+	$status = $userInfo['status'] ?? 0;
+	$close_start_time = $userInfo['close_start_time'] ?? 0;
+	$close_end_time = $userInfo['close_end_time'] ?? 0;
+	$create_token_time = $userInfo['create_token_time'] ?? $userInfo['access_key_create_time'] ?? 0;
+    if(1 == $status){
+        die('{"code":502,"msg":"很遗憾，该账户已被列入企业黑名单","data":""}');
+    }
+    if($ctime>$close_start_time && $ctime<$close_end_time){
+        die('{"code":503,"msg":"已经被封号，封号时间'.date('Y-m-d H:i:s', $close_start_time).'到'.date('Y-m-d H:i:s', $close_end_time).'","data":""}');
+    }
+
+    //判断token是否已经需要自动续期，到期前24小时续期
+    $exptime = Config::get('token_time') - ($ctime - $create_token_time);
+    if($exptime < 3*24*36000 && $exptime > 0){
+		$userInfo['create_token_time'] = $ctime;
+        Cache::set($token, $userInfo, Config::get('token_time'));
+    }
+
+    return $userInfo['user_id'];
+}
+
+/**
+ * 更新会员缓存
+ * @param $condition
+ * @return int|string
+ */
+function updateTokenCache($memberId,$token,$memberInfo){
+    if(empty($memberId))
+	{
+		return false;
+	}
+	$old_token=Cache::get(TM_MEMBER_ID_TOKEN_INFO."_".$memberId);
+	if(!empty($old_token)){
+		Cache::rm($old_token);
+	}
+	Cache::set(TM_MEMBER_ID_TOKEN_INFO."_".$memberId,$token,Config::get('token_time'));
+	Cache::set($token, $memberInfo,Config::get('token_time'));
+
+    return true;
+}
+
 /**
  * 生成唯一code
  * @param string $namespace
@@ -86,6 +212,37 @@ function createCode($namespace = '') {
             substr($hash, 20, 12) ;
     return $guid;
   }
+
+ /**
+ * 生成唯一订单ID
+ * @param string $namespace
+ * @return string
+ */
+function createOrderId($namespace = '') {
+    list($msec, $sec) = explode(' ', microtime());
+	$num = mt_rand(0,99);
+	$msec = strval(floatval($msec)*1000000);
+	$msec = str_pad($msec,6,'0',STR_PAD_LEFT);
+	$num = str_pad(strval($num),2,'0',STR_PAD_LEFT);
+	$order_id = strval(date("YmdHis")).$msec.$num;
+    return $order_id.$namespace;
+}
+
+ /**
+ * 生成唯一交易流水ID
+ * @param string $namespace
+ * @return string
+ */
+function createTradeId($namespace = '') {
+    list($msec, $sec) = explode(' ', microtime());
+	$num = mt_rand(0,9999);
+	$msec = strval(floatval($msec)*1000000);
+	$msec = str_pad($msec,6,'0',STR_PAD_LEFT);
+	$num = str_pad(strval($num),4,'0',STR_PAD_LEFT);
+	$trade_id = strval(date("YmdHis")).$msec.$num;
+    return $trade_id.$namespace;
+}
+
 
 /**
  * 函数用途描述:必须参数验证,请求方式验证
@@ -351,7 +508,7 @@ function getCommonArticleType(){
     if(empty($config_data)){
        return false;
     }
-    $getFromids = tmBaseHttp("http://www.360tianma.com/reptile/Reptile/getFromids",['key'=>$config_data['value']],'POST');
+    $getFromids = tmBaseHttp(config("tm_shop_url")."/reptile/Reptile/getFromids",['key'=>$config_data['value']],'POST');
     if(empty($getFromids)){
         return false;
     }
@@ -365,6 +522,11 @@ function getCommonArticleType(){
 }
 
 function tmBaseHttp($url, $params, $method = 'GET', $multi = false, $header = array()){
+    
+    $array=@get_headers($url, 1); 
+    if(!preg_match('/200/',$array[0]))  return false;
+
+
     $opts = array(
         CURLOPT_TIMEOUT        => 6000,
         CURLOPT_RETURNTRANSFER => 1,
@@ -467,6 +629,36 @@ function pushMessage($title,$content,$url,$android_info,$ios_info,$type = '系�
     }
     return false;
 }
+
+//***********************************************************
+//*
+//*Software: 单个精准推送
+//*
+//***********************************************************
+function pushone($title,$content,$url,$android_info,$ios_info,$type = '系统消息',$push_time = ''){
+    $inputData['title'] = $title;
+    $inputData['content'] = $content;
+    $inputData['url'] = $url;
+    $inputData['ios_info'] = json_encode($ios_info);
+    $inputData['android_info'] = json_encode($android_info);
+    $inputData['type'] = $type;
+    $inputData['add_time'] = time();
+    $inputData['push_time'] = $push_time > $inputData['add_time']?$push_time:$inputData['add_time']; //如果存在推送时间并大于当前时间 则定时推送
+    $inputData['status'] = 1;
+    $PushMessageModel = new \app\member\model\PushMessageModel();
+    $result = $PushMessageModel->addInfo($inputData);
+    if($result){
+        $PushMessageModel->addPushMessage($result);
+    }
+    if($result){
+        $jobController = new \app\queue\controller\Job();
+        $jobController->actionPushMessage();
+        $jobController->actionGetRes();
+        return true;
+    }
+    return false;
+}
+
 /*生成app支付宝签名
 入参：
 $out_trade_no 订单号  必须
@@ -910,9 +1102,56 @@ function getEncryptGetData()
     return $data;
 }
 
+
+/*
+ * 获取加密的get参数并自动转成明文
+ * 天马自己的接口使用的
+ * */
+function getEncryptData()
+{
+    $postdata = getEncryptPostData()??[];
+	$getdata = getEncryptGetData()??[];
+	$data = array_merge($getdata,$postdata);
+    return $data;
+}
+
 /**
  * 接口返回加密json数据处理
- * 天马自己的接口使用的
+ * 天马自营项目的接口使用的
+ * @param $status
+ * @param $msg
+ * @param array $data
+ * @return \think\response\Json
+ */
+function resultEncryptJson($status,$msg,$data = [],$is_encrypt=true){
+    $count = true;
+    if(is_array($data) && 0 == count($data)){
+        $count = false;
+        $data = json($data);
+    }
+    $arr = [
+        'error_code'=>$status,
+        'result'=>$data,
+        'error_message'=>$msg,
+        'tmencrypt'=>0,
+        'tmcode'=>1
+    ];
+    $head = getAllHeader();
+    if(isset($head['tmencrypt']) && 1==$head['tmencrypt'] && $is_encrypt && $count){
+        if(is_array($data)){
+            $data = tmEncrypt(json_encode($data));
+        }else{
+            $data = tmEncrypt($data);
+        }
+        $arr['result'] = $data;
+        $arr['tmencrypt'] = 1;
+    }
+    return json($arr);
+}
+
+/**
+ * 接口返回加密json数据处理
+ * 天马框架的接口使用的
  * @param $status
  * @param $msg
  * @param array $data
@@ -944,3 +1183,283 @@ function reEncryptJson($status,$msg,$data = [],$is_encrypt=true){
     return json($arr);
 }
 
+//***********************************************************
+//*
+//*Software: 
+//*
+//***********************************************************
+function checkToken($request){
+        //判断请求方式以及请求参数
+        $inputData = $request;
+        $method = Request::method();    
+        $params = ['token'];
+        $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
+        $ret2 = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
+        if(!$ret&&!$ret2){
+            return reTmJsonObj(500,$msg,[]);
+        }
+
+        //检查缓存中token
+        $cache = Cache::get($inputData['token']); 
+        $token = $cache['access_key'];
+        if(!$cache || empty($cache['user_id'])){
+            return reTmJsonObj(500, '无效的token', []);
+        }
+
+        $user_id = $cache['user_id'];
+        //没有则查询数据库是否有这个token的用户存在
+        $condition = [
+            'user_id' => $user_id,
+            'status' => 0,
+            'deleted' => 0
+        ];
+        $field = 'user_id, user_code, user_name, real_name, password, head_pic,
+         email, mobile, branch_id, access_key, access_key_create_time';
+        $userModel = new UserModel();
+        
+        
+
+        $userInfo = $userModel->getUserInfo($condition, $field);
+        //没有这个用户说明token错误
+        if(!$userInfo){
+            return reTmJsonObj(500, '用户不存在', []);
+        }
+
+        //获取用户部门code,name
+        $branch = _getBranch($userInfo['branch_id']);
+        if($branch === false){
+            return reTmJsonObj(500, '获取用户部门失败', []);
+        }
+        $userInfo['branch_code'] = $branch['branch_code'];
+        $userInfo['branch_name'] = $branch['branch_name'];
+
+        //获取用户所有角色code,name
+        $role = _getRole($userInfo['user_code']);
+        if($role === false){
+            return reTmJsonObj(500, '获取用户所有角色失败', []);
+        } //return $role->getData();
+
+        if(!is_array($role))   $role =json_decode($role);
+        
+        $roleCodes = array_column($role, 'role_code'); 
+
+        //获取用户权限code,name
+        $privilege = _getPrivilege($roleCodes);
+        if($privilege === false){
+            return reTmJsonObj(500, '获取用户权限失败', []);
+        }
+
+        //获取用户所有站点code,name
+        $site = _getSite($roleCodes);
+        if($site === false){
+            return reTmJsonObj(500, '获取用户站点失败', []);
+        }
+
+        //获取所有应用code,name,app_code
+        $component = _getComponent($roleCodes);
+        if($component === false){
+            return reTmJsonObj(500, '获取用户站点失败', []);
+        }
+
+        $return = [
+            'token' => $token,
+            'user_info' => $userInfo,
+            'role' => $role,
+            'site' => $site,
+            'privilege' => $privilege,
+            'component' => $component
+        ];
+
+        $tokenStr = base64_decode($inputData['token']) ?? "";
+        $tokenArr = json_decode($tokenStr,true) ?? [];
+        $expTime = $tokenArr['expTime'] ?? 0;
+        if(time()-$expTime < 24*3600){
+            Cache::rm($inputData['token']);
+            Cache::set($inputData['token'],$cache,Config::get('token_time'));
+        }
+
+        return reTmJsonObj(200, '验证成功', $return);
+    }
+
+    /**
+     * 获取用户部门name,code
+     * @param $branchId
+     * @return array|bool
+     */
+    function _getBranch($branchId){
+        $branchModel = new BranchModel();
+        $branch = $branchModel->getBranchInfo(['branch_id' => $branchId], 'branch_code, branch_name');
+        if($branch === false){
+            Logservice::writeArray(['sql'=>$this->branchModel->getLastSql()], '获取用户部门失败', 2);
+            return false;
+        }
+        return $branch;
+    }
+    /**
+     * 获取角色name,code
+     * @param $userCode
+     * @return array|bool
+     */
+    function _getRole($userCode){
+        //查询用户角色表获取所有角色code
+        $condition['tm_role_user.user_code'] = $userCode;
+        $field = 'tm_role_user.role_code, tm_role.role_name';
+        $roleModel = new RoleModel();
+        $role = $roleModel->getRoleUserListDetail($condition, $field);
+        if($role === false){
+            Logservice::writeArray(['sql'=>$roleModel->getLastSql()], '获取角色失败', 2);
+            return false;
+        }
+        return $role;
+    }
+
+    /**
+     * 获取权限name,code
+     * @param $roleCodes
+     * @return array|bool
+     */
+    function _getPrivilege($roleCodes){
+        //查询所有角色对应的所有权限
+        $condition = [['tm_role_privilege.role_code', 'in', $roleCodes]];
+        $field = 'tm_role_privilege.privilege_code, tm_privilege.privilege_name';
+        $roleModel = new RoleModel();
+        $privilege = $roleModel->getRolePrivilegeListDetail($condition, $field);
+        if($privilege === false){
+            Logservice::writeArray(['sql'=>$roleModel->getLastSql()], '获取权限失败', 2);
+            return false;
+        }
+        return $privilege;
+    }
+
+    /**
+     * 获取站点code,name
+     * @param $roleCodes
+     * @return mixed
+     */
+    function _getSite($roleCodes){
+        //查询所有角色对应的所有站点
+        $condition = [['tm_role_site.role_code', 'in', $roleCodes]];
+        $field = 'tm_role_site.site_code, tm_site.site_name';
+        $roleModel = new RoleModel();
+        $site = $roleModel->getRoleSiteListDetail($condition, $field);
+        if($site === false){
+            Logservice::writeArray(['sql'=>$roleModel->getLastSql()], '获取站点失败', 2);
+            return false;
+        }
+        return $site;
+    }
+
+    /**
+     * 获取所有应用code,name,app_code
+     * @param $roleCodes
+     * @return mixed
+     */
+    function _getComponent($roleCodes){
+        //查询所有角色对应的所有站点
+        $condition = [['tm_role_component.role_code', 'in', $roleCodes]];
+        $field = 'tm_component.component_code, tm_component.component_name, tm_component.component_key,
+         tm_component.developer_code, tm_component.access_key, tm_component.secret_key, tm_component.index_version,
+         tm_component.admin_version, tm_component.app_code, tm_component.create_time, tm_component.company_name,
+         tm_component.address, tm_component.tel, tm_component.description, tm_component.linkman, tm_component.note,
+         tm_component.component_pic';
+         $roleModel = new RoleModel();
+        $site = $roleModel->getRoleComponentListDetail($condition, $field);
+        if($site === false){
+            Logservice::writeArray(['sql'=>$roleModel->getLastSql()], '获取应用失败', 2);
+            return false;
+        }
+        return $site;
+    }
+    
+    function getClientIP($hasTransmit = false)
+	{
+		$strIp = '';
+		if(isset($_SERVER['HTTP_CLIENTIP']))
+		{
+			$strIp = strip_tags($_SERVER['HTTP_CLIENTIP']);
+        }
+		elseif(isset($_SERVER['HTTP_X_FORWARDED_FOR']))
+		{
+            $strIp = $_SERVER['HTTP_X_FORWARDED_FOR'];
+            //获取最后一个
+            $strIp = strip_tags(trim($strIp));
+            $intPos = strrpos($strIp, ',');
+            if($intPos > 0)
+			{
+                $strIp = substr($strIp, $intPos + 1);
+            }
+        }
+		elseif(!$hasTransmit && isset($_SERVER['REMOTE_ADDR']))
+		{
+           $strIp = strip_tags($_SERVER['REMOTE_ADDR']);
+        }
+		elseif(isset($_SERVER['HTTP_CLIENT_IP']))
+		{
+            $strIp = strip_tags($_SERVER['HTTP_CLIENT_IP']);
+        }
+		elseif(isset($_SERVER['REMOTE_ADDR']))
+		{
+			$strIp = strip_tags($_SERVER['REMOTE_ADDR']);
+		}
+		$strIp = trim($strIp);
+		if(!ip2long($strIp))
+		{
+			$strIp = '127.0.0.1';
+		}
+		
+		return $strIp;
+    }
+
+    //***********************************************************
+    //*
+    //*Software: 获取app下载地址
+    //*
+    //***********************************************************
+    function get_appurl($value='')
+    {
+        $list=Db::table("tm_config")->field('key,value,remarks')->where('key','in',['android_url','ios_url'])->select();
+        return $list;
+    }
+
+    //***********************************************************
+    //*
+    //*Software: 检测出是否有非数字  有则返回 true
+    //*
+    //***********************************************************
+    function check_number($x)
+    {   
+        $yz=preg_replace("#[0-9 ]#",'',$x);
+        if ($yz!=="") {
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    //***********************************************************
+    //*
+    //*Software: 得到组件模块当前的后台入口地址
+    //*
+    //***********************************************************
+    function get_module_adminurl($value='')
+    {
+        $portal=new Portal(1);
+        $portal_key=$portal->portal_key;
+        $portals=Db::table('tm_portal')->field('portal_value')->where(['portal_key'=>$portal_key])->find()['portal_value'];
+        $portals=json_decode($portals,true);
+        $module_now=request()->module();
+        $webUrl='';
+        foreach ($portals as $k => $v) {
+            // if(is_string($v)) $v=json_decode($v,true); 
+            // dump($v);die(); 
+            foreach ($v['children'] as $ke => $va) {
+                if(stristr($va['webUrl'],$module_now)) {
+                    $webUrl=$va['webUrl']; break;
+                }
+            }
+        }
+        return $webUrl;
+    }
+     
+    
+     

@@ -187,9 +187,9 @@ function create_tables_multi($db=null, $prefix = '',$dir = 'db'){
             }elseif($sql == 'config.sql'){ //配置文件sql
                 create_tables($db,$prefix,$dir.'/'.$sql);
             }
-        }elseif($sql != '.' && $sql != '..' && is_dir(Env::get('root_path').$dir.'/'.$sql)){
+        }/*elseif($sql != '.' && $sql != '..' && is_dir(Env::get('root_path').$dir.'/'.$sql)){
             $dir_array[] = $sql;
-        }
+        }*/
     }
     if(count($dir_array) > 0){  //递归文件夹处理
         foreach ($dir_array as $sql){

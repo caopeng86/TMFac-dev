@@ -1341,6 +1341,17 @@ class Request
             $this->typeCast($data, $type);
         }
 
+        $module = $this->module();
+        $controller = $this->controller();
+        $url = $module."/".$controller."/";
+        if($data && is_array($data)){
+            foreach ($data as $key=>$value){
+                if(strpos($key,$url)!==false){
+                    unset($data[$key]);
+                }
+            }
+        }
+
         return $data;
     }
 

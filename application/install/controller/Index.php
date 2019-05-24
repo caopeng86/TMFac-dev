@@ -90,7 +90,7 @@ class Index extends \think\Controller {
 				unset($DB['database']);
 				$db  = \think\Db::connect($DB);
 				$sql = "CREATE DATABASE IF NOT EXISTS `{$dbname}` DEFAULT CHARACTER SET utf8";
-				if (!$db->execute($sql)) {
+				if (false === $db->execute($sql)) {
 					return $this->error('创建数据库失败');
 				} else {
 					return $this->redirect('/install/index/sql');
@@ -172,7 +172,7 @@ class Index extends \think\Controller {
 //        $create_sql="CREATE DATABASE $dbname DEFAULT CHARSET utf8mb4 COLLATE utf8mb4_unicode_ci;";
         $create_sql = "CREATE DATABASE IF NOT EXISTS `{$dbname}` DEFAULT CHARACTER SET utf8";
         $retval = $db->execute($create_sql);
-        if(!$retval)
+        if(false === $retval)
         {
             show_msg('数据库:'.$dbname.'.初始化失败！');
             return false;

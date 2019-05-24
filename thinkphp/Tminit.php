@@ -46,6 +46,16 @@ class Tminit{
         if(empty($get_all_head['tmtimestamp']) || empty($get_all_head['tmrandomnum']) || empty($get_all_head['tmencryptkey'])){
             return false;
         }
+        if(13 == strlen($get_all_head['tmtimestamp'])){
+            if($get_all_head['tmtimestamp']<time()*1000-5*1000){
+                return false;
+            }
+        }
+        if(10 == strlen($get_all_head['tmtimestamp'])){
+            if($get_all_head['tmtimestamp']<time()-5){
+                return false;
+            }
+        }
         if($get_all_head['tmencryptkey'] !== md5(base64_encode(md5($get_all_head['tmtimestamp']).$get_all_head['tmrandomnum']).$get_all_head['tmrandomnum'])){
             return false;
         }

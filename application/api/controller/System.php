@@ -140,4 +140,29 @@ class System extends Controller
         $ConfigList['distance'] = 3; //默认三千米
         return reTmJsonObj(200, '获取成功', $ConfigList);
     }
+
+    /**
+     * 获取app唯一标示
+     */
+    public function getTmAppKey(){
+        //判断请求方式以及请求参数
+        $inputData = Request::get();
+        $method = Request::method();
+        $params = [];
+        $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
+        if(!$ret){
+            return reTmJsonObj(500, $msg, []);
+        }
+        $condition = [];
+        $condition['key'] = ['android_app_key','ios_app_key'];
+        $condition['type'] = 'tm_app_key';
+        $ConfigList = $this->ConfigModel->getConfigList($condition);
+        if($ConfigList === false){
+            return reTmJsonObj(500, '获取失败', []);
+        }
+        $ConfigList = $this->ConfigModel->ArrayToKey($ConfigList);
+        $ConfigList['android_app_key'] = empty($ConfigList['android_app_key'])?"":$ConfigList['android_app_key'];
+        $ConfigList['ios_app_key'] = empty($ConfigList['ios_app_key'])?"":$ConfigList['ios_app_key'];
+        return reTmJsonObj(200, '获取成功', $ConfigList);
+    }
 }

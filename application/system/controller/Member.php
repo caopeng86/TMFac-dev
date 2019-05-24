@@ -10,8 +10,8 @@ namespace app\system\controller;
 
 
 use app\extend\controller\Logservice;
-use app\api\model\MemberModel;
 use app\api\model\SiteModel;
+use app\member\model\MemberModel;
 use app\member\model\MemberThirdPartyModel;
 use app\member\model\MemberpointModel;
 use app\member\model\MemberBehaviorLogModel;
@@ -118,7 +118,7 @@ class Member extends Controller
         //获取搜索条件
         $condition = $this->_getCondition($inputData);
         $field = 'member_id,member_code, member_name, member_nickname, member_real_name, email,
-         mobile, head_pic, create_time, status, wx, qq, zfb, wb,birthday,sex,ip,point,access_key_create_time,close_start_time,close_end_time,member_sn';
+         mobile, head_pic, create_time, status, wx, qq, zfb, wb,birthday,sex,ip,point,access_key_create_time,close_start_time,close_end_time,member_sn,channel_sources';
         empty($inputData['page_size']) ? $pageSize = 20 : $pageSize = $inputData['page_size'];
         $order = 'create_time desc';
         if(!empty($inputData['sort']) && in_array($inputData['sort'],['create_time','access_key_create_time']) && !empty($inputData['order']) && in_array($inputData['order'],['desc','asc'])){
@@ -127,10 +127,10 @@ class Member extends Controller
         $orwhere = '1=1 ';
         //获取会员列表数据
         if(empty($inputData['channel_sources'])){
-            if(!empty($inputData['channel_sources_top']) || 0 == $inputData['channel_sources_top']){
+            if(!empty($inputData['channel_sources_top'])){
                 $orwhere .= " and (cast(channel_sources as UNSIGNED INTEGER) < ".$inputData['channel_sources_top']." or cast(channel_sources as UNSIGNED INTEGER) = ".$inputData['channel_sources_top'].")";
             }
-            if(!empty($inputData['channel_sources_low']) || 0 == $inputData['channel_sources_low']){
+            if(!empty($inputData['channel_sources_low'])){
                 $orwhere .= " and (cast(channel_sources as UNSIGNED INTEGER) > ".$inputData['channel_sources_low']." or cast(channel_sources as UNSIGNED INTEGER) = ".$inputData['channel_sources_low'].")";
             }
         }
@@ -183,11 +183,11 @@ class Member extends Controller
                 $status = "拉黑";
             }
             $exportToExcelArr = [$v['member_id'],$v['member_sn'],$v['head_pic'],$v['member_nickname'],$v['point'],
-                $v['birthday'],$sex,$v['mobile'],$status,$v['create_time'],$v['access_key_create_time']
+                $v['birthday'],$sex,$v['mobile'],$status,$v['create_time'],$v['access_key_create_time'],$v['channel_sources']
             ];
             $exportToExcelAllArr[] = $exportToExcelArr;
         }
-        $this->exportToExcel("会员名单.xls",["ID","账号","头像","昵称","积分","生日","性别","手机号","状态","注册时间","最近登录时间"],$exportToExcelAllArr);
+        $this->exportToExcel("会员名单.xls",["ID","账号","头像","昵称","积分","生日","性别","手机号","状态","注册时间","最近登录时间","邀请码"],$exportToExcelAllArr);
         exit();
     }
 
@@ -861,7 +861,7 @@ class Member extends Controller
         if($memberCount){
             $login_typeData = [];
             foreach ($memberCount as $val) {
-                $login_typeData['key'][] = $type_name[$val['login_type']];
+                $login_typeData['key'][] = $type_name[$val['login_type']]??"mobile";
                 $login_typeData['value'][] = $val['num'];
             }
             return reTmJsonObj(200,'获取成功',$login_typeData);

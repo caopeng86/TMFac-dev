@@ -21,6 +21,7 @@ use think\facade\Cache;
 use think\facade\Config;
 use think\facade\Env;
 use think\facade\Request;
+use think\Db;
 require_once '../vendor/tmdatapull/GetData.php';
 
 
@@ -128,16 +129,16 @@ class Member extends Base
         }
 
         //验证手机号
-        if(!preg_match("/^1[34578]\d{9}$/", $inputData['mobile'])){
+        if(!preg_match("/^1[3456789]\d{9}$/", $inputData['mobile'])){
             return reTmJsonObj(500, '手机号错误', []);
         }
 
-        //state 1: 登录 2: 密码找回 3: 修改密码 4: 原手机号验证 5: 新手机号验证
-//        $arr = [1,2,3,4,5];
-//        $template_code = 'SMS_125026751';
-//        if(in_array($inputData['state'], $arr)){
-//            $template_code = 'SMS_125026751';
-//        }
+       //  state 1: 登录 2: 密码找回 3: 修改密码 4: 原手机号验证 5: 新手机号验证
+       // $arr = [1,2,3,4,5];
+       // $template_code = 'SMS_125026751';
+       // if(in_array($inputData['state'], $arr)){
+       //     $template_code = 'SMS_125026751';
+       // }
 
         //配置发送短信的配置
         $config = [
@@ -220,13 +221,14 @@ class Member extends Base
         if (empty($getMemberInfo)){
             return reTmJsonObj(500, '账号异常', []);
         }
+		$memberId = $getMemberInfo["member_id"];
         if(isset($inputData['password'])){
             $inputData['password'] = md5(md5($inputData['password']));
         }
         $Configcondition = ['type'=>'point'];
         $ConfigList = $this->ConfigModel->getConfigList($Configcondition,'key,value');
         $ConfigList = array_column($ConfigList,null,'key');
-        $re = $this->memberModel->updateMember($condition, $inputData);
+        $re = $this->memberModel->updateMember(['member_id'=>$memberId], $inputData);
         $re1 = true;
         if(isset($inputData['sex'])){
             $re1 = $this->updatePoint($getMemberInfo,$ConfigList,$condition,"sex_edit_time","sex","完善性别");
@@ -300,7 +302,10 @@ class Member extends Base
         $condition['mobile'] = $inputData['mobile'];
         $condition['site_code'] = $inputData['site_code'];
         $inputData['password'] = md5(md5($inputData['password']));
-        $re = $this->memberModel->updateMember($condition, $inputData);
+
+		$getMemberInfo = $this->memberModel->getMemberInfo($condition);
+		$memberId = $getMemberInfo['member_id'] ?? 0;
+        $re = $this->memberModel->updateMember(['member_id' => $memberId], $inputData);
         if($re === false){
             Logservice::writeArray(['sql'=>$this->memberModel->getLastSql()], '修改会员密码失败', 2);
             return reTmJsonObj(500, '修改失败', []);
@@ -360,12 +365,15 @@ class Member extends Base
         if($path === false){
             return reTmJsonObj(500, '图片数据处理失败', []);
         }
-//        $path = $this->_base64ImgUpload($inputData['head_pic'], $inputData['mobile']);
-//        if($path === false){
-//            return reTmJsonObj(500, '上传服务器失败', []);
-//        }
+       // $path = $this->_base64ImgUpload($inputData['head_pic'], $inputData['mobile']);
+       // if($path === false){
+       //     return reTmJsonObj(500, '上传服务器失败', []);
+       // }
         //保存路径到数据库
-        $re = $this->memberModel->updateMember(['member_code' => $inputData['member_code']], ['head_pic' => $path[0]]);
+		$condition['member_code'] = $inputData['member_code'];
+		$getMemberInfo = $this->memberModel->getMemberInfo($condition);
+		$memberId = $getMemberInfo['member_id'] ?? 0;
+        $re = $this->memberModel->updateMember(['member_id' => $memberId], ['head_pic' => $path[0]]);
         if($re === false){
             Logservice::writeArray(['sql'=>$this->memberModel->getLastSql()], '修改会员头像失败', 2);
             return reTmJsonObj(500, '保存失败', []);
@@ -415,8 +423,9 @@ class Member extends Base
         $ConfigList = $this->ConfigModel->getConfigList($Configcondition,'key,value');
         $ConfigList = array_column($ConfigList,null,'key');
         $getMemberInfo = $this->memberModel->getMemberInfo($condition);
-        $re1 = $this->updatePoint($getMemberInfo,$ConfigList,$condition,"mobile_edit_time","mobile","绑定手机号");
-        $re = $this->memberModel->updateMember($condition,['mobile'=>$inputData['mobile']]);
+		$memberId = $getMemberInfo['member_id'];
+        $re1 = $this->updatePoint($getMemberInfo,$ConfigList,['member_id'=>$memberId],"mobile_edit_time","mobile","绑定手机号");
+        $re = $this->memberModel->updateMember(['member_id'=>$memberId],['mobile'=>$inputData['mobile']]);
         if($re === false){
             Logservice::writeArray(['sql'=>$this->memberModel->getLastSql()], '手机号更换失败', 2);
             return reTmJsonObj(500, '更换失败', []);
@@ -432,28 +441,24 @@ class Member extends Base
      */
     public function getMemberInfo(){
         //判断请求方式以及请求参数
-        //$inputData = Request::get();
-        $inputData = getEncryptGetData();
-        if(!$inputData){
-            return reTmJsonObj(552,"解密数据失败",[]);
-        }
+        $inputData = Request::get();
         $method = Request::method();
-        $params = ['member_code'];
-        $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
-        if(!$ret){
-            return reTmJsonObj(500, $msg, []);
+        $token = Request::header('token');
+        if(!$token || strlen($token)<20){
+            return reTmJsonObj(500, "token参数错误", []);
+        }
+		
+		$memberId = getUserIByToken($token);
+		if(empty($memberId)){
+            return reTmJsonObj(500, "token验证失效", []);
         }
 
-        $condition['member_code'] = $inputData['member_code'];
-        //  $field = 'member_id,member_code, member_name, member_nickname, member_real_name, site_code, email, mobile, head_pic, create_time, status, wx, qq, zfb, wb,receive_notice,wifi_show_image,list_auto_play';
-
-        $field = 'member_id,member_code, member_name, member_nickname,member_sn,member_real_name,site_code,email,deleted,sex_edit_time,birthday_edit_time,mobile_edit_time,wb_edit_time,wx_edit_time,qq_edit_time,
-         mobile, head_pic, create_time, status, wx, qq, zfb, wb,birthday,sex,ip,point,access_key_create_time,close_start_time,close_end_time,password,receive_notice,wifi_show_image,list_auto_play,login_type,channel_sources';
-        $memberInfo = $this->memberModel->getMemberInfo($condition, $field);
-        if($memberInfo === false){
+        $memberInfo = $this->memberModel->getMemberInfoById($memberId);
+        if(empty($memberInfo)){
             Logservice::writeArray(['sql'=>$this->memberModel->getLastSql()], '获取会员详情失败', 2);
             return reTmJsonObj(500, '获取会员信息失败', []);
         }
+		
         $memberInfo['login_type'] = empty($memberInfo['login_type'])?'mobile':$memberInfo['login_type'];
         $siteModel = new SiteModel();
         $siteName = $siteModel->getSiteInfo(['site_code' => $memberInfo['site_code']], 'site_name')['site_name'];
@@ -470,17 +475,21 @@ class Member extends Base
         $ConfigList = array_column($ConfigList,'value','key');
         //第3方信息获取
         $memberThirdPartyModel = new MemberThirdPartyModel();
-        $memberInfo['other_info'] = $memberThirdPartyModel->getThirdPartyList(['member_id'=>$memberInfo['member_id']],'uid,nick_name,member_id,head_url,address,ip,type');
+        $memberInfo['other_info'] = $memberThirdPartyModel->getThirdPartyListById($memberInfo['member_id']);
         $memberInfo['other_info'] = $memberThirdPartyModel->ArrayToType($memberInfo['other_info']);
-        $ConfigList['sex'] = empty($memberInfo['sex_edit_time'])?$ConfigList['sex']:0;
-        $ConfigList['birthday'] = empty($memberInfo['birthday_edit_time'])?$ConfigList['birthday']:0;
-        $ConfigList['mobile'] = empty($memberInfo['mobile_edit_time'])?$ConfigList['mobile']:0;
-        $ConfigList['wb'] = empty($memberInfo['wb_edit_time'])?$ConfigList['wb']:0;
-        $ConfigList['wx'] = empty($memberInfo['wx_edit_time'])?$ConfigList['wx']:0;
-        $ConfigList['qq'] = empty($memberInfo['qq_edit_time'])?$ConfigList['qq']:0;
+        $ConfigList['sex'] = empty($memberInfo['sex_edit_time'])?$ConfigList['sex']??0:0;
+        $ConfigList['birthday'] = empty($memberInfo['birthday_edit_time'])?$ConfigList['birthday']??0:0;
+        $ConfigList['mobile'] = empty($memberInfo['mobile_edit_time'])?$ConfigList['mobile']??0:0;
+        $ConfigList['wb'] = empty($memberInfo['wb_edit_time'])?$ConfigList['wb']??0:0;
+        $ConfigList['wx'] = empty($memberInfo['wx_edit_time'])?$ConfigList['wx']??0:0;
+        $ConfigList['qq'] = empty($memberInfo['qq_edit_time'])?$ConfigList['qq']??0:0;
         $memberInfo['point_config'] = $ConfigList;
         $memberInfo['is_first_login'] = false;
-        return reEncryptJson(200, '获取会员信息成功', $memberInfo);
+		$memberInfo["appname"] = Config::get('app_name');
+
+		unset($memberInfo["password"]);
+
+        return reTmJsonObj(200, '获取会员信息成功', $memberInfo);
     }
 
     /*
@@ -739,13 +748,18 @@ class Member extends Base
      * 检查用户信息
      */
     public function checkMemberInfo(){
-        $condition = [
-            ['member_id','=',$this->memberInfo['member_id']],
-            ['status','=',0]
-        ];
-        $field = 'mobile,birthday,sex,wx,qq,wb';
-        $memberInfo = $this->memberModel->getMemberInfo($condition,$field);
-        if(!$memberInfo){
+		$token = Request::header('token');
+        if(!$token || strlen($token)<20){
+            return reTmJsonObj(500, "token参数错误", []);
+        }
+		
+		$memberId = getUserIByToken($token);
+		if(empty($memberId)){
+            return reTmJsonObj(500, "token验证失效", []);
+        }
+
+        $memberInfo = $this->memberModel->getMemberInfoById($memberId);
+        if(!$memberInfo || $memberInfo['status'] != 0){
             return reTmJsonObj('500'.'用户不存在',[]);
         }
         $data = [];
@@ -756,6 +770,29 @@ class Member extends Base
         return reTmJsonObj('200','成功',$data);
     }
 
+
+    //***********************************************************
+    //*Software: 上传设备极光 Registration ID
+    //*
+    //***********************************************************
+    public function upjpushid(){
+        $member_id = input('param.member_id'); 
+        /*验证参数*/
+        // $memberId = getUserIByToken($token);
+        // if(empty($memberId)){
+        //     return reTmJsonObj(500, "token验证失效", []);
+        // }
+
+        if (input('?param.jpush_id') && input('param.jpush_id')!='') {
+            $data['jpush_id']=input('param.jpush_id');
+        }else{
+            return reEncryptJson(0, "请检查参数");
+        }
+        
+        $res = Db::table('tm_member','',false)->field('jpush_id')->where('member_id', $member_id)->update($data);
+        if ($res) return reEncryptJson(1, "跟新激光id成功");
+        return reEncryptJson(0, "跟新激光id失败");
+    }
 
 
 }

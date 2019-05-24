@@ -15,7 +15,7 @@
 
 return [
     // 应用名称
-    'app_name'               => '',
+    'app_name'               => Env::get(SERVER_ENV.'APP_NAME',true),
     // 应用地址
     'app_host'               => '',
     // 应用调试模式
@@ -96,6 +96,10 @@ return [
     'url_param_type'         => 0,
     // 是否开启路由延迟解析
     'url_lazy_route'         => false,
+
+    // 开启路由缓存
+    'route_check_cache' => true,//后加
+
     // 是否强制使用路由
     'url_route_must'         => false,
     // 路由是否完全匹配
@@ -162,6 +166,7 @@ return [
     ],
     //token保存时间
     'token_time'=>31104000,
+	'user_time'=>3600,
     'queue' =>[
         'connector'=>'database'
     ],
@@ -195,14 +200,21 @@ return [
             'mp2'=>'audio/mpeg, video/mpeg',
             'mp3'=>'audio/mpeg',
             'mp4'=>'audio/mp4, video/mp4',
+            'wmv'=>'audio/wmv, video/wmv',
+            'avi'=>'audio/avi, video/avi',
             "video/mp4"=>"video/mp4",
             "audio/mp4"=>"audio/mp4",
+            "video/wmv"=>"video/wmv",
+            "audio/wmv"=>"audio/wmv",
+            "video/avi"=>"video/avi",
+            "audio/avi"=>"audio/avi",
             'mpeg'=>'video/mpeg',
             'mpg'=>'video/mpeg',
             'mpp'=>'application/vnd.ms-project',
             'ogg'=>'application/ogg, audio/ogg',
             'pdf'=>'application/pdf',
             'png'=>'image/png',
+            'image/png'=>'image/png',
             'pot'=>'application/vnd.ms-powerpoint',
             'pps'=>'application/vnd.ms-powerpoint',
             'ppt'=>'application/vnd.ms-powerpoint',
@@ -279,5 +291,8 @@ return [
             'cdn'=>'',
         ],
     ],
-    'mch_domain'=>''
+    'mch_domain'=>'',
+    'tm_shop_url'=>'https://shop.360tianma.com',
+	'tianqiapi_url'=>'https://www.tianqiapi.com',
+	'sojson_url'=>'https://www.sojson.com',
 ];

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>积分调整</title>
+    <link  rel="stylesheet" type="text/css" href="lib/layui/css/layui.css" />
+    <link  rel="stylesheet" type="text/css" href="lib/public.css" />
+    <style>
+        #demo1{
+            width:344px;
+            height:135px;
+            margin: 20px 0;
+        }
+        .sort{
+            margin: 10px 0;
+            width:100px
+        }
+        .AlignCenter{
+            text-align: center;
+        }
+        .layui-btn-normal {
+            background-color: #1E9FFF!important;
+            height: 30px;
+            line-height: 30px !important;
+            width: 90px;
+        }
+        .title{
+            border-bottom: 1px solid #e6e6e6;
+            padding: 15px;
+            font-weight: bolder;
+        }
+        .integral-box{
+            display: none;
+            text-align: center;
+            margin-top: 35px;
+        }
+        .integral-box span{
+            font-size: 30px;
+            margin-left: 5px;
+        }
+        .integral-box span,.integral-box img{
+            vertical-align: middle;
+        }
+        .integral-adj{
+            margin-top: 15px;
+        }
+        .integral-adj .layui-input-block{
+            float: left;
+            margin-left: 0;
+            margin-right: 10px;
+            margin-top: 5px;
+        }
+        .integral-adj .layui-input-block input{
+            height: 30px;
+        }
+        .integralList-box{
+            font-size: 25px;
+            text-align: center;
+            margin-top: 50px;
+            display: none;
+        }
+        .integralList-box span{
+            font-size: 20px;
+            color: rgb(255,102,0);
+        }
+    </style>
+</head>
+<body>
+<form class="layui-form" action="">
+    <div class="title">积分调整</div>
+    <div class="integral-box">
+        <div>
+            <img src="./temp/integral.png" width="30px" alt="">
+            <span>599</span>
+        </div>
+        <p style="margin-top: 10px;font-size: 16px">当前积分</p>
+    </div>
+    <div class="integralList-box">
+        已选中 <span>0</span> 条
+    </div>
+    <div class="layui-form-item integral-adj">
+        <label class="layui-form-label">积分</label>
+        <div class="layui-input-block" style="width: 100px;float: left">
+            <select name="status" lay-verify="required">
+                <option value="">请选择</option>
+                <option value="0">增加</option>
+                <option value="1">减少</option>
+            </select>
+        </div>
+        <div class="layui-input-block" style="width: 170px;float: left">
+            <input type="text" name="point" onkeyup="this.value=this.value.replace(/[^\d]/g,'')" onpaste="this.value=this.value.replace(/[^\d]/g,'') "   lay-verify="required" lay-filter="point" maxlength="4" placeholder="请输入整数" autocomplete="off" class="layui-input typename">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">备注</label>
+        <div class="layui-input-block" style="position: relative">
+            <textarea onKeyDown="getNum(this);" id=”introduce” onKeyUp="getNum(this);" name="remarks" lay-filter="remarks" style="width: 280px;resize:none;height: 100px"  lay-verify="required"  maxlength="45" placeholder="请输入备注信息" class="layui-textarea"></textarea>
+            <div style="position: absolute;bottom: 5px;left: 240px;color: #999999;width:40px;">
+                <span id="initNum">0</span>/<span>45</span>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block" style="margin-left: 0;text-align: center;padding-top: 5px">
+            <button class="layui-btn layui-btn-normal submit" lay-submit lay-filter="submitInfo">提交</button>
+        </div>
+    </div>
+</form>
+</body>
+<script src="lib/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="lib/layui/layui.all.js"></script>
+<script>
+    $(window).ready(function(){
+        if(getQueryString("idDataNum")==1&&getQueryString("idData")!=null){
+            $('.integral-box').show();
+            $('.integralList-box').hide();
+            $('.integral-box span').html(getQueryString("point"));
+        }else{
+            $('.integral-box').hide();
+            $('.integralList-box').show();
+            $('.integralList-box span').html(getQueryString("idDataNum"));
+        }
+    })
+    function getNum(get){
+        var are = document.getElementById("introduce");
+        var num = document.getElementById("initNum");
+        if(get.value.length > 200){
+            are.value = are.value.substring(0,200);
+            // event.returnValue = false;
+        } else{
+            num.innerHTML = "";
+            num.innerHTML = get.value.length.toString();
+        }
+    }
+    layui.use('form', function(){
+        var form = layui.form;
+        //监听提交
+        form.on('submit(submitInfo)', function(data){
+            var point = '';
+            var postData = {
+                member_name: getQueryString('member_name'),
+                account : getQueryString('account'),
+                mobile : getQueryString('mobile'),
+                status : getQueryString('status'),
+                sex : getQueryString('sex'),
+                channel_sources_low : getQueryString('channel_sources_low'),
+                channel_sources_top : getQueryString('channel_sources_top'),
+            };
+            if(isNaN(Number(data.field.point))){
+                layer.msg("请输入整数")
+                return true;
+            }
+            if(data.field.status==0){
+                postData.point = data.field.point
+            }else{
+                postData.point = '-'+data.field.point
+            }
+            if(getQueryString("isExclude")=='true'){
+                postData.not_member_id = getQueryString("idData")
+            }else{
+                postData.member_id = getQueryString("idData")
+            }
+            $.ajax({
+                type: "post",
+                url: "/system/Member/updateMemberPoint",
+                cache: false,  //禁用缓存
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("token", localStorage.getItem("token"));
+                },
+                data: postData,//传入组装的参数
+                dataType: "json",
+                success: function (data) {
+                    if (data.code == 200) {
+                        parent.window.location.reload()
+                    } else if (data.code == 501) {
+                        parent.parent.parent.checkToken()
+                    } else {
+                        layer.msg(data.msg)
+                    }
+                }
+            })
+            return false;
+        });
+    });
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
+</script>
+</html>

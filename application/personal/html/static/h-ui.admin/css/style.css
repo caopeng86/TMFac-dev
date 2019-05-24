@@ -1,0 +1,78 @@
+@charset "utf-8";
+/* 你自己的样式 */
+
+/* 积分调整 */
+.adjustment_box{
+    border: 1px  solid #333333;
+    margin-bottom: 20px;
+}
+.adjustment_box .title_hd{
+    padding: 10px 15px;
+    background: #f2f2f2;
+    overflow: hidden;
+}
+.adjustment_title{
+    margin-top: 10px;
+    float: left;
+}
+.border_top{
+    border-top: 1px solid #333333;
+}
+.rule_box{
+    padding: 20px 0;
+}
+.rule_box .rule_part{
+    margin-bottom: 15px;
+}
+.rule_infobox, .rule_title{
+    display: inline-block;
+    vertical-align: top;
+}
+.rule_title{
+    width: 110px;
+    text-align: right;
+    padding-top: 4px;
+}
+.rule_infobox{
+    margin-left: 35px;
+}
+.rule_infobox ul li{
+    margin-bottom: 10px;
+}
+.rule_infobox span{
+    vertical-align: middle;
+}
+.red{
+    color: red;
+}
+.rule_input{
+    border: 1px solid #333333;
+    width: 70px;
+    padding: 5px;
+    text-align: center;
+    margin: 0 10px;
+    vertical-align: middle;
+}
+.layui-form-item{
+    margin-bottom: 0;
+}
+.layui-table-cell{
+    height: auto;
+    white-space: inherit;
+    overflow: visible;
+    text-overflow: initial;
+}
+
+/* 背景图 */
+.bgimg-box .tips p{
+    color: #999999;
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+.bgimg-box .tips img{
+    margin-top: 10px;
+    margin-bottom: 40px;
+}
+.layui-layer{
+    border-radius: 5px!important;
+}

@@ -386,7 +386,7 @@
                         shade: 0.8,
                         // shadeClose:true,
                         area: ['500px', '400px'],
-                        content: 'integralmodal.html?idData='+idData+'&idDataNum='+selectedNum+'&point='+point+'&member_name='+member_name+'&account='+account+'&mobile='+mobile+'&status='+status+'&sex='+sex+'&isExclude='+isExclude //iframe的url
+                        content: 'integralmodal-linhai.html?idData='+idData+'&idDataNum='+selectedNum+'&point='+point+'&member_name='+member_name+'&account='+account+'&mobile='+mobile+'&status='+status+'&sex='+sex+'&isExclude='+isExclude+'&channel_sources_low='+channel_sources_low+'&channel_sources_top='+channel_sources_top //iframe的url
                     });
                     break;
                 case 'allchangeData':
@@ -402,7 +402,7 @@
                         shade: 0.8,
                         // shadeClose:true,
                         area: ['500px', '400px'],
-                        content: 'integralmodal.html?member_name='+member_name+'&account='+account+'&mobile='+mobile+'&status='+status+'&sex='+sex+'&idDataNum='+dataLength //iframe的url
+                        content: 'integralmodal-linhai.html?member_name='+member_name+'&account='+account+'&mobile='+mobile+'&status='+status+'&sex='+sex+'&idDataNum='+dataLength+'&channel_sources_low='+channel_sources_low+'&channel_sources_top='+channel_sources_top //iframe的url
                     });
                     break;
 
@@ -451,7 +451,7 @@
                         shade: 0.8,
                         // shadeClose:true,
                         area: ['500px', '380px'],
-                        content: 'downloadFile.html?idData='+idData+'&member_name='+member_name+'&account='+account+'&mobile='+mobile+'&status='+status+'&sex='+sex+'&idDataNum='+selectedNum+'&isExclude='+isExclude //iframe的url
+                        content: 'downloadFile-linhai.html?idData='+idData+'&member_name='+member_name+'&account='+account+'&mobile='+mobile+'&status='+status+'&sex='+sex+'&idDataNum='+selectedNum+'&isExclude='+isExclude+'&channel_sources_low='+channel_sources_low+'&channel_sources_top='+channel_sources_top //iframe的url
                     });
                     // downloadFile("/system/Member/exportMemberToExcel?member_id"+idData)
                     // window.open("/system/Member/exportMemberToExcel?member_id"+idData);
@@ -470,7 +470,7 @@
                         shade: 0.8,
                         // shadeClose:true,
                         area: ['500px', '380px'],
-                        content: 'downloadFile.html?member_name='+member_name+'&account='+account+'&mobile='+mobile+'&status='+status+'&sex='+sex+'&idDataNum='+dataLength //iframe的url
+                        content: 'downloadFile-linhai.html?member_name='+member_name+'&account='+account+'&mobile='+mobile+'&status='+status+'&sex='+sex+'&idDataNum='+dataLength+'&channel_sources_low='+channel_sources_low+'&channel_sources_top='+channel_sources_top //iframe的url
                     });
                     // downloadFile("/system/Member/exportMemberToExcel?member_id"+idData)
                     // window.open("/system/Member/exportMemberToExcel?member_id"+idData);

@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>新建轮播图</title>
+    <!--<link  rel="stylesheet" type="text/css" href="lib/layui/css/layui.css" />-->
+    <link  rel="stylesheet" type="text/css" href="/public/templateUI/publicStyle.css" />
+    <link  rel="stylesheet" type="text/css" href="lib/iconfont/iconfont.css" />
+    <style>
+        body{
+            padding: 50px 250px 30px 0;
+        }
+        #demo1{
+            width:344px;
+            height:135px;
+            margin: 20px 0;
+        }
+        .sort{
+            margin: 10px 0;
+            width:100px
+        }
+        .layui-btn-normal {
+            background-color: #1E9FFF!important;
+            height: 30px;
+            line-height: 30px !important;
+            width: 90px;
+
+        }
+        .layui-btn-primary {
+            color: #1E9FFF!important;
+            border:1px solid #1E9FFF!important;
+            height: 30px;
+            line-height: 30px !important;
+            width: 90px;
+        }
+        .layui-tab-brief>.layui-tab-title .layui-this{
+            color: #fff;
+            background: #1E9FFF;
+        }
+        .layui-tab-brief>.layui-tab-more li.layui-this:after, .layui-tab-brief>.layui-tab-title .layui-this:after{
+            border-bottom: none
+        }
+        .layui-tab-title li{
+            color:#1E9FFF;
+            border:1px solid #1E9FFF
+        }
+        table{
+            width: 320px;
+            height: 150px;
+        }
+        table tbody td{
+            border:1px solid #c3c3c3;
+            text-align: center;
+            cursor:pointer;
+            box-sizing: border-box;
+        }
+        .layui-tab-content{
+            padding:10px 0;
+        }
+        .layui-tab-title{
+            border:none
+        }
+        .tips p{
+            color: #999999;
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+        .upload{
+            /*border:1px solid #c3c3c3;*/
+            width:320px;
+            height:150px;
+            text-align: center;
+            line-height: 150px;
+        }
+        .layui-form-select dl dd.layui-this{
+            background:#1E9FFF ;
+        }
+        .layui-tab-title li{
+            height:30px;
+            line-height: 30px;
+        }
+        .key{
+            width:45%
+        }
+        .value{
+            width: 63%;
+            margin: 0 3%;
+        }
+        .canshu{
+            display: flex;
+            line-height: 38px;
+            margin: 20px 0;
+        }
+        .deletecanshu{
+            color:orangered;
+            font-size: 19px;
+            cursor:pointer;
+        }
+        .component{
+            display: none;
+        }
+        .android{
+            display: none;
+        }
+        .ios{
+            display: none;
+        }
+        .notcomponent{
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<form class="layui-form" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">图标</label>
+        <div class="layui-input-block">
+            <div class="layui-tab layui-tab-brief" lay-filter="demo">
+                <div class="layui-tab-content">
+                    <div class="layui-tab-item layui-show">
+                        <div class="tips">
+                            <p>图片尺寸为1090px*310px</p>
+                            <p>格式支持jpg、jpeg、png</p>
+                        </div>
+                        <div class="upload">
+                            <!--<p style="position: absolute;top: -5px;left: -30px;right: 0;color: #c3c3c3;font-size: 12px;height:0px">1090px*310px</p>-->
+                            <img style="width:100%;vertical-align: middle;margin: auto" id="demo1" src="static/images/tp1h.png"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--<div class="layui-form-item">-->
+        <!--<label class="layui-form-label">模块名称</label>-->
+        <!--<div class="layui-input-block">-->
+            <!--<input type="text"  name="title" maxlength="8" placeholder="请输入模块名称，最多输入8个字" autocomplete="off" class="layui-input name">-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="layui-form-item">-->
+        <!--<label class="layui-form-label">分类</label>-->
+        <!--<div class="layui-input-block">-->
+            <!--<select class="type" name="type" lay-verify="required" lay-filter="type">-->
+            <!--</select>-->
+        <!--</div>-->
+    <!--</div>-->
+    <div class="layui-form-item">
+        <label class="layui-form-label">类型</label>
+        <div class="layui-input-block">
+            <p style="padding-top: 8px;color:#999999;white-space: nowrap;">选择原生类型会自动带出您已安装的组件，您可以添加到轮播图当中</p>
+            <p style="padding: 8px 0;color:#999999">选择非原生类型需要输入支持APP端的网页跳转地址</p>
+            <select class="balance" name="balance" lay-verify="required" lay-filter="balance">
+                <option value="0">非原生</option>
+                <option value="1">原生</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item component">
+        <label class="layui-form-label">组件</label>
+        <div class="layui-input-block">
+            <select class="components" name="components" lay-verify="required" lay-filter="components">
+            </select>
+        </div>
+    </div>
+    <!--<div class="layui-form-item notcomponent">-->
+        <!--<label class="layui-form-label">组件</label>-->
+        <!--<div class="layui-input-block">-->
+            <!--<select class="notcomponents" name="notcomponents" lay-filter="notcomponents">-->
+                <!--<option value="0">其他</option>-->
+            <!--</select>-->
+        <!--</div>-->
+    <!--</div>-->
+    <div class="layui-form-item base">
+        <label class="layui-form-label">地址</label>
+        <div class="layui-input-block">
+            <p style="padding-top: 8px;color:#999999;white-space: nowrap;">如果有跳转地址，请填写包含http://或者https://的链接</p>
+            <p style="padding-top: 8px;color:#999999;">如果没有跳转地址，请直接填写 /</p>
+            <input type="text" name="title" placeholder="请输入地址" autocomplete="off" class="layui-input url">
+        </div>
+    </div>
+    <div class="layui-form-item android">
+        <label class="layui-form-label">Android地址</label>
+        <div class="layui-input-block">
+            <input type="text" name="title" placeholder="请输入地址" autocomplete="off" class="layui-input androidurl">
+        </div>
+    </div>
+    <div class="layui-form-item ios">
+        <label class="layui-form-label">IOS地址</label>
+        <div class="layui-input-block">
+            <input type="text" name="title" placeholder="请输入地址" autocomplete="off" class="layui-input iosurl">
+        </div>
+    </div>
+    <!--<div class="layui-form-item">-->
+        <!--<label class="layui-form-label">参数</label>-->
+        <!--<p style="padding: 8px 0;color:#dbdbdb;white-space: nowrap;">-->
+            <!--<a class="layui-btn layui-btn-primary addcanshu">添加</a>-->
+        <!--</p>-->
+        <!--<div class="layui-input-block canshulist" style="min-height: 0">-->
+        <!--</div>-->
+    <!--</div>-->
+    <div class="layui-form-item">
+        <label class="layui-form-label">排序</label>
+        <div class="layui-input-block">
+            <p style="padding-top: 8px;color:#999999">数字越大越靠前</p>
+            <input type="text" name="title"  maxlength="4" autocomplete="off" class="layui-input sort" onkeyup="this.value=this.value.replace(/[^\d]/g,'')" onafterpaste="this.value=this.value.replace(/[^\d]/g,'') ">
+        </div>
+    </div>
+</form>
+<div class="layui-form-item">
+    <div class="layui-input-block">
+        <button class="layui-btn layui-btn-normal submit">提交</button>
+    </div>
+</div>
+</body>
+<!--<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>-->
+<script src="/lib/js/jquery-3.3.1.min.js"></script>
+<!--<script type="text/javascript" src="lib/layui/layui.all.js"></script>-->
+<script type="text/javascript" src="/public/templateUI/layui/layui.all.js"></script>
+<!--<script type="text/javascript" src="lib/iconfont/iconfont.js"></script>-->
+<script>
+
+    // $(".addcanshu").click(function(){
+    //     var html='<div class="canshu">\n' +
+    //         '<input type="text" name="title" placeholder="请输入参数名称" autocomplete="off" class="layui-input key">\n' +
+    //         '<input type="text" name="title" placeholder="请输入参数值" autocomplete="off" class="layui-input value">\n' +
+    //         '<i class="layui-icon layui-icon-close-fill deletecanshu"></i>\n' +
+    //         '</div>'
+    //     $(".canshulist").append(html)
+    //     $(".deletecanshu").click(function(){
+    //         $(this).parent().remove()
+    //     })
+    // })
+    // $(".deletecanshu").click(function(){
+    //     $(this).parent().remove()
+    // })
+
+    // var is_login_skip = 1;
+    var type="";
+    var balance=0;
+    var unit_id="";
+    var imgUrl="";
+    var unit_name="";
+    var image_key="";
+    var canshu={};
+    $(window).ready(function(){
+
+        $.ajax({
+            type: "get",
+            url: "/system/system/get_unit",
+            cache: false,  //禁用缓存
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("token", localStorage.getItem("token"));
+            },
+            dataType: "json",
+            success: function (data) {
+                if(data.code==200){
+                    var html="<option value=''></option>"
+                    for(var i=0;i<data.data.length;i++){
+                        var array=[];
+                        array.push(data.data[i].component_id)
+                        array.push(data.data[i].android_info)
+                        array.push(data.data[i].ios_info)
+                        array.push(data.data[i].component_name)
+                        html+="<option value='"+array+"'>"+data.data[i].component_name+"</option>"
+                    }
+                    $(".components").html(html)
+                    layui.use('form', function() {
+                        var form = layui.form;
+                        form.render('select');
+                    })
+                }else if(data.code==501){
+                    parent.parent.checkToken()
+                }else{
+                    layer.msg(data.msg)
+                }
+            },error:function(){
+                layer.msg("网络错误，请稍后再试")
+            }
+        })
+        if(getQueryString("status")==1){
+            $.ajax({
+                type: "get",
+                url: "/system/Adv/getAdvInfo",
+                cache: false,  //禁用缓存
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("token", localStorage.getItem("token"));
+                },
+                data:{"id":getQueryString("id")},
+                dataType: "json",
+                success: function (data) {
+                    if(data.code==200){
+                        // $(".name").val(data.data.model_name)
+                        // type=data.data.model_type
+                        // is_login_skip = data.data.is_login_skip
+                        // console.log(data)
+                        setTimeout(function(){
+                            // $(".type").val(data.data.model_type)
+                            $(".balance").val(data.data.form)
+                            var str=data.data.unit_id+","+data.data.android_info+","+data.data.ios_info+","+data.data.unit_name
+                            $(".components").val(str)
+                            layui.use('form',function(){
+                                var form = layui.form;
+                                form.render();
+                            });
+                        },200)
+                        $(".androidurl").val(data.data.android_info)
+                        $(".iosurl").val(data.data.ios_info)
+                        unit_id=data.data.unit_id
+                        unit_name=data.data.unit_name
+                        balance=data.data.form
+                        imgUrl=data.data.image
+                        $(".sort").val(data.data.sort)
+                        $("#demo1").attr("src",data.data.image)
+                        $(".url").val(data.data.url)
+                        if(data.data.form==0){
+                            $(".component").hide()
+                            $(".ios").hide()
+                            $(".android").hide()
+                            $(".base").show()
+                        }else{
+                            $(".component").show()
+                            $(".ios").show()
+                            $(".android").show()
+                            $(".base").hide()
+                        }
+
+                    }else if(data.code==501){
+                        parent.parent.checkToken()
+                    }else{
+                        layer.msg(data.msg)
+                    }
+                },error:function(){
+                    layer.msg("网络错误，请稍后再试")
+                }
+            })
+        }
+    })
+    layui.use('form', function() {
+        var form = layui.form;
+        form.on('select(balance)', function (data) {
+            balance=data.value
+            if(data.value=="0"){
+                $(".component").hide()
+                $(".ios").hide()
+                $(".android").hide()
+                $(".base").show()
+                // $(".notcomponent").show()
+            }else{
+                $(".component").show()
+                $(".ios").show()
+                $(".android").show()
+                $(".base").hide()
+                // $(".notcomponent").hide()
+            }
+        })
+        // form.on('select(type)', function (data) {
+        //     console.log(data.value)
+        //     type=data.value
+        // })
+        form.on('select(components)', function (data) {
+            var array=data.value.split(",")
+            unit_id=array[0]
+            unit_name=array[3]
+            $(".androidurl").val(array[1])
+            $(".iosurl").val(array[2])
+        })
+    })
+    layui.use('upload', function() {
+        var $ = layui.jquery
+            , upload = layui.upload;
+        //普通图片上传
+        var posterWidth = 1090;
+        var posterHeight = 310;
+        var uploadInst = upload.render({
+            elem: '#demo1'
+            , auto: false
+            , url: '/system/Upload/imgUpload'
+            ,accept: 'file' //普通文件
+            ,exts: 'png|jpg|jpeg' //只允许上传压缩文件
+            , choose: function (obj) {
+                //预读本地文件示例，不支持ie8
+                obj.preview(function(index, file, result) {
+                    var img = new Image();
+                    img.onload = function() {
+                        console.log('choose poster', img.width, img.height);
+                        if (posterWidth == img.width && posterHeight == img.height) {
+                            $('#demo1').attr('src', result); //图片链接（base64）不支持ie8
+                            obj.upload(index, file);
+                        } else {
+                            layer.msg('轮播图片尺寸必须为：' + posterWidth + 'x' + posterHeight + 'px');
+                            return false
+                        }
+                        var index = layer.load(1, {
+                            shade: [0.1,'#fff'] //0.1透明度的白色背景
+                        });
+                    };
+                    img.src = result;
+                });
+            }
+            , done: function (res) {
+                layer.closeAll(); //疯狂模式，关闭所有层
+                if(res.code==200){
+                    layer.msg("上传成功");
+                    imgUrl=res.data;
+                    image_key=0
+                }else{
+                    layer.msg(res.msg)
+                }
+                //上传成功
+            }
+            , error: function () {
+                layer.msg("网络错误，请稍后再试")
+                layer.closeAll(); //疯狂模式，关闭所有层
+            }
+        });
+    });
+    $(".submit").click(function(){
+        // var canshu={}
+        // $(".canshulist .canshu").each(function(){
+        //     canshu[$(this).children(".key").val()]=$(this).children(".value").val()
+        // })
+        if(balance==0){
+            if ($(".url").val() == ""||$(".url").val() == "/") {
+                $(".url").val("/")
+                // layer.msg("请输入模块地址")
+                // return false
+            }else{
+                if(!(/(http:\/\/|https:\/\/)((\w|=|\?|\.|\/|&|-)+)/.test($(".url").val()))){
+                    layer.msg("地址请填写包含http://或者https://的链接");
+                    return false;
+                }
+            }
+
+        }else{
+            if($(".androidurl").val()==""){
+                layer.msg("请输入android地址")
+                return false
+            }
+            if($(".iosurl").val()==""){
+                layer.msg("请输入ios地址")
+                return false
+            }
+        }
+
+        if (imgUrl == "") {
+            layer.msg("请上传轮播图片")
+            return false
+        }else if ($(".name").val() == "") {
+            layer.msg("模块名称不能为空")
+            return false
+        }
+        // else if (type == "") {
+        //     console.log(1)
+        //     layer.msg("请选择模块分类")
+        //     return false
+        // }
+        else if ($(".sort").val() == "") {
+            layer.msg("请输入排序")
+            return false
+        }
+        var postData={
+            "image": imgUrl,
+            "url": $(".url").val(),
+            "sort": $(".sort").val(),
+            "form": balance,
+            "unit_id": unit_id,
+            "unit_name": unit_name,
+            "android_info":$(".androidurl").val(),
+            "ios_info":$(".iosurl").val(),
+            // is_login_skip: is_login_skip,
+        }
+        if(getQueryString("status")==1) {
+            postData.id=getQueryString("id")
+        }
+        $.ajax({
+            type: "post",
+            url: "/system/Adv/saveAdv",
+            cache: false,  //禁用缓存
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("token", localStorage.getItem("token"));
+            },
+            data: postData,  //传入组装的参数
+            dataType: "json",
+            success: function (data) {
+                if (data.code == 200) {
+                    parent.window.location.reload()
+                } else if (data.code == 501) {
+                    parent.parent.parent.checkToken()
+                } else {
+                    layer.msg(data.msg)
+                }
+            }
+        })
+    })
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
+</script>
+</html>

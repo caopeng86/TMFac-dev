@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+	<title>投诉</title>
+	<link href="http://res.wx.qq.com/open/libs/weui/1.1.2/weui.min.css" rel="stylesheet">
+    <link href="/public/templateUI/publicStyle.css" rel="stylesheet">
+	<script src="/public/static/js/jquery-3.31.min.js"></script>
+    <script src="/public/templateUI/layui/layui.all.js"></script>
+</head>
+<style>
+	.title{
+		font-size: 12px;
+		color:#c3c3c3;
+		padding: 10px;
+	}
+	.weui-cells{
+		margin-top: 0;
+	}
+</style>
+<body>
+	<div class="page">
+    <div class="page__hd">
+        <p class="page__desc title"><span style="color:#01AAED;margin-right: 5px">|</span>请选择投诉原因</p>
+    </div>
+    <div class="page__bd">
+        <div class="weui-cells weui-cells_radio">
+            <label class="weui-cell weui-check__label" for="x11">
+                <div class="weui-cell__bd">
+                    <p>广告</p>
+                </div>
+                <div class="weui-cell__ft">
+                    <input type="radio" class="weui-check" value="广告" name="radio1" id="x11"/>
+                    <span class="weui-icon-checked"></span>
+                </div>
+            </label>
+            <label class="weui-cell weui-check__label" for="x12">
+
+                <div class="weui-cell__bd">
+                    <p>色情低俗</p>
+                </div>
+                <div class="weui-cell__ft">
+                    <input type="radio" name="radio1" value="色情低俗" class="weui-check" id="x12"/>
+                    <span class="weui-icon-checked"></span>
+                </div>
+            </label>
+            <label class="weui-cell weui-check__label" for="x13">
+
+                <div class="weui-cell__bd">
+                    <p>反动</p>
+                </div>
+                <div class="weui-cell__ft">
+                    <input type="radio" name="radio1" value="反动" class="weui-check" id="x13"/>
+                    <span class="weui-icon-checked"></span>
+                </div>
+            </label>
+            <label class="weui-cell weui-check__label" for="x14">
+
+                <div class="weui-cell__bd">
+                    <p>谣言</p>
+                </div>
+                <div class="weui-cell__ft">
+                    <input type="radio" name="radio1" value="谣言" class="weui-check" id="x14"/>
+                    <span class="weui-icon-checked"></span>
+                </div>
+            </label>
+            <label class="weui-cell weui-check__label" for="x15">
+
+                <div class="weui-cell__bd">
+                    <p>欺诈或恶意营销</p>
+                </div>
+                <div class="weui-cell__ft">
+                    <input type="radio" name="radio1" value="欺诈或恶意营销" class="weui-check" id="x15"/>
+                    <span class="weui-icon-checked"></span>
+                </div>
+            </label>
+            <label class="weui-cell weui-check__label" for="x16">
+
+                <div class="weui-cell__bd">
+                    <p>标题夸张/文不对题</p>
+                </div>
+                <div class="weui-cell__ft">
+                    <input type="radio" name="radio1" value="标题夸张/文不对题" class="weui-check" id="x16"/>
+                    <span class="weui-icon-checked"></span>
+                </div>
+            </label>
+            <label class="weui-cell weui-check__label" for="x17">
+
+                <div class="weui-cell__bd">
+                    <p>内容过时</p>
+                </div>
+                <div class="weui-cell__ft">
+                    <input type="radio" name="radio1" value="内容过时" class="weui-check" id="x17"/>
+                    <span class="weui-icon-checked"></span>
+                </div>
+            </label>
+            <label class="weui-cell weui-check__label" for="x18">
+
+                <div class="weui-cell__bd">
+                    <p>内容格式有误</p>
+                </div>
+                <div class="weui-cell__ft">
+                    <input type="radio" name="radio1" value="内容格式有误" class="weui-check" id="x18"/>
+                    <span class="weui-icon-checked"></span>
+                </div>
+            </label>
+            <label class="weui-cell weui-check__label" for="x19">
+
+                <div class="weui-cell__bd">
+                    <p>错别字</p>
+                </div>
+                <div class="weui-cell__ft">
+                    <input type="radio" name="radio1" value="错别字" class="weui-check" id="x19"/>
+                    <span class="weui-icon-checked"></span>
+                </div>
+            </label>
+            <label class="weui-cell weui-check__label" for="x20">
+
+                <div class="weui-cell__bd">
+                    <p>抄袭</p>
+                </div>
+                <div class="weui-cell__ft">
+                    <input type="radio" name="radio1" value="抄袭" class="weui-check" id="x20"/>
+                    <span class="weui-icon-checked"></span>
+                </div>
+            </label>
+        </div>
+        <div class="weui-btn-area">
+            <a class="weui-btn weui-btn_primary submit" style="height: 38px;line-height: 38px;" href="javascript:" id="showTooltips">提交</a>
+        </div>
+    </div>
+    </div>
+</body>
+<script>
+    var text="";
+    $(".submit").css("background",getQueryString('color'));
+    $(".weui-check__label").click(function(){
+        setTimeout(function(){
+            text=$("input[name='radio1']:checked").val()
+        },100)
+    });
+    $(".submit").click(function(){
+        if(text==""){
+            layer.msg("请选择投诉原因")
+        }else {
+            $.ajax({
+                type: "post",
+                url: "/api/site/saveComplain",
+                cache: false,  //禁用缓存
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("token", localStorage.getItem("token"));
+                },
+                data: {"id": 1, "message": text},  //传入组装的参数
+                dataType: "json",
+                success: function (data) {
+                    if (data.code == 200) {
+                        console.log(data)
+                        layer.msg("投诉成功")
+                    }else {
+                        layer.msg(data.msg)
+                    }
+                }
+            })
+        }
+    });
+
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
+</script>
+</html>

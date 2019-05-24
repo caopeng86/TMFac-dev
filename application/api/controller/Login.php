@@ -7,7 +7,10 @@
  */
 
 namespace app\api\controller;
-
+header('content-type:application:json;charset=utf8');
+header('Access-Control-Allow-Origin:*');
+header('Access-Control-Allow-Methods:GET,POST');
+header('Access-Control-Allow-Headers:x-requested-with,content-type');
 
 use app\api\model\BranchModel;
 use app\api\model\RoleModel;
@@ -18,6 +21,11 @@ use think\Controller;
 use think\facade\Cache;
 use think\facade\Config;
 use think\facade\Request;
+// use think\Request;
+
+
+
+
 
 
 class Login extends Controller
@@ -245,16 +253,21 @@ class Login extends Controller
      */
     public function checkToken(){
         //判断请求方式以及请求参数
-        $inputData = Request::post();
-        $method = Request::method();
+        $inputData = Request::post(); 
+        $inputData = input('param.'); 
+        // return $request;
+        // $inputData['token']=input('?token')?input('token'):input('token2'); return reTmJsonObj(100, '获取', $inputData); 
+        //$method = Request::method();   //return $method; //return input('');
+        $method = $_SERVER['REQUEST_METHOD']; 
         $params = ['token'];
         $ret = checkBeforeAction($inputData, $params, $method, 'POST', $msg);
-        if(!$ret){
+        $ret2 = checkBeforeAction($inputData, $params, $method, 'GET', $msg); 
+        if(!$ret && !$ret2){
             return reTmJsonObj(500,$msg,[]);
         }
 
         //检查缓存中token
-        $cache = Cache::get($inputData['token']);
+        $cache = Cache::get($inputData['token']); 
         $token = $cache['access_key'];
         if(!$cache || empty($cache['user_id'])){
             return reTmJsonObj(500, '无效的token', []);
@@ -275,12 +288,6 @@ class Login extends Controller
             return reTmJsonObj(500, '用户不存在', []);
         }
 
-        //判断token是否已经超时
-        $time = time() - $userInfo['access_key_create_time'];
-        if($time > 3600*24*7){
-            return reTmJsonObj(500, 'token超时', []);
-        }
-
         //获取用户部门code,name
         $branch = $this->_getBranch($userInfo['branch_id']);
         if($branch === false){
@@ -293,8 +300,11 @@ class Login extends Controller
         $role = $this->_getRole($userInfo['user_code']);
         if($role === false){
             return reTmJsonObj(500, '获取用户所有角色失败', []);
-        }
-        $roleCodes = array_column($role, 'role_code');
+        } //return $role->getData();
+
+        if(!is_array($role))   $role =json_decode($role);
+        
+        $roleCodes = array_column($role, 'role_code'); 
 
         //获取用户权限code,name
         $privilege = $this->_getPrivilege($roleCodes);
@@ -322,6 +332,14 @@ class Login extends Controller
             'privilege' => $privilege,
             'component' => $component
         ];
+
+        $tokenStr = base64_decode($inputData['token']) ?? "";
+        $tokenArr = json_decode($tokenStr,true) ?? [];
+        $expTime = $tokenArr['expTime'] ?? 0;
+        if(time()-$expTime < 24*3600){
+            Cache::rm($inputData['token']);
+            Cache::set($inputData['token'],$cache,Config::get('token_time'));
+        }
 
         return reTmJsonObj(200, '验证成功', $return);
     }

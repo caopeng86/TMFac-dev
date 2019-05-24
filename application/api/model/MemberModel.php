@@ -11,6 +11,8 @@ namespace app\api\model;
 
 use think\Db;
 use think\Model;
+use think\facade\Cache;
+use think\facade\Config;
 
 class MemberModel extends CommonModel
 {
@@ -67,6 +69,41 @@ class MemberModel extends CommonModel
      */
     public function getMemberInfo($condition, $field=''){
         $re = Db::table($this->member_db)->field($field)->where($condition)->find();
+        return $re;
+    }
+
+	/**
+     * 获取一条会员信息
+     * @param $condition
+     * @param string $field
+     * @return array|false|\PDOStatement|string|\think\Model
+     * @throws
+     */
+    public function getMemberInfoById($memberId, $isCache=true){
+		if(empty($memberId)){
+			return false;
+		}
+		$field = 'member_id,member_code, member_name, member_nickname, member_real_name,site_code,email,deleted,sex_edit_time,birthday_edit_time,mobile_edit_time,wb_edit_time,wx_edit_time,qq_edit_time,
+         mobile, head_pic, create_time, status, wx, qq, zfb, wb,birthday,sex,ip,point,access_key_create_time,close_start_time,close_end_time,password,receive_notice,wifi_show_image,list_auto_play,login_type,member_sn,channel_sources';
+
+		if($isCache){
+			$cacheValue=Cache::get(TM_MEMBER_BASE_INFO."_".$memberId);
+			if(!empty($cacheValue) && !empty($cacheValue['member_id'])){
+				return $cacheValue;
+			}
+		}
+
+		$condition=array();
+		$condition['member_id'] = $memberId;
+        $re = Db::table($this->member_db)->field($field)->where($condition)->find();
+		if(empty($re)){
+			return array();
+		}
+
+		$memberId = strval($re['member_id']);
+
+		Cache::set(TM_MEMBER_BASE_INFO."_".$memberId,$re,Config::get('user_time'));
+		
         return $re;
     }
 

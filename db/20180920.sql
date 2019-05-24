@@ -142,7 +142,7 @@ INSERT INTO `tm_classes` (`classes_id`, `classes_code`, `classes_name`, `classes
 --
 
 CREATE TABLE `tm_component` (
-  `component_id` int(10) UNSIGNED NOT NULL COMMENT '产品组件id',
+  `component_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '产品组件id',
   `component_code` varchar(64) NOT NULL COMMENT '产品组件代码',
   `component_name` varchar(128) NOT NULL COMMENT '产品组件名称',
   `component_key` varchar(64) NOT NULL COMMENT '模块唯一key',
@@ -161,8 +161,9 @@ CREATE TABLE `tm_component` (
   `description` varchar(128) DEFAULT NULL COMMENT '描述',
   `linkman` varchar(128) DEFAULT NULL,
   `note` varchar(128) DEFAULT NULL,
-  `component_pic` varchar(128) DEFAULT NULL COMMENT '应用图标'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `component_pic` varchar(128) DEFAULT NULL COMMENT '应用图标',
+  PRIMARY KEY (`component_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='专题敏感词';
 
 --
 -- Dumping data for table `tm_component`
@@ -929,12 +930,13 @@ CREATE TABLE `tm_user` (
 --
 
 CREATE TABLE `tm_user_log` (
-  `log_id` int(10) UNSIGNED NOT NULL COMMENT '日志ID',
+  `log_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '日志ID',
   `user_code` varchar(64) NOT NULL COMMENT '用户代码',
   `ip` varchar(32) NOT NULL COMMENT 'IP地址',
   `log_type` varchar(32) NOT NULL COMMENT '登陆类型（''login'',''logout'',''delete'',''add'',''modify''）',
   `log_message` text NOT NULL COMMENT '登陆信息',
-  `log_time` int(10) UNSIGNED NOT NULL COMMENT '日志记录时间'
+  `log_time` int(10) UNSIGNED NOT NULL COMMENT '日志记录时间',
+  PRIMARY KEY (`log_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -959,11 +961,6 @@ ALTER TABLE `tm_branch`
 ALTER TABLE `tm_classes`
   ADD PRIMARY KEY (`classes_id`);
 
---
--- Indexes for table `tm_component`
---
-ALTER TABLE `tm_component`
-  ADD PRIMARY KEY (`component_id`);
 
 --
 -- Indexes for table `tm_fix_item`
@@ -1067,11 +1064,7 @@ ALTER TABLE `tm_site`
 ALTER TABLE `tm_user`
   ADD PRIMARY KEY (`user_id`);
 
---
--- Indexes for table `tm_user_log`
---
-ALTER TABLE `tm_user_log`
-  ADD PRIMARY KEY (`log_id`);
+
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -1177,10 +1170,6 @@ ALTER TABLE `tm_site`
 --
 ALTER TABLE `tm_user`
   MODIFY `user_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '用户ID', AUTO_INCREMENT=61;
---
--- AUTO_INCREMENT for table `tm_user_log`
---
-ALTER TABLE `tm_user_log`
-  MODIFY `log_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '日志ID', AUTO_INCREMENT=8966;
+
 
 update tm_portal set portal_value ='[{"key":"0","title":"资讯视频","children":[]},{"key":"1","title":"互动娱乐","category":"1","url":"","children":[],"thunmb":"/uploads/default.png"},{"key":"2","title":"管理","category":"2","url":"","children":[{"key":"2-0","title":"会员管理","type":"url","app_code":"","admin_url":"","index_url":"","category":"2","url":"","thumb":"/uploads/default/20180601/6b270aae57882c48982acae1e597db92.png","webUrl":"/application/member_info/html/index.html","site_code":"00000000000000000000000000000000"}],"thunmb":"/uploads/default.png"}]';

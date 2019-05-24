@@ -1,0 +1,391 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="lib/html5shiv.js"></script>
+    <script type="text/javascript" src="lib/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link  rel="stylesheet" type="text/css" href="lib/layui/css/layui.css" />
+    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
+    <!--[if IE 6]>
+    <script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+    <script>DD_belatedPNG.fix('*');</script>
+    <![endif]-->
+    <title>积分调整</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 配置 <span class="c-gray en">&gt;</span> 积分调整 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+    <div class="adjustment_box">
+        <div class="title_hd">
+            <div class="adjustment_title">新用户</div>
+            <form class="layui-form" lay-filter="newUserForm" action="" style="float: right">
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <input type="checkbox" class="openkey" lay-filter="newUser" name="newUserSwitch" lay-skin="switch" lay-text="开启|关闭">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="rule_box border_top">
+            <div class="rule_part">
+                <div class="rule_title"><span class="red">*</span>基本规则</div>
+                <div class="rule_infobox">
+                    <ul>
+                        <li>
+                            <span>新用户首次登陆，获得</span>
+                            <input type="text" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+                                   onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'0')}else{this.value=this.value.replace(/\D/g,'')}"  id="first_login" key="first_login" dataType="value" class="rule_input" >
+                            <span>积分</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="adjustment_box">
+        <div class="title_hd">
+            <div class="adjustment_title">完善资料</div>
+            <form class="layui-form" lay-filter="perfectInfoForm" style="float: right">
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <input type="checkbox" class="openkey" lay-filter="perfectInfo" name="perfectInfoSwitch" lay-skin="switch" lay-text="开启|关闭">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="rule_box border_top">
+            <div class="rule_part">
+                <div class="rule_title">基本规则</div>
+                <div class="rule_infobox">
+                    <ul>
+                        <li>
+                            <span>完善</span>
+                            <input type="text" class="rule_input" value="性别" disabled >
+                            <span>,</span>
+                            <span>获得</span>
+                            <input type="text" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+                                   onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'0')}else{this.value=this.value.replace(/\D/g,'')}"  key="sex" dataType="value" id="sex" class="rule_input" >
+                            <span>积分</span>
+                        </li>
+                        <li>
+                            <span>完善</span>
+                            <input type="text" class="rule_input" value="生日" disabled >
+                            <span>,</span>
+                            <span>获得</span>
+                            <input type="text" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+                                   onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'0')}else{this.value=this.value.replace(/\D/g,'')}"  id="birthday" key="birthday" dataType="value" class="rule_input" >
+                            <span>积分</span>
+                        </li>
+                        <li>
+                            <span>完善</span>
+                            <input type="text" class="rule_input" value="手机号" disabled >
+                            <span>,</span>
+                            <span>获得</span>
+                            <input type="text" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+                                   onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'0')}else{this.value=this.value.replace(/\D/g,'')}"  id="mobile" key="mobile" dataType="value" class="rule_input" >
+                            <span>积分</span>
+                        </li>
+                        <li>
+                            <span>绑定</span>
+                            <input type="text" class="rule_input" value="微博" disabled >
+                            <span>,</span>
+                            <span>获得</span>
+                            <input type="text" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+                                   onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'0')}else{this.value=this.value.replace(/\D/g,'')}"  id="wb" key="wb" dataType="value" class="rule_input" >
+                            <span>积分</span>
+                        </li>
+                        <li>
+                            <span>绑定</span>
+                            <input type="text" class="rule_input" value="微信" disabled >
+                            <span>,</span>
+                            <span>获得</span>
+                            <input type="text" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+                                   onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'0')}else{this.value=this.value.replace(/\D/g,'')}"  id="wx" key="wx" dataType="value" class="rule_input" >
+                            <span>积分</span>
+                        </li>
+                        <li>
+                            <span>绑定</span>
+                            <input type="text"  class="rule_input"  value="QQ" disabled >
+                            <span>,</span>
+                            <span>获得</span>
+                            <input type="text" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+                                   onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'0')}else{this.value=this.value.replace(/\D/g,'')}"  id="qq" key="qq" dataType="value" class="rule_input" >
+                            <span>积分</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="adjustment_box">
+        <div class="title_hd">
+            <div class="adjustment_title">签到</div>
+            <form class="layui-form" lay-filter="signInForm" style="float: right">
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <input type="checkbox"  class="openkey" lay-filter="signIn" name="signInSwitch" lay-skin="switch" lay-text="开启|关闭">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="rule_box border_top">
+            <div class="rule_part">
+                <div class="rule_title">基本规则</div>
+                <div class="rule_infobox">
+                    <ul>
+                        <li class="sign">
+                            <span>每签到</span>
+                            <input type="text" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+                                   onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'0')}else{this.value=this.value.replace(/\D/g,'')}"  disabled value="1" class="rule_input" >
+                            <span>次,</span>
+                            <span>获得</span>
+                            <input type="text" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+                                   onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'0')}else{this.value=this.value.replace(/\D/g,'')}"  key="sign" dataType="value" class="rule_input value" >
+                            <span>积分</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="rule_part">
+                <div class="rule_title">周期奖励</div>
+                <div class="rule_infobox">
+                    <ul>
+                        <li style="margin-top: 5px"><span style="color: #999999">支持以7天为一周，进行周期奖励</span></li>
+                        <li class="sign_cycle_first">
+                            <span>每周第</span>
+                            <input type="text" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+                                   onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'0')}else{this.value=this.value.replace(/\D/g,'')}"  key="sign_cycle_first" dataType="remarks" value="" class="rule_input remarks" >
+                            <span>天,</span>
+                            <span>额外获得</span>
+                            <input type="text" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+                                   onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'0')}else{this.value=this.value.replace(/\D/g,'')}"  key="sign_cycle_first" dataType="value" class="rule_input value" >
+                            <span>积分</span>
+                        </li>
+                        <li class="sign_cycle_two">
+                            <span>每周第</span>
+                            <input type="text" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+                                   onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'0')}else{this.value=this.value.replace(/\D/g,'')}"  key="sign_cycle_two" dataType="remarks" class="rule_input remarks" >
+                            <span>天,</span>
+                            <span>额外获得</span>
+                            <input type="text" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+                                   onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'0')}else{this.value=this.value.replace(/\D/g,'')}"   key="sign_cycle_two" dataType="value" class="rule_input value" >
+                            <span>积分</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="rule_part">
+                <div class="rule_title">额外奖励规则</div>
+                <div class="rule_infobox">
+                    <ul>
+                        <li class="sign_extra_first">
+                            <span>连续签到满</span>
+                            <input type="text" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+                                   onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'0')}else{this.value=this.value.replace(/\D/g,'')}"  key="sign_extra_first" dataType="remarks" class="rule_input remarks"  >
+                            <span>次,</span>
+                            <span>额外获得</span>
+                            <input type="text" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+                                   onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'0')}else{this.value=this.value.replace(/\D/g,'')}"  key="sign_extra_first" dataType="value" class="rule_input value" >
+                            <span>积分</span>
+                        </li>
+                        <li class="sign_extra_two">
+                            <span>连续签到满</span>
+                            <input type="text" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+                                   onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'0')}else{this.value=this.value.replace(/\D/g,'')}"  key="sign_extra_two" dataType="remarks" class="rule_input remarks"  >
+                            <span>次,</span>
+                            <span>额外获得</span>
+                            <input type="text" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+                                   onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'0')}else{this.value=this.value.replace(/\D/g,'')}"  key="sign_extra_two" dataType="value" class="rule_input value" >
+                            <span>积分</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="lib/layui/layui.all.js"></script>
+<script type="text/javascript" src="lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<!--<script type="text/javascript" src="lib/laypage/1.2/laypage.js"></script>-->
+<script type="text/javascript">
+
+
+    $(window).ready(function(){
+        layui.use('form', function() {
+            var form = layui.form;
+            //新用户开关
+            form.on('switch(newUser)', function (data) {
+                var data={
+                    value:'',
+                    key:'first_login_switch'
+                }
+                if(this.checked==true){
+                    data.value=1
+                }else{
+                    data.value=0
+                }
+                postHttpAjax('/system/Memberpoint/editPoint',data)
+            })
+            //完善资料开关
+            form.on('switch(perfectInfo)', function (data) {
+                var data={
+                    value:'',
+                    key:'perfect_information_switch'
+                }
+                if(this.checked==true){
+                    data.value=1
+                }else{
+                    data.value=0
+                }
+                postHttpAjax('/system/Memberpoint/editPoint',data)
+            })
+            //签到开关
+            form.on('switch(signIn)', function (data) {
+                var data={
+                    value:'',
+                    key:'sign_switch'
+                }
+                if(this.checked==true){
+                    data.value=1
+                }else{
+                    data.value=0
+                }
+                postHttpAjax('/system/Memberpoint/editPoint',data)
+            })
+        });
+
+
+        $('.rule_input').blur(function(){
+            var key = $(this).attr('key');
+            var dataType = $(this).attr('dataType');
+            var val = $(this).val();
+            var data={
+                key:key
+            }
+            data[dataType]=val
+            postHttpAjax('/system/Memberpoint/editPoint',data)
+        })
+
+        //获取信息
+        layer.load(2);
+        $.ajax({
+            type: "get",
+            url: "/system/Memberpoint/getPoints",
+            cache: false,  //禁用缓存
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("token", localStorage.getItem("token"));
+            },
+            dataType: "json",
+            success: function (data) {
+                var dataInfo = data.data.list
+                layer.closeAll('loading');
+                if(data.code==200){
+                    /* 新用户 */
+                    $('#first_login').val(dataInfo.first_login.value);
+                    //新用户开关
+                    if(dataInfo.first_login_switch.value==1){
+                        layui.form.val("newUserForm", {
+                            "newUserSwitch": true // "name": "value"
+                        })
+                    }
+
+                    /* 完善资料 */
+                    $('#sex').val(dataInfo.sex.value);
+                    $('#birthday').val(dataInfo.birthday.value);
+                    $('#mobile').val(dataInfo.mobile.value);
+                    $('#wb').val(dataInfo.wb.value);
+                    $('#wx').val(dataInfo.wx.value);
+                    $('#qq').val(dataInfo.qq.value);
+
+                    //完善资料开关
+                    if(dataInfo.perfect_information_switch.value==1){
+                        layui.form.val("perfectInfoForm", {
+                            "perfectInfoSwitch": true // "name": "value"
+                        })
+                    }
+
+
+                    /* 签到 */
+
+                    //签到开关
+                    if(dataInfo.sign_switch.value==1){
+                        layui.form.val("signInForm", {
+                            "signInSwitch": true // "name": "value"
+                        })
+                    }
+                    //基本规则
+                    $('.sign .value').val(dataInfo.sign.value);
+
+                    //周期奖励
+                    $('.sign_cycle_first .remarks').val(dataInfo.sign_cycle_first.remarks);
+                    $('.sign_cycle_first .value').val(dataInfo.sign_cycle_first.value);
+
+                    $('.sign_cycle_two .remarks').val(dataInfo.sign_cycle_two.remarks);
+                    $('.sign_cycle_two .value').val(dataInfo.sign_cycle_two.value);
+
+                    //额外奖励
+                    $('.sign_extra_first .remarks').val(dataInfo.sign_extra_first.remarks);
+                    $('.sign_extra_first .value').val(dataInfo.sign_extra_first.value);
+
+                    $('.sign_extra_two .remarks').val(dataInfo.sign_extra_two.remarks);
+                    $('.sign_extra_two .value').val(dataInfo.sign_extra_two.value)
+
+
+                }else if(data.code==501){
+                    parent.parent.checkToken()
+                }else{
+                    layer.msg(data.msg)
+                }
+
+            },error:function(){
+                layer.closeAll('loading');
+                layer.msg("网络错误，请稍后再试")
+            }
+        })
+
+        function postHttpAjax(url,data){
+            $.ajax({
+                type: "POST",
+                url: url,
+                cache: false,  //禁用缓存
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("token", localStorage.getItem("token"));
+                },
+                data: data,  //传入组装的参数
+                dataType: "json",
+                success: function (data) {
+                    if (data.code == 200) {
+                        layer.msg(data.msg)
+                    }else if(data.code==501){
+                        parent.parent.checkToken()
+                    }else{
+                        layer.msg(data.msg)
+                    }
+                },error:function(){
+                    layer.msg("网络错误，请稍后再试")
+                }
+            })
+        }
+    })
+</script>
+</body>
+</html>

@@ -13,6 +13,7 @@ use think\Db;
 use think\Controller;
 use think\facade\Request;
 use think\facade\Env;
+use app\api\model\ComponentModel;
 
 class System extends Controller
 {
@@ -71,6 +72,7 @@ class System extends Controller
         }
         return reTmJsonObj(200,'保存完成');
     }
+
 
     /**
      * 获取门户配置信息
@@ -1046,23 +1048,154 @@ class System extends Controller
         if(!$ret){
             return reTmJsonObj(500, $msg, []);
         }
+        if(!is_file(Env::get('app_path') . '/install.lock')){
+            return reTmJsonObj(600, '请先安装框架', []);
+        }
         $condition = [];
         $condition['key'] = ['license'];
         $condition['type'] = 'license';
         $ConfigList = $this->ConfigModel->getConfigList($condition);
         if($ConfigList === false){
-            return reTmJsonObj(500, '获取失败', []);
+            return reTmJsonObj(601, 'license没有配置', []);
         }
         $ConfigList = $this->ConfigModel->ArrayToKey($ConfigList);
         if(empty($ConfigList['license'])){
-            return reTmJsonObj(500, '获取失败', []);
+            return reTmJsonObj(601, 'license没有配置', []);
         }
-        $data = tmBaseHttp("https://www.360tianma.com/home/index/getLicense",['license'=>$ConfigList['license'],'domain'=>$_SERVER['SERVER_NAME']]);
-        $data = (array)json_decode($data);
-        if($data['status']!=1){
-            return reTmJsonObj(500, '获取失败', []);
+        try {
+            $data = tmBaseHttp(config("tm_shop_url")."/api/License/getLicense",['license'=>$ConfigList['license'],'domain'=>$_SERVER['SERVER_NAME']]);
+            $data = (array)json_decode($data);
+            if($data['status']!=1){
+                return reTmJsonObj(602, 'license错误', []);
+            }
+        } catch (Exception $e) {
+            return reTmJsonObj(602, 'license错误', []);
+        }
+        $component =  Db::table("tm_component")->find();
+        if(empty($component)){
+            return reTmJsonObj(603, '组件还未安装', []);
         }
         return reTmJsonObj(200, '成功', $data['data']);
     }
+
+    /**
+     * 获取组件
+     */
+    public function get_unit(){
+        $inputData = Request::get();
+        $method = Request::method();
+        $params = [];
+        $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
+        if(!$ret){
+            return reTmJsonObj(500, $msg, []);
+        }
+        $ComponentModel = new ComponentModel();
+        $field = 'component_id,component_name,index_url,ios_info,android_info,linkman';
+        $component_list = $ComponentModel->getComponentList(false,$field);
+        if($component_list === false){
+            return reTmJsonObj(500,'获取失败',[]);
+        }
+        foreach ($component_list as $key=>$value){
+            empty($value['linkman'])?"":$value['index_url'] = $value['linkman'];  //这里主要是因为有的前端地址是记到linkman字段中的
+            if(!empty($value['index_url'])){
+                $component_list[$key]['index_url'] = input('server.REQUEST_SCHEME') . '://' . input('server.SERVER_NAME').$value['index_url'];
+            }
+        }
+        return reTmJsonObj(200,'获取成功',$component_list);
+    }
+
+    /**
+     * 这个接口只是用来检测系统响应速度的
+     */
+    public function check_system(){
+        $tm_system_article = Db::table("tm_system_article")->select();
+        return reTmJsonObj(200,'获取成功',$tm_system_article);
+    }
+
+    //***********************************************************
+    //*
+    //*Software: 配置app 下载地址
+    //* android_url  ios_url
+    //***********************************************************
+    public function save_appurl($value='')
+    {
+       if(!input('?android_url')||empty(input('android_url')) 
+           || !input('?ios_url')||empty(input('ios_url')) ) return reTmJsonObj(412,'请检测参数');
+        $time=time();
+        $an_count=Db::table("tm_config")->where(['key'=>'android_url'])->count();
+        $io_count=Db::table("tm_config")->where(['key'=>'ios_url'])->count();
+        if($an_count || $io_count){
+            $res=Db::table("tm_config")->where(['key'=>'android_url'])->update(['value'=>input('android_url')]);
+            $res=Db::table("tm_config")->where(['key'=>'ios_url'])->update(['value'=>input('ios_url')]);
+        }else{
+            $data=[['key'=>'android_url','value'=>input('android_url'),'remarks'=>'安卓下载地址','add_time'=>$time],
+                    ['key'=>'ios_url','value'=>input('ios_url'),'remarks'=>'苹果下载地址','add_time'=>$time]
+                    ];
+            $res=Db::table("tm_config")->insertAll($data);
+        }
+
+        if($res) return reTmJsonObj(200,'保存成功');
+        return reTmJsonObj(0,'保存失败或提交数据和原数据一样');
+    }
+
+    //***********************************************************
+    //*
+    //*Software: 获取APP下载地址
+    //*
+    //***********************************************************
+     public function get_appurl($value='')
+     {
+        $app_url= get_appurl();
+        if($app_url) return reTmJsonObj(1,'获取成功',$app_url);
+        return reTmJsonObj(0,'获取失败',$app_url);
+     }
+
+    /**
+     * 设置app唯一标示
+     */
+    public function setTmAppKey(){
+        //判断请求方式以及请求参数
+        $inputData = Request::post();
+        $method = Request::method();
+        $params = ['android_app_key','ios_app_key'];
+        $remarks = ['android_app_key'=>'app唯一标示','ios_app_key'=>'app唯一标示'];
+        $ret = checkBeforeAction($inputData, [], $method, 'POST', $msg);
+        if(!$ret){
+            return reTmJsonObj(500, $msg, []);
+        }
+        foreach ($params as $val){
+            if(isset($inputData[$val])){
+                $this->ConfigModel->batchSaveConfig($val,$inputData[$val],$remarks[$val],'tm_app_key');
+            }
+        }
+        return reTmJsonObj(200,'保存成功',[]);
+    }
+
+    /**
+     * 获取app唯一标示
+     */
+    public function getTmAppKey(){
+        //判断请求方式以及请求参数
+        $inputData = Request::get();
+        $method = Request::method();
+        $params = [];
+        $ret = checkBeforeAction($inputData, $params, $method, 'GET', $msg);
+        if(!$ret){
+            return reTmJsonObj(500, $msg, []);
+        }
+        $condition = [];
+        $condition['key'] = ['android_app_key','ios_app_key'];
+        $condition['type'] = 'tm_app_key';
+        $ConfigList = $this->ConfigModel->getConfigList($condition);
+        if($ConfigList === false){
+            return reTmJsonObj(500, '获取失败', []);
+        }
+        $ConfigList = $this->ConfigModel->ArrayToKey($ConfigList);
+        $ConfigList['android_app_key'] = empty($ConfigList['android_app_key'])?"":$ConfigList['android_app_key'];
+        $ConfigList['ios_app_key'] = empty($ConfigList['ios_app_key'])?"":$ConfigList['ios_app_key'];
+        return reTmJsonObj(200, '获取成功', $ConfigList);
+    }
+     
+
 
 }

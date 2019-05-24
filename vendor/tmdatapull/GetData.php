@@ -137,7 +137,7 @@ class GetData {
             return false;
         }
         $arr['key'] = $this->getKey();
-        $objMy = $this->http("https://shop.360tianma.com/reptile/Reptile/getData",$arr,'POST');
+        $objMy = $this->http(config("tm_shop_url")."/reptile/Reptile/getData",$arr,'POST');
         $dataMy = json_decode($objMy);
         if(!empty($dataMy) && !empty($dataMy->code) && (200 == $dataMy->code || '200' == $dataMy->code)){
         }else{

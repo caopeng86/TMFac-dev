@@ -1,0 +1,173 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="lib/html5shiv.js"></script>
+<script type="text/javascript" src="lib/respond.min.js"></script>
+
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" />
+<link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="lib/layui/css/layui.css" />
+<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
+<!--[if IE 6]>
+<script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+<title>消息推送</title>
+<style type="text/css">
+	.textarea-numberbar{
+		color:#c9c9c9;
+	}
+	.submit{
+		width:100px;
+	}
+	.col-sm-1{
+		width:150px
+	}
+	.col-sm-3{
+		width:400px
+	}
+</style>
+</head>
+<body>
+
+	<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 消息管理 <span class="c-gray en">&gt;</span> 消息推送 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+	<form action="" method="post" class="form form-horizontal" id="form-user-add">
+		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-1">
+				<span class="c-red">*</span>
+				标题：</label>
+			<div class="formControls col-xs-6 col-sm-3">
+				<input type="text" class="input-text title" value="" placeholder="请输入标题" id="user-name" name="product-category-name" maxlength="25">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-1"><span class="c-red">*</span>内容：</label>
+			<div class="formControls col-xs-6 col-sm-3">
+				<textarea class="textarea content"  placeholder="请输入内容" maxlength="75" oninput="content()"></textarea>
+				<p class="textarea-numberbar"><em class="textarea-length">0</em>/75</p>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-1"><span class="c-red">*</span>推送时间：</label>
+			<div class="formControls col-xs-6 col-sm-3">
+				<input type="text" class="layui-input time" id="test1" placeholder="yyyy-MM-dd HH:mm:ss" readonly="readonly">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-1">链接：</label>
+			<div class="formControls col-xs-6 col-sm-3">
+				<input type="text" class="layui-input link" placeholder="请输入链接">
+			</div>
+		</div>
+		
+	</form>
+	<div class="row cl" style="margin-top: 20px">
+		<div class="col-9 col-offset-1" style="margin-left: 150px!important;">
+			<button class="btn btn-primary submit" value="提交">提交</button>
+		</div>
+	</div>
+</div>
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script> 
+<script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script> 
+<script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="lib/layui/layui.all.js"></script>
+<script type="text/javascript" src="lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript">
+	var timestamp = Date.parse(new Date());
+	console.log(timestamp)
+	layui.use('laydate', function(){
+	  var laydate = layui.laydate;
+	  
+	  //执行一个laydate实例
+	  laydate.render({
+	    elem: '#test1' //指定元素
+	    ,type:'datetime'
+	    ,format: 'yyyy-MM-dd HH:mm:ss'
+	    ,min: timestamp
+          ,done: function(value, date, endDate){
+              console.log(value); //得到日期生成的值，如：2017-08-18
+			  window.clearInterval(inter)
+          }
+	  });
+	});
+	var inter=setInterval(function(){
+        var time=new Date();
+        $(".time").val(dateFtt("yyyy-MM-dd hh:mm:ss",time))
+	},1000)
+    var time=new Date();
+    $(".time").val(dateFtt("yyyy-MM-dd hh:mm:ss",time))
+    /**************************************时间格式化处理************************************/
+    function dateFtt(fmt,date)
+    { //author: meizz
+        var o = {
+            "M+" : date.getMonth()+1,                 //月份
+            "d+" : date.getDate(),                    //日
+            "h+" : date.getHours(),                   //小时
+            "m+" : date.getMinutes(),                 //分
+            "s+" : date.getSeconds(),                 //秒
+            "q+" : Math.floor((date.getMonth()+3)/3), //季度
+            "S"  : date.getMilliseconds()             //毫秒
+        };
+        if(/(y+)/.test(fmt))
+            fmt=fmt.replace(RegExp.$1, (date.getFullYear()+"").substr(4 - RegExp.$1.length));
+        for(var k in o)
+            if(new RegExp("("+ k +")").test(fmt))
+                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+        return fmt;
+    }
+    function content(){
+	$(".textarea-length").html($(".content").val().length)
+}
+$(".submit").click(function(){
+    if($(".title").val()==""){
+        layer.msg("标题不能为空")
+	}else if($(".content").val()==""){
+        layer.msg("内容不能为空")
+	}else if($("#test1").val()==""){
+        layer.msg("请选择推送时间")
+	}else {
+        $.ajax({
+            type: "POST",
+            url: "/system/Membermessagepush/saveMessageInfo",
+            cache: false,  //禁用缓存
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("token", localStorage.getItem("token"));
+            },
+            data: {"title":$(".title").val(),"content":$(".content").val(),"push_time":$("#test1").val(),"url":$(".link").val()},  //传入组装的参数
+            dataType: "json",
+            success: function (data) {
+                console.log(data)
+                if (data.code == 200) {
+                    layer.alert('保存成功', {
+                        title:'提示',
+                        icon: 1,
+                    })
+                }else if(data.code==501){
+                    parent.parent.checkToken()
+                }else{
+                    layer.msg(data.msg)
+				}
+            },error:function(){
+                layer.msg("网络错误，请稍后再试")
+            }
+        })
+	}
+})
+</script>
+</body>
+</html>
